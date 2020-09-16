@@ -26,7 +26,10 @@
 
     <link rel="stylesheet" href="css/style.css">
     </head>
-
+		<jsp:include page="${contextPath}/html/loginModal.html"></jsp:include>
+		<jsp:include page="${contextPath}/html/registerModal.html"></jsp:include>
+		<jsp:include page="${contextPath}/html/findEmailModal.html"></jsp:include>
+		<jsp:include page="${contextPath}/html/findPwdModal.html"></jsp:include>
         <div class="header-area ">
             <div id="sticky-header" class="main-header-area">
                 <div class="container-fluid ">
@@ -64,8 +67,8 @@
                                 	<div class="personMenu">
                                         <a href="#"><img class="personicon" src="img/person.png"></a>
                                          	<ul class="submenu">
-                                                    <li><a href="candidate.html">로그인 </a></li>
-                                                    <li><a href="job_details.html">회원가입</a></li>                                                   
+                                                    <li><a data-toggle="modal" href="#loginModal">로그인</a></li>
+                                                    <li><a data-toggle="modal" href="#registerModal">회원가입</a></li>                                                   
                                             </ul>                                                                               
                                          </div>
                                         <a href="#"><img class="personicon" src="img/bell.png"></a>

@@ -28,17 +28,15 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "personal_msg")
-public class PersonalMessage implements Serializable{
+public class PersonalMessage {
 	@Id
 	@Column(name = "personal_msg_no")
 	private Integer personalMsgNo;
 	
-	@Id
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "send")
 	private Customer send;
 	
-	@Id
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "receive")
 	private Customer receive;
