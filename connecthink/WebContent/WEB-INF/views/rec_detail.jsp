@@ -121,7 +121,8 @@ img.on {
 							<p>팀설명 (파일에서 읽어올 부분)</p>
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
-								<div class="single_candidates">
+								<h4 class="mt-3">팀원</h4>
+								<div class="single_candidates mb-5">
 									<div class="thumb text-center mr-2">
 										<img src="img/candiateds/1.png" alt=""> <span>이름</span>
 									</div>
@@ -142,10 +143,11 @@ img.on {
 					<!-- 컨텐츠 끝 -->
 					<div class="single_jobs white-bg d-flex justify-content-between">
 						<div class="rec_foot_left">
-							<!-- 팀원 프로필 -->
+							<!-- 팀장 프로필 -->
 							<div class="thumb text-center mr-2">
-								<img src="img/candiateds/1.png" alt=""> <span>이름</span>
+								<img src="img/candiateds/1.png" alt="프로필">
 							</div>
+							<span>[팀장]이름</span>
 						</div>
 						<div class="rec_foot_right">						
 							<button class="boxed-btn mt-2 message">메세지</button>

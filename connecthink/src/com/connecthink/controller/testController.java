@@ -10,7 +10,6 @@ public class testController {
 	public void test() {
 		System.out.println("jaebaldwera");
 	}
-<<<<<<< HEAD
 	
 	@RequestMapping("/add_project")
 	public void addp() {
