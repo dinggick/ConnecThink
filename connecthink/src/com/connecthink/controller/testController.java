@@ -10,4 +10,8 @@ public class testController {
 	public void test() {
 		System.out.println("jaebaldwera");
 	}
+	@RequestMapping("/member_recruit")
+	public String recruit() {
+		return "/member_recruit";
+	}
 }
