@@ -11,4 +11,5 @@ local.properties
 Servers/
 .classpath
 .project
-/target/
+target/
+.settings/
