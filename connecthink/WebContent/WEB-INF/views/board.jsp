@@ -5,93 +5,83 @@
 <head>
 <style>
 body {
-	font-family: sans-serif;
-	color: #172b4d;
-	background-color: #0279bf;
-	display: flex;
-	align-items: start;
+  font-family: sans-serif;
+  color: #172b4d;
+  background-color: #0279bf;
+  display: flex;
+  align-items: start;
 }
 
 div {
-	border-radius: 3px;
+  border-radius: 3px;
 }
 
 #dashBoard {
-	display: flex;
-	align-items: start;
+  display: flex;
+  align-items: start;
 }
 
 .title {
-	font-weight: 600;
-	margin: 7px;
-	padding: 10px;
+  text-align:center;
+  font-weight: 1000;
+  margin: 2px;
+  padding: 5px;
 }
 
 .editable {
-	user-select: none;
-	outline: none;
-	margin: 7px;
-	padding: 10px;
-	cursor: pointer !important;
-	display: flex;
-	justify-content: space-between;
+  user-select: none;
+  outline: none;
+  margin: 7px;
+  padding: 30px;
+  cursor: pointer !important;
+  display: flex;
+  justify-content: space-between;
 }
 
 .editing {
-	background: white;
-	color: #172b4d !important;
-	box-shadow: inset 0px 0px 0px 2px #0279bf;
+  background: white;
+  color: #172b4d !important;
+  box-shadow:inset 0px 0px 0px 2px #0279bf;
 }
 
 .editing:hover {
-	background: white !important;
+  background: white !important;
 }
 
 .card {
-	background: white;
-	border-bottom: 1px solid #aaa;
+  background: white;
+  border-bottom: 1px solid #aaa;
 }
 
-.todo, .doing, .done {
-	/*   padding: 7px; */
-	min-width: 280px;
-	margin: 10px 5px;
-	position: relative;
-	background: #dfe1e6;
+.todo,.doing,.done {
+/*   padding: 7px; */
+  min-width: 300px;
+  margin: 10px 5px;
+  position: relative;
+  background: #dfe1e6;
 }
 
-.add-list {
-	min-width: 280px;
-	margin: 10px 5px;
-	position: relative;
-	background: rgba(0, 0, 0, .12);
-	color: hsla(0, 0%, 100%, .8);
-}
-
-.ghost {
-	opacity: .1;
-	color: #000;
-	background-color: #000;
-}
 
 .add-task {
-	width: calc(100% - 35px);
-	display: inline-block;
-	padding: 10px;
-	margin-top: 0px;
-	color: gray;
-	text-decoration: none;
-	/*   border-bottom: 1px solid #dfe1e6; */
+  width: calc(100% - 35px);
+  display: inline-block;
+  padding: 10px;
+  margin-top: 0px;
+  color: gray;
+  text-decoration: none;
+/*   border-bottom: 1px solid #dfe1e6; */
 }
 
 .add-task:hover {
-	background-color: rgba(9, 30, 66, .13);
+  background-color: rgba(9,30,66,.13);
 }
 
 .del {
-	font-weight: 600;
-	color: gray;
+  font-weight: 600;
+  color: gray;
 }
+
+
 
 /* chat css */
 .allUsersList {
@@ -431,39 +421,232 @@ scale
 .reception{
 	margin: 20px -20px
 }
+
+/*******************변재영역 css************************ */
+#dashBoard{
+	padding-top:7%;
+	margin-left: 35%;
+}
+
+.todo{
+	margin-right: 25%;
+}
+.doing{
+	margin-right: 25%;
+}
+.done{
+	margin-right: 25%;
+}
+	
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 250px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    background: #CEE3F6;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+/* Sidebar Styles */
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: black;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebarTeamName {
+    height: 65px;
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebarTeamName a {
+    color: #999999;
+}
+
+.sidebar-nav > .sidebarTeamName a:hover {
+    color: #fff;
+    background: none;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+.menutoggle{
+	text-decoration: none;
+	font-size: 3em;
+	color: rgba(0, 0, 0, 0.61);
+	-webkit-transition: all 0.15s ease-out 0;
+	-moz-transition: all 0.15s ease-out 0;
+	transition: all 0.45s ease-out 0;
+	position: fixed;
+	top: 10px;
+	left: 20px;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.usty{
+	 list-style:none;
+	 padding-left:0px;
+}
+
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js"></script>
 <meta charset="UTF-8">
 <title>board.jsp</title>
 </head>
 <body>
-	<button class="endPj">프로젝트 종료</button>
-
-	<div id="dashBoard">
-
-		<div class="todo">
+	<!-- Sidebar -->
+		<a href="#menu-toggle" class="menutoggle" id="menu-toggle">☰</a>
+	
+        <div id="sidebar-wrapper" style="display: none">
+            <ul class="sidebar-nav">
+                <li class="sidebarTeamName">
+                    <a href="#" id="down">This is Team Name</a>
+                </li>
+                <li>
+                    <a href="#">팀원1</a>
+                </li>
+                <li>
+                    <a href="#">팀원2</a>
+                </li>
+                <li>
+                    <a href="#">팀원3</a>
+                </li>
+                <li>
+                    <a href="#">팀원4</a>
+                </li>
+                <li>
+                    <a href="#">팀원5</a>
+                </li>
+                <li>
+                    <a href="#">프로젝트 종료</a>
+                </li>
+            </ul>
+        </div>
+	
+		 <div id="app"></div>
+	<!-- <div id="dashBoard" v-drag-and-drop:options="options">
+		<div class="todo" id="do">
 			<div class="title">TO DO</div>
 			<div class="content">
 				<div class="card removable editable">This is a card</div>
-				<div class="card removable editable" style="">Look, another
-					card!</div>
+				<div class="card removable editable" style="">Look, another card!</div>
+				<div class="card removable editable" style="">Look, another card!</div>
+				<div class="card removable editable" style="">Look, another card!</div>
+				<div class="card removable editable" style="">Look, another card!</div>
+				<div class="card removable editable" style="">Look, another card!</div>
+				<div class="card removable editable" style="">Look, another card!sdfsdfsdf</div>
+				<component v-for="item in buttons" :is="item"></component>{{task}}
 			</div>
-			<div class="add-task">작업 추가하기</div>
+			<div class="add-task" @click="add">작업 추가하기</div>
 		</div>
 
-		<div class="doing">
+		<div class="doing" id="doing">
 			<div class="title">DOING</div>
 			<div class="content">
 				<div class="card removable editable">Hello world!</div>
+				<component v-for="item in buttons" :is="item"></component>{{task}}
 			</div>
-			<div class="add-task">작업 추가하기</div>
+			<div class="add-task" @click="add">작업 추가하기</div>
 		</div>
 
-		<div class="done">
+		<div class="done" id="done">
 			<div class="title">DONE</div>
-			<div class="content"></div>
-			<div class="add-task">작업 추가하기</div>
+			<div class="content">
+				<component v-for="item in buttons" :is="item"></component>{{task}}
+			</div>
+			<div class="add-task" @click="add">작업 추가하기</div>
 		</div>
+	</div> -->
 
 
 		<!-- chat -->
@@ -669,7 +852,148 @@ scale
 			  }
 		  }//method
 		});
-		
+	
+	////////////////////////////////변재 vue.js////////////////////////////////////////////////////////
+		var cc = document.getElementById('menu-toggle');
+	var cc1 = document.getElementById('sidebar-wrapper');
+	var cc2 = document.getElementById('down');
+	cc.onclick = function() { 
+		cc1.style.display='block';
+	};
+	cc2.onclick = function() { 
+		cc1.style.display='none';
+	};
+	
+	
+	
+	
+	Vue.component('my-button2', {
+		template: `<div class='card removable editable'>xxxxxxxxx</div>`
+	})
+
+	
+	
+	/*drag&drop시작*/
+	Vue.use(VueDraggable.default);
+	
+	new Vue({
+		  template: `
+			  <div v-drag-and-drop:options="options" class="drag-wrapper">
+			  	<div id="dashBoard">		   
+					<div class="todo" id="do">
+						<div class="title">TO DO
+					  		<div class="content">
+			  					<ul class="usty">
+			  						<li><div class="card removable editable">This is a card</div></li>
+			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
+			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
+			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
+			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
+			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
+			  						<li><div class="card removable editable" style="">Look, another card!sdfsdfsdf</div></li>
+			  					</ul>
+							</div>
+			    		<div class="add-task" >작업 추가하기</div>
+			    		</div>
+			    	</div>
+			    
+			    	<div class="doing" id="doing">
+			    		<div class="title">Doing
+							<div class="content">
+			  					<ul class="usty">
+								    <li><div class="card removable editable">This is a card</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!sdfsdfsdf</div></li>
+								</ul>
+							</div>
+					    <div class="add-task" >작업 추가하기</div>
+					    </div>
+					</div>
+			    
+			    	<div class="done" id="done">
+			    		<div class="title">Done
+				  			<div class="content">
+							    <ul class="usty">
+								    <li><div class="card removable editable">This is a card</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!</div></li>
+									<li><div class="card removable editable" style="">Look, another card!sdfsdfsdf</div></li>
+							    </ul>
+							</div>
+						<div class="add-task">작업 추가하기</div>
+						</div>
+					</div>
+			    </div>
+			  </div>
+		  `,
+		  data() {
+		    const componentInstance = this;
+		    
+		    return {
+		      options: {
+		        onDragend(event) {
+		          componentInstance.someDummyMethod();
+
+		          // to detect if draggable element is dropped out
+		          if (!event.droptarget) {
+		            console.log('event is dropped out');
+		          } 
+		        }
+		      }
+		    }
+		  },
+		  methods: {
+			  someDummyMethod() {
+				     console.log('Hello from someDummyMethod');
+				   }
+		  }
+		}).$mount("#app");
+	
+	/* var todo = new Vue({
+		el: '#do',
+		data: {
+			buttons: []
+			,task:''
+		},
+		methods: {
+			add () {
+				this.buttons.push('my-button2')
+			}
+		}
+	})
+	
+	var doing = new Vue({
+		el: '#doing',
+		data: {
+			buttons: []
+			,task:''
+		},
+		methods: {
+			add () {
+				this.buttons.push('my-button2')
+			}
+		}
+	})
+	
+	var done = new Vue({
+		el: '#done',
+		data: {
+			buttons: []
+			,task:''
+		},
+		methods: {
+			add () {
+				this.buttons.push('my-button2')
+			}
+		}
+	}) */
 
 </script>
 </html>
