@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,10 +28,10 @@
 
     <link rel="stylesheet" href="css/style.css">
     </head>
-		<jsp:include page="${contextPath}/html/loginModal.html"></jsp:include>
-		<jsp:include page="${contextPath}/html/registerModal.html"></jsp:include>
-		<jsp:include page="${contextPath}/html/findEmailModal.html"></jsp:include>
-		<jsp:include page="${contextPath}/html/findPwdModal.html"></jsp:include>
+    	<jsp:include page="/resources/html/loginModal.html"></jsp:include>
+		<jsp:include page="/resources/html/registerModal.html"></jsp:include>
+		<jsp:include page="/resources/html/findEmailModal.html"></jsp:include>
+		<jsp:include page="/resources/html/findPwdModal.html"></jsp:include>
         <div class="header-area ">
             <div id="sticky-header" class="main-header-area">
                 <div class="container-fluid ">
