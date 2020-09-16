@@ -10,6 +10,7 @@ public class testController {
 	public void test() {
 		System.out.println("jaebaldwera");
 	}
+<<<<<<< HEAD
 	
 	@RequestMapping("/add_project")
 	public void addp() {
@@ -39,5 +40,10 @@ public class testController {
 	@RequestMapping("/rec_detail")
 	public void rec_detail() {
 		System.out.println("모집 상세");
+	}
+	
+	@RequestMapping("/member_recruit")
+	public String recruit() {
+		return "/member_recruit";
 	}
 }
