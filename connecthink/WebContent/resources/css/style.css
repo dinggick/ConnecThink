@@ -1875,7 +1875,7 @@ h3 {
 
 /*썸네일 - 모집*/
 .featured_candidates_area .single_candidates .thumbnail {
-   width: 25%
+   width: 25%;
    margin: auto;
 }
 
