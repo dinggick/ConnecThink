@@ -488,8 +488,8 @@ scale
 					<!-- chat Content -->
 					<div  v-show='toggle'>
 						<div id="chatbox-area">
-							<div class="card-content chat-content">
-								<div class="content" onscroll="chat_on_scroll()">
+							<div class="card-content chat-content" onscroll="chat_on_scroll()" id="chatContent">
+								<div class="content">
 									
 									<!-- 메세지 받을때 -->
 									
@@ -557,19 +557,21 @@ scale
 	
 	var chat_on_scroll = function(){
 			console.log("scroll!!!");
-			var chatDiv = document.getElementById("chatApp");
-	 
+			var chatDiv = document.getElementById("chatContent");
+	 		console.log(chatDiv.scrollTop);
 	        if((chatDiv.scrollTop + chatDiv.clientHeight) == chatDiv.scrollHeight){
 	                // 채팅창 전체높이 + 스크롤높이가 스크롤 전체높이와 같다면
 	                // 이는 스크롤이 바닥을 향해있다는것이므로
 	                // 스크롤 바닥을 유지하도록 플래그 설정
 	                bottom_flag = true;
+	               console.log("여기");
 	        }
 
 	 if(pre_diffHeight > chatDiv.scrollTop + chatDiv.clientHeight){
 	                // 스크롤이 한번이라도 바닥이 아닌 위로 상승하는 액션이 발생할 경우
 	                // 스크롤 바닥유지 플래그 해제
 	                bottom_flag = false;  
+	                console.log("요기")
 	 }
 	        //
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
@@ -595,7 +597,7 @@ scale
 		  ,updated(){
 			console.log("update!");
 			console.log(bottom_flag);
-			var chatDiv = document.getElementById("chatApp");
+			var chatDiv = document.getElementById("chatContent");
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
@@ -635,7 +637,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.121:8080/connecthink/boardEcho");
+				  this.socket = new WebSocket("ws://192.168.0.219:8080/connecthink/boardEcho");
 				  console.log(this.socket);
 				  //onopen
 				  this.socket.onopen = () => {
