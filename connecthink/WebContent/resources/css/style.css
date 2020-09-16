@@ -1873,6 +1873,28 @@ h3 {
   }
 }
 
+/*썸네일 - 모집*/
+.featured_candidates_area .single_candidates .thumbnail {
+   width: 25%
+   margin: auto;
+}
+
+.featured_candidates_area .single_candidates .thumbnail .test{
+   position: relative;
+   padding-top: 40%;
+   overflow: hidden;
+}
+
+.featured_candidates_area .single_candidates .thumbnail img {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   max-width: 100%;
+   height: auto;
+}
+
 /* line 13, ../../Arafath/CL/December/235. Job board/HTML/scss/_testmonial.scss */
 .testimonial_area .single_testmonial .thumb {
   position: relative;
