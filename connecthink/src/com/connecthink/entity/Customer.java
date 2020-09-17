@@ -60,4 +60,8 @@ public class Customer {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	private List<Notification> notifications;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinColumn(name = "customer_no")
+	private Set<CustomerPosition> customerPositions;
 }
