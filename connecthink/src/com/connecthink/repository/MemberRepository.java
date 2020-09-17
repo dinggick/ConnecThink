@@ -11,4 +11,5 @@ public interface MemberRepository extends JpaRepository<Member, MemberId>{
 	public List<Member> findByIdMemberNo(Integer memberNo);
 
 	public List<Member> findTop8By();
+
 }

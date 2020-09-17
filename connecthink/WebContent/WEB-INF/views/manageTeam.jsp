@@ -170,7 +170,7 @@ div.table-row>div.title:hover {
 							<div class="status">상태</div>
 							<div class="button text-center">관리</div>
 						</div>
-						<div class="table-row bg-white" style="display:none;">
+						<div class="table-row bg-white">
 							<div class="index">0</div>
 							<div class="recruit_no" style="display:none;"></div>
 							<div class="title">프로젝트 이름 예시1</div>
@@ -257,7 +257,6 @@ div.table-row>div.title:hover {
 let manageBtnArray = document.querySelectorAll("div.button>a");
 manageBtnArray.forEach(function(element){
 	element.addEventListener("click", function(e){
-		
 	    e.preventDefault();
 	});
 });
@@ -279,12 +278,18 @@ $menuBtnArray.each(function(i){
 			}
 		});
 		
-		//table row 다시 쓰기
+		//ajax로 데이터 불러와서 table row 다시 쓰기
 		let $tableRow = $("div.table-row");
-		let $clone = $tableRow.clone();
-		$tableRow.after($clone);
-		$clone.css("display","block");
-		e.preventDefault();
+		$.ajax({
+			url:"${contextPath}/manageMyApplication"
+			,method:"POST"
+			,data:"memberNo=101"
+		 	,success:function(data){
+				console.log(data);
+			}
+		});
+		//기본 이벤트, 이벤트 전파 막기
+		return false;
 	});
 });
 
