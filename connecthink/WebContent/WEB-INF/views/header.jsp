@@ -28,7 +28,7 @@
 
     <link rel="stylesheet" href="css/style.css">
     </head>
-    	<!-- Find Email Modal -->
+    	<!-- 이메일 찾기 Modal -->
     <div class="modal" id="findEmailModal" tabindex="-1" role="dialog" aria-labelledby="findEmailModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -55,7 +55,7 @@
             </div>
         </div>
     </div>
-    <!-- Find Password Modal -->
+    <!-- 비밀번호 찾기 Modal -->
     <div class="modal" id="findPwdModal" tabindex="-1" role="dialog" aria-labelledby="findPwdModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -69,10 +69,10 @@
                     <form action="#">
 	                    <br>
                     	<div class="row">
-                    		<div class="col-md-6 offset-1">
+                    		<div class="col-md-5 offset-1">
                             	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
 	                        </div>
-	                        <div class="col-md-6">
+	                        <div class="col-md-5">
 	                            <a href="#" class="genric-btn info-border">이메일 인증</a>
 	                        </div>
 	                    </div>
@@ -86,7 +86,7 @@
             </div>
         </div>
     </div>
-        <!-- Log in Modal -->
+        <!-- 로그인 Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -115,9 +115,9 @@
             </div>
         </div>
     </div>
-    <!-- Register Modal -->
+    <!-- 회원가입 Modal -->
     <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="registerModalLongTitle">회원가입</h5>
@@ -127,12 +127,14 @@
                 </div>
                 <div class="modal-body">
                     <form action="#">
-                        <div class="mt-10">
-                            <input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
-                            <div class="mt-10">
-                                <a href="#" class="genric-btn info-border">이메일 인증</a>
-                            </div>
-                        </div>
+                        <div class="row">
+                    		<div class="col-md-6">
+                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
+	                        </div>
+	                        <div class="col-md-6">
+	                            <a href="#" class="genric-btn info-border">이메일 인증</a>
+	                        </div>
+	                    </div>
                         <div class="mt-10">
                             <input type="password" name="password" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'" required class="single-input">
                         </div>
