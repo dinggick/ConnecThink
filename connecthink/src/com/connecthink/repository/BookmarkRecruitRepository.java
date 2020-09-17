@@ -2,7 +2,7 @@ package com.connecthink.repository;
 
 import java.util.List;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.connecthink.entity.BookmarkRecruit;
 import com.connecthink.entity.BookmarkRecruitId;
