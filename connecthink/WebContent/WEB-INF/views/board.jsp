@@ -1011,7 +1011,7 @@ scale
 		}).$mount("#app");
 	
 	Vue.component('my-button2', {
-		template: `<div class='card editable'>xxxxxxxxx</div>`
+		template: `<li><div class='card editable'>xxxxxxxxx</div></li>`
 	})
 	
 	var todo = new Vue({

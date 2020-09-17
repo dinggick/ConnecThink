@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
+import com.connecthink.entity.Task;
 import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.MessageRepository;
+import com.connecthink.repository.TaskRepository;
 
 public class BoardService {
 	
@@ -16,6 +18,9 @@ public class BoardService {
 	
 	@Autowired
 	private MemberRepository memberRpty;
+	
+	@Autowired
+	private TaskRepository taskRepository;
 	
 	/**
 	 * 로그를 위한 사용자가 보낸 메세지 저장
@@ -40,6 +45,46 @@ public class BoardService {
 	public List<Member> lookUpMember(Integer project_no){
 		return memberRpty.lookUpMember(project_no);
 		
+	}
+	
+	////////////////////변재 영역 
+	/*
+	 * 포스트잇 전체 조회
+	 */
+	public List<Task> findAll(){
+		return taskRepository.findAll();
+	}
+	
+	/*
+	 * 포스트잇 한개 추가
+	 * @author 변재
+	 */
+	public void add(Task task) {
+		taskRepository.save(task);
+	}
+	
+	/*
+	 * 포스트잇 내용 수정
+	 * @author 변재
+	 */
+	public void updateByComment(Task task) {
+		taskRepository.save(task);
+	}
+	
+	/*
+	 * 포스트잇 상태 변경(드래그앤 드롭)
+	 * @author 변재
+	 */
+	public void updateByState(Task task) {
+		taskRepository.save(task);
+	}
+	
+	/*
+	 * 포스트잇 삭제
+	 * @author 변재
+	 */
+	public void removeByTask(Integer CustomerNo) {
+		taskRepository.deleteById(CustomerNo);
 	}
 	
 	

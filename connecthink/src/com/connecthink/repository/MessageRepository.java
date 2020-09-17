@@ -2,12 +2,11 @@ package com.connecthink.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-
 import com.connecthink.entity.Message;
 
-public interface MessageRepository extends CrudRepository<Message, Integer> {
+public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
 	@Query(nativeQuery = true, value ="select c.name, m.content, m.create_date\n" + 
 			"from message m join customer c on(m.writer_no = c.customer_no)\n" + 

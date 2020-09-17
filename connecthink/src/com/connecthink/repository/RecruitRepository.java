@@ -2,12 +2,12 @@ package com.connecthink.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 
 import com.connecthink.entity.Recruit;
 
-public interface RecruitRepository extends CrudRepository<Recruit, Integer> {
+public interface RecruitRepository extends JpaRepository<Recruit, Integer> {
 	@Query(nativeQuery = true, value = "select\r\n" + 
 			"    r.*\r\n" + 
 			"from\r\n" + 
