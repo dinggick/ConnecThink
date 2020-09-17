@@ -441,6 +441,7 @@ scale
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
+    top:0;
     left: 250px;
     width: 0;
     height: 100%;
@@ -517,7 +518,7 @@ scale
     background: none;
 }
 
-@media(min-width:768px) {
+@media(min-width:900px) {
     #wrapper {
         padding-left: 250px;
     }
@@ -527,7 +528,7 @@ scale
     }
 
     #sidebar-wrapper {
-        width: 250px;
+        width: 270px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
@@ -703,8 +704,64 @@ scale
             </ul>
         </div>
 	
-		 <div id="app"></div>
-
+				 <div v-drag-and-drop:options="options" class="drag-task" id="big">
+				  	<div id="dashBoard">		   
+						<div class="todo" id="do">
+							<div class="title">TO DO
+						  		<div class="content">
+				  					<ul class="usty">
+				  						<li><div class="card editable"><a href="www.naver.com">This is a card</a></div></li>
+				  						<li><div class="card editable">제육볶음</div></li>
+				  						<li><div class="card editable">칼국수</div></li>
+				  						<li><div class="card editable">순두부찌개</div></li>
+				  						<li><div class="card editable">돈까스</div></li>
+				  						<li><div class="card editable">죽</div></li>
+				  						<li><div class="card editable">감자탕</div></li>
+				  					</ul>
+								</div>
+				    			<div v-on:click.native="add" class="add-task">작업 추가하기</div>
+				    		</div>
+				    	</div>
+				    
+				    	<div class="doing" id="doing">
+				    		<div class="title">Doing
+								<div class="content">
+				  					<ul class="usty">
+				  					<li><div class="card editable">vue.js</div></li>
+			  						<li><div class="card editable">JAVA</div></li>
+			  						<li><div class="card editable">javascript</div></li>
+			  						<li><div class="card editable">html</div></li>
+			  						<li><div class="card editable">css</div></li>
+			  						<li><div class="card editable">script</div></li>
+			  						<li><div class="card editable">c++</div></li>
+									</ul>
+								</div>
+						    <div class="add-task">작업 추가하기</div>
+						    </div>
+						</div>
+				    
+				    	<div class="done" id="done">
+				    		<div class="title">Done
+					  			<div class="content">
+								    <ul class="usty">
+								    <li><div class="card editable">This is a card</div></li>
+			  						<li><div class="card editable">변재원</div></li>
+			  						<li><div class="card editable">김동준</div></li>
+			  						<li><div class="card editable">최종국</div></li>
+			  						<li><div class="card editable">이혜림</div></li>
+			  						<li><div class="card editable">홍지수</div></li>
+			  						<li><div class="card editable">임수정</div></li>
+								    </ul>
+								</div>
+							<div class="add-task">작업 추가하기</div>
+							</div>
+						</div>
+				    </div>
+				  </div>
+			
+		
+		
+		
 		<!-- chat -->
 		<div id="chatApp">
 
@@ -928,62 +985,7 @@ scale
 	Vue.use(VueDraggable.default);
 	
 	new Vue({
-		  template: `
-			  <div v-drag-and-drop:options="options" class="drag-task">
-			  	<div id="dashBoard">		   
-					<div class="todo" id="do">
-						<div class="title">TO DO
-					  		<div class="content">
-			  					<ul class="usty">
-			  						<li><div class="card editable">This is a card</div></li>
-			  						<li><div class="card editable">제육볶음</div></li>
-			  						<li><div class="card editable">칼국수</div></li>
-			  						<li><div class="card editable">순두부찌개</div></li>
-			  						<li><div class="card editable">돈까스</div></li>
-			  						<li><div class="card editable">죽</div></li>
-			  						<li><div class="card editable">감자탕</div></li>
-			  					</ul>
-							</div>
-			    			<div class="add-task" v-on:click="add()">작업 추가하기</div>
-			    		</div>
-			    	</div>
-			    
-			    	<div class="doing" id="doing">
-			    		<div class="title">Doing
-							<div class="content">
-			  					<ul class="usty">
-			  					<li><div class="card editable">vue.js</div></li>
-		  						<li><div class="card editable">JAVA</div></li>
-		  						<li><div class="card editable">javascript</div></li>
-		  						<li><div class="card editable">html</div></li>
-		  						<li><div class="card editable">css</div></li>
-		  						<li><div class="card editable">script</div></li>
-		  						<li><div class="card editable">c++</div></li>
-								</ul>
-							</div>
-					    <div class="add-task">작업 추가하기</div>
-					    </div>
-					</div>
-			    
-			    	<div class="done" id="done">
-			    		<div class="title">Done
-				  			<div class="content">
-							    <ul class="usty">
-							    <li><div class="card editable">This is a card</div></li>
-		  						<li><div class="card editable">변재원</div></li>
-		  						<li><div class="card editable">김동준</div></li>
-		  						<li><div class="card editable">최종국</div></li>
-		  						<li><div class="card editable">이혜림</div></li>
-		  						<li><div class="card editable">홍지수</div></li>
-		  						<li><div class="card editable">임수정</div></li>
-							    </ul>
-							</div>
-						<div class="add-task">작업 추가하기</div>
-						</div>
-					</div>
-			    </div>
-			  </div>
-		  `,
+		  el:"#big",
 		  data() {
 		    const componentInstance = this;
 		    
@@ -997,7 +999,7 @@ scale
 		          // to detect if draggable element is dropped out
 		          if (!event.droptarget) {
 		            console.log('event is dropped out');
-		          } 
+		          }
 		        }
 		      }
 		    }
@@ -1008,7 +1010,7 @@ scale
 				   }
 		  }
 		  
-		}).$mount("#app");
+		})
 	
 	Vue.component('my-button2', {
 		template: `<li><div class='card editable'>xxxxxxxxx</div></li>`
@@ -1017,15 +1019,14 @@ scale
 	var todo = new Vue({
 		el: '#do',
 		data: {
-			items: []
-			,task:''
+		
 		},created(){
 			console.log("do !! created");
 		}
 		,methods: {
 			add() {
 				console.log("do add event!!");
-				this.items.push({task:'my-button2'});
+				//this.buttons.push({task:'my-button2'});
 			}
 		}
 	})

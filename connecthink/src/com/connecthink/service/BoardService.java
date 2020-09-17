@@ -57,10 +57,14 @@ public class BoardService {
 	
 	////////////////////변재 영역 
 	/*
-	 * 포스트잇 전체 조회
+	 * 해당 프로젝트 포스트잇 전체 조회
 	 */
-	public List<Task> findAll(){
-		return taskRepository.findAll();
+	public List<Task> lookUpTask(Integer project_no){
+		List<Task> tasks = new ArrayList<>();
+		projectRepository.findById(project_no).get().getTasks().forEach(r ->{
+			tasks.add(r);
+		});
+		return tasks;
 	}
 	
 	/*
@@ -91,8 +95,8 @@ public class BoardService {
 	 * 포스트잇 삭제
 	 * @author 변재
 	 */
-	public void removeByTask(Integer CustomerNo) {
-		taskRepository.deleteById(CustomerNo);
+	public void removeByTask(Integer customer_no) {
+		taskRepository.deleteById(customer_no);
 	}
 	
 	
