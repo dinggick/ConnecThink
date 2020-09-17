@@ -37,24 +37,12 @@ div {
   display: flex;
   justify-content: space-between;
 }
-
-.editing {
-  background: white;
-  color: #172b4d !important;
-  box-shadow:inset 0px 0px 0px 2px #0279bf;
-}
-
-.editing:hover {
-  background: white !important;
-}
-
 .card {
   background: white;
   border-bottom: 1px solid #aaa;
 }
 
 .todo,.doing,.done {
-/*   padding: 7px; */
   min-width: 300px;
   margin: 10px 5px;
   position: relative;
@@ -101,7 +89,7 @@ div {
 }
 
 .usersChatList {
-	position: absolute;
+	position: fixed;
 	width: 250px;
 	bottom: 0;
 	margin-bottom: 0;
@@ -493,7 +481,7 @@ scale
 
 .sidebar-nav li {
     text-indent: 20px;
-    line-height: 40px;
+    line-height: 20px;
     margin-bottom: 20px;
 }
 
@@ -614,40 +602,7 @@ scale
         </div>
 	
 		 <div id="app"></div>
-	<!-- <div id="dashBoard" v-drag-and-drop:options="options">
-		<div class="todo" id="do">
-			<div class="title">TO DO</div>
-			<div class="content">
-				<div class="card removable editable">This is a card</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!sdfsdfsdf</div>
-				<component v-for="item in buttons" :is="item"></component>{{task}}
-			</div>
-			<div class="add-task" @click="add">작업 추가하기</div>
-		</div>
-
-		<div class="doing" id="doing">
-			<div class="title">DOING</div>
-			<div class="content">
-				<div class="card removable editable">Hello world!</div>
-				<component v-for="item in buttons" :is="item"></component>{{task}}
-			</div>
-			<div class="add-task" @click="add">작업 추가하기</div>
-		</div>
-
-		<div class="done" id="done">
-			<div class="title">DONE</div>
-			<div class="content">
-				<component v-for="item in buttons" :is="item"></component>{{task}}
-			</div>
-			<div class="add-task" @click="add">작업 추가하기</div>
-		</div>
-	</div> -->
-
+	
 
 		<!-- chat -->
 		<div id="chatApp">
@@ -866,12 +821,6 @@ scale
 		cc1.style.display='none';
 	};
 	
-	
-	
-	
-	Vue.component('my-button2', {
-		template: `<div class='card removable editable'>xxxxxxxxx</div>`
-	})
 
 	
 	
@@ -880,22 +829,23 @@ scale
 	
 	new Vue({
 		  template: `
-			  <div v-drag-and-drop:options="options" class="drag-wrapper">
+			  <div v-drag-and-drop:options="options" class="drag-task">
 			  	<div id="dashBoard">		   
 					<div class="todo" id="do">
 						<div class="title">TO DO
 					  		<div class="content">
 			  					<ul class="usty">
-			  						<li><div class="card removable editable">This is a card</div></li>
-			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
-			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
-			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
-			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
-			  						<li><div class="card removable editable" style="">Look, another card!</div></li>
-			  						<li><div class="card removable editable" style="">Look, another card!sdfsdfsdf</div></li>
+			  						<li><div class="card editable">This is a card</div></li>
+			  						<li><div class="card editable">제육볶음</div></li>
+			  						<li><div class="card editable">칼국수</div></li>
+			  						<li><div class="card editable">순두부찌개</div></li>
+			  						<li><div class="card editable">돈까스</div></li>
+			  						<li><div class="card editable">죽</div></li>
+			  						<li><div class="card editable">감자탕</div></li>
+			  						<li><div class="card editable" v-for="item in items">{{task}}</div></li>
 			  					</ul>
 							</div>
-			    		<div class="add-task" >작업 추가하기</div>
+			    			<div class="add-task" v-on:click="add">작업 추가하기</div>
 			    		</div>
 			    	</div>
 			    
@@ -903,16 +853,16 @@ scale
 			    		<div class="title">Doing
 							<div class="content">
 			  					<ul class="usty">
-								    <li><div class="card removable editable">This is a card</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!sdfsdfsdf</div></li>
+			  					<li><div class="card editable">vue.js</div></li>
+		  						<li><div class="card editable">JAVA</div></li>
+		  						<li><div class="card editable">javascript</div></li>
+		  						<li><div class="card editable">html</div></li>
+		  						<li><div class="card editable">css</div></li>
+		  						<li><div class="card editable">script</div></li>
+		  						<li><div class="card editable">c++</div></li>
 								</ul>
 							</div>
-					    <div class="add-task" >작업 추가하기</div>
+					    <div class="add-task">작업 추가하기</div>
 					    </div>
 					</div>
 			    
@@ -920,13 +870,13 @@ scale
 			    		<div class="title">Done
 				  			<div class="content">
 							    <ul class="usty">
-								    <li><div class="card removable editable">This is a card</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!</div></li>
-									<li><div class="card removable editable" style="">Look, another card!sdfsdfsdf</div></li>
+							    <li><div class="card editable">This is a card</div></li>
+		  						<li><div class="card editable">변재원</div></li>
+		  						<li><div class="card editable">김동준</div></li>
+		  						<li><div class="card editable">최종국</div></li>
+		  						<li><div class="card editable">이혜림</div></li>
+		  						<li><div class="card editable">홍지수</div></li>
+		  						<li><div class="card editable">임수정</div></li>
 							    </ul>
 							</div>
 						<div class="add-task">작업 추가하기</div>
@@ -942,7 +892,11 @@ scale
 		      options: {
 		        onDragend(event) {
 		          componentInstance.someDummyMethod();
-
+				  console.log(componentInstance);
+		          if(componentInstance == null){
+		        	  componentInstance.someDummyMethod();
+		          }
+		          
 		          // to detect if draggable element is dropped out
 		          if (!event.droptarget) {
 		            console.log('event is dropped out');
@@ -956,12 +910,17 @@ scale
 				     console.log('Hello from someDummyMethod');
 				   }
 		  }
+		  
 		}).$mount("#app");
 	
-	/* var todo = new Vue({
+	Vue.component('my-button2', {
+		template: `<div class='card editable'>xxxxxxxxx</div>`
+	})
+	
+	var todo = new Vue({
 		el: '#do',
 		data: {
-			buttons: []
+			items: []
 			,task:''
 		},
 		methods: {
@@ -971,7 +930,7 @@ scale
 		}
 	})
 	
-	var doing = new Vue({
+	/* var doing = new Vue({
 		el: '#doing',
 		data: {
 			buttons: []

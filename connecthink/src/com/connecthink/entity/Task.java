@@ -6,9 +6,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,9 +29,17 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "task")
+@SequenceGenerator(
+		   name = "task_seq_generator"// 사용할 sequence 이름
+		  ,sequenceName ="task_no_seq" // 실제 데이터베이스 sequence 이름
+		  ,initialValue = 1
+		  , allocationSize = 1
+		)
 public class Task {
 	@Id
 	@Column(name = "task_no")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE
+	,generator = "task_seq_generator")
 	private Integer taskNo;
 	
 	@Column(name = "content", length = 300, nullable = true)
