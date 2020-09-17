@@ -814,6 +814,7 @@ scale
 		var cc = document.getElementById('menu-toggle');
 	var cc1 = document.getElementById('sidebar-wrapper');
 	var cc2 = document.getElementById('down');
+	var cc3 = document.getElementById('content');
 	cc.onclick = function() { 
 		cc1.style.display='block';
 	};
@@ -842,10 +843,9 @@ scale
 			  						<li><div class="card editable">돈까스</div></li>
 			  						<li><div class="card editable">죽</div></li>
 			  						<li><div class="card editable">감자탕</div></li>
-			  						<li><div class="card editable" v-for="item in items">{{task}}</div></li>
 			  					</ul>
 							</div>
-			    			<div class="add-task" v-on:click="add">작업 추가하기</div>
+			    			<div class="add-task" v-on:click="add()">작업 추가하기</div>
 			    		</div>
 			    	</div>
 			    
@@ -893,9 +893,7 @@ scale
 		        onDragend(event) {
 		          componentInstance.someDummyMethod();
 				  console.log(componentInstance);
-		          if(componentInstance == null){
-		        	  componentInstance.someDummyMethod();
-		          }
+		          
 		          
 		          // to detect if draggable element is dropped out
 		          if (!event.droptarget) {
@@ -922,10 +920,13 @@ scale
 		data: {
 			items: []
 			,task:''
-		},
-		methods: {
-			add () {
-				this.buttons.push('my-button2')
+		},created(){
+			console.log("do !! created");
+		}
+		,methods: {
+			add() {
+				console.log("do add event!!");
+				this.items.push({task:'my-button2'});
 			}
 		}
 	})
