@@ -37,7 +37,7 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
             <property name="database" value="ORACLE" /> <!--DB종류 -->
-            <property name="generateDdl" value="true" /> <!--DDL생성시 DB고유 기능사용 -->
+            <property name="generateDdl" value="false" /> <!--DDL생성시 DB고유 기능사용 -->
             <property name="showSql" value="true"></property><!--SQL문 로그보여주기 -->
             </bean>
         </property>

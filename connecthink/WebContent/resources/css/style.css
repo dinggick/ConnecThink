@@ -1873,9 +1873,9 @@ h3 {
   }
 }
 
-/*썸네일 - 모집*/
+/*�뜽�꽕�씪 - 紐⑥쭛*/
 .featured_candidates_area .single_candidates .thumbnail {
-   width: 25%
+   width: 25%;
    margin: auto;
 }
 
@@ -2954,11 +2954,11 @@ h3 {
 }
 .main_member_area {
   background: #F5F7FA;
-  padding: 50px 0;
+  padding: 70px 80px 0px;
 }
 .popular_catagory_area {
   background: #F5F7FA;
-  padding: 70px 50px 0;
+  padding: 70px 80px 0;
 }
 
 /* line 4, ../../Arafath/CL/December/235. Job board/HTML/scss/_popular_catagory.scss */
@@ -3131,7 +3131,7 @@ h3 {
 
 /* line 1, ../../Arafath/CL/December/235. Job board/HTML/scss/_testmonial.scss */
 .testimonial_area {
-  padding: 100px 0;
+  padding: 70px 80px 80px;
 }
 
 @media (max-width: 767px) {
