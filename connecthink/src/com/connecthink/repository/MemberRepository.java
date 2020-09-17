@@ -9,4 +9,5 @@ import com.connecthink.entity.MemberId;
 
 public interface MemberRepository extends CrudRepository<Member, MemberId>{
 	public List<Member> findByIdMemberNo(Integer memberNo);
+	public List<Member> findTop8By();
 }
