@@ -39,4 +39,9 @@ public class CustomerController {
 	public void remove(Integer customerNo) {
 		service.removeByCustomerNo(customerNo);
 	}
+	
+	@RequestMapping("/CustomerInfo")
+	public void customerInfo() {
+		
+	}
 }
