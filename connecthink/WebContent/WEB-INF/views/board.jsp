@@ -873,7 +873,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.8:8080/connecthink/boardEcho");
+				  this.socket = new WebSocket("ws://192.168.0.121:8080/connecthink/boardEcho");
 				  console.log(this.socket);
 				  //onopen
 				  this.socket.onopen = () => {

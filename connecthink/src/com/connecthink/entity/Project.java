@@ -55,4 +55,5 @@ public class Project {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
+	
 }
