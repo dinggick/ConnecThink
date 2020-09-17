@@ -32,13 +32,11 @@ public class PersonalMessage implements Serializable{
 	@Id
 	@Column(name = "personal_msg_no")
 	private Integer personalMsgNo;
-	
-	@Id
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "send")
 	private Customer send;
-	
-	@Id
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "receive")
 	private Customer receive;

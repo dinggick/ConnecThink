@@ -22,7 +22,7 @@ class MemberTest {
 	
 	@Test
 	void findByMemberNoTest() {
-		repository.findByIdMemberNo(2).forEach(m -> {
+		repository.findByIdMemberNo(102).forEach(m -> {
 			System.out.println("멤버 번호 : " + m.getCustomer().getCustomerNo());
 		});
 	}

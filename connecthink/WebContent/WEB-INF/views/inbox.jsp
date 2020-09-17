@@ -113,6 +113,9 @@ ul.list>li {
     border-bottom: 1px solid #dfe1e2;
     background-color: rgba(256,256,256,0.95);
 }
+.msg_sender>img {
+	height: 100%;
+}
 .message .content {
 	height: 560px;
 }
@@ -239,11 +242,11 @@ ul.list>li {
                     	<div class="col-12 message">
                     		<div class="row">
                     			<div class="col-12 content">
-                    			    <header class="msg_header">
+                    			    <div class="msg_header">
                     					<div class="msg_sender">
-                    						<img src="img/logo.png"><span>고디바</span>
+                    						<img src="img/person.png"><span>고디바</span>
                     					</div>
-                    				</header>
+                    				</div>
                     				<div class="msg_body">
                     					<div class="receive_msg">안녕하세요 저는 고디바라고 합니다 잘 부탁 드립니다.</div>
                     					<div style="clear:both;"></div>
