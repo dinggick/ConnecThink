@@ -479,7 +479,7 @@ scale
     list-style: none;
 }
 
-/* .sidebar-nav>li{
+.sidebar-nav>li{
     text-indent: 20px;
     line-height: 20px;
     margin-bottom: 20px;
@@ -500,7 +500,7 @@ scale
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
     text-decoration: none;
-} */
+}
 
 .sidebar-nav > .sidebarTeamName {
     height: 65px;
