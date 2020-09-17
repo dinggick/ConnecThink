@@ -101,7 +101,7 @@ div {
 }
 
 .usersChatList {
-	position: absolute;
+	position: fixed;
 	width: 250px;
 	bottom: 0;
 	margin-bottom: 0;
@@ -491,9 +491,9 @@ scale
     list-style: none;
 }
 
-.sidebar-nav li {
+.sidebar-nav>li{
     text-indent: 20px;
-    line-height: 40px;
+    line-height: 20px;
     margin-bottom: 20px;
 }
 
@@ -576,6 +576,56 @@ scale
 	 padding-left:0px;
 }
 
+/* profile */
+
+.friend{
+	height:70px;
+	border-bottom:1px solid #e7ebee;		
+	position:relative;
+}
+.friend:hover{
+	background:#f1f4f6;
+	cursor:pointer;
+}
+.friend img{
+	width:40px;
+	border-radius:50%;
+	margin:15px;
+	float:left;
+}
+.floatingImg{
+	width:40px;
+	border-radius:50%;
+	position:absolute;
+	top:0;
+	left:12px;
+	border:3px solid #fff;
+}
+.friend p{
+
+}
+.friend p strong{
+  font-weight:600;
+  font-size:15px;
+	color:#597a96;  
+
+}
+.friend p span{
+	font-size:13px;
+	font-weight:400;
+	color:#aab8c2;
+}
+.friend .status{
+	background:#26c281;
+	border-radius:50%;	
+	width:9px;
+	height:9px;
+	position:absolute;
+	top:31px;
+	right:17px;
+}
+
+.friend .status.offline{background:#ffce54;}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -592,21 +642,73 @@ scale
                 <li class="sidebarTeamName">
                     <a href="#" id="down">This is Team Name</a>
                 </li>
+                
+            <li>
+				<div class="friend">
+					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
+					<div class="profile">
+						<p><strong>Hailey</strong></p> 
+						<p><span>Web Master</span></p>
+					</div>
+					<div class="status offline"></div>
+				</div>
+			</li>
+			
                 <li>
-                    <a href="#">팀원1</a>
+                   <div class="friend">
+						<img src="https://t1.daumcdn.net/cfile/blog/2559E33B51368FEF02" />
+						<div class="profile">
+							<p><strong>Modify</strong></p> 
+							<p><span>Web God</span></p>
+						</div>
+						<div class="status offline"></div>
+					</div>
                 </li>
+                
                 <li>
-                    <a href="#">팀원2</a>
+                   <div class="friend">
+						<img src="https://pbs.twimg.com/media/EB5Pq3rVUAAYjxI.jpg" />
+						<div class="profile">
+							<p><strong>Ggugi</strong></p> 
+							<p><span>Web Developer</span></p>
+						</div>
+						<div class="status online"></div>
+					</div>
                 </li>
+                
                 <li>
-                    <a href="#">팀원3</a>
-                </li>
+                    <div class="friend">
+						<img src="https://t1.daumcdn.net/liveboard/realty/b0516b5193334bd089651b49b52d7655.png" />
+						<div class="profile">
+							<p><strong>Seo Kang-Joon</strong></p> 
+							<p><span>git God</span></p>
+						</div>
+						<div class="status online"></div>
+					</div>
+				</li>
+                
                 <li>
-                    <a href="#">팀원4</a>
+                    <div class="friend">
+						<img src="https://cphoto.asiae.co.kr/listimglink/6/2020062421493324321_1593002973.png" />
+						<div class="profile">
+							<p><strong>Dlwlrma</strong></p> 
+							<p><span>God</span></p>
+						</div>
+						<div class="status offline"></div>
+					</div>
                 </li>
-                <li>
-                    <a href="#">팀원5</a>
+                
+                 <li>
+                    <div class="friend">
+						<img src="https://pbs.twimg.com/profile_images/1274215735070343168/e0rgTWHp_400x400.jpg" />
+						<div class="profile">
+							<p><strong>Ji Chu</strong></p> 
+							<p><span>Buddha</span></p>
+						</div>
+						<div class="status"></div>
+					</div>
                 </li>
+                
                 <li>
                     <a href="#">프로젝트 종료</a>
                 </li>
@@ -614,40 +716,6 @@ scale
         </div>
 	
 		 <div id="app"></div>
-	<!-- <div id="dashBoard" v-drag-and-drop:options="options">
-		<div class="todo" id="do">
-			<div class="title">TO DO</div>
-			<div class="content">
-				<div class="card removable editable">This is a card</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!</div>
-				<div class="card removable editable" style="">Look, another card!sdfsdfsdf</div>
-				<component v-for="item in buttons" :is="item"></component>{{task}}
-			</div>
-			<div class="add-task" @click="add">작업 추가하기</div>
-		</div>
-
-		<div class="doing" id="doing">
-			<div class="title">DOING</div>
-			<div class="content">
-				<div class="card removable editable">Hello world!</div>
-				<component v-for="item in buttons" :is="item"></component>{{task}}
-			</div>
-			<div class="add-task" @click="add">작업 추가하기</div>
-		</div>
-
-		<div class="done" id="done">
-			<div class="title">DONE</div>
-			<div class="content">
-				<component v-for="item in buttons" :is="item"></component>{{task}}
-			</div>
-			<div class="add-task" @click="add">작업 추가하기</div>
-		</div>
-	</div> -->
-
 
 		<!-- chat -->
 		<div id="chatApp">
@@ -726,9 +794,6 @@ scale
 			</div>
 		</div>
 
-	</div>
-
-	</div>
 </body>
 <script>
 	
@@ -820,7 +885,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.219:8080/connecthink/boardEcho");
+				  this.socket = new WebSocket("ws://172.30.1.8:8080/connecthink/boardEcho");
 				  console.log(this.socket);
 				  //onopen
 				  this.socket.onopen = () => {
@@ -852,6 +917,7 @@ scale
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
 			  }
+			  
 		  }//method
 		});
 	
