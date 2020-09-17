@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
 import com.connecthink.repository.MessageRepository;
 import com.connecthink.repository.ProjectRepository;
 
+@Service
 public class BoardService {
 	
 	@Autowired

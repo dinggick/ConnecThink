@@ -1,7 +1,5 @@
 package com.connecthink.entity;
 
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,9 +32,8 @@ public class Message {
 	@Column(name = "content", length = 300, nullable = true)
 	private String content;
 	
-	@CreationTimestamp
 	@Column(name = "create_date")
-	private Date createDate;
+	private String createDate;
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "writer_no")
