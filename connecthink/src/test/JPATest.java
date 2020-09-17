@@ -64,7 +64,7 @@ class JPATest {
 		List<Project> list = projectRepository.test(2);
 		list.forEach(p -> {
 			System.out.println("----프로젝트 번호 : " + p.getProjectNo());
-			
+			System.out.println("팀장 번호 : " + p.getManagerNo());
 			p.getRecruits().forEach(r -> {
 				System.out.println("----모집 번호 : " + r.getRecruitNo());
 				

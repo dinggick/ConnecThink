@@ -67,14 +67,16 @@
                 </div>
                 <div class="modal-body">
                     <form action="#">
+	                    <br>
                     	<div class="row">
-                    		<div class="col-md-5">
+                    		<div class="col-md-6 offset-1">
                             	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
 	                        </div>
-	                        <div class="col-md-5">
+	                        <div class="col-md-6">
 	                            <a href="#" class="genric-btn info-border">이메일 인증</a>
 	                        </div>
 	                    </div>
+	                    <br>
                     </form>
                 </div>
                 <div class="modal-footer">
