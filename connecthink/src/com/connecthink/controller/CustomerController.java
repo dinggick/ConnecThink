@@ -32,7 +32,7 @@ public class CustomerController {
 		return service.findByEmail(email);
 	}
 	
-	public void insert(Customer c) {
+	public void add(Customer c) {
 		service.add(c);
 	}
 	
@@ -40,8 +40,13 @@ public class CustomerController {
 		service.removeByCustomerNo(customerNo);
 	}
 	
-	@RequestMapping("/CustomerInfo")
+	@RequestMapping("/customerInfo")
 	public void customerInfo() {
+		
+	}
+	
+	@RequestMapping("/modifyCustomerInfo")
+	public void modifyCustomerInfo() {
 		
 	}
 }

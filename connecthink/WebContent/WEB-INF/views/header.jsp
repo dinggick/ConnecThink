@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
@@ -28,12 +28,12 @@
 
     <link rel="stylesheet" href="css/style.css">
     </head>
-    	<!-- ¿Ã∏ﬁ¿œ √£±‚ Modal -->
+    	<!-- Ïù¥Î©îÏùº Ï∞æÍ∏∞ Modal -->
     <div class="modal" id="findEmailModal" tabindex="-1" role="dialog" aria-labelledby="findEmailModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="findEmailModalLongTitle">¿Ã∏ﬁ¿œ √£±‚</h5>
+                    <h5 class="modal-title" id="findEmailModalLongTitle">Ïù¥Î©îÏùº Ï∞æÍ∏∞</h5>
 <!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
 <!--                 <span aria-hidden="true">&times;</span> -->
 <!--             </button> -->
@@ -41,26 +41,26 @@
                 <div class="modal-body">
                     <form action="#">
                         <div class="mt-10">
-                            <input type="text" name="name" placeholder="¿Ã∏ß" onfocus="this.placeholder = ''" onblur="this.placeholder = '¿Ã∏ß'" required class="single-input">
+                            <input type="text" name="name" placeholder="Ïù¥Î¶Ñ" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ïù¥Î¶Ñ'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="text" name="birthDate" placeholder="ª˝≥‚ø˘¿œ 8¿⁄∏Æ ex)19921211" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ª˝≥‚ø˘¿œ 8¿⁄∏Æ ex)19921211'" required class="single-input">
+                            <input type="text" name="birthDate" placeholder="ÏÉùÎÖÑÏõîÏùº 8ÏûêÎ¶¨ ex)19921211" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ÏÉùÎÖÑÏõîÏùº 8ÏûêÎ¶¨ ex)19921211'" required class="single-input">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">µ⁄∑Œ</button>
-                    <button type="button" class="btn btn-primary">√£±‚</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Îí§Î°ú</button>
+                    <button type="button" class="btn btn-primary">Ï∞æÍ∏∞</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ∫Òπ–π¯»£ √£±‚ Modal -->
+    <!-- ÎπÑÎ∞ÄÎ≤àÌò∏ Ï∞æÍ∏∞ Modal -->
     <div class="modal" id="findPwdModal" tabindex="-1" role="dialog" aria-labelledby="findPwdModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="findPwdModalLongTitle">∆–Ω∫øˆµÂ √£±‚</h5>
+                    <h5 class="modal-title" id="findPwdModalLongTitle">Ìå®Ïä§ÏõåÎìú Ï∞æÍ∏∞</h5>
 <!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
 <!--                 <span aria-hidden="true">&times;</span> -->
 <!--             </button> -->
@@ -70,28 +70,28 @@
 	                    <br>
                     	<div class="row">
                     		<div class="col-md-5 offset-1">
-                            	<input type="email" name="email" placeholder="¿Ã∏ﬁ¿œ" onfocus="this.placeholder = ''" onblur="this.placeholder = '¿Ã∏ﬁ¿œ'" required class="single-input">
+                            	<input type="email" name="email" placeholder="Ïù¥Î©îÏùº" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ïù¥Î©îÏùº'" required class="single-input">
 	                        </div>
 	                        <div class="col-md-5">
-	                            <a href="#" class="genric-btn info-border">¿Ã∏ﬁ¿œ ¿Œ¡ı</a>
+	                            <a href="#" class="genric-btn info-border">Ïù¥Î©îÏùº Ïù∏Ï¶ù</a>
 	                        </div>
 	                    </div>
 	                    <br>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">µ⁄∑Œ</button>
-                    <button type="button" class="btn btn-primary">√£±‚</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Îí§Î°ú</button>
+                    <button type="button" class="btn btn-primary">Ï∞æÍ∏∞</button>
                 </div>
             </div>
         </div>
     </div>
-        <!-- ∑Œ±◊¿Œ Modal -->
+        <!-- Î°úÍ∑∏Ïù∏ Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLongTitle">∑Œ±◊¿Œ</h5>
+                    <h5 class="modal-title" id="loginModalLongTitle">Î°úÍ∑∏Ïù∏</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -99,28 +99,28 @@
                 <div class="modal-body">
                     <form action="#">
                         <div class="mt-10">
-                            <input type="email" name="email" placeholder="¿Ã∏ﬁ¿œ" onfocus="this.placeholder = ''" onblur="this.placeholder = '¿Ã∏ﬁ¿œ'" required class="single-input">
+                            <input type="email" name="email" placeholder="Ïù¥Î©îÏùº" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ïù¥Î©îÏùº'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="password" name="password" placeholder="∫Òπ–π¯»£" onfocus="this.placeholder = ''" onblur="this.placeholder = '∫Òπ–π¯»£'" required class="single-input">
+                            <input type="password" name="password" placeholder="ÎπÑÎ∞ÄÎ≤àÌò∏" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ÎπÑÎ∞ÄÎ≤àÌò∏'" required class="single-input">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <a style="text-decoration: underline; color: #367FFF;" href="#findEmailModal" data-toggle="modal" data-backdrop="false">¿Ã∏ﬁ¿œ √£±‚</a>
-                    <a style="text-decoration: underline; color: #367FFF;" href="#findPwdModal" data-toggle="modal" data-backdrop="false">∫Òπ–π¯»£ √£±‚</a>
-<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">¥›±‚</button> -->
-                    <button type="button" class="btn btn-primary">∑Œ±◊¿Œ</button>
+                    <a style="text-decoration: underline; color: #367FFF;" href="#findEmailModal" data-toggle="modal" data-backdrop="false">Ïù¥Î©îÏùº Ï∞æÍ∏∞</a>
+                    <a style="text-decoration: underline; color: #367FFF;" href="#findPwdModal" data-toggle="modal" data-backdrop="false">ÎπÑÎ∞ÄÎ≤àÌò∏ Ï∞æÍ∏∞</a>
+<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Îã´Í∏∞</button> -->
+                    <button type="button" class="btn btn-primary">Î°úÍ∑∏Ïù∏</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- »∏ø¯∞°¿‘ Modal -->
+    <!-- ÌöåÏõêÍ∞ÄÏûÖ Modal -->
     <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLongTitle">»∏ø¯∞°¿‘</h5>
+                    <h5 class="modal-title" id="registerModalLongTitle">ÌöåÏõêÍ∞ÄÏûÖ</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -129,23 +129,23 @@
                     <form action="#">
                         <div class="row">
                     		<div class="col-md-6">
-                            	<input type="email" name="email" placeholder="¿Ã∏ﬁ¿œ" onfocus="this.placeholder = ''" onblur="this.placeholder = '¿Ã∏ﬁ¿œ'" required class="single-input">
+                            	<input type="email" name="email" placeholder="Ïù¥Î©îÏùº" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ïù¥Î©îÏùº'" required class="single-input">
 	                        </div>
 	                        <div class="col-md-6">
-	                            <a href="#" class="genric-btn info-border">¿Ã∏ﬁ¿œ ¿Œ¡ı</a>
+	                            <a href="#" class="genric-btn info-border">Ïù¥Î©îÏùº Ïù∏Ï¶ù</a>
 	                        </div>
 	                    </div>
                         <div class="mt-10">
-                            <input type="password" name="password" placeholder="∫Òπ–π¯»£" onfocus="this.placeholder = ''" onblur="this.placeholder = '∫Òπ–π¯»£'" required class="single-input">
+                            <input type="password" name="password" placeholder="ÎπÑÎ∞ÄÎ≤àÌò∏" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ÎπÑÎ∞ÄÎ≤àÌò∏'" required class="single-input">
                         </div>
                         <div class="mt-10">
-                            <input type="text" name="name" placeholder="¿Ã∏ß" onfocus="this.placeholder = ''" onblur="this.placeholder = '¿Ã∏ß'" required class="single-input">
+                            <input type="text" name="name" placeholder="Ïù¥Î¶Ñ" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ïù¥Î¶Ñ'" required class="single-input">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">¥›±‚</button> -->
-                    <button type="button" class="btn btn-primary">»∏ø¯∞°¿‘</button>
+<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Îã´Í∏∞</button> -->
+                    <button type="button" class="btn btn-primary">ÌöåÏõêÍ∞ÄÏûÖ</button>
                 </div>
             </div>
         </div>
@@ -166,11 +166,11 @@
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">∏ﬁ¿Œ»®</a></li>
-                                            <li><a href="jobs.html">∏¡˝¡ﬂ¿Œ ∏‚πˆ</a></li>
+                                            <li><a href="index.html">Î©îÏù∏Ìôà</a></li>
+                                            <li><a href="jobs.html">Î™®ÏßëÏ§ëÏù∏ Î©§Î≤Ñ</a></li>
                                            
-                                            <li><a href="#">∏¡˝¡ﬂ¿Œ∆¿</a></li>
-                                            <li><a href="contact.html">¡¯«‡¡ﬂ¿Œ ∞¯∏¿¸</a></li>
+                                            <li><a href="#">Î™®ÏßëÏ§ëÏù∏ÌåÄ</a></li>
+                                            <li><a href="contact.html">ÏßÑÌñâÏ§ëÏù∏ Í≥µÎ™®Ï†Ñ</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
@@ -187,8 +187,8 @@
                                 	<div class="personMenu">
                                         <a href="#"><img class="personicon" src="img/person.png"></a>
                                          	<ul class="submenu">
-                                                    <li><a data-toggle="modal" href="#loginModal">∑Œ±◊¿Œ</a></li>
-                                                    <li><a data-toggle="modal" href="#registerModal">»∏ø¯∞°¿‘</a></li>                                                   
+                                                    <li><a data-toggle="modal" href="#loginModal">Î°úÍ∑∏Ïù∏</a></li>
+                                                    <li><a data-toggle="modal" href="#registerModal">ÌöåÏõêÍ∞ÄÏûÖ</a></li>                                                   
                                             </ul>                                                                               
                                          </div>
                                         <a href="#"><img class="personicon" src="img/bell.png"></a>
@@ -196,11 +196,11 @@
 								<a href="#"><img class="personicon" src="img/pmenu.png" onclick="openNav()"></a>
 								<div id="mySidenav" class="sidenav">
 									<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
-										<h4 style="padding-left: 20px;">≥™¿« «¡∑Œ¡ß∆Æ Ω∫∆‰¿ÃΩ∫</h4>
+										<h4 style="padding-left: 20px;">ÎÇòÏùò ÌîÑÎ°úÏ†ùÌä∏ Ïä§ÌéòÏù¥Ïä§</h4>
 										<hr>
-										<a href="#">«¡∑Œ¡ß∆Æ1</a> 
-										<a href="#">«¡∑Œ¡ß∆Æ2</a> 
-										<a href="#">«¡∑Œ¡ß∆Æ3</a> 										
+										<a href="#">ÌîÑÎ°úÏ†ùÌä∏1</a> 
+										<a href="#">ÌîÑÎ°úÏ†ùÌä∏2</a> 
+										<a href="#">ÌîÑÎ°úÏ†ùÌä∏3</a> 										
 								</div>
 							</div>
 						</div>

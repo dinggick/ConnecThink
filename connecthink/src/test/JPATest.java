@@ -45,7 +45,7 @@ class JPATest {
 		Customer c = new Customer();
 		c.setCustomerNo(202);
 		c.setEmail("test03@gmail.com");
-		controller.insert(c);
+		controller.add(c);
 	}
 	
 //	@Test
