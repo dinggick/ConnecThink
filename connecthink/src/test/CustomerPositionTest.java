@@ -1,7 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +8,7 @@ import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.connecthink.repository.CustomerPositionRepository;
+import com.connecthink.repository.CustomerRepository;
 
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
@@ -19,12 +18,23 @@ import com.connecthink.repository.CustomerPositionRepository;
 class CustomerPositionTest {
 	@Autowired
 	private CustomerPositionRepository repository;
-	@Test
+	@Autowired
+	private CustomerRepository crepository;
+	//@Test
 	void findAllTest() {
 		repository.findAll().forEach(cp -> {
 			System.out.println("사용자 번호 : " + cp.getCustomer().getCustomerNo());
 			System.out.println("역할군 번호 : " + cp.getPosition().getPositionNo());
 		});
 	}
+	@Test
+	void findTop() {
+		crepository.findTop8By().forEach(c -> {
+			c.getCustomerPositions().forEach(b -> {
+				b.getPosition().getName();
+			});
+		});
+	}
+	
 
 }

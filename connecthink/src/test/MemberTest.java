@@ -1,6 +1,7 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import com.connecthink.entity.Member;
 import com.connecthink.repository.MemberRepository;
 
 @ExtendWith(SpringExtension.class)
@@ -20,11 +22,18 @@ class MemberTest {
 	@Autowired
 	private MemberRepository repository;
 	
-	@Test
+	//@Test
 	void findByMemberNoTest() {
 		repository.findByIdMemberNo(2).forEach(m -> {
 			System.out.println("멤버 번호 : " + m.getCustomer().getCustomerNo());
 		});
 	}
-
+	@Test
+	void findAllMember() {
+		
+		repository.findTop8By().forEach(s -> {
+			System.out.println("멤버: " + s.getCustomer().getExperiences());
+		});
+		
+	}
 }
