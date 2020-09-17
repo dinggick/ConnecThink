@@ -5646,6 +5646,10 @@ button.close {
     overflow: hidden
 }
 
+body {
+	padding-right: 0px !important;
+}
+
 .modal {
     position: fixed;
     top: 0;
@@ -5716,7 +5720,7 @@ button.close {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 999999;
+    z-index: 1000;
     background-color: #000
 }
 
