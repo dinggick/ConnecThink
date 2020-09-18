@@ -27,13 +27,14 @@ class CustomerPositionTest {
 			System.out.println("역할군 번호 : " + cp.getPosition().getPositionNo());
 		});
 	}
-	@Test
+	//@Test
 	void findTop() {
-		crepository.findTop8By().forEach(c -> {
-			c.getCustomerPositions().forEach(b -> {
-				b.getPosition().getName();
+		crepository.findTop8By().forEach(c ->{
+			c.getCustomerPositions().forEach(cp -> {
+				System.out.println(cp.getPosition().getName());
 			});
-		});
+			
+		});		
 	}
 	
 

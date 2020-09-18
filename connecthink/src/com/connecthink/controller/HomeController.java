@@ -42,7 +42,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/member_recruit")
-	public String recruit() {
-		return "/member_recruit";
+	public void recruit() {
+		System.out.println("멤버 상세");
 	}
 }
