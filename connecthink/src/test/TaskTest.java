@@ -62,8 +62,18 @@ class TaskTest {
 		projectRepository.save(p);
 	}
 	
-//	@Test
+	@Test
 	public void delete() {
+		//현재 사용자 아이디가져오기
+		
+		
+		Task t = repository.findById(12).get();
+		
+		Customer c = t.getCustomer();
+		
+		if(c.getCustomerNo() == 3) {
+			repository.delete(t);
+		}
 		
 	}
 	
@@ -77,7 +87,7 @@ class TaskTest {
 	}
 	
 	//내용수정
-	@Test
+//	@Test
 	public void updateContent() {
 		Task t = repository.findById(1).get();
 		
