@@ -1,6 +1,7 @@
 package com.connecthink.repository;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -124,4 +125,16 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"WHERE\r\n" + 
 			"	m.enter_status = 0 AND m.member_no = ?1 AND m.invited = 1")
 	public List<Project> findMyInvitation(Integer memberNo);
+	
+	/**
+	 * @author 홍지수
+	 * 모집상세보기
+	 */
+	@Query(nativeQuery = true, value=
+			"SELECT pj.*\r\n" +  
+			"FROM project pj   JOIN recruit rec ON (pj.project_no = rec.project_no)\r\n"+
+			"where rec.recruit_no= ?1"
+			)
+	public Project findByRecruits(String recruitNo);
+	
 }
