@@ -24,5 +24,5 @@ public class ProjectService {
 
 	public List<Project> findMyInvitation(Integer memberNo) {
 		return projectRepository.findMyInvitation(memberNo);
-	}
+	}	
 }

@@ -28,4 +28,7 @@ public class CustomerService {
 	public void removeByCustomerNo(Integer customerNo) {
 		customerRepository.deleteById(customerNo);
 	}
+	public List<Customer> findTopMembers() {
+		return customerRepository.findTop8By();
+	}
 }

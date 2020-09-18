@@ -124,4 +124,6 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"WHERE\r\n" + 
 			"	m.enter_status = 0 AND m.member_no = ?1 AND m.invited = 1")
 	public List<Project> findMyInvitation(Integer memberNo);
+	
+	
 }
