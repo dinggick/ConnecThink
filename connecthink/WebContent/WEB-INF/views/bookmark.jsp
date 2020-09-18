@@ -177,12 +177,13 @@
 		}
 		
 		function ttab(){
-			
 			document.querySelector(".mate").style.display="none";
 			document.querySelector(".team").style.display="block";
 			document.querySelector(".mate_tab").style.background="#f9f9ff";
 			document.querySelector(".team_tab").style.background="#fff";
 		}
+		
+		
 		
 		</script>
 </body>
