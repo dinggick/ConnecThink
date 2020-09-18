@@ -54,4 +54,9 @@ public class CustomerController {
 	public void modifyCustomerInfo() {
 		
 	}
+	@RequestMapping("/memberList")
+	public List<Customer> findTopMembers(){
+		System.out.println("드러옴");
+		return service.findTopMembers();
+	}
 }

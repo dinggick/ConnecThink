@@ -28,12 +28,16 @@ public class CustomerService {
 	public void removeByCustomerNo(Integer customerNo) {
 		customerRepository.deleteById(customerNo);
 	}
-	
+
 	public Customer findManager(String recruitNo) {
 		return customerRepository.findManager(recruitNo);
 	}
 	
 	public List<Customer> findByProject(String recruitNo){
 		return customerRepository.findByProject(recruitNo);
+	}	
+	
+	public List<Customer> findTopMembers() {
+		return customerRepository.findTop8By();
 	}
 }

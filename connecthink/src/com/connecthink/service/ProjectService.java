@@ -29,4 +29,5 @@ public class ProjectService {
 	public Project findByRecruits(String recruitNo) {
 		return projectRepository.findByRecruits(recruitNo);
 	}
+
 }

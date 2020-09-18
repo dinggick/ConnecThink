@@ -124,7 +124,9 @@ class JPATest {
 		}
 	}
 	
-//	@Test
+
+
+	//@Test
 	@DisplayName("내 프로젝트에 지원한 사람 목록")
 	public void applicantOfMyProjectTest() {
 		int managerNo = 2;
@@ -163,4 +165,5 @@ class JPATest {
 			}
 		}
 	}
+
 }
