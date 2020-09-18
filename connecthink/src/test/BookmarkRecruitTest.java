@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.repository.BookmarkRecruitRepository;
 
+@WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -32,6 +34,12 @@ class BookmarkRecruitTest {
 			System.out.println("사용자 번호 : " + br.getCustomer().getCustomerNo());
 			System.out.println("모집 번호 : " + br.getRecruit().getRecruitNo());
 		});
+	}
+	
+	@Test
+	void findByIdRecruitNo() {
+		int num = repository.findByIdRecruitNo("45R2");
+		System.out.println(num);
 	}
 
 }

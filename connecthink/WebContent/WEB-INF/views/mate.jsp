@@ -1,4 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var = "customer" value="${requestScope.customer}"/>
 
 <head>
 <meta charset="utf-8">
@@ -32,6 +35,9 @@
  height: 70px !important;"
 }
 
+span.customerNo{
+ display: none;
+}
 
 </style>
 
@@ -67,18 +73,23 @@
 		<div class="container">
 			<div class="row">
 				<!-- 박스 -->
+				<c:forEach items="${customer}" var="customer" varStatus="status">
 				<div class="col-md-6 col-lg-4">
-					<div class="single_candidates">
+					<div class="single_candidates" onclick="mateDetail(this);">
 						<div class="thumb" style="display: inline-block;">
 							<img src="img/candiateds/1.png" alt="">
 						</div>
-						<h4 style="display: inline-block;" class="ml-3 mt-2">Markary Jondon</h4>
+						<h4 style="display: inline-block;" class="ml-3 mt-2">${customer.name}</h4>
+						<span class="customerNo">${customer.customerNo}</span>
 						<ul class="mateInfo mt-4" style="list-style: none;">
-							<li class="position" style="font-weight: bold;">백엔드 개발자</li>
-							<li class="intro">한줄소개</li>
+							<c:forEach items="${customer.customerPositions}" var="position" varStatus="st1">
+							<li class="position" style="font-weight: bold;">${position.position.name}</li>
+							</c:forEach>
+							<li class="intro">${customer.about}</li>
 						</ul>
 					</div>
 				</div>
+				</c:forEach>
 				<!-- 박스 끝 -->
 				
 				
@@ -145,6 +156,25 @@
 
 
 	<script src="js/main.js"></script>
+
+	<script>
+	$(function(){
+		fetch("${contextPath}/mateList").then(function(data){
+			console.log("fetch ajax 성공");
+		});
+	});
+	
+	//클릭 시 상세 페이지로 이동(미완)
+	function mateDetail(e){
+		let $customerNo = $(e).find("span.customerNo").html();
+		alert($customerNo);
+// 		let url = "${contextPath}/rec_detail?recNo=" + $customerNo ;
+// 		location.href = url;
+	}
+	
+	
+	</script>
+
 </body>
 
 </html>

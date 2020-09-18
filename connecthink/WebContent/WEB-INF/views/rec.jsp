@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var = "rec" value="${requestScope.rec}"/>
 
 <head>
 <meta charset="utf-8">
@@ -26,6 +30,13 @@
 <link rel="stylesheet" href="css/style.css">
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
 
+<style>
+.rec_title{
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+</style>
 
 </head>
 
@@ -59,21 +70,24 @@
 		<div class="container">
 			<div class="row">
 				<!-- 객체 -->
+				<c:forEach items="${rec}" var="rec" varStatus = "status">
 				<div class="col-md-6 col-lg-4">
-					<div class="single_candidates text-center pl-0 pr-0 pt-0">
+					<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">
 						<div class="thumbnail">
 							<div class="test">
-								<img src="img/banner/banner.png" alt="프로젝트 사진">
+								<img src="img/default.png" alt="모집 사진">
 							</div>
 						</div>
-						<h4 class="mt-4">테스트입니다</h4>
+						<h4 class="mt-4 mr-4 ml-4 rec_title">${rec.requirement}</h4>
 						<ul style="list-style: none;">
-							<li class="teamName">팀이름 / 팀장이름</li>
-							<li class="wanna">찾는 포지션</li>
-							<li class="peorid">모집기한</li>
+							<li class="wanna">${rec.position.name}</li>
+							<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
+							<li class="peorid">${dl}</li>
+							<li class="recNo" style="display: none;">${rec.recruitNo}</li>
 						</ul>
 					</div>
 				</div>
+				</c:forEach>
 			</div>
 			<!-- 페이징 -->
 			<div class="row">
@@ -134,6 +148,24 @@
 
 
 	<script src="js/main.js"></script>
+	
+	<script>
+	$(function(){
+		fetch("${contextPath}/rec").then(function(data){
+			console.log("fetch ajax 성공");
+		});
+	});
+	
+	function recDetail(e){
+		let $recNo = $(e).find("li.recNo").html();
+		alert($recNo);
+		let url = "${contextPath}/rec_detail?recNo=" + $recNo ;
+		alert(url);
+		location.href = url;
+	}
+	
+	</script>
+	
 </body>
 
 </html>

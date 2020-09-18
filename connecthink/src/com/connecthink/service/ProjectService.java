@@ -25,4 +25,8 @@ public class ProjectService {
 	public List<Project> findMyInvitation(Integer memberNo) {
 		return projectRepository.findMyInvitation(memberNo);
 	}
+	
+	public Project findByRecruits(String recruitNo) {
+		return projectRepository.findByRecruits(recruitNo);
+	}
 }

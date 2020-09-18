@@ -31,16 +31,6 @@ public class HomeController {
 		System.out.println("메이트 리스트");
 	}
 	
-	@RequestMapping("/rec")
-	public void rec() {
-		System.out.println("모집리스트");
-	}
-	
-	@RequestMapping("/rec_detail")
-	public void rec_detail() {
-		System.out.println("모집 상세");
-	}
-	
 	@RequestMapping("/member_recruit")
 	public String recruit() {
 		return "/member_recruit";
