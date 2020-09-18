@@ -3,6 +3,17 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/themify-icons.css">
+<link rel="stylesheet" href="css/nice-select.css">
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/gijgo.css">
+<link rel="stylesheet" href="css/animate.min.css">
+<link rel="stylesheet" href="css/slicknav.css">
+<link rel="stylesheet" href="css/style.css">
 <style>
 body {
   font-family: sans-serif;
@@ -412,18 +423,18 @@ scale
 
 /*******************변재영역 css************************ */
 #dashBoard{
-	padding-top:7%;
-	margin-left: 35%;
+	padding-top:5%;
+	margin-left: 15%;
 }
 
 .todo{
-	margin-right: 25%;
+	margin-right: 20%;
 }
 .doing{
-	margin-right: 25%;
+	margin-right: 20%;
 }
 .done{
-	margin-right: 25%;
+	margin-right: 20%;
 }
 	
 #wrapper {
@@ -619,6 +630,7 @@ scale
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js"></script>
+
 <meta charset="UTF-8">
 <title>board.jsp</title>
 </head>
@@ -703,9 +715,33 @@ scale
                 </li>
             </ul>
         </div>
+        
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
+        	<div class="modal-dialog modal-dialog-centered" role="document">
+            	<div class="modal-content">
+                	<div class="modal-body">
+                    	<form action="#">
+                        	<div class="mt-10">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                				<span aria-hidden="true">&times;</span>
+            				</button><br><br>
+                            	<input type="text" name="text" onfocus="this.placeholder = ''" required class="single-input">
+                        	</div>
+                    	</form>
+                	</div>
+                	<div class="modal-footer">
+                    	<button type="button" class="btn btn-primary">수정하기</button>
+                    	<button type="button" class="btn btn-primary">삭제하기</button>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+        
+        
+        
+        
 	
-				 <div v-drag-and-drop:options="options" class="drag-task" id="big">
-				  	<div id="dashBoard">		   
+				  	<div id="dashBoard" v-drag-and-drop:options="options">		   
 						<div class="todo" id="do">
 							<div class="title">TO DO
 						  		<div class="content">
@@ -717,9 +753,11 @@ scale
 				  						<li><div class="card editable">돈까스</div></li>
 				  						<li><div class="card editable">죽</div></li>
 				  						<li><div class="card editable">감자탕</div></li>
+				  						<li><div class="card editable"><a data-toggle="modal" href="#loginModal">감자탕</a></div></li>
+				  						<component v-for="item in buttons" :is="item"></component>{{task}}
 				  					</ul>
 								</div>
-				    			<div v-on:click.native="add" class="add-task">작업 추가하기</div>
+				    			<div v-on:click="add" class="add-task">작업 추가하기</div>
 				    		</div>
 				    	</div>
 				    
@@ -734,9 +772,10 @@ scale
 			  						<li><div class="card editable">css</div></li>
 			  						<li><div class="card editable">script</div></li>
 			  						<li><div class="card editable">c++</div></li>
+			  						<component v-for="item in buttons" :is="item"></component>{{task}}
 									</ul>
 								</div>
-						    <div class="add-task">작업 추가하기</div>
+						    <div v-on:click="add" class="add-task">작업 추가하기</div>
 						    </div>
 						</div>
 				    
@@ -751,16 +790,13 @@ scale
 			  						<li><div class="card editable">이혜림</div></li>
 			  						<li><div class="card editable">홍지수</div></li>
 			  						<li><div class="card editable">임수정</div></li>
+			  						<component v-for="item in buttons" :is="item"></component>{{task}}
 								    </ul>
 								</div>
-							<div class="add-task">작업 추가하기</div>
+							<div v-on:click="add" class="add-task">작업 추가하기</div>
 							</div>
 						</div>
 				    </div>
-				  </div>
-			
-		
-		
 		
 		<!-- chat -->
 		<div id="chatApp">
@@ -979,13 +1015,60 @@ scale
 	};
 	
 
-	
-	
-	/*drag&drop시작*/
 	Vue.use(VueDraggable.default);
 	
+	/*drag&drop시작*/
+	
+	var todo = new Vue({
+		el: '#do',
+		data: {
+			buttons: []
+			,task:''
+		},created(){
+			console.log("do !! created");
+		}
+		,methods: {
+			add : function() {
+				alert('dd');
+				console.log("do add event!!");
+				this.buttons.push('my-button2');
+			}
+		}
+	})
+	
+	var doing = new Vue({
+		el: '#doing',
+		data: {
+			buttons: []
+			,task:''
+		}, 
+		methods: {
+			add () {
+				this.buttons.push('my-button2')
+			}
+		}
+	})
+	
+	var done = new Vue({
+		el: '#done',
+		data: {
+			buttons: []
+			,task:''
+		},
+		methods: {
+			add () {
+				this.buttons.push('my-button2')
+			}
+		}
+	})
+	
+	Vue.component('my-button2', {
+		template: `<li><div class='card editable'><input type="text"></div></li>`
+	})
+
+	
 	new Vue({
-		  el:"#big",
+		  el:"#dashBoard",
 		  data() {
 		    const componentInstance = this;
 		    
@@ -1008,54 +1091,43 @@ scale
 			  someDummyMethod() {
 				     console.log('Hello from someDummyMethod');
 				   }
+			  
 		  }
 		  
 		})
 	
-	Vue.component('my-button2', {
-		template: `<li><div class='card editable'>xxxxxxxxx</div></li>`
-	})
 	
-	var todo = new Vue({
-		el: '#do',
-		data: {
-		
-		},created(){
-			console.log("do !! created");
-		}
-		,methods: {
-			add() {
-				console.log("do add event!!");
-				//this.buttons.push({task:'my-button2'});
-			}
-		}
-	})
-	
-	/* var doing = new Vue({
-		el: '#doing',
-		data: {
-			buttons: []
-			,task:''
-		},
-		methods: {
-			add () {
-				this.buttons.push('my-button2')
-			}
-		}
-	})
-	
-	var done = new Vue({
-		el: '#done',
-		data: {
-			buttons: []
-			,task:''
-		},
-		methods: {
-			add () {
-				this.buttons.push('my-button2')
-			}
-		}
-	}) */
 
 </script>
+<!-- JS here -->
+	<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/isotope.pkgd.min.js"></script>
+	<script src="js/ajax-form.js"></script>
+	<script src="js/waypoints.min.js"></script>
+	<script src="js/jquery.counterup.min.js"></script>
+	<script src="js/imagesloaded.pkgd.min.js"></script>
+	<script src="js/scrollIt.js"></script>
+	<script src="js/jquery.scrollUp.min.js"></script>
+	<script src="js/wow.min.js"></script>
+	<script src="js/nice-select.min.js"></script>
+	<script src="js/jquery.slicknav.min.js"></script>
+	<script src="js/jquery.magnific-popup.min.js"></script>
+	<script src="js/plugins.js"></script>
+	<script src="js/gijgo.min.js"></script>
+
+
+
+	<!--contact js-->
+	<script src="js/contact.js"></script>
+	<script src="js/jquery.ajaxchimp.min.js"></script>
+	<script src="js/jquery.form.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
+	<script src="js/mail-script.js"></script>
+
+
+	<script src="js/main.js"></script>
 </html>

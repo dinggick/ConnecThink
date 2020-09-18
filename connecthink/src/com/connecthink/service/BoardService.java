@@ -72,7 +72,8 @@ public class BoardService {
 	 * @author 변재
 	 */
 	public void add(Task task) {
-		taskRepository.save(task);
+		
+		
 	}
 	
 	/*
