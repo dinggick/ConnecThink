@@ -47,7 +47,7 @@ public class BoardController {
 		Task task = new Task();
 		task.setTaskStatus(status);
 		task.setContent(content);
-		service.add(task);
+		service.add(task, null, null);
 	}
 	
 }

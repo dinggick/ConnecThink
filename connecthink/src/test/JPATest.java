@@ -107,14 +107,27 @@ class JPATest {
 //	@Test
 	@DisplayName("내가 지원한 프로젝트 목록")
 	public void myAppliedProjectTest() {
-		int memberNo = 101;
+		int memberNo = 102;
 		List<Project> list = projectRepository.findMyApplication(memberNo);
 		for(Project p : list) {
-			System.out.println("프로젝트 명 : " + p.getTitle());
+			Set<Recruit> recruits = p.getRecruits();
+			Iterator<Recruit> iter = recruits.iterator();
+			while (iter.hasNext()) {
+				Recruit r = iter.next();
+				boolean isRightRecruit = false;
+				for(Member m : r.getMembers()) {
+					if (m.getCustomer().getCustomerNo() == 102) {
+						isRightRecruit = true;
+					}
+				}
+				if(isRightRecruit==false) {
+					iter.remove();
+				}
+			}
 		}
 	}
 	
-//	@Test
+	@Test
 	@DisplayName("내가 초대받은 프로젝트 목록")
 	public void myInvitedProjectTest() {
 		int memberNo = 161;
@@ -123,10 +136,10 @@ class JPATest {
 			System.out.println("프로젝트 명 : " + p.getTitle());
 		}
 	}
-	
 
 
-	//@Test
+
+//	@Test
 	@DisplayName("내 프로젝트에 지원한 사람 목록")
 	public void applicantOfMyProjectTest() {
 		int managerNo = 2;
