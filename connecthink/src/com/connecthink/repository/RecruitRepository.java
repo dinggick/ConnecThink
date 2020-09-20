@@ -16,4 +16,5 @@ public interface RecruitRepository extends JpaRepository<Recruit, Integer> {
 			"where\r\n" + 
 			"    m.member_no = ?1")
 	public List<Recruit> findByCustomerNo(Integer customerNo);
+	
 }

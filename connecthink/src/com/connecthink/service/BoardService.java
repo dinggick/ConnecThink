@@ -6,9 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
+import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
+import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MessageRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
@@ -24,6 +27,9 @@ public class BoardService {
 	
 	@Autowired
 	private TaskRepository taskRepository;
+	
+	@Autowired
+	private CustomerRepository customerRepository;
 	
 	/**
 	 * 로그를 위한 사용자가 보낸 메세지 저장
@@ -71,8 +77,13 @@ public class BoardService {
 	 * 포스트잇 한개 추가
 	 * @author 변재
 	 */
-	public void add(Task task) {
-		taskRepository.save(task);
+	public void add(Task task,Integer customerNo,Integer projectNo) {
+		Customer c = customerRepository.findById(customerNo).get();
+		Project p = projectRepository.findById(projectNo).get();
+		task.setCustomer(c);
+		p.getTasks().add(task);
+		
+		projectRepository.save(p);
 	}
 	
 	/*
@@ -80,7 +91,9 @@ public class BoardService {
 	 * @author 변재
 	 */
 	public void updateByComment(Task task) {
-		taskRepository.save(task);
+		Task t = taskRepository.findById(task.getTaskNo()).get();
+		
+		taskRepository.save(t);
 	}
 	
 	/*
@@ -88,15 +101,22 @@ public class BoardService {
 	 * @author 변재
 	 */
 	public void updateByState(Task task) {
-		taskRepository.save(task);
+		Task t = taskRepository.findById(task.getTaskStatus()).get();
+		
+		taskRepository.save(t);
 	}
 	
 	/*
 	 * 포스트잇 삭제
 	 * @author 변재
 	 */
-	public void removeByTask(Integer customer_no) {
-		taskRepository.deleteById(customer_no);
+	public void removeByTask(Integer customer_no,Integer taskNo) {
+		Task t = taskRepository.findById(taskNo).get();
+		Customer c = t.getCustomer();
+		
+		if(c.getCustomerNo() == customer_no) {
+			taskRepository.delete(t);
+		}
 	}
 	
 	

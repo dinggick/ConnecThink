@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -279,15 +281,82 @@ $menuBtnArray.each(function(i){
 		});
 		
 		//ajax로 데이터 불러와서 table row 다시 쓰기
-		let $tableRow = $("div.table-row");
-		$.ajax({
-			url:"${contextPath}/manageMyApplication"
-			,method:"POST"
-			,data:"memberNo=101"
-		 	,success:function(data){
-				console.log(data);
-			}
-		});
+		//
+		if ($(this).attr("id") == "myApplication"){
+			$.ajax({
+				url:"${contextPath}/manageMyApplication"
+				,method:"POST"
+				,data:"memberNo=102"
+			 	,success:function(projects){
+					let $tableRow = $("div.table-row");
+					console.log($tableRow.html());
+					projects.forEach(function(project, index){
+						let recruits = project.recruits;
+						recruits.forEach(function(recruit, index){
+							let $clone = $tableRow.clone();
+							let $index = $clone.find("div.index");
+							let $recruitNo = $clone.find("div.recruit_no");
+							let $title = $clone.find("div.title");
+							let $purpose = $clone.find("div.purposeOrName");
+							let $position = $clone.find("div.position");
+							let $deadline = $clone.find("div.deadline");
+							let $status = $clone.find("div.status");
+							$index.html(index + 1);
+							$recruitNo.html(recruit.recruitNo);
+							$title.html(project.title);
+							$purpose.html(project.purpose);
+							$position.html(recruit.position.name);
+							let date = new Date(recruit.deadline);
+							$deadline.html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
+							if(recruit.recruitStatus==1){
+								$status.html("모집중");
+							} else {
+								$status.html("모집마감");
+							}
+							$tableRow.after($clone);
+						});
+					});
+					$tableRow.remove();
+				}
+			});
+		} else if ($(this).attr("id") == "myInvitaion") {
+			$.ajax({
+				url:"${contextPath}/manageMyInvitation"
+				,method:"POST"
+				,data:"memberNo=161"
+			 	,success:function(projects){
+					let $tableRow = $("div.table-row");
+					console.log($tableRow.html());
+					projects.forEach(function(project, index){
+						let recruits = project.recruits;
+						recruits.forEach(function(recruit, index){
+							let $clone = $tableRow.clone();
+							let $index = $clone.find("div.index");
+							let $recruitNo = $clone.find("div.recruit_no");
+							let $title = $clone.find("div.title");
+							let $purpose = $clone.find("div.purposeOrName");
+							let $position = $clone.find("div.position");
+							let $deadline = $clone.find("div.deadline");
+							let $status = $clone.find("div.status");
+							$index.html(index + 1);
+							$recruitNo.html(recruit.recruitNo);
+							$title.html(project.title);
+							$purpose.html(project.purpose);
+							$position.html(recruit.position.name);
+							let date = new Date(recruit.deadline);
+							$deadline.html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
+							if(recruit.recruitStatus==1){
+								$status.html("모집중");
+							} else {
+								$status.html("모집마감");
+							}
+							$tableRow.after($clone);
+						});
+					});
+					$tableRow.remove();
+				}
+			});
+		}
 		//기본 이벤트, 이벤트 전파 막기
 		return false;
 	});

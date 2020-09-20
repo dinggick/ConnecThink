@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -12,16 +13,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.controller.CustomerController;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
+import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.ProjectRepository;
 
 import lombok.extern.log4j.Log4j;
 
+@WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -33,6 +37,26 @@ class JPATest {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	
+//	@Test
+	void recDetailTest() {
+		Project p = projectRepository.findByRecruits("45R2");
+		System.out.println(p.getPurpose());
+		System.out.println(p.getProjectNo());
+		Set<Recruit> r = p.getRecruits();
+		Iterator<Recruit> iter = r.iterator();
+		while(iter.hasNext()) {
+			System.out.println(iter.next().getRecruitNo());
+			Set<Member> m = iter.next().getMembers();
+			Iterator<Member> iterm = m.iterator();
+			System.out.println(m.size());
+			while(iterm.hasNext()) {
+			System.out.println(iterm.next().getCustomer().getName());
+			}
+		}
+	}
+	
 	
 //	@Test
 	public void controllerTest() {
@@ -83,14 +107,27 @@ class JPATest {
 //	@Test
 	@DisplayName("내가 지원한 프로젝트 목록")
 	public void myAppliedProjectTest() {
-		int memberNo = 101;
+		int memberNo = 102;
 		List<Project> list = projectRepository.findMyApplication(memberNo);
 		for(Project p : list) {
-			System.out.println("프로젝트 명 : " + p.getTitle());
+			Set<Recruit> recruits = p.getRecruits();
+			Iterator<Recruit> iter = recruits.iterator();
+			while (iter.hasNext()) {
+				Recruit r = iter.next();
+				boolean isRightRecruit = false;
+				for(Member m : r.getMembers()) {
+					if (m.getCustomer().getCustomerNo() == 102) {
+						isRightRecruit = true;
+					}
+				}
+				if(isRightRecruit==false) {
+					iter.remove();
+				}
+			}
 		}
 	}
 	
-//	@Test
+	@Test
 	@DisplayName("내가 초대받은 프로젝트 목록")
 	public void myInvitedProjectTest() {
 		int memberNo = 161;
@@ -99,8 +136,10 @@ class JPATest {
 			System.out.println("프로젝트 명 : " + p.getTitle());
 		}
 	}
-	
-	@Test
+
+
+
+//	@Test
 	@DisplayName("내 프로젝트에 지원한 사람 목록")
 	public void applicantOfMyProjectTest() {
 		int managerNo = 2;
@@ -139,4 +178,5 @@ class JPATest {
 			}
 		}
 	}
+
 }
