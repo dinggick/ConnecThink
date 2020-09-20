@@ -775,10 +775,6 @@ scale
 								src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT2s9HDKipReXD4JCwZtvwq21UdaVbif2z2QQ&usqp=CAU"
 								style="width: 30px;">&nbsp;{{headUser}}
 						</p>
-						<a class="card-header-icon"> <span class="icon"> <i
-								class="fa fa-close"></i>
-						</span>
-						</a>
 					</header>
 
 					<!-- chat Content -->
@@ -870,7 +866,6 @@ scale
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
 	
-	
 	//채팅 헤더 토글
 	var chat = new Vue({
 		 el: '#chatApp'
@@ -930,7 +925,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.121:8080/connecthink/boardEcho");
+				  this.socket = new WebSocket("ws://172.30.1.52:8080/connecthink/boardEcho");
 				  console.log(this.socket);
 				  //onopen
 				  this.socket.onopen = () => {
