@@ -91,7 +91,9 @@ public class BoardService {
 	 * @author 변재
 	 */
 	public void updateByComment(Task task) {
-		taskRepository.save(task);
+		Task t = taskRepository.findById(task.getTaskNo()).get();
+		
+		taskRepository.save(t);
 	}
 	
 	/*
@@ -99,15 +101,22 @@ public class BoardService {
 	 * @author 변재
 	 */
 	public void updateByState(Task task) {
-		taskRepository.save(task);
+		Task t = taskRepository.findById(task.getTaskStatus()).get();
+		
+		taskRepository.save(t);
 	}
 	
 	/*
 	 * 포스트잇 삭제
 	 * @author 변재
 	 */
-	public void removeByTask(Integer customer_no) {
-		taskRepository.deleteById(customer_no);
+	public void removeByTask(Integer customer_no,Integer taskNo) {
+		Task t = taskRepository.findById(taskNo).get();
+		Customer c = t.getCustomer();
+		
+		if(c.getCustomerNo() == customer_no) {
+			taskRepository.delete(t);
+		}
 	}
 	
 	

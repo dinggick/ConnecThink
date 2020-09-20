@@ -39,12 +39,15 @@ public class BoardController {
 	@RequestMapping("/board/addTask")
 	public void insert(HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		String id = (String)session.getAttribute("loginInfo");
-		
+		Integer id = (Integer) session.getAttribute("loginInfo");
+		Customer c = new Customer();
+		c.setCustomerNo(id);
 		Integer status = Integer.parseInt(request.getParameter("status"));
 		String content = request.getParameter("content");
 		
 		Task task = new Task();
+		
+		task.setCustomer(c);
 		task.setTaskStatus(status);
 		task.setContent(content);
 		service.add(task, null, null);

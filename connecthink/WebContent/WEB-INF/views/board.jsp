@@ -737,24 +737,12 @@ scale
         	</div>
     	</div>
         
-        
-        
-        
-	
-				  	<div id="dashBoard" v-drag-and-drop:options="options">		   
+				  	<div id="dashBoard"  v-drag-and-drop:options="options">		   
 						<div class="todo" id="do">
 							<div class="title">TO DO
 						  		<div class="content">
 				  					<ul class="usty">
-				  						<li><div class="card editable"><a href="www.naver.com">This is a card</a></div></li>
-				  						<li><div class="card editable">제육볶음</div></li>
-				  						<li><div class="card editable">칼국수</div></li>
-				  						<li><div class="card editable">순두부찌개</div></li>
-				  						<li><div class="card editable">돈까스</div></li>
-				  						<li><div class="card editable">죽</div></li>
-				  						<li><div class="card editable">감자탕</div></li>
-				  						<li><div class="card editable"><a data-toggle="modal" href="#loginModal">감자탕</a></div></li>
-				  						<component v-for="item in buttons" :is="item"></component>{{task}}
+				  						<li v-for="card in list"><div class="card editable">{{card.task}}</div></li>
 				  					</ul>
 								</div>
 				    			<div v-on:click="add" class="add-task">작업 추가하기</div>
@@ -765,14 +753,13 @@ scale
 				    		<div class="title">Doing
 								<div class="content">
 				  					<ul class="usty">
+				  					<li v-for="card in list"><div class="card editable">{{card.task2}}</div></li>
 				  					<li><div class="card editable">vue.js</div></li>
 			  						<li><div class="card editable">JAVA</div></li>
-			  						<li><div class="card editable">javascript</div></li>
 			  						<li><div class="card editable">html</div></li>
 			  						<li><div class="card editable">css</div></li>
 			  						<li><div class="card editable">script</div></li>
-			  						<li><div class="card editable">c++</div></li>
-			  						<component v-for="item in buttons" :is="item"></component>{{task}}
+			  						<li><div class="card editable"><a data-toggle="modal" href="#loginModal">테스트</a></div></li>
 									</ul>
 								</div>
 						    <div v-on:click="add" class="add-task">작업 추가하기</div>
@@ -783,14 +770,12 @@ scale
 				    		<div class="title">Done
 					  			<div class="content">
 								    <ul class="usty">
-								    <li><div class="card editable">This is a card</div></li>
 			  						<li><div class="card editable">변재원</div></li>
 			  						<li><div class="card editable">김동준</div></li>
 			  						<li><div class="card editable">최종국</div></li>
 			  						<li><div class="card editable">이혜림</div></li>
 			  						<li><div class="card editable">홍지수</div></li>
 			  						<li><div class="card editable">임수정</div></li>
-			  						<component v-for="item in buttons" :is="item"></component>{{task}}
 								    </ul>
 								</div>
 							<div v-on:click="add" class="add-task">작업 추가하기</div>
@@ -811,8 +796,7 @@ scale
 								src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT2s9HDKipReXD4JCwZtvwq21UdaVbif2z2QQ&usqp=CAU"
 								style="width: 30px;">&nbsp;{{headUser}}
 						</p>
-						<a class="card-header-icon"> <span class="icon"> <i
-								class="fa fa-close"></i>
+						<a class="card-header-icon"> <span class="icon">
 						</span>
 						</a>
 					</header>
@@ -857,17 +841,19 @@ scale
 							</div>
 						</div>
 						<footer class="card-footer" id="chatBox-textbox">
-							<div style="width: 67%">
+							<div>
 								<textarea id="chatTextarea" class="chat-textarea"
 									v-model.trim="message" placeholder="메세지를 입력 하세요"
-									@keypress.enter="sendMsg"></textarea>
+									@keypress.enter="sendMsg">
+								</textarea>
+								
 							</div>
 							<div class="has-text-centered" style="width: 33%" id="msgBox">
 								<button class="button is-white" @click="sendMsg">
 									<img
 										src="https://image.flaticon.com/icons/svg/1388/1388910.svg"
-										style="width: 30px;"> senddd
-								</button>
+										style="width: 30px;"> Send
+									</button>
 							</div>
 						</footer>
 					</div>
@@ -1018,37 +1004,54 @@ scale
 	Vue.use(VueDraggable.default);
 	
 	/*drag&drop시작*/
+	Vue.component('my-button2', {
+		template: `<li><div class='card editable'>dd</div></li>`
+	})
 	
 	var todo = new Vue({
-		el: '#do',
+		
+		el: '#dashBoard',
 		data: {
-			buttons: []
-			,task:''
-		},created(){
-			console.log("do !! created");
-		}
-		,methods: {
-			add : function() {
-				alert('dd');
-				console.log("do add event!!");
-				this.buttons.push('my-button2');
+			/* list:[{
+				task:'',
+				task2:''
+			}],	  */
+			
+			options:{
+				 onDragend(event){
+					 console.log(event.items[0].innerText);
+				 }
 			}
+			
+		},
+		created(){
+			console.log("do !! created");
+		},
+		methods: {
+			add() {
+				console.log("do add event!!");
+				this.list.push('my-button2');
+			},
+			someDummyMethod() {
+			     console.log('Hello from someDummyMethod');
+			   }
 		}
 	})
 	
-	var doing = new Vue({
-		el: '#doing',
+	/* var doing = new Vue({
+		el: '#do',
 		data: {
-			buttons: []
-			,task:''
+			list:[{
+				task:''
+			}]
 		}, 
 		methods: {
 			add () {
 				this.buttons.push('my-button2')
 			}
 		}
-	})
-	
+	}) */
+	/*
 	var done = new Vue({
 		el: '#done',
 		data: {
@@ -1060,14 +1063,10 @@ scale
 				this.buttons.push('my-button2')
 			}
 		}
-	})
-	
-	Vue.component('my-button2', {
-		template: `<li><div class='card editable'><input type="text"></div></li>`
-	})
+	}) */
 
 	
-	new Vue({
+	/* new Vue({
 		  el:"#dashBoard",
 		  data() {
 		    const componentInstance = this;
@@ -1094,7 +1093,7 @@ scale
 			  
 		  }
 		  
-		})
+		}) */
 	
 	
 
