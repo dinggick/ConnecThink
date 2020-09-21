@@ -156,7 +156,7 @@ div.table-row>div.title:hover {
                     <button id="myApplication" class="genric-btn default radius">내가 지원한 팀</button>
                     <button id="myInvitaion" class="genric-btn default radius">초대받은 팀</button>
                     <button id="invitedMember" class="genric-btn default radius">내가 초대한 멤버</button>
-                    <button id="appicatedMember" class="genric-btn default radius">우리 팀에 지원한 멤버</button>
+                    <button id="appliedMember" class="genric-btn default radius">우리 팀에 지원한 멤버</button>
                 </div>
             </div>
             <div class="row">
@@ -281,76 +281,144 @@ $menuBtnArray.each(function(i){
 		});
 		
 		//ajax로 데이터 불러와서 table row 다시 쓰기
-		//
+		//내가 지원한 팀
 		if ($(this).attr("id") == "myApplication"){
 			$.ajax({
 				url:"${contextPath}/manageMyApplication"
 				,method:"POST"
 				,data:"memberNo=102"
 			 	,success:function(projects){
+			 		let $tableHead = $("div.table-head");
+			 		let $thPurpose = $tableHead.find("div.purposeOrName");
+			 		$thPurpose.html("목적");
 					let $tableRow = $("div.table-row");
-					console.log($tableRow.html());
 					projects.forEach(function(project, index){
 						let recruits = project.recruits;
 						recruits.forEach(function(recruit, index){
 							let $clone = $tableRow.clone();
-							let $index = $clone.find("div.index");
-							let $recruitNo = $clone.find("div.recruit_no");
-							let $title = $clone.find("div.title");
-							let $purpose = $clone.find("div.purposeOrName");
-							let $position = $clone.find("div.position");
-							let $deadline = $clone.find("div.deadline");
-							let $status = $clone.find("div.status");
-							$index.html(index + 1);
-							$recruitNo.html(recruit.recruitNo);
-							$title.html(project.title);
-							$purpose.html(project.purpose);
-							$position.html(recruit.position.name);
-							let date = new Date(recruit.deadline);
-							$deadline.html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
-							if(recruit.recruitStatus==1){
-								$status.html("모집중");
-							} else {
-								$status.html("모집마감");
-							}
 							$tableRow.after($clone);
+							$clone.find("div.index").html(index + 1);
+							$clone.find("div.recruit_no").html(recruit.recruitNo);
+							$clone.find("div.title").html(project.title);
+							$clone.find("div.purposeOrName").html(project.purpose);
+							$clone.find("div.position").html(recruit.position.name);
+							let date = new Date(recruit.deadline);
+							$clone.find("div.deadline").html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
+							if(recruit.recruitStatus==1){
+								$clone.find("div.status").html("모집중");
+							} else {
+								$clone.find("div.status").html("모집마감");
+							}
 						});
 					});
-					$tableRow.remove();
+ 					$tableRow.remove();
 				}
 			});
-		} else if ($(this).attr("id") == "myInvitaion") {
+		}
+		//초대 받은 팀
+		else if ($(this).attr("id") == "myInvitaion") {
 			$.ajax({
 				url:"${contextPath}/manageMyInvitation"
 				,method:"POST"
 				,data:"memberNo=161"
 			 	,success:function(projects){
+			 		let $tableHead = $("div.table-head");
+			 		let $thPurpose = $tableHead.find("div.purposeOrName");
+			 		$thPurpose.html("목적");
+					let $tableRow = $("div.table-row");
+					projects.forEach(function(project, index){
+						let recruits = project.recruits;
+						recruits.forEach(function(recruit, index){
+							let $clone = $tableRow.clone();
+							$tableRow.after($clone);
+							$clone.find("div.index").html(index + 1);
+							$clone.find("div.recruit_no").html(recruit.recruitNo);
+							$clone.find("div.title").html(project.title);
+							$clone.find("div.purposeOrName").html(project.purpose);
+							$clone.find("div.position").html(recruit.position.name);
+							let date = new Date(recruit.deadline);
+							$clone.find("div.deadline").html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
+							if(recruit.recruitStatus==1){
+								$clone.find("div.status").html("모집중");
+							} else {
+								$clone.find("div.status").html("모집마감");
+							}
+						});
+					});
+					$tableRow.remove();
+				}
+			});
+		}
+		//내가 초대한 멤버
+		else if ($(this).attr("id") == "invitedMember") {
+			$.ajax({
+				url:"${contextPath}/manageInvited"
+				,method:"POST"
+				,data:"managerNo=2"
+			 	,success:function(projects){
+			 		let $tableHead = $("div.table-head");
+			 		let $thName = $tableHead.find("div.purposeOrName");
+			 		$thName.html("이름");
 					let $tableRow = $("div.table-row");
 					console.log($tableRow.html());
 					projects.forEach(function(project, index){
 						let recruits = project.recruits;
 						recruits.forEach(function(recruit, index){
-							let $clone = $tableRow.clone();
-							let $index = $clone.find("div.index");
-							let $recruitNo = $clone.find("div.recruit_no");
-							let $title = $clone.find("div.title");
-							let $purpose = $clone.find("div.purposeOrName");
-							let $position = $clone.find("div.position");
-							let $deadline = $clone.find("div.deadline");
-							let $status = $clone.find("div.status");
-							$index.html(index + 1);
-							$recruitNo.html(recruit.recruitNo);
-							$title.html(project.title);
-							$purpose.html(project.purpose);
-							$position.html(recruit.position.name);
-							let date = new Date(recruit.deadline);
-							$deadline.html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
-							if(recruit.recruitStatus==1){
-								$status.html("모집중");
-							} else {
-								$status.html("모집마감");
-							}
-							$tableRow.after($clone);
+							let members = recruit.members;
+							members.forEach(function(member, index){
+								let $clone = $tableRow.clone();
+								$tableRow.after($clone);
+								$clone.find("div.index").html(index + 1);
+								$clone.find("div.recruit_no").html(recruit.recruitNo);
+								$clone.find("div.title").html(project.title);
+								$clone.find("div.purposeOrName").html(member.customer.name);
+								$clone.find("div.position").html(recruit.position.name);
+								let date = new Date(recruit.deadline);
+								$clone.find("div.deadline").html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
+								if(recruit.recruitStatus==1){
+									$clone.find("div.status").html("모집중");
+								} else {
+									$clone.find("div.status").html("모집마감");
+								}
+							});
+						});
+					});
+					$tableRow.remove();
+				}
+			});
+		}
+		//우리 팀에 지원한 멤버
+		else if ($(this).attr("id") == "appliedMember") {
+			$.ajax({
+				url:"${contextPath}/manageApplied"
+				,method:"POST"
+				,data:"managerNo=2"
+			 	,success:function(projects){
+			 		let $tableHead = $("div.table-head");
+			 		let $thName = $tableHead.find("div.purposeOrName");
+			 		$thName.html("이름");
+					let $tableRow = $("div.table-row");
+					console.log($tableRow.html());
+					projects.forEach(function(project, index){
+						let recruits = project.recruits;
+						recruits.forEach(function(recruit, index){
+							let members = recruit.members;
+							members.forEach(function(member, index){
+								let $clone = $tableRow.clone();
+								$tableRow.after($clone);
+								$clone.find("div.index").html(index + 1);
+								$clone.find("div.recruit_no").html(recruit.recruitNo);
+								$clone.find("div.title").html(project.title);
+								$clone.find("div.purposeOrName").html(member.customer.name);
+								$clone.find("div.position").html(recruit.position.name);
+								let date = new Date(recruit.deadline);
+								$clone.find("div.deadline").html(date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate());
+								if(recruit.recruitStatus==1){
+									$clone.find("div.status").html("모집중");
+								} else {
+									$clone.find("div.status").html("모집마감");
+								}
+							});
 						});
 					});
 					$tableRow.remove();

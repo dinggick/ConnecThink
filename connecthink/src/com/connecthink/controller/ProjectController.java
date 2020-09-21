@@ -20,14 +20,13 @@ public class ProjectController {
 	private ProjectService service;
 	
 	@PostMapping(value="/manageMyProject")
-	public List<Project> findByManagerNo(Integer managerNo) {
-		System.out.println("findByManagerNo 호출");
+	public List<Project> manageMyProject(Integer managerNo) {
+		System.out.println("manageMyProject 호출");
 		return service.findByManagerNo(managerNo);
 	}
 	
 	@PostMapping(value="/manageMyApplication")
-	public List<Project> findMyApplication(Integer memberNo) {
-		System.out.println("findMyApplication 호출");
+	public List<Project> manageMyApplication(Integer memberNo) {
 		List<Project> pList = service.findMyApplication(memberNo);
 		for(Project p : pList) {
 			Set<Recruit> recruits = p.getRecruits();
@@ -36,7 +35,7 @@ public class ProjectController {
 				Recruit r = iter.next();
 				boolean isRightRecruit = false;
 				for(Member m : r.getMembers()) {
-					if (m.getCustomer().getCustomerNo() == memberNo) {
+					if (m.getCustomer().getCustomerNo().equals(memberNo) ) {
 						isRightRecruit = true;
 					}
 				}
@@ -49,8 +48,7 @@ public class ProjectController {
 	}
 
 	@PostMapping(value="/manageMyInvitation")
-	public List<Project> findMyInvitation(Integer memberNo) {
-		System.out.println("findMyInvitation 호출");
+	public List<Project> manageMyInvitation(Integer memberNo) {
 		List<Project> pList = service.findMyInvitation(memberNo);
 		for(Project p : pList) {
 			Set<Recruit> recruits = p.getRecruits();
@@ -59,7 +57,7 @@ public class ProjectController {
 				Recruit r = iter.next();
 				boolean isRightRecruit = false;
 				for(Member m : r.getMembers()) {
-					if (m.getCustomer().getCustomerNo() == memberNo) {
+					if (m.getCustomer().getCustomerNo().equals(memberNo) ) {
 						isRightRecruit = true;
 					}
 				}
@@ -70,5 +68,60 @@ public class ProjectController {
 		}
 		return pList;
 	}
+	
+	@PostMapping(value="/manageInvited")
+	public List<Project> manageInvited(Integer managerNo) {
+		System.out.println("manageInvited 호출");
+		List<Project> pList = service.findByManagerNo(managerNo);
+		Integer invited = new Integer(1);
+		Integer enterStatus = new Integer(0);
+		for(Project p : pList) {
+			Iterator<Recruit> rIter = p.getRecruits().iterator();
+			while (rIter.hasNext()) {
+				Recruit r = rIter.next();
+				Set<Member> Members = r.getMembers();
+				Iterator<Member> mIter = Members.iterator();
+				while (mIter.hasNext()) {
+					Member m = mIter.next();
+					if (!m.getInvited().equals(invited) || !m.getEnterStatus().equals(enterStatus) ) {
+						System.out.println("초대된 멤버가 아니므로 이 멤버(" + m.getCustomer().getCustomerNo() + ")를 삭제합니다.");
+						mIter.remove();
+					}
+				}
+				if(Members.isEmpty()) {
+					System.out.println("해당하는 멤버가 없으므로 모집글(" + r.getRecruitNo() +")을 삭제합니다.");
+					rIter.remove();
+				}
+			}
+		}
+		return pList;
+	}
 
+	@PostMapping(value="/manageApplied")
+	public List<Project> manageApplied(Integer managerNo) {
+		System.out.println("manageApplied 호출");
+		List<Project> pList = service.findByManagerNo(managerNo);
+		Integer invited = new Integer(0);
+		Integer enterStatus = new Integer(0);
+		for(Project p : pList) {
+			Iterator<Recruit> rIter = p.getRecruits().iterator();
+			while (rIter.hasNext()) {
+				Recruit r = rIter.next();
+				Set<Member> Members = r.getMembers();
+				Iterator<Member> mIter = Members.iterator();
+				while (mIter.hasNext()) {
+					Member m = mIter.next();
+					if (!m.getInvited().equals(invited) || !m.getEnterStatus().equals(enterStatus) ) {
+						System.out.println("지원한 멤버가 아니므로 이 멤버(" + m.getCustomer().getCustomerNo() + ")를 삭제합니다.");
+						mIter.remove();
+					}
+				}
+				if(Members.isEmpty()) {
+					System.out.println("해당하는 멤버가 없으므로 모집글(" + r.getRecruitNo() +")을 삭제합니다.");
+					rIter.remove();
+				}
+			}
+		}
+		return pList;
+	}
 }
