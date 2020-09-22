@@ -654,14 +654,15 @@ scale
                     <a href="#" id="down">This is Team Name</a>
                 </li>
                 
-            <li>
+            <li v-for = "member in memberList">
 				<div class="friend">
 					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
 					<div class="profile">
-						<p><strong>Hailey</strong></p> 
-						<p><span>Web Master</span></p>
+						<p><strong>{{member.name}}</strong></p> 
+						<p><span>{{member.position}}</span></p>
 					</div>
-					<div class="status offline"></div>
+					<div v-if = msg.isOnline  class="status online"></div>
+					<div v-else class="status offline"></div>
 				</div>
 			</li>
 			
@@ -747,7 +748,28 @@ scale
             </div>
         </div>
     </div>   
-              
+        
+        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
+        	<div class="modal-dialog modal-dialog-centered" role="document">
+            	<div class="modal-content">
+                	<div class="modal-body">
+                    	<form action="#">
+                        	<div class="mt-10">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                				<span aria-hidden="true">&times;</span>
+            				</button><br><br>
+                            	<input type="text" name="text" onfocus="this.placeholder = ''" required class="single-input">
+                        	</div>
+                    	</form>
+                	</div>
+                	<div class="modal-footer">
+                    	<button type="button" class="btn btn-primary">수정하기</button>
+                    	<button type="button" class="btn btn-primary">삭제하기</button>
+                	</div>
+            	</div>
+        	</div>
+    	</div>
+    	
 				  	<div id="dashBoard"  v-drag-and-drop:options="options">		   
 						<div class="todo" id="do">
 							<div class="title">TO DO
@@ -811,9 +833,6 @@ scale
 								src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT2s9HDKipReXD4JCwZtvwq21UdaVbif2z2QQ&usqp=CAU"
 								style="width: 30px;">&nbsp;{{headUser}}
 						</p>
-						<a class="card-header-icon"> <span class="icon">
-						</span>
-						</a>
 					</header>
 
 					<!-- chat Content -->
@@ -825,7 +844,7 @@ scale
 									<!-- 메세지 받을때 -->
 									
 									<div id="msgs" v-for="msg in msgs">
-										<div class="chat-message-group reception" v-if="msg.isReception">
+										<div class="chat-message-group reception" v-if="msg.reception">
 											<div class="chat-thumb">
 												<figure class="image is-32x32">
 													<img
@@ -836,16 +855,16 @@ scale
 											
 											<div class="chat-messages">
 												<div>{{msg.writer}}</div>
-												<div class="message">{{msg.reception}}</div>
-												<div class="from">{{msg.receptionTime}}</div>
+												<div class="message">{{msg.content}}</div>
+												<div class="from">{{msg.createDate}}</div>
 											</div>
 										</div>
 									
 										<!-- 메세지 보낼때 -->
 										<div class="chat-message-group writer-user" v-else>
 											<div class="chat-messages">
-												<div class="message">{{msg.reception}}</div>
-												<div class="from">{{msg.receptionTime}}</div>
+												<div class="message">{{msg.content}}</div>
+												<div class="from">{{msg.createDate}}</div>
 											</div>
 										</div>
 
@@ -907,7 +926,6 @@ scale
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
 	
-	
 	//채팅 헤더 토글
 	var chat = new Vue({
 		 el: '#chatApp'
@@ -916,17 +934,34 @@ scale
 		   headUser: '팀 명이 들어갈 곳 입니다.',
 		   message : "",
 		   msgs : [],
-		   wrts : []
+		   wrts : [],
+		   memberList : [],
+		   project_no : ""
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
-		  ,created(){
+		  ,created(ev){
 			  console.log('created');
-			  this.connect()
-		  }
+			  this.connect();
+			  console.log(${project_no});
+// 			  this.project_no = ev.target.getAttribute("project_no");
+// 			  alert(this.project_no);
+			  //이전에 메세지 들고오기
+			  axios
+			  	.get('board/lookUpMsg', {
+			  	    params: {
+			  	      project_no: 1
+			  	    }
+			  	 })
+			  	.then(result => {
+					  var msgList = result.data;	   
+					  msgList.forEach(msg => 
+					  	this.msgs.push({createDate : this.getTime(),content : msg.content,reception :msg.reception,writer : msg.writer.name}) 
+					  );
+			  })//axios
+    		}//created
+		  
 		   //변화가 있을경우
 		  ,updated(){
-			console.log("update!");
-			console.log(bottom_flag);
 			var chatDiv = document.getElementById("chatContent");
 			
 			if(bottom_flag){
@@ -959,15 +994,21 @@ scale
 			 //메세지 전송
 			 send(){
 				 if(this.status == "Connected"){
-					 this.msgs.push({receptionTime : this.getTime(),reception : this.message,isReception :false});	 
-					 this.socket.send(this.message);
+					 this.msgs.push({createDate : this.getTime(),content : this.message,reception :false});	 
+					 //this.socket.send(this.message);
+					 var messageForm = {
+							 createDate : this.getTime()
+							 ,content : this.message
+							 ,reception :false
+					 }
+					 this.socket.send(JSON.stringify(messageForm));
 				 }else{
 					alert('연결 상태가 올바르지 않습니다.'); 
 				 }
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.121:8080/connecthink/boardEcho");
+				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/boardEcho");
 				  console.log(this.socket);
 				  //onopen
 				  this.socket.onopen = () => {
@@ -975,7 +1016,9 @@ scale
 					  this.status = "Connected";
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
+						  console.log("message도착!");
 						var datas = data.split(":");
+						console.log(datas);
 						if(datas[0] == "userid"){
 							writer = datas[1];
 						}else{
@@ -983,7 +1026,7 @@ scale
 							var msg = datas[1];
 							
 							//전송한 사람이 내가 아닐경우
-							this.msgs.push({receptionTime : this.getTime(),reception : msg,isReception :true,writer : user});
+							this.msgs.push({createDate : this.getTime(),content : msg,reception :true,writer : user});
 						}
 												
 						
@@ -998,8 +1041,23 @@ scale
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
+			  },
+				
+			  //맴버 정보 가져오기
+			  showMember(){
+				  axios
+				  	.get('board/lookUpMemeber', {
+				  	    params: {
+				  	      project_no: 1
+				  	    }
+				  	 })
+				  	.then(result => {
+						  var memberList = result.data;	   
+						  memberList.forEach(msg => 
+						  	this.memberList.push({name : msg.name,position : msg.position}) 
+						  );
+				  })//axios
 			  }
-			  
 		  }//method
 		});
 	
@@ -1103,7 +1161,7 @@ scale
               }
 		}
 	});
-	
+
 	new Vue({
 		el:'#contentModal',
 		data:{
