@@ -236,10 +236,21 @@ span.customerNo{
 	
 	//북마크 추가
 	function bookmark(){
-		$("img.bm").css("display","none");
-		$("img.on").css("display", "inline-block");
 		let no = $("span.rec_no").text();
 		console.log(no);
+		$.ajax({
+			url : "${contextPath}/bmToRec",
+			method : "POST",
+			data : {recruitNo : no},
+			success : function(data){
+				if(data == "success"){
+					alert("북마크 추가");
+					$("img.bm").css("display","none");
+					$("img.on").css("display", "inline-block");
+					count();
+				}
+			}
+		});
 	}
 	
 	//북마크 삭제
@@ -265,7 +276,12 @@ span.customerNo{
 	//지원하기
 	function apply(){
 		alert("${recNo}");
+		
 	}
+	
+	function count(){
+	}
+	
 	</script>
 </body>
 

@@ -158,9 +158,7 @@
 	
 	function recDetail(e){
 		let $recNo = $(e).find("li.recNo").html();
-		alert($recNo);
 		let url = "${contextPath}/rec_detail?recNo=" + $recNo ;
-		alert(url);
 		location.href = url;
 	}
 	

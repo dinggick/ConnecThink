@@ -24,7 +24,7 @@ import lombok.Setter;
 @Table(name = "bookmark_recruit")
 public class BookmarkRecruit{
 	@EmbeddedId
-	private BookmarkRecruitId id;
+	private BookmarkRecruitId id = new BookmarkRecruitId();
 	
 	@MapsId(value = "customerNo")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
