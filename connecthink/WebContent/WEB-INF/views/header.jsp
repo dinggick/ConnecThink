@@ -198,7 +198,7 @@
 		                                            	<li><a data-toggle="modal" href="#registerModal">회원가입</a></li>
                                          			</c:when>
                                          			<c:otherwise>
-                                         				<li><a href="#">내 정보 보기</a></li>
+                                         				<li><a href="${contextPath}/modifyCustomerInfo">내 정보 보기</a></li>
                                          			</c:otherwise>
                                          		</c:choose>
                                             </ul>                                                                               
