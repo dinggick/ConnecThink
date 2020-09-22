@@ -52,7 +52,7 @@ public class Task {
 	@Column(name = "task_status")
 	private Integer taskStatus;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne
 	@JoinColumn(name = "writer_no")
 	private Customer customer;
 }

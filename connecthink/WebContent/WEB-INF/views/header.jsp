@@ -11,22 +11,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/gijgo.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${contextPath}/css/style.css">
     </head>
     	<!-- 이메일 찾기 Modal -->
     <div class="modal" id="findEmailModal" tabindex="-1" role="dialog" aria-labelledby="findEmailModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
@@ -93,25 +93,30 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="loginModalLongTitle">로그인</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
+		                <span aria-hidden="true">&times;</span>
+		            </button>
                 </div>
-                <div class="modal-body">
-                    <form action="#">
-                        <div class="mt-10">
-                            <input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
-                        </div>
-                        <div class="mt-10">
-                            <input type="password" name="password" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'" required class="single-input">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <a style="text-decoration: underline; color: #367FFF;" href="#findEmailModal" data-toggle="modal" data-backdrop="false">이메일 찾기</a>
-                    <a style="text-decoration: underline; color: #367FFF;" href="#findPwdModal" data-toggle="modal" data-backdrop="false">비밀번호 찾기</a>
-<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
-                    <button type="button" class="btn btn-primary">로그인</button>
-                </div>
+                <form action="/connecthink/login" method="POST">
+				<div class="modal-body">
+					<div class="mt-10">
+						<input type="email" name="username" placeholder="이메일"
+							onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'"
+							required class="single-input">
+					</div>
+					<div class="mt-10">
+						<input type="password" name="password" placeholder="비밀번호"
+							onfocus="this.placeholder = ''"
+							onblur="this.placeholder = '비밀번호'" required class="single-input">
+					</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</div>
+				<div class="modal-footer">
+	                    <a style="text-decoration: underline; color: #367FFF;" href="#findEmailModal" data-toggle="modal" data-backdrop="false">이메일 찾기</a>
+	                    <a style="text-decoration: underline; color: #367FFF;" href="#findPwdModal" data-toggle="modal" data-backdrop="false">비밀번호 찾기</a>
+	<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
+	                    <button type="submit" class="btn btn-primary">로그인</button>
+	                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -129,7 +134,7 @@
                     <form action="#">
                         <div class="row">
                     		<div class="col-md-6">
-                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
+                            	<input type="email" name="username" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
 	                        </div>
 	                        <div class="col-md-6">
 	                            <a href="#" class="genric-btn info-border">이메일 인증</a>
@@ -158,7 +163,7 @@
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
                                     <a href="index.html">
-                                        <img src="img/logo.png" alt="">
+                                        <img src="${contextPath}/img/logo.png" alt="">
                                     </a>
                                 </div>
                             </div>
@@ -171,7 +176,7 @@
                                            
                                             <li><a href="#">모집중인팀</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
-<!--                                              <li><a href="#"><img class="personicon" src="img/person.png"><i class="ti-angle-down"></i></a> -->
+<!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
 <!--                                                     <li><a href="job_details.html">job details </a></li> -->
@@ -185,15 +190,22 @@
                             <div class="col-xl-3 col-lg-3 d-none d-lg-block">
                                 <div class="Appointment">
                                 	<div class="personMenu">
-                                        <a href="#"><img class="personicon" src="img/person.png"></a>
+                                        <a href="#"><img class="personicon" src="${contextPath}/img/person.png"></a>
                                          	<ul class="submenu">
-                                                    <li><a data-toggle="modal" href="#loginModal">로그인</a></li>
-                                                    <li><a data-toggle="modal" href="#registerModal">회원가입</a></li>                                                   
+                                         		<c:choose>
+                                         			<c:when test="${empty sessionScope.loginInfo}">
+	                                         			<li><a data-toggle="modal" href="#loginModal">로그인</a></li>
+		                                            	<li><a data-toggle="modal" href="#registerModal">회원가입</a></li>
+                                         			</c:when>
+                                         			<c:otherwise>
+                                         				<li><a href="#">내 정보 보기</a></li>
+                                         			</c:otherwise>
+                                         		</c:choose>
                                             </ul>                                                                               
                                          </div>
-                                        <a href="#"><img class="personicon" src="img/bell.png"></a>
+                                        <a href="#"><img class="personicon" src="${contextPath}/img/bell.png"></a>
 							<div class="sidebar">
-								<a href="#"><img class="personicon" src="img/pmenu.png" onclick="openNav()"></a>
+								<a href="#"><img class="personicon" src="${contextPath}/img/pmenu.png" onclick="openNav()"></a>
 								<div id="mySidenav" class="sidenav">
 									<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
 										<h4 style="padding-left: 20px;">나의 프로젝트 스페이스</h4>

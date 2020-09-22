@@ -62,16 +62,6 @@ public class Customer {
 	@JsonIgnore
 	private Set<Experience> experiences;
 	
-	public Set<Experience> getExperiences(){
-		System.out.println("getter transaction name : " + TransactionSynchronizationManager.getCurrentTransactionName());
-		return this.experiences;
-	}
-	
-	public void setExperiences(Set<Experience> experiences) {
-		System.out.println("setter transaction name : " + TransactionSynchronizationManager.getCurrentTransactionName());
-		this.experiences = experiences;
-	}
-	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	@JsonIgnore

@@ -33,11 +33,12 @@ public class PersonalMessage {
 	@Column(name = "personal_msg_no")
 	private Integer personalMsgNo;
 
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "send")
 	private Customer send;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "receive")
 	private Customer receive;
 	

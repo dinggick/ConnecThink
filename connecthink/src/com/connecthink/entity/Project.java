@@ -50,21 +50,14 @@ public class Project {
 	@Column(name = "manager_no")
 	private Integer managerNo;
 	
-
 	@OneToMany
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
-	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
-//	
-//	@Transactional
-//	public List<Task> getTasks() {
-//		return this.tasks;
-//	}
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
