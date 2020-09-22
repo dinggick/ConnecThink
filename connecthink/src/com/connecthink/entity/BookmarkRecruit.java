@@ -30,12 +30,12 @@ public class BookmarkRecruit{
 	private BookmarkRecruitId id;
 	
 	@MapsId(value = "customerNo")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	private Customer customer;
 	
 	@MapsId(value = "recruitNo")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "recruit_no")
 	private Recruit recruit;
 }

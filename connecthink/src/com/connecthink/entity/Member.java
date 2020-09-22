@@ -32,13 +32,13 @@ public class Member{
 	private MemberId id;
 	
 	@MapsId(value = "recruitNo")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "recruit_no")
 	@JsonBackReference
 	private Recruit recruit;
 	
 	@MapsId(value = "memberNo")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_no")
 	private Customer customer;
 	

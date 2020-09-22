@@ -33,11 +33,11 @@ public class PersonalMessage {
 	@Column(name = "personal_msg_no")
 	private Integer personalMsgNo;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "send")
 	private Customer send;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "receive")
 	private Customer receive;
 	

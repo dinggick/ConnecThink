@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.transaction.support.TransactionSynchronizationManager;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,15 +57,27 @@ public class Customer {
 	@Column(name = "drop_status", nullable = true)
 	private Integer dropStatus;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
+	@JsonIgnore
 	private Set<Experience> experiences;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	public Set<Experience> getExperiences(){
+		System.out.println("getter transaction name : " + TransactionSynchronizationManager.getCurrentTransactionName());
+		return this.experiences;
+	}
+	
+	public void setExperiences(Set<Experience> experiences) {
+		System.out.println("setter transaction name : " + TransactionSynchronizationManager.getCurrentTransactionName());
+		this.experiences = experiences;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
+	@JsonIgnore
 	private List<Notification> notifications;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	private Set<CustomerPosition> customerPositions;
 }
