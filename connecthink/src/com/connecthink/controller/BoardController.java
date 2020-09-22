@@ -29,28 +29,28 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	@RequestMapping("/board")
-	ModelAndView board(HttpServletRequest req,@RequestParam("project_no") String project_no) {
-		ModelAndView mv = new ModelAndView();
-		System.out.println("board임");
-		System.out.println("project_No : "+project_no);
-		req.setAttribute("project_no",project_no);
-		int customer_no = 0;
-		
-		//Http session 에 저장할 userid 대체용
-		for(int i = 0; i < 100; i++) {
-
-		    double dValue = Math.random();
-
-		   customer_no = (int)(dValue * 10);
-		}
-        
-        HttpSession session = req.getSession();        
-        session.setAttribute("LoginInfo",customer_no);
-        mv.setViewName("board");
-        mv.addObject("project_no",project_no);
-		return mv;
-	}
+//	@RequestMapping("/board")
+//	ModelAndView board(HttpServletRequest req,@RequestParam("project_no") String project_no) {
+//		ModelAndView mv = new ModelAndView();
+//		System.out.println("board임");
+//		System.out.println("project_No : "+project_no);
+//		req.setAttribute("project_no",project_no);
+//		int customer_no = 0;
+//		
+//		//Http session 에 저장할 userid 대체용
+//		for(int i = 0; i < 100; i++) {
+//
+//		    double dValue = Math.random();
+//
+//		   customer_no = (int)(dValue * 10);
+//		}
+//        
+//        HttpSession session = req.getSession();        
+//        session.setAttribute("LoginInfo",customer_no);
+//        mv.setViewName("board");
+//        mv.addObject("project_no",project_no);
+//		return mv;
+//	}
 	
 	@RequestMapping("/board/lookUpMember")
 	ModelAndView lookUpMember(int product_no) {

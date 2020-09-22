@@ -2,8 +2,12 @@ package com.connecthink.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +36,13 @@ public class CustomerController {
 		return mnv; 
 	}
 	
+	@RequestMapping("/logined/findCustomerByNo")
+	@ResponseBody
+	public Customer findByNo(int customerNo, Authentication auth) {
+		System.out.println("principal in findCustomerByNo : " + auth.getPrincipal());
+		return service.findByNo(customerNo);
+	}
+	
 	public void add(Customer c) {
 		service.add(c);
 	}
@@ -41,8 +52,10 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/customerInfo")
-	public void customerInfo() {
+	public String customerInfo(Model model, HttpSession session) {
+		model.addAttribute("customerInfo", service.findByNo((Integer)session.getAttribute("loginInfo")));
 		
+		return "customerInfo";
 	}
 	
 	@RequestMapping("/modifyCustomerInfo")

@@ -2,6 +2,8 @@ package com.connecthink.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,7 @@ import com.connecthink.entity.Customer;
 import com.connecthink.repository.CustomerRepository;
 
 @Service
+@Transactional
 public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -17,8 +20,13 @@ public class CustomerService {
 		return customerRepository.findAll();
 	}
 	
-	public Customer findByEmail(String email) {
-		return customerRepository.findByEmail(email);
+	public Customer findByNo(Integer customerNo) {
+		Customer c = customerRepository.findById(customerNo).get();
+		c.getCustomerPositions();
+		c.getExperiences();
+		c.getNotifications();
+
+		return c;
 	}
 	
 	public void add(Customer c) {

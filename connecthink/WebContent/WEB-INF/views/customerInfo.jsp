@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!doctype html>
 <html>
 
@@ -74,7 +76,8 @@
                                     <div class="links_locat d-flex align-items-center">
                                         <!-- position -->
                                         <div class="location">
-                                            <p> <i class="fa fa-male"></i> 기획자, 백엔드 개발자</p>
+                                            <p> <i class="fa fa-male"></i> 기획자, 백엔드 개발자
+                                            </p>
                                         </div>
                                         <!-- graduation status -->
                                         <div class="location">
@@ -169,6 +172,20 @@
 
 
     <script src="js/main.js"></script>
+    
+    <script>
+    	$(() => {
+    		$.ajax({
+    			url : "/connecthink/logined/findCustomerByNo",
+    			method : "POST",
+    			data : {customerNo : ${sessionScope.loginInfo},
+    					${_csrf.parameterName} : '${_csrf.token}'},
+    			success : (data, textStatus, jqXHR) => {
+    				console.log(data);
+    			}
+    		});
+    	});
+    </script>
 </body>
 
 </html>
