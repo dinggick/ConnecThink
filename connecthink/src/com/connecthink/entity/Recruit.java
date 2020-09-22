@@ -43,11 +43,11 @@ public class Recruit {
 	@Column(name = "recruit_status")
 	private Integer recruitStatus;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "recruit_no")
 	private Set<Member> members;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "position_no")
 	private Position position;
 }

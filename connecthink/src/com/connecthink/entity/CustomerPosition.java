@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,13 +33,13 @@ public class CustomerPosition implements Serializable{
 	private CustomerPositionId id;
 	
 	@MapsId("customerNo")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_no")
 	@JsonBackReference
 	private Customer customer;
 	
 	@MapsId("positionNo")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "position_no")
 	private Position position;
 }
