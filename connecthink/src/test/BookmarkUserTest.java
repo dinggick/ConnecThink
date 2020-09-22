@@ -1,7 +1,6 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,9 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.connecthink.entity.CustomerPosition;
 import com.connecthink.repository.BookmarkUserRepository;
 
+@WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -31,9 +33,13 @@ class BookmarkUserTest {
 
 	@Test
 	void findByIdSendTest() {
-		repository.findByIdSend(2).forEach(bu -> {
+		repository.findByIdSend(1).forEach(bu -> {
 			System.out.println("관심 등록한 사용자 번호 : " + bu.getSend().getCustomerNo());
 			System.out.println("관심 등록 대상자 번호 : " + bu.getReceive().getCustomerNo());
+			Set<CustomerPosition> cp = bu.getReceive().getCustomerPositions();
+			cp.forEach(p ->{
+				System.out.println(p.getPosition().getName());
+				});
 		});
 	}
 }
