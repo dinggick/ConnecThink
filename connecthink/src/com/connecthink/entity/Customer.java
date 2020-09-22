@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 사용자 정보
@@ -24,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@ToString
 @Entity
 @Table(name="customer")
 public class Customer {

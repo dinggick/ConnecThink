@@ -8,7 +8,7 @@ import com.connecthink.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 	
-	@Query(nativeQuery = true, value ="select c.name, m.content, m.create_date\n" + 
+	@Query(nativeQuery = true, value ="select message_no, content, create_Date, writer_no\n" + 
 			"from message m join customer c on(m.writer_no = c.customer_no)\n" + 
 			"join chat_room cr on(m.chat_room_no = cr.chat_room_no)\n" + 
 			"join project p on(cr.project_no = p.project_no)\n" + 

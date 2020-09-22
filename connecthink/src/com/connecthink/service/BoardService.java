@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.connecthink.entity.ChatRoom;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
@@ -35,8 +36,15 @@ public class BoardService {
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
 	 */
-	public void sendMessage(Message msg) {
-		msgRepository.save(msg);
+	public void sendMessage(int project_no,List<Message> messages) {
+		System.out.println("sendMessage service 들어옴");
+		Project p = projectRepository.findById(project_no).get();
+		ChatRoom cr_no = p.getChatRoom();
+		List<Message> msgs = cr_no.getMessages();
+		messages.forEach(message -> {
+			msgs.add(message);
+		});
+		projectRepository.save(p);
 	}
 	
 	/**
@@ -52,7 +60,13 @@ public class BoardService {
 	 * @author DongJun
 	 */
 	public List<Member> lookUpMember(Integer project_no){
+		Project pjInfo = projectRepository.findById(2).get();
+		
 		List<Member> members = new ArrayList<>();
+		Member leaderInfo = new Member();
+		leaderInfo.setManager(customerRepository.findById(pjInfo.getManagerNo()).get());
+		
+		members.add(leaderInfo);
 		projectRepository.findById(project_no).get().getRecruits().forEach(r -> {
 			r.getMembers().forEach(m ->{
 				members.add(m);
