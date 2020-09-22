@@ -32,12 +32,6 @@ public class CustomerController {
 		return mnv; 
 	}
 	
-	@RequestMapping("/findByEmail")
-	@ResponseBody
-	public Customer findByEmail(String email) {
-		return service.findByEmail(email);
-	}
-	
 	public void add(Customer c) {
 		service.add(c);
 	}

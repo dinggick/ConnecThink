@@ -37,7 +37,7 @@
 
     <!-- header-start -->
     <header>
-        <jsp:include page="header.jsp"></jsp:include>
+        <jsp:include page="/header"></jsp:include>
     </header>
     <!-- header-end -->
 

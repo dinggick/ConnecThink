@@ -84,7 +84,7 @@
 
 	<!-- header-start -->
 	<header>
-		<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+		<jsp:include page="/header"></jsp:include>
 	</header>
 	<!-- header-end -->
 
