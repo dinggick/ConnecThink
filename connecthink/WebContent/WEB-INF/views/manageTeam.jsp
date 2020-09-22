@@ -411,6 +411,9 @@ function fxInvited(testManager){
 			let $thPurpose = $tableHead.find("div.purposeOrName");
 			$thPurpose.html("이름");
 			let sectionData = "";
+			if (projects.length == 0){
+				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>팀장을 맡고 있는 프로젝트가 없습니다.</div>";
+			} else {
 			projects.forEach(function(project, pIndex){
 				let recruits = project.recruits;
 				recruits.forEach(function(recruit, rIndex){
@@ -436,6 +439,7 @@ function fxInvited(testManager){
 					});
 				});
 			});
+			}
 			if(sectionData == ""){
 				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대한 멤버가 없습니다.</div>";
 			}
@@ -456,6 +460,9 @@ function fxApplied(testManager) {
 			let $thPurpose = $tableHead.find("div.purposeOrName");
 			$thPurpose.html("이름");
 			let sectionData = "";
+			if (projects.length == 0){
+				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>팀장을 맡고 있는 프로젝트가 없습니다.</div>";
+			} else {
 			projects.forEach(function(project, pIndex){
 				let recruits = project.recruits;
 				recruits.forEach(function(recruit, rIndex){
@@ -482,6 +489,7 @@ function fxApplied(testManager) {
 					});
 				});
 			});
+			}
 			if(sectionData == ""){
 				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 멤버가 없습니다. </div>";
 			}
