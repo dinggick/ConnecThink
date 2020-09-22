@@ -114,7 +114,7 @@ ul.list>li {
     background-color: rgba(256,256,256,0.95);
 }
 .msg_sender>img {
-	height: 100%;
+	height: 50px;
 }
 .message .content {
 	height: 560px;

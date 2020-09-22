@@ -34,17 +34,18 @@ public class ProjectService {
 			Iterator<Recruit> iter = recruits.iterator();
 			while (iter.hasNext()) {
 				Recruit r = iter.next();
-				boolean isRightRecruit = false;
+//				boolean isRightRecruit = false;
 				for(Member m : r.getMembers()) {
-					if (m.getCustomer().getCustomerNo().equals(memberNo) ) {
-						isRightRecruit = true;
-					}
+					System.out.println(m.getCustomer());
+//					if (m.getCustomer().getCustomerNo().equals(memberNo) ) {
+//						isRightRecruit = true;
+//					}
 				}
-				if(isRightRecruit==false) {
-					iter.remove();
-				} else {
+//				if(isRightRecruit==false) {
+//					iter.remove();
+//				} else {
 					System.out.println(r.getPosition().getName());
-				}
+//				}
 			}
 		}
 		return pList;
@@ -57,17 +58,18 @@ public class ProjectService {
 			Iterator<Recruit> iter = recruits.iterator();
 			while (iter.hasNext()) {
 				Recruit r = iter.next();
-				boolean isRightRecruit = false;
+//				boolean isRightRecruit = false;
 				for(Member m : r.getMembers()) {
-					if (m.getCustomer().getCustomerNo().equals(memberNo) ) {
-						isRightRecruit = true;
-					}
+					System.out.println(m.getCustomer());
+//					if (m.getCustomer().getCustomerNo().equals(memberNo) ) {
+//						isRightRecruit = true;
+//					}
 				}
-				if(isRightRecruit==false) {
-					iter.remove();
-				} else {
+//				if(isRightRecruit==false) {
+//					iter.remove();
+//				} else {
 					System.out.println(r.getPosition().getName());
-				}
+//				}
 			}
 		}
 		return pList;
@@ -75,67 +77,61 @@ public class ProjectService {
 	
 	public List<Project> findInvited(Integer managerNo){
 		List<Project> pList = projectRepository.findByManagerNo(managerNo);
-		Integer invited = new Integer(1);
-		Integer enterStatus = new Integer(0);
+//		Integer invited = new Integer(1);
+//		Integer enterStatus = new Integer(0);
 		for(Project p : pList) {
-			System.out.println("초대자 찾기 프로젝트 : " + p.getProjectNo());
 			Iterator<Recruit> rIter = p.getRecruits().iterator();
 			while (rIter.hasNext()) {
 				Recruit r = rIter.next();
-				System.out.println("초대자 찾기 모집글 : " + r.getRecruitNo());
 				Set<Member> Members = r.getMembers();
 				Iterator<Member> mIter = Members.iterator();
 				while (mIter.hasNext()) {
 					Member m = mIter.next();
-					System.out.println("초대자 찾기 멤버 : " + m.getCustomer().getCustomerNo());
-					if (!m.getInvited().equals(invited) || !m.getEnterStatus().equals(enterStatus) ) {
-						System.out.println("초대자 찾기 : 틀린 멤버이므로 삭제합니다.");
-						mIter.remove();
-					} else {
-						System.out.println("초대자 찾기 맞는 멤버 : " + m.getCustomer());
-					}
+					System.out.println("초대자 찾기 멤버 : " + m.getCustomer());
+//					if (!m.getInvited().equals(invited) || !m.getEnterStatus().equals(enterStatus) ) {
+//						System.out.println("초대자 찾기 : 틀린 멤버이므로 삭제합니다.");
+//						mIter.remove();
+//					} else {
+//						System.out.println("초대자 찾기 맞는 멤버 : " + m.getCustomer());
+//					}
 				}
-				if(Members.isEmpty()) {
-					System.out.println("초대자 찾기 : 틀린 모집글이므로 삭제합니다.");
-					rIter.remove();
-				} else {
+//				if(Members.isEmpty()) {
+//					System.out.println("초대자 찾기 : 틀린 모집글이므로 삭제합니다.");
+//					rIter.remove();
+//				} else {
 					System.out.println("초대자 찾기 : " + r.getPosition().getName());
-				}
+//				}
 			}
 		}
 		return pList;
 	}
 	
 	public List<Project> findApplied(Integer managerNo){
-		System.out.println("지원자 찾기 서비스 진입");
 		List<Project> pList = projectRepository.findByManagerNo(managerNo);
-		System.out.println("지원자 찾기 레포지토리 끝");
-		Integer invited = new Integer(0);
-		Integer enterStatus = new Integer(0);
+//		Integer invited = new Integer(0);
+//		Integer enterStatus = new Integer(0);
 		for(Project p : pList) {
-			System.out.println("지원자 찾기 프로젝트 : " + p.getProjectNo());
 			Iterator<Recruit> rIter = p.getRecruits().iterator();
 			while (rIter.hasNext()) {
 				Recruit r = rIter.next();
-				System.out.println("지원자 찾기 모집글 : " + r.getRecruitNo());
 				Set<Member> Members = r.getMembers();
 				Iterator<Member> mIter = Members.iterator();
 				while (mIter.hasNext()) {
 					Member m = mIter.next();
-					System.out.println("지원자 찾기 멤버 : " + m.getCustomer().getCustomerNo());
-					if (!m.getInvited().equals(invited) || !m.getEnterStatus().equals(enterStatus) ) {
-						System.out.println("지원자 찾기 : 틀린 멤버이므로 삭제합니다.");
-						mIter.remove();
-					} else {
-						System.out.println("지원자 찾기 맞는 멤버 : " + m.getCustomer());
-					}
+					System.out.println("지원자 찾기 멤버 : " + m.getCustomer());
+//					if (!m.getInvited().equals(invited) || !m.getEnterStatus().equals(enterStatus) ) {
+//						System.out.println("지원자 찾기 : 틀린 멤버이므로 삭제합니다.");
+//						mIter.remove();
+//					} else {
+//						System.out.println("지원자 찾기 맞는 멤버 : " + m.getCustomer());
+//					}
 				}
-				if(Members.isEmpty()) {
-					System.out.println("지원자 찾기 : 틀린 모집글이므로 삭제합니다.");
-					rIter.remove();
-				} else {
+//				if(Members.isEmpty()) {
+//					System.out.println("지원자 찾기 : 틀린 모집글이므로 삭제합니다.");
+//					rIter.remove();
+//				} else {
 					System.out.println("지원자 찾기 : " + r.getPosition().getName());
-				}
+//				}
 			}
 		}
 		return pList;

@@ -57,20 +57,17 @@ div.table-head>div {
 div.table-row>div {
 	font-size: 1em;
 }
-div.index {
-	width: 7%;
-}
 div.title {
-	width: 31%;
+	width: 32%;
 }
 div.purposeOrName, div.purpose, div.name {
-	width: 13%;
+	width: 15%;
 }
 div.position {
-	width: 13%;
+	width: 15%;
 }
 div.deadline {
-	width: 11%;
+	width: 12%;
 }
 div.status {
 	width: 6%;
@@ -83,7 +80,7 @@ div.table-row>div.title:hover {
 	transition: 0.3s;
 	cursor: pointer;
 }
-.table-head>:first-child, .table-row>:first-child {
+.table-head>:first-child, .table-row>:nth-child(2) {
 	padding-left:10px;
 }
 .table-row>:last-child {
@@ -118,6 +115,9 @@ div.table-row>div.title:hover {
 	background: #f44a40;
 	border: 1px solid transparent;
 }
+/* .viewerForm{ */
+/* 	display:none; */
+/* } */
 /* style.css 추가 할 부분 끝 */
     </style>
 </head>
@@ -163,7 +163,6 @@ div.table-row>div.title:hover {
                     <div class="manage_team_table_warp bg-white">
 					<div class="progress-table bg-white">
 						<div class="table-head bg-white">
-							<div class="index">#</div>
 							<div class="title">프로젝트 명</div>
 							<div class="purposeOrName">목적</div>
 							<div class="position">직무</div>
@@ -173,23 +172,16 @@ div.table-row>div.title:hover {
 						</div>
 						<div class="tr-section">
 							<div class="table-row bg-white">
-								<div class="index">0</div>
-								<div class="recruit_no" style="display:none;"></div>
-								<div class="title">프로젝트 이름 예시1</div>
-								<div class="purposeOrName">공모전 참여</div>
-								<div class="position">웹 개발자</div>
-								<div class="deadline">2020.10.10</div>
-								<div class="status">모집중</div>
-								<div class="button text-center">
-									<a href="#" class="manage-bnt manage-bnt-allow" style="margin-right: 10px;">수락</a>
-									<a href="#" class="manage-bnt manage-bnt-deny">거절</a>
-								</div>
+								<div style='width:100%; height:100px; line-height:100px; text-align:center;'>응답중입니다.</div>
 							</div>
 						</div>
                     </div>
                     </div>
                 </div>
             </div>
+            <form name="viewerForm" action="${contextPath}/rec_detail"><!-- method="post"> -->
+				<input type="hidden" name="recNo" value="999">
+			</form>
 <!--             <div class="row"> -->
 <!--                 <div class="col-lg-12"> -->
 <!--                     <div class="pagination_wrap"> -->
@@ -244,6 +236,10 @@ div.table-row>div.title:hover {
     <script src="js/main.js"></script>
     
 <script>
+//테스트용 변수
+var testMember = 101;
+var testManager = 2;
+
 //섹션 설정
 var $section = $("div.tr-section");
 
@@ -262,19 +258,19 @@ $menuBtnArray.each(function(i){
 		//ajax로 데이터 불러와서 table row 다시 쓰기
 		//내가 지원한 팀
 		if ($(this).attr("id") == "myApplication"){
-			fxMyApplication();
+			fxMyApplication(testMember);
 		}
 		//초대 받은 팀
 		else if ($(this).attr("id") == "myInvitaion") {
-			fxMyInvitation();
+			fxMyInvitation(testMember);
 		}
 		//내가 초대한 멤버
 		else if ($(this).attr("id") == "invitedMember") {
-			fxInvited();
+			fxInvited(testManager);
 		}
 		//우리 팀에 지원한 멤버
 		else if ($(this).attr("id") == "appliedMember") {
-			fxApplied();
+			fxApplied(testManager);
 		}
 		//기본 이벤트, 이벤트 전파 막기
 		return false;
@@ -283,212 +279,254 @@ $menuBtnArray.each(function(i){
 
 //관리버튼 클릭
 $section.on("click", "a.manage-bnt", function(e){
+	let tableRow = this.parentNode.parentNode;
+	let recruitNo = $(tableRow).find("div.recruit_no").html();
+	let memberNo = $(tableRow).find("div.member_no").html();
+	
 	//내 지원 취소하기 / 지원한 사람 거절하기 / 초대 취소하기 / 초대 거절하기
-	if ($(this).attr("class").search("deny") > 0) { 
-		deny();
+	if ($(this).attr("class").search("deny") > 0) {
+		let denyConfirm = confirm("정말 " + this.innerHTML + "하시겠습니까?");
+		if(denyConfirm==1){
+			deny(recruitNo, memberNo, this.innerHTML);
+		}
 	}
 	//지원자 수락하기 / 초대 수락하기
 	else if ($(this).attr("class").search("allow") > 0) {
-		allow();
+		let allowConfirm = confirm("정말 수락하시겠습니까?");
+		if(allowConfirm==1){
+			allow(recruitNo, memberNo);
+		}
 	}
 	//기본 이벤트, 이벤트 전파 막기
 	return false;
 });
 
+//프로젝트 이름 클릭하면 프로젝트 페이지 열기
+$section.on("click", "div.title", function(e){
+	let tableRow = this.parentNode;
+	let recruitNo = $(tableRow).find("div.recruit_no").html();
+	fxRecruitDetail();
+	return false;
+});
+
+//----------------------함수들------------------------------
 //내가 지원한 프로젝트
 function fxMyApplication(){
+	sendData = "memberNo=" + testMember;
 	$.ajax({
 		url:"${contextPath}/manageMyApplication"
 		,method:"POST"
-		,data:"memberNo=101"
+		,data:sendData
 		,success:function(projects){
 			let $tableHead = $("div.table-head");
 			let $thPurpose = $tableHead.find("div.purposeOrName");
 			$thPurpose.html("목적");
 			let sectionData = "";
-			if(projects.length == 0){
-				sectionData = "<div style='width:100%; height:20px; text-align:center;'> 지원한 팀이 없습니다. </div>";
-			}
 			projects.forEach(function(project, pIndex){
 				let recruits = project.recruits;
 				recruits.forEach(function(recruit, rIndex){
-					
-					sectionData += '<div class="table-row bg-white">';
-					sectionData += '<div class="index">' + (pIndex+1) + '</div>';
-					sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
-					sectionData += '<div class="title">' + project.title + '</div>';
-					sectionData += '<div class="member_no" style="display:none;">'+ 101 +'</div>';
-					sectionData += '<div class="purpose">' + project.purpose + '</div>';
-					sectionData += '<div class="position">' + recruit.position.name + '</div>';
-					let date = new Date(recruit.deadline);
-					sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
-					if(recruit.recruitStatus==1){
-						sectionData += '<div class="status">모집중</div>';
-					} else {
-						sectionData += '<div class="status">마감</div>';
-					}
-					sectionData += '<div class="button text-center">';
-					sectionData += '<a href="#" class="manage-bnt deny-my-app">취소</a></div></div>';
+					recruit.members.forEach(function(member, mIndex){
+						if(member.customer.customerNo == 101) {
+							sectionData += '<div class="table-row bg-white">';
+							sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
+							sectionData += '<div class="title">' + project.title + '</div>';
+							sectionData += '<div class="member_no" style="display:none;">'+ 101 +'</div>';
+							sectionData += '<div class="purpose">' + project.purpose + '</div>';
+							sectionData += '<div class="position">' + recruit.position.name + '</div>';
+							let date = new Date(recruit.deadline);
+							sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
+							if(recruit.recruitStatus==1){
+								sectionData += '<div class="status">모집중</div>';
+							} else {
+								sectionData += '<div class="status">마감</div>';
+							}
+							sectionData += '<div class="button text-center">';
+							sectionData += '<a href="#" class="manage-bnt deny-my-app">취소</a></div></div>';
+						}
+					});
 				});
 			});
+			if(sectionData == ""){
+				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 팀이 없습니다.</div>";
+			}
 			$section.html(sectionData);
 		}
 	});
 }
 
 //나에게 초대를 보낸 팀 보여주기
-function fxMyInvitation() {
+function fxMyInvitation(testMember) {
+	sendData = "memberNo=" + testMember;
 	$.ajax({
 		url:"${contextPath}/manageMyInvitation"
 		,method:"POST"
-		,data:"memberNo=101"
+		,data:sendData
 		,success:function(projects){
 			let $tableHead = $("div.table-head");
 			let $thPurpose = $tableHead.find("div.purposeOrName");
 			$thPurpose.html("목적");
 			let sectionData = "";
-			if(projects.length == 0){
-				sectionData = "<div style='width:100%; height:20px; text-align:center;'> 초대받은 팀이 없습니다. </div>";
-			}
 			projects.forEach(function(project, pIndex){
 				let recruits = project.recruits;
 				recruits.forEach(function(recruit, rIndex){
-					sectionData += '<div class="table-row bg-white">';
-					sectionData += '<div class="index">' + (pIndex+1) + '</div>';
-					sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
-					sectionData += '<div class="title">' + project.title + '</div>';
-					sectionData += '<div class="member_no" style="display:none;">'+ 101 +'</div>';
-					sectionData += '<div class="purpose">' + project.purpose + '</div>';
-					sectionData += '<div class="position">' + recruit.position.name + '</div>';
-					let date = new Date(recruit.deadline);
-					sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
-					if(recruit.recruitStatus==1){
-						sectionData += '<div class="status">모집중</div>';
-					} else {
-						sectionData += '<div class="status">마감</div>';
-					}
-					sectionData += '<div class="button text-center">';
-					sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
-					sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
+					recruit.members.forEach(function(member, mIndex){
+						if(member.customer.customerNo == 101) {
+							sectionData += '<div class="table-row bg-white">';
+							sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
+							sectionData += '<div class="title">' + project.title + '</div>';
+							sectionData += '<div class="member_no" style="display:none;">'+ 101 +'</div>';
+							sectionData += '<div class="purpose">' + project.purpose + '</div>';
+							sectionData += '<div class="position">' + recruit.position.name + '</div>';
+							let date = new Date(recruit.deadline);
+							sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
+							if(recruit.recruitStatus==1){
+								sectionData += '<div class="status">모집중</div>';
+							} else {
+								sectionData += '<div class="status">마감</div>';
+							}
+							sectionData += '<div class="button text-center">';
+							sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
+							sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
+						}
+					});
 				});
 			});
+			if(sectionData == ""){
+				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
+			}
 			$section.html(sectionData);
 		}
 	});
 }
 
 //내가 초대한 멤버 보여주기
-function fxInvited(){
+function fxInvited(testManager){
+	sendData = "managerNo=" + testManager;
 	$.ajax({
 		url:"${contextPath}/manageInvited"
 		,method:"POST"
-		,data:"managerNo=2"
+		,data:sendData
 		,success:function(projects){
 			let $tableHead = $("div.table-head");
 			let $thPurpose = $tableHead.find("div.purposeOrName");
 			$thPurpose.html("이름");
 			let sectionData = "";
-			if(projects.length == 0){
-				sectionData = "<div style='width:100%; height:20px; text-align:center;'> 초대한 멤버가 없습니다. </div>";
-			}
 			projects.forEach(function(project, pIndex){
 				let recruits = project.recruits;
 				recruits.forEach(function(recruit, rIndex){
 					let members = recruit.members;
 					members.forEach(function(member, mIndex){
-						console.log(member.customer.name);
-						sectionData += '<div class="table-row bg-white">';
-						sectionData += '<div class="index">' + (rIndex+1) + '</div>';
-						sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
-						sectionData += '<div class="title">' + project.title + '</div>';
-						sectionData += '<div class="member_no" style="display:none;">'+ member.customer.customerNo +'</div>';
-						sectionData += '<div class="name">' + member.customer.name + '</div>';
-						sectionData += '<div class="position">' + recruit.position.name + '</div>';
-						let date = new Date(recruit.deadline);
-						sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
-						if(recruit.recruitStatus==1){
-							sectionData += '<div class="status">모집중</div>';
-						} else {
-							sectionData += '<div class="status">마감</div>';
+						if(member.enterStatus==0 && member.invited==1){
+							sectionData += '<div class="table-row bg-white">';
+							sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
+							sectionData += '<div class="title">' + project.title + '</div>';
+							sectionData += '<div class="member_no" style="display:none;">'+ member.customer.customerNo +'</div>';
+							sectionData += '<div class="name">' + member.customer.name + '</div>';
+							sectionData += '<div class="position">' + recruit.position.name + '</div>';
+							let date = new Date(recruit.deadline);
+							sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
+							if(recruit.recruitStatus==1){
+								sectionData += '<div class="status">모집중</div>';
+							} else {
+								sectionData += '<div class="status">마감</div>';
+							}
+							sectionData += '<div class="button text-center">';
+							sectionData += '<a href="#" class="manage-bnt deny-to-invite">취소</a></div></div>';
 						}
-						sectionData += '<div class="button text-center">';
-						sectionData += '<a href="#" class="manage-bnt deny-to-invite">취소</a></div></div>';
 					});
 				});
 			});
+			if(sectionData == ""){
+				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대한 멤버가 없습니다.</div>";
+			}
 			$section.html(sectionData);
 		}
 	});		
 }
 
 //내 팀에 지원한 멤버 보여주기
-function fxApplied() {
+function fxApplied(testManager) {
+	sendData = "managerNo=" + testManager;
 	$.ajax({
 		url:"${contextPath}/manageApplied"
 		,method:"POST"
-		,data:"managerNo=2"
+		,data:sendData
 		,success:function(projects){
 			let $tableHead = $("div.table-head");
 			let $thPurpose = $tableHead.find("div.purposeOrName");
 			$thPurpose.html("이름");
 			let sectionData = "";
-			if(projects.length == 0){
-				sectionData = "<div style='width:100%; height:20px; text-align:center;'> 초대한 멤버가 없습니다. </div>";
-			}
 			projects.forEach(function(project, pIndex){
 				let recruits = project.recruits;
 				recruits.forEach(function(recruit, rIndex){
 					let members = recruit.members;
 					members.forEach(function(member, mIndex){
-						sectionData += '<div class="table-row bg-white">';
-						sectionData += '<div class="index">' + (rIndex+1) + '</div>';
-						sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
-						sectionData += '<div class="title">' + project.title + '</div>';
-						sectionData += '<div class="member_no" style="display:none;">'+ member.customer.customerNo +'</div>';
-						sectionData += '<div class="name">' + member.customer.name + '</div>';
-						sectionData += '<div class="position">' + recruit.position.name + '</div>';
-						let date = new Date(recruit.deadline);
-						sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
-						if(recruit.recruitStatus==1){
-							sectionData += '<div class="status">모집중</div>';
-						} else {
-							sectionData += '<div class="status">마감</div>';
+						if(member.enterStatus==0 && member.invited==0){
+							sectionData += '<div class="table-row bg-white">';
+							sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
+							sectionData += '<div class="title">' + project.title + '</div>';
+							sectionData += '<div class="member_no" style="display:none;">'+ member.customer.customerNo +'</div>';
+							sectionData += '<div class="name">' + member.customer.name + '</div>';
+							sectionData += '<div class="position">' + recruit.position.name + '</div>';
+							let date = new Date(recruit.deadline);
+							sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
+							if(recruit.recruitStatus==1){
+								sectionData += '<div class="status">모집중</div>';
+							} else {
+								sectionData += '<div class="status">마감</div>';
+							}
+							sectionData += '<div class="button text-center">';
+							sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
+							sectionData += '<a href="#" class="manage-bnt deny-in">거절</a></div></div>';
 						}
-						sectionData += '<div class="button text-center">';
-						sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
-						sectionData += '<a href="#" class="manage-bnt deny-in">거절</a></div></div>';
 					});
 				});
 			});
+			if(sectionData == ""){
+				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 멤버가 없습니다. </div>";
+			}
 			$section.html(sectionData);
 		}
 	});
 }
 
-function deny(){
+//거절, 취소하기
+function deny(recruitNo, memberNo, question){
+	let sendData = "recruitNo=" + recruitNo + "&memberNo=" + memberNo;
 	$.ajax({
 		url:"${contextPath}/deny"
 		,method:"POST"
-		,data:"recruitNo=50R2&memberNo=101"
+		,data:sendData
 		,success:function(result){
 			if(result=="success"){
-				alert("지원이 취소되었습니다.");
+				alert(question + "되었습니다.");
 			}
 		}
 	});
 }
 
-function allow(){
+//수락하기
+function allow(recruitNo, memberNo){
+	let sendData = "recruitNo=" + recruitNo + "&memberNo=" + memberNo;
 	$.ajax({
 		url:"${contextPath}/allow"
 		,method:"POST"
-		,data:"recruitNo=50R2&memberNo=101"
+		,data:sendData
 		,success:function(result){
 			if(result=="success"){
-				alert("지원이 취소되었습니다.");
+				alert("수락되었습니다.");
 			}
 		}
 	});
+}
+
+//새 창으로 프로젝트 상세보기 페이지 열기
+function fxRecruitDetail(){
+	window.open("about:blank", "winName");
+	let form = document.viewerForm;
+	form.action = "${contextPath}/rec_detail";
+	form.target = "winName";
+	form.submit();
 }
 </script>
 </body>
