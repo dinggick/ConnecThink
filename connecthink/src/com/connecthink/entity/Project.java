@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.transaction.Transactional;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -49,13 +50,18 @@ public class Project {
 	@Column(name = "manager_no")
 	private Integer managerNo;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
+//	
+//	@Transactional
+//	public List<Task> getTasks() {
+//		return this.tasks;
+//	}
 	
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")

@@ -3,6 +3,10 @@ package com.connecthink.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,7 @@ import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
 
 @Service
+@Transactional
 public class BoardService {
 	
 	@Autowired
@@ -65,12 +70,23 @@ public class BoardService {
 	/*
 	 * 해당 프로젝트 포스트잇 전체 조회
 	 */
+//	@Transactional
 	public List<Task> lookUpTask(Integer project_no){
+		System.out.println("--------------test01");
 		List<Task> tasks = new ArrayList<>();
-		projectRepository.findById(project_no).get().getTasks().forEach(r ->{
-			tasks.add(r);
-		});
+//		projectRepository.findById(project_no).get().getTasks().forEach(r ->{
+//			tasks.add(r);
+//		});
+		Project p = projectRepository.findById(project_no).get();
+		System.out.println("--------------test02");
+//		p.getTasks().get(0).getTaskNo();
+//		Hibernate.initialize(p.getTasks());
+		tasks.addAll(p.getTasks());
+		System.out.println("--------------test03");
+		
 		return tasks;
+		
+		
 	}
 	
 	/*

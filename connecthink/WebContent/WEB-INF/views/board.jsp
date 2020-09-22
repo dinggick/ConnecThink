@@ -1,19 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="list" value="${requestScope.list}"/>	
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-<link rel="stylesheet" href="css/magnific-popup.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/themify-icons.css">
-<link rel="stylesheet" href="css/nice-select.css">
-<link rel="stylesheet" href="css/flaticon.css">
-<link rel="stylesheet" href="css/gijgo.css">
-<link rel="stylesheet" href="css/animate.min.css">
-<link rel="stylesheet" href="css/slicknav.css">
-<link rel="stylesheet" href="css/style.css">
+<!-- <link rel="manifest" href="site.webmanifest"> -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <!-- Place favicon.ico in the root directory -->
+
+    <!-- CSS here -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/themify-icons.css">
+    <link rel="stylesheet" href="css/nice-select.css">
+    <link rel="stylesheet" href="css/flaticon.css">
+    <link rel="stylesheet" href="css/gijgo.css">
+    <link rel="stylesheet" href="css/animate.min.css">
+    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="css/style.css">
+
+
 <style>
 body {
   font-family: sans-serif;
@@ -630,6 +639,7 @@ scale
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <meta charset="UTF-8">
 <title>board.jsp</title>
@@ -655,7 +665,7 @@ scale
 				</div>
 			</li>
 			
-                <li>
+                <li> 
                    <div class="friend">
 						<img src="https://t1.daumcdn.net/cfile/blog/2559E33B51368FEF02" />
 						<div class="profile">
@@ -715,37 +725,43 @@ scale
                 </li>
             </ul>
         </div>
-        
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
-        	<div class="modal-dialog modal-dialog-centered" role="document">
-            	<div class="modal-content">
-                	<div class="modal-body">
-                    	<form action="#">
-                        	<div class="mt-10">
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                				<span aria-hidden="true">&times;</span>
-            				</button><br><br>
-                            	<input type="text" name="text" onfocus="this.placeholder = ''" required class="single-input">
-                        	</div>
-                    	</form>
-                	</div>
-                	<div class="modal-footer">
-                    	<button type="button" class="btn btn-primary">수정하기</button>
-                    	<button type="button" class="btn btn-primary">삭제하기</button>
-                	</div>
-            	</div>
-        	</div>
-    	</div>
-        
+         
+    <!-- 상세 내용 모달 -->
+    <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                		<span aria-hidden="true">&times;</span>
+            		</button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-10">
+                      <input v-model="updateText" value="${p.content}" name="text" required class="single-input">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                 	<button type="button" class="btn btn-primary" v-on:click="updateContent">수정하기</button>
+	                <button type="button" class="btn btn-secondary" v-on:click="deleteTask">삭제하기</button>
+                </div>
+            </div>
+        </div>
+    </div>   
+              
 				  	<div id="dashBoard"  v-drag-and-drop:options="options">		   
 						<div class="todo" id="do">
 							<div class="title">TO DO
 						  		<div class="content">
 				  					<ul class="usty">
-				  						<li v-for="card in list"><div class="card editable">{{card.task}}</div></li>
+				  					<c:forEach items="${requestScope.list}" var="p">
+				  						<c:if test="${p.taskStatus==1}">
+				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal">${p.content}</a></div></li>
+				  						</c:if>
+				  					</c:forEach>
+				  						<li v-for="item in list"><div class='card editable'>{{item.id}}</div></li>
 				  					</ul>
 								</div>
-				    			<div v-on:click="add" class="add-task">작업 추가하기</div>
+				    			<div class="add-task"><input v-model="addName" required class="single-input"><button class="btn btn-primary" v-on:click="getData">작업 추가하기</button></div>
 				    		</div>
 				    	</div>
 				    
@@ -753,16 +769,15 @@ scale
 				    		<div class="title">Doing
 								<div class="content">
 				  					<ul class="usty">
-				  					<li v-for="card in list"><div class="card editable">{{card.task2}}</div></li>
-				  					<li><div class="card editable">vue.js</div></li>
-			  						<li><div class="card editable">JAVA</div></li>
-			  						<li><div class="card editable">html</div></li>
-			  						<li><div class="card editable">css</div></li>
-			  						<li><div class="card editable">script</div></li>
-			  						<li><div class="card editable"><a data-toggle="modal" href="#loginModal">테스트</a></div></li>
+				  					<c:forEach items="${requestScope.list}" var="p">
+				  						<c:if test="${p.taskStatus==2}">
+				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal">${p.content}</a></div></li>
+				  						</c:if>
+				  					</c:forEach>
+				  						<li v-for="item in list2"><div class='card editable'>{{item.id2}}</div></li>
 									</ul>
 								</div>
-						    <div v-on:click="add" class="add-task">작업 추가하기</div>
+						    <div class="add-task"><input v-model="addName"><button v-on:click="getData">작업 추가하기</button></div>
 						    </div>
 						</div>
 				    
@@ -770,15 +785,15 @@ scale
 				    		<div class="title">Done
 					  			<div class="content">
 								    <ul class="usty">
-			  						<li><div class="card editable">변재원</div></li>
-			  						<li><div class="card editable">김동준</div></li>
-			  						<li><div class="card editable">최종국</div></li>
-			  						<li><div class="card editable">이혜림</div></li>
-			  						<li><div class="card editable">홍지수</div></li>
-			  						<li><div class="card editable">임수정</div></li>
+								    <c:forEach items="${requestScope.list}" var="p">
+				  						<c:if test="${p.taskStatus==3}">
+				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal">${p.content}</a></div></li>
+				  						</c:if>
+				  					</c:forEach>
+				  						<li v-for="item in list3"><div class='card editable'>{{item.id3}}</div></li>
 								    </ul>
 								</div>
-							<div v-on:click="add" class="add-task">작업 추가하기</div>
+							<div class="add-task"><input v-model="addName"><button v-on:click="getData">작업 추가하기</button></div>
 							</div>
 						</div>
 				    </div>
@@ -989,10 +1004,11 @@ scale
 		});
 	
 	////////////////////////////////변재 vue.js////////////////////////////////////////////////////////
-		var cc = document.getElementById('menu-toggle');
+	var cc = document.getElementById('menu-toggle');
 	var cc1 = document.getElementById('sidebar-wrapper');
 	var cc2 = document.getElementById('down');
-	var cc3 = document.getElementById('content');
+	
+	
 	cc.onclick = function() { 
 		cc1.style.display='block';
 	};
@@ -1004,129 +1020,119 @@ scale
 	Vue.use(VueDraggable.default);
 	
 	/*drag&drop시작*/
-	Vue.component('my-button2', {
-		template: `<li><div class='card editable'>dd</div></li>`
+	Vue.component('AddCard', {
+		template: `<li><div class='card editable'><input type="text"><div v-on:click="getData" class="add-task">등록</div></div></li>`
 	})
 	
 	var todo = new Vue({
 		
 		el: '#dashBoard',
 		data: {
-			/* list:[{
-				task:'',
-				task2:''
-			}],	  */
-			
+			list:[
+			],
+			list2:[
+			],
+			list3:[
+			],	
 			options:{
 				 onDragend(event){
 					 console.log(event.items[0].innerText);
 				 }
 			}
-			
-		},
-		created(){
-			console.log("do !! created");
 		},
 		methods: {
 			add() {
 				console.log("do add event!!");
-				this.list.push('my-button2');
+				this.list.push({id:this.addName});
+			},
+			add2() {
+				console.log("doing add event!!");
+				this.list2.push({id:this.addName});
+			},
+			add3() {
+				console.log("done add event!!");
+				this.list3.push({id:this.addName});
 			},
 			someDummyMethod() {
 			     console.log('Hello from someDummyMethod');
-			   }
+			   },
+			getData(ev) {
+				var status = 0;
+				var evPath = ev.path[3].id;	   
+				if(evPath == 'do'){
+					status = 1;
+					axios.get('/connecthink/addTask',{
+	                	params:{
+	                		content:this.addName,
+	                		status:status
+	                	}
+	                })
+	                .then(function(response){	
+	        			this.list.push({id:this.addName});
+	                });
+					
+					
+				}else if(evPath == 'doing'){
+					status = 2;
+					axios.get('/connecthink/addTask',{
+	                	params:{
+	                		content:this.addName,
+	                		status:status
+	                	}
+	                })
+	                .then(function(response){
+	                    console.log(response); 
+	                });
+				}else if(evPath == 'done'){
+					status = 3;
+					axios.get('/connecthink/addTask',{
+	                	params:{
+	                		content:this.addName,
+	                		status:status
+	                	}
+	                })
+	                .then(function(response){
+	                    alert(response);
+	                });
+				}
+                
+              }
+		}
+	});
+	
+	new Vue({
+		el:'#contentModal',
+		data:{
+			
+		},
+		methods:{
+			updateContent(){
+				console.log('qwretry');
+				
+			},
+			deleteTask(){
+				console.log('dbfvcxbcx');
+			}
 		}
 	})
 	
-	/* var doing = new Vue({
-		el: '#do',
-		data: {
-			list:[{
-				task:''
-			}]
-		}, 
-		methods: {
-			add () {
-				this.buttons.push('my-button2')
-			}
-		}
-	}) */
-	/*
-	var done = new Vue({
-		el: '#done',
-		data: {
-			buttons: []
-			,task:''
-		},
-		methods: {
-			add () {
-				this.buttons.push('my-button2')
-			}
-		}
-	}) */
-
-	
-	/* new Vue({
-		  el:"#dashBoard",
-		  data() {
-		    const componentInstance = this;
-		    
-		    return {
-		      options: {
-		        onDragend(event) {
-		          componentInstance.someDummyMethod();
-				  console.log(componentInstance);
-		          
-		          
-		          // to detect if draggable element is dropped out
-		          if (!event.droptarget) {
-		            console.log('event is dropped out');
-		          }
-		        }
-		      }
-		    }
-		  },
-		  methods: {
-			  someDummyMethod() {
-				     console.log('Hello from someDummyMethod');
-				   }
-			  
-		  }
-		  
-		}) */
-	
-	
-
 </script>
-<!-- JS here -->
-	<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-	<script src="js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/isotope.pkgd.min.js"></script>
-	<script src="js/ajax-form.js"></script>
-	<script src="js/waypoints.min.js"></script>
-	<script src="js/jquery.counterup.min.js"></script>
-	<script src="js/imagesloaded.pkgd.min.js"></script>
-	<script src="js/scrollIt.js"></script>
-	<script src="js/jquery.scrollUp.min.js"></script>
-	<script src="js/wow.min.js"></script>
-	<script src="js/nice-select.min.js"></script>
-	<script src="js/jquery.slicknav.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/gijgo.min.js"></script>
-
-
-
-	<!--contact js-->
-	<script src="js/contact.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/jquery.form.js"></script>
-	<script src="js/jquery.validate.min.js"></script>
-	<script src="js/mail-script.js"></script>
-
-
-	<script src="js/main.js"></script>
+<script src="js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="js/vendor/jquery-1.12.4.min.js"></script>
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/isotope.pkgd.min.js"></script>
+<script src="js/ajax-form.js"></script>
+<script src="js/waypoints.min.js"></script>
+<script src="js/jquery.counterup.min.js"></script>
+<script src="js/imagesloaded.pkgd.min.js"></script>
+<script src="js/scrollIt.js"></script>
+<script src="js/jquery.scrollUp.min.js"></script>
+<script src="js/wow.min.js"></script>
+<script src="js/nice-select.min.js"></script>
+<script src="js/jquery.slicknav.min.js"></script>
+<script src="js/jquery.magnific-popup.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/gijgo.min.js"></script>
 </html>

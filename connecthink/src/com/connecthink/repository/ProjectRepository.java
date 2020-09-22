@@ -3,12 +3,15 @@ package com.connecthink.repository;
 import java.util.List;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 
+//@Transactional
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	public List<Project> findByManagerNo(Integer managerNo); //팀장 번호로 프로젝트 정보 가져오기
 	
