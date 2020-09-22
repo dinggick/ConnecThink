@@ -748,27 +748,6 @@ scale
             </div>
         </div>
     </div>   
-        
-        <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
-        	<div class="modal-dialog modal-dialog-centered" role="document">
-            	<div class="modal-content">
-                	<div class="modal-body">
-                    	<form action="#">
-                        	<div class="mt-10">
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                				<span aria-hidden="true">&times;</span>
-            				</button><br><br>
-                            	<input type="text" name="text" onfocus="this.placeholder = ''" required class="single-input">
-                        	</div>
-                    	</form>
-                	</div>
-                	<div class="modal-footer">
-                    	<button type="button" class="btn btn-primary">수정하기</button>
-                    	<button type="button" class="btn btn-primary">삭제하기</button>
-                	</div>
-            	</div>
-        	</div>
-    	</div>
     	
 				  	<div id="dashBoard"  v-drag-and-drop:options="options">		   
 						<div class="todo" id="do">
