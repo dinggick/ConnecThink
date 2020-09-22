@@ -737,7 +737,7 @@ scale
                 </div>
                 <div class="modal-body">
                     <div class="mt-10">
-                      <input v-model="updateText" value="${p.content}" name="text" required class="single-input">
+                      <input id="inputInModal" v-model="updateText" name="text" required class="single-input">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -755,7 +755,7 @@ scale
 				  					<ul class="usty">
 				  					<c:forEach items="${requestScope.list}" var="p">
 				  						<c:if test="${p.taskStatus==1}">
-				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal">${p.content}</a></div></li>
+				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal" v-on:click="tt">${p.content}</a></div></li>
 				  						</c:if>
 				  					</c:forEach>
 				  						<li v-for="item in list"><div class='card editable'>{{item.id}}</div></li>
@@ -1041,6 +1041,10 @@ scale
 			}
 		},
 		methods: {
+			tt(ev){
+				var inputInModal = document.getElementById('inputInModal');
+				inputInModal.value = ev.target.innerText;
+			},
 			add() {
 				console.log("do add event!!");
 				this.list.push({id:this.addName});
