@@ -30,7 +30,7 @@ public class ChatRoom {
 	@Column(name = "chat_room_no")
 	private Integer chatRoomNo;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "chat_room_no")
 	private List<Message> messages;
 }

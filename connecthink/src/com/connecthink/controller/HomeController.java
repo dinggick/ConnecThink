@@ -15,8 +15,12 @@ public class HomeController {
 	@Autowired
 	private CustomerService service;
 	@RequestMapping("/index")
-	public void test() {
-		
+	public void home() {
+	}
+	
+	@RequestMapping("/header")
+	public String header() {
+		return "header";
 	}
 	
 	@RequestMapping("/member_recruit")

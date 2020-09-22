@@ -49,15 +49,15 @@ public class Project {
 	@Column(name = "manager_no")
 	private Integer managerNo;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
 }

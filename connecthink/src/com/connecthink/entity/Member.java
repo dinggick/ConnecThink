@@ -38,7 +38,7 @@ public class Member{
 	private Recruit recruit;
 	
 	@MapsId(value = "memberNo")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "member_no")
 	private Customer customer;
 	

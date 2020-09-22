@@ -53,15 +53,15 @@ public class Customer {
 	@Column(name = "drop_status", nullable = true)
 	private Integer dropStatus;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "customer_no")
 	private Set<Experience> experiences;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "customer_no")
 	private List<Notification> notifications;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany
 	@JoinColumn(name = "customer_no")
 	private Set<CustomerPosition> customerPositions;
 }

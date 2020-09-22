@@ -35,7 +35,7 @@ public class Message {
 	@Column(name = "create_date")
 	private String createDate;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "writer_no")
 	private Customer writer;
 }

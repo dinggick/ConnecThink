@@ -30,12 +30,12 @@ public class BookmarkUser{
 	private BookmarkUserId id;
 	
 	@MapsId(value = "send")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "send")
 	private Customer send;
 	
 	@MapsId(value = "receive")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "receive")
 	private Customer receive;
 }
