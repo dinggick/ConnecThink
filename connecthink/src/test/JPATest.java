@@ -20,6 +20,7 @@ import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
+import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.ProjectRepository;
 
 import lombok.extern.log4j.Log4j;
@@ -36,6 +37,26 @@ class JPATest {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	
+//	@Test
+	void recDetailTest() {
+		Project p = projectRepository.findByRecruits("45R2");
+		System.out.println(p.getPurpose());
+		System.out.println(p.getProjectNo());
+		Set<Recruit> r = p.getRecruits();
+		Iterator<Recruit> iter = r.iterator();
+		while(iter.hasNext()) {
+			System.out.println(iter.next().getRecruitNo());
+			Set<Member> m = iter.next().getMembers();
+			Iterator<Member> iterm = m.iterator();
+			System.out.println(m.size());
+			while(iterm.hasNext()) {
+			System.out.println(iterm.next().getCustomer().getName());
+			}
+		}
+	}
+	
 	
 //	@Test
 	public void controllerTest() {
@@ -82,4 +103,80 @@ class JPATest {
 			});
 		});
 	}
+	
+//	@Test
+	@DisplayName("내가 지원한 프로젝트 목록")
+	public void myAppliedProjectTest() {
+		int memberNo = 102;
+		List<Project> list = projectRepository.findMyApplication(memberNo);
+		for(Project p : list) {
+			Set<Recruit> recruits = p.getRecruits();
+			Iterator<Recruit> iter = recruits.iterator();
+			while (iter.hasNext()) {
+				Recruit r = iter.next();
+				boolean isRightRecruit = false;
+				for(Member m : r.getMembers()) {
+					if (m.getCustomer().getCustomerNo() == 102) {
+						isRightRecruit = true;
+					}
+				}
+				if(isRightRecruit==false) {
+					iter.remove();
+				}
+			}
+		}
+	}
+	
+	@Test
+	@DisplayName("내가 초대받은 프로젝트 목록")
+	public void myInvitedProjectTest() {
+		int memberNo = 161;
+		List<Project> list = projectRepository.findMyInvitation(memberNo);
+		for(Project p : list) {
+			System.out.println("프로젝트 명 : " + p.getTitle());
+		}
+	}
+
+
+
+//	@Test
+	@DisplayName("내 프로젝트에 지원한 사람 목록")
+	public void applicantOfMyProjectTest() {
+		int managerNo = 2;
+		List<Project> projectList = projectRepository.findByManagerNo(managerNo);
+		for(Project p : projectList) {
+			System.out.println("프로젝트 명 : " + p.getTitle());
+			Set<Recruit> recruitList = p.getRecruits();
+			for(Recruit r : recruitList) {
+				System.out.println("모집분야 : " + r.getPosition().getName());
+				Set<Member> memberList = r.getMembers();
+				for(Member m : memberList) {
+					if (m.getEnterStatus()==0 && m.getInvited()==0) {
+						System.out.println("지원자 : " + m.getCustomer().getName());
+					}
+				}
+			}
+		}
+	}
+	
+//	@Test
+	@DisplayName("내 프로젝트에 내가 초대한 사람 목록")
+	public void guestOfMyProjectTest() {
+		int managerNo = 2;
+		List<Project> projectList = projectRepository.findByManagerNo(managerNo);
+		for(Project p : projectList) {
+			System.out.println("프로젝트 명 : " + p.getTitle());
+			Set<Recruit> recruitList = p.getRecruits();
+			for(Recruit r : recruitList) {
+				System.out.println("모집분야 : " + r.getPosition().getName());
+				Set<Member> memberList = r.getMembers();
+				for(Member m : memberList) {
+					if (m.getEnterStatus()==0 && m.getInvited()==1) {
+						System.out.println("초대받은 사람 : " + m.getCustomer().getName());
+					}
+				}
+			}
+		}
+	}
+
 }

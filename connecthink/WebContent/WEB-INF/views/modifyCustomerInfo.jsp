@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!doctype html>
 <html>
 
@@ -111,9 +112,17 @@
                         </div>
                     </div>
                     <div class="apply_job_form white-bg ">
-                    	
                         <form action="# " role="form ">
                         	<div class="row">
+                        		<%-- 비밀번호 --%>
+                        		<div class="col-md-2">
+                        			<h5 class="mt-3" style="font-weight: bold;">비밀번호</h5>
+                        		</div>
+                        		<div class="col-md-10">
+                        			<div class="input_field">
+                        				<input type="password" name="password" placeholder="비밀번호 ">
+                        			</div>
+                        		</div>
                         		<%-- 한 줄 소개 --%>
                         		<div class="col-md-2">
                         			<h5 class="mt-3" style="font-weight: bold;">한 줄 소개</h5>
@@ -139,224 +148,45 @@
                         		<div class="col-md-2">
                         			<h5 class="mt-3" style="font-weight: bold;">역할군</h5>
                         		</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<div class="input_field position0">
-										<select name="position0" class="position" onchange="position(this);" required>
-											<option value="" selected>직군선택</option>
+										<select name="position0" class="position" required>
+											<option selected disabled hidden style='display: none' value=''>직군선택</option>
 											<option value="1">기획자</option>
 											<option value="2">디자이너</option>
 											<option value="3">개발자</option>
 										</select>
 									</div>
 								</div>
-								<div class="col-md-3">
-									<div class="input_field position1" style="display: none;">
-										<select class="position11" onchange="position_p(this);">
-											<option value="">직무선택</option>
-											<option value="1">사업기획자</option>
-											<option value="2">컨텐츠기획자</option>
-											<option value="3">기획자</option>
-											<option value="4">마케터</option>
-											<option value="5">서비스운영자</option>
-											<option value="6">마케팅</option>
-											<option value="7">상품기획자</option>
-											<option value="8">모바일서비스기획자</option>
-										</select>
-									</div>
-									<!-- 2 -->
-									<div class="input_field position2" style="display: none;">
-										<select class="position21" onchange="position_ds(this);">
-											<option value="">직무선택</option>
-											<option value="9">디자이너</option>
-											<option value="10">UI/UX디자이너</option>
-											<option value="11">그래픽디자이너</option>
-											<option value="12">웹 디자이너</option>
-											<option value="13">영상디자이너</option>
-											<option value="14">산업디자이너</option>
-											<option value="15">일러스트레이터</option>
-											<option value="16">모바일 디자이너</option>
-										</select>
-									</div>
-									<!-- 3 -->
-									<div class="input_field position3" style="display: none;">
-										<select class="position31" onchange="position_dv(this);">
-											<option value="">직무선택</option>
-											<option value="17">개발자</option>
-											<option value="18">백엔드 개발자</option>
-											<option value="19">웹개발자</option>
-											<option value="20">프로트엔드개발자</option>
-											<option value="21">안드로이드개발자</option>
-											<option value="22">IOS</option>
-											<option value="23">임베디드 개발자</option>
-											<option value="24">DB 개발자</option>
-										</select>
+								<div class="col-md-4">
+									<div class="input_field position_div_second" style="display: none;">
+										
 									</div>
 								</div>
 								<div class="col-md-2">
-									<div class="input_group"><button><i class="gj-icon minus removePositionBtn"></i></button></div>
+									<a class="boxed-btn3 addPositionBtn"><i class="gj-icon plus"></i></a>
 								</div>
-<!-- 								<div class="col-md-3 offset-2"> -->
-<!-- 									<div class="input_field position0"> -->
-<!-- 										<select name="position0" class="position" onchange="position(this);" required> -->
-<!-- 											<option value="" selected>직군선택</option> -->
-<!-- 											<option value="1">기획자</option> -->
-<!-- 											<option value="2">디자이너</option> -->
-<!-- 											<option value="3">개발자</option> -->
-<!-- 										</select> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-md-3"> -->
-<!-- 									<div class="input_field position1" style="display: none;"> -->
-<!-- 										<select class="position11" onchange="position_p(this);"> -->
-<!-- 											<option value="">직무선택</option> -->
-<!-- 											<option value="1">사업기획자</option> -->
-<!-- 											<option value="2">컨텐츠기획자</option> -->
-<!-- 											<option value="3">기획자</option> -->
-<!-- 											<option value="4">마케터</option> -->
-<!-- 											<option value="5">서비스운영자</option> -->
-<!-- 											<option value="6">마케팅</option> -->
-<!-- 											<option value="7">상품기획자</option> -->
-<!-- 											<option value="8">모바일서비스기획자</option> -->
-<!-- 										</select> -->
-<!-- 									</div> -->
-<!-- 									2 -->
-<!-- 									<div class="input_field position2" style="display: none;"> -->
-<!-- 										<select class="position21" onchange="position_ds(this);"> -->
-<!-- 											<option value="">직무선택</option> -->
-<!-- 											<option value="9">디자이너</option> -->
-<!-- 											<option value="10">UI/UX디자이너</option> -->
-<!-- 											<option value="11">그래픽디자이너</option> -->
-<!-- 											<option value="12">웹 디자이너</option> -->
-<!-- 											<option value="13">영상디자이너</option> -->
-<!-- 											<option value="14">산업디자이너</option> -->
-<!-- 											<option value="15">일러스트레이터</option> -->
-<!-- 											<option value="16">모바일 디자이너</option> -->
-<!-- 										</select> -->
-<!-- 									</div> -->
-<!-- 									3 -->
-<!-- 									<div class="input_field position3" style="display: none;"> -->
-<!-- 										<select class="position31" onchange="position_dv(this);"> -->
-<!-- 											<option value="">직무선택</option> -->
-<!-- 											<option value="17">개발자</option> -->
-<!-- 											<option value="18">백엔드 개발자</option> -->
-<!-- 											<option value="19">웹개발자</option> -->
-<!-- 											<option value="20">프로트엔드개발자</option> -->
-<!-- 											<option value="21">안드로이드개발자</option> -->
-<!-- 											<option value="22">IOS</option> -->
-<!-- 											<option value="23">임베디드 개발자</option> -->
-<!-- 											<option value="24">DB 개발자</option> -->
-<!-- 										</select> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-md-2"> -->
-<!-- 									<i class="gj-icon minus removePositionBtn"></i> -->
-<!-- 								</div> -->
+								<%-- 경험 --%>
+								<div class="col-md-2">
+									<h5 class="mt-3" style="font-weight: bold;">경험</h5>
+								</div>
+								<div class="col-md-4">
+									<div class="input_field">
+                        				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
+                        			</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input_field">
+                        				<input type="text" name="term" placeholder="기간 ex)2019/01 ~ 2020/01">
+                        			</div>
+								</div>
+								<div class="col-md-2">
+									<a class="boxed-btn3 addExpBtn"><i class="gj-icon plus"></i></a>
+								</div>
                         	</div>
-                            <!-- positions -->
-                            <div class="single_wrap positions">
-                                <h4>포지션</h4>
-                                <ul>
-                                    <li>
-                                        <div class="default-select" style="display: inline-block;">
-                                            <select name="position_no">
-                                                <option value="1">사업 기획자</option>
-                                                <option value="2">컨텐츠 기획자</option>
-                                                <option value="3" selected>기획자</option>
-                                                <option value="4">마케터</option>
-                                                <option value="5">서비스 운영자</option>
-                                                <option value="6">마케팅</option>
-                                                <option value="7">상품 기획자</option>
-                                                <option value="8">모바일 서비스 기획자</option>
-                                                <option value="9">디자이너</option>
-                                                <option value="10">UI/UX디자이너</option>
-                                                <option value="11">그래픽 디자이너</option>
-                                                <option value="12">웹 디자이너</option>
-                                                <option value="13">영상 디자이너</option>
-                                                <option value="14">산업 디자이너</option>
-                                                <option value="15">일러스트레이터</option>
-                                                <option value="16">모바일 디자이너</option>
-                                                <option value="17">개발자</option>
-                                                <option value="18">백엔드 개발자</option>
-                                                <option value="19">웹 개발자</option>
-                                                <option value="20">프론트엔드 개발자</option>
-                                                <option value="21">안드로이드 개발자</option>
-                                                <option value="22">IOS</option>
-                                                <option value="23">임베디드 개발자</option>
-                                                <option value="24">DB 개발자</option>
-                                            </select>
-                                        </div>
-                                        <i class="gj-icon minus removePositionBtn"></i>
-                                    </li>
-                                    <li>
-                                        <div class="default-select" style="display: inline-block;">
-                                            <select name="position_no">
-                                                <option value="1">사업 기획자</option>
-                                                <option value="2">컨텐츠 기획자</option>
-                                                <option value="3" selected>기획자</option>
-                                                <option value="4">마케터</option>
-                                                <option value="5">서비스 운영자</option>
-                                                <option value="6">마케팅</option>
-                                                <option value="7">상품 기획자</option>
-                                                <option value="8">모바일 서비스 기획자</option>
-                                                <option value="9">디자이너</option>
-                                                <option value="10">UI/UX디자이너</option>
-                                                <option value="11">그래픽 디자이너</option>
-                                                <option value="12">웹 디자이너</option>
-                                                <option value="13">영상 디자이너</option>
-                                                <option value="14">산업 디자이너</option>
-                                                <option value="15">일러스트레이터</option>
-                                                <option value="16">모바일 디자이너</option>
-                                                <option value="17">개발자</option>
-                                                <option value="18">백엔드 개발자</option>
-                                                <option value="19">웹 개발자</option>
-                                                <option value="20">프론트엔드 개발자</option>
-                                                <option value="21">안드로이드 개발자</option>
-                                                <option value="22">IOS</option>
-                                                <option value="23">임베디드 개발자</option>
-                                                <option value="24">DB 개발자</option>
-                                            </select>
-                                        </div>
-                                        <i class="gj-icon plus addPositionBtn"></i>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- experiences -->
-                            <div class="single_wrap experiences">
-                                <h4>경험</h4>
-                                <ul>
-                                    <li>
-                                        <div class="mb-2" style="display: inline-block; ">
-                                            <input type="text" name="explain" placeholder="설명" value="공모전 1 참여" class="form-control">
-                                        </div>
-                                        <div class="mx-sm-3 mb-2 " style="display: inline-block; ">
-                                            <input type="text" name="term" placeholder="기간 " value="2019/01 ~ 2020/01" class="form-control">
-                                        </div>
-                                        <i class="gj-icon minus removeExpBtn"></i>
-                                    </li>
-                                    <li>
-                                        <div class="mb-2 " style="display: inline-block; ">
-                                            <input type="text" name="exp_explain" placeholder="설명" class="form-control">
-                                        </div>
-                                        <div class="mx-sm-3 mb-2 " style="display: inline-block; ">
-                                            <input type="text" name="exp_term" placeholder="기간" class="form-control">
-                                        </div>
-                                        <i class="gj-icon plus addExpBtn "></i>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- project history (in connecThink service) -->
-                            <div class="single_wrap ">
-                                <h4>connecThink 프로젝트 경험</h4>
-                                <ul class="list-unstyled ">
-                                    <li>프로젝트 1 2019/01 ~ 2020/01</li>
-                                    <li>프로젝트 2 2019/02 ~ 2020/02</li>
-                                    <li>프로젝트 3 2019/03 ~ 2020/03</li>
-                                    <li>프로젝트 4 2019/04 ~ 2020/04</li>
-                                </ul>
-                            </div>
-                            <div class="single_wrap " style="text-align: right; ">
-                                <a href="# " class="genric-btn info-border ">수정</a>
-                                <a href="# " class="genric-btn danger-border ">취소</a>
+                            <div class="single_wrap" style="text-align: right;">
+                                <a href="#" class="genric-btn info-border">수정</a>
+                                <a href="#" class="genric-btn danger-border">취소</a>
                             </div>
                         </form>
                     </div>
@@ -405,96 +235,136 @@
     <script src="js/main.js "></script>
 
     <script>
-        $(".experiences ").on("click ", ".addExpBtn ", function(e) {
-            var new_li = `<li>
-                            <div class="mb-2 " style="display: inline-block; ">
-                                <input type="text " name="exp_explain " placeholder="설명 " class="form-control ">
-                            </div>
-                            <div class="mx-sm-3 mb-2 " style="display: inline-block; ">
-                                <input type="text " name="exp_term " placeholder="기간 " class="form-control ">
-                            </div>
-                            <i class="gj-icon plus addExpBtn "></i>
-                        </li>`;
-            $(this).parent().after(new_li);
-            $(this).removeClass("plus ").removeClass("addExpBtn ").addClass("minus ").addClass("removeExpBtn ");
-        }).on("click ", ".removeExpBtn ", function(e) {
-            $(this).parent().remove();
-        });
+	    function position(obj){
+	    	console.log(obj);
+			if(obj.value == 1){
+				$position = $(obj).parent().parent().next().find(".position_div_second");
+				$position.html(`<select class="position" name="position" onchange="position_p(this);">
+									<option selected disabled hidden style='display: none' value=''>직무선택</option>
+									<option value="1">사업기획자</option>
+									<option value="2">컨텐츠기획자</option>
+									<option value="3">기획자</option>
+									<option value="4">마케터</option>
+									<option value="5">서비스운영자</option>
+									<option value="6">마케팅</option>
+									<option value="7">상품기획자</option>
+									<option value="8">모바일서비스기획자</option>
+								</select>`);
+				$position.css("display","block");
+				$("select").niceSelect();
+			} else if(obj.value == 2) {
+				$position = $(obj).parent().parent().next().find(".position_div_second");
+				$position.html(`<select class="position" name="position" onchange="position_ds(this);">
+									<option selected disabled hidden style='display: none' value=''>직무선택</option>
+									<option value="9">디자이너</option>
+									<option value="10">UI/UX디자이너</option>
+									<option value="11">그래픽디자이너</option>
+									<option value="12">웹 디자이너</option>
+									<option value="13">영상디자이너</option>
+									<option value="14">산업디자이너</option>
+									<option value="15">일러스트레이터</option>
+									<option value="16">모바일 디자이너</option>
+								</select>`);
+				$position.css("display","block");
+				$("select").niceSelect();
+			} else if(obj.value == 3) {
+				$position = $(obj).parent().parent().next().find(".position_div_second");
+				$position.html(`<select class="position" name="position" onchange="position_dv(this);">
+									<option selected disabled hidden style='display: none' value=''>직무선택</option>
+									<option value="17">개발자</option>
+									<option value="18">백엔드 개발자</option>
+									<option value="19">웹개발자</option>
+									<option value="20">프로트엔드개발자</option>
+									<option value="21">안드로이드개발자</option>
+									<option value="22">IOS</option>
+									<option value="23">임베디드 개발자</option>
+									<option value="24">DB 개발자</option>
+								</select>`);
+				$position.css("display","block");
+				$("select").niceSelect();
+			} 
+		}
+	    
+		function position_p(obj){
+			alert(obj.value);
+		}
+		
+		function position_ds(obj){
+			alert(obj.value);
+		}
+		
+		function position_dv(obj){
+			alert(obj.value);
+		}
+    	$(() => {
+    		//역할군 추가 및 삭제
+	        $(".apply_job_form").on("click", ".addPositionBtn", function(e) {
+                var new_inputs = `<div class="col-md-4 offset-2">
+	    							<div class="input_field position0">
+	    								<select name="position0" class="position" required>
+	    									<option selected disabled hidden style='display: none' value=''>직군선택</option>
+	    									<option value="1">기획자</option>
+	    									<option value="2">디자이너</option>
+	    									<option value="3">개발자</option>
+	    								</select>
+	    							</div>
+	    						</div>
+	    						<div class="col-md-4">
+	    							<div class="input_field position_div_second" style="display: none;">
+	    								
+	    							</div>
+	    						</div>
+	    						<div class="col-md-2">
+	    							<a class="boxed-btn3 addPositionBtn"><i class="gj-icon plus"></i></a>
+	    						</div>`;
+                $(this).parent().after(new_inputs);
+                $(this).removeClass("addPositionBtn").addClass("removePositionBtn");
+                $(this).find("i").removeClass("plus").addClass("minus");
+                $('select').niceSelect();
+            }).on("click", ".removePositionBtn", function(e) {
+                var $btnCol = $(this).parent();
+                $btnCol.prev().remove();
+                $btnCol.prev().remove();
+                console.log($btnCol.prev().children());
+                if($btnCol.prev().children().hasClass("mt-3")) $btnCol.next().removeClass("offset-2");
+                $btnCol.remove();
+            });
+    		//직군 선택 시 직무 select box 생성
+    		$(".apply_job_form").on("change", "select.position", function(e) {
+    			position(e.target);
+    		});
 
-        $(".positions").on("click", ".addPositionBtn", function(e) {
-            var new_li = `<li>
-                                        <div class="default-select" style="display: inline-block;">
-                                            <select name="position_no">
-                                                <option value="1">사업 기획자</option>
-                                                <option value="2">컨텐츠 기획자</option>
-                                                <option value="3">기획자</option>
-                                                <option value="4">마케터</option>
-                                                <option value="5">서비스 운영자</option>
-                                                <option value="6">마케팅</option>
-                                                <option value="7">상품 기획자</option>
-                                                <option value="8">모바일 서비스 기획자</option>
-                                                <option value="9">디자이너</option>
-                                                <option value="10">UI/UX디자이너</option>
-                                                <option value="11">그래픽 디자이너</option>
-                                                <option value="12">웹 디자이너</option>
-                                                <option value="13">영상 디자이너</option>
-                                                <option value="14">산업 디자이너</option>
-                                                <option value="15">일러스트레이터</option>
-                                                <option value="16">모바일 디자이너</option>
-                                                <option value="17">개발자</option>
-                                                <option value="18">백엔드 개발자</option>
-                                                <option value="19">웹 개발자</option>
-                                                <option value="20">프론트엔드 개발자</option>
-                                                <option value="21">안드로이드 개발자</option>
-                                                <option value="22">IOS</option>
-                                                <option value="23">임베디드 개발자</option>
-                                                <option value="24">DB 개발자</option>
-                                                <option selected disabled hidden style='display: none' value=''></option>
-                                            </select>
-                                        </div>
-                                        <i class="gj-icon plus addPositionBtn"></i>
-                                    </li>`;
-            $(this).parent().after(new_li);
-            $(this).removeClass("plus").removeClass("addPositionBtn").addClass("minus").addClass("removePositionBtn");
-            $('select').niceSelect();
-        }).on("click", ".removePositionBtn", function(e) {
-            $(this).parent().remove();
-        });
-        $(".thumb").on("click", "img", function(e) {
-            $(this).next().trigger("click");
-        });
-        
-        function position(obj){
-    		if(obj.value == 1){
-    			$("div.position1").css("display","block");
-    			$("div.position2").css("display","none");
-    			$("div.position3").css("display","none");
-    		} else if(obj.value == 2) {
-    			$("div.position1").css("display","none")
-    			$("div.position2").css("display","block");
-    			$("div.position3").css("display","none");
-    		} else if(obj.value == 3) {
-    			$("div.position1").css("display","none");
-    			$("div.position2").css("display","none");
-    			$("div.position3").css("display","block");
-    		} else {
-    			$("div.position1").css("display","none");
-    			$("div.position2").css("display","none");
-    			$("div.position3").css("display","none");
-    		}
-    	}
-        
-    	function position_p(obj){
-    		alert(obj.value);
-    	}
-    	
-    	function position_ds(obj){
-    		alert(obj.value);
-    	}
-    	
-    	function position_dv(obj){
-    		alert(obj.value);
-    	}
+            //경험 추가 및 삭제
+    		$(".apply_job_form").on("click", ".addExpBtn", function(e) {
+                var new_inputs = `<div class="col-md-4 offset-2">
+									<div class="input_field">
+					    				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
+					    			</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input_field">
+					    				<input type="text" name="term" placeholder="기간 ex)2019/01 ~ 2020/01">
+					    			</div>
+								</div>
+								<div class="col-md-2">
+									<a class="boxed-btn3 addExpBtn"><i class="gj-icon plus"></i></a>
+								</div>`;
+                $(this).parent().after(new_inputs);
+                $(this).removeClass("addExpBtn").addClass("removeExpBtn");
+                $(this).find("i").removeClass("plus").addClass("minus");
+            }).on("click", ".removeExpBtn ", function(e) {
+            	var $btnCol = $(this).parent();
+                $btnCol.prev().remove();
+                $btnCol.prev().remove();
+                if($btnCol.prev().children().hasClass("mt-3")) $btnCol.next().removeClass("offset-2");
+                $btnCol.remove();
+            });
+            
+			//프로필 클릭시 사진 업로드
+            $(".thumb").on("click", "img", function(e) {
+                $(this).next().trigger("click");
+            });
+    	});
     </script>
 </body>
 

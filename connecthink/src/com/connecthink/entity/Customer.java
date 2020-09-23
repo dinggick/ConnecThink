@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 사용자 정보
@@ -28,7 +29,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-
+@ToString
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -61,16 +62,6 @@ public class Customer {
 	@JoinColumn(name = "customer_no")
 	@JsonIgnore
 	private Set<Experience> experiences;
-	
-	public Set<Experience> getExperiences(){
-		System.out.println("getter transaction name : " + TransactionSynchronizationManager.getCurrentTransactionName());
-		return this.experiences;
-	}
-	
-	public void setExperiences(Set<Experience> experiences) {
-		System.out.println("setter transaction name : " + TransactionSynchronizationManager.getCurrentTransactionName());
-		this.experiences = experiences;
-	}
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")

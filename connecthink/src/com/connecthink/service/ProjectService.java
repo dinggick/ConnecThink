@@ -106,6 +106,10 @@ public class ProjectService {
 		return pList;
 	}
 	
+	public Project findByRecruits(String recruitNo) {
+		return projectRepository.findByRecruits(recruitNo);
+	}
+
 	public List<Project> findApplied(Integer managerNo){
 		List<Project> pList = projectRepository.findByManagerNo(managerNo);
 //		Integer invited = new Integer(0);
@@ -136,6 +140,5 @@ public class ProjectService {
 		}
 		return pList;
 	}
-	
-	
+
 }

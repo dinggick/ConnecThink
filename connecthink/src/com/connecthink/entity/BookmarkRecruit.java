@@ -1,12 +1,9 @@
 package com.connecthink.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -27,7 +24,7 @@ import lombok.Setter;
 @Table(name = "bookmark_recruit")
 public class BookmarkRecruit{
 	@EmbeddedId
-	private BookmarkRecruitId id;
+	private BookmarkRecruitId id = new BookmarkRecruitId();
 	
 	@MapsId(value = "customerNo")
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

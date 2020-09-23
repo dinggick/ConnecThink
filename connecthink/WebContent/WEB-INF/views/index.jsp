@@ -130,54 +130,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 1</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 2</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 3</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 4</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 5</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 6</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 7</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>TEAM 8</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -193,54 +146,54 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="member_recruit"><h4>MEMBER 1</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 2</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 3</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 4</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 5</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 6</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 7</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
-				<div class="col-lg-4 col-xl-3 col-md-6">
-					<div class="single_catagory">
-						<a href="jobs.html"><h4>MEMBER 8</h4></a>
-						<p>Available position</p>
-					</div>
-				</div>
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="member_recruit"><h4>MEMBER 1</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 2</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 3</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 4</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 5</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 6</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 7</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
+<!-- 					<div class="single_catagory"> -->
+<!-- 						<a href="jobs.html"><h4>MEMBER 8</h4></a> -->
+<!-- 						<p>Available position</p> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 			</div>
 		</div>
 	</div>
@@ -358,10 +311,13 @@
 	<script src="js/jquery.form.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/mail-script.js"></script>
-
-
 	<script src="js/main.js"></script>
-	
+	<script src="js/index.js"></script>
+	<script>
+		$(() => {
+			
+		});
+	</script>
 </body>
 
 </html>

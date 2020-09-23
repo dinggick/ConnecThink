@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
 import com.connecthink.service.CustomerService;
@@ -20,10 +21,15 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	
-	@RequestMapping("/findAll")
-	@ResponseBody
-	public List<Customer> findAll() {
-		return service.findAll();
+	@RequestMapping("/all/mateList")
+	public ModelAndView findAll() {
+		System.out.println("matelist test");
+		ModelAndView mnv = new ModelAndView();
+		List<Customer> list = service.findAll();
+		mnv.addObject("customer", list);
+		mnv.setViewName("mate");
+		
+		return mnv; 
 	}
 	
 	@RequestMapping("/findByEmail")
@@ -48,5 +54,10 @@ public class CustomerController {
 	@RequestMapping("/modifyCustomerInfo")
 	public void modifyCustomerInfo() {
 		
+	}
+	@RequestMapping("/memberList")
+	public List<Customer> findTopMembers(){
+		System.out.println("드러옴");
+		return service.findTopMembers();
 	}
 }

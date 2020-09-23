@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.connecthink.entity.Recruit;
 
-public interface RecruitRepository extends JpaRepository<Recruit, Integer> {
+public interface RecruitRepository extends JpaRepository<Recruit, String> {
 	@Query(nativeQuery = true, value = "select\r\n" + 
 			"    r.*\r\n" + 
 			"from\r\n" + 
@@ -16,4 +16,5 @@ public interface RecruitRepository extends JpaRepository<Recruit, Integer> {
 			"where\r\n" + 
 			"    m.member_no = ?1")
 	public List<Recruit> findByCustomerNo(Integer customerNo);
+	
 }

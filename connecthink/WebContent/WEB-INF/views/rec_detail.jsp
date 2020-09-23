@@ -1,4 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var = "detail" value="${requestScope.detail}"/>
+<c:set var = "manager" value="${requestScope.manager}"/>
+<c:set var = "member" value="${requestScope.member}"/>
+<c:set var = "recNo" value="${requestScope.recNo}"/>
+<c:set var = "bmCount" value="${requestScope.bmCount}"/>
 
 <head>
 <meta charset="utf-8">
@@ -28,8 +35,8 @@
 
 <style>
 .thumb {
- width: 50px !important;
- height: 50px !important;
+ width: 55px !important;
+ height: 55px !important;
  display: inline-block;
 }
 
@@ -62,6 +69,17 @@ img.on {
  display: none;
 }
 
+li::before {
+ content : unset !important;
+}
+
+li{
+ color: black !important;
+}
+
+span.customerNo{
+ display: none;
+}
 </style>
 
 </head>
@@ -105,11 +123,11 @@ img.on {
 							</div>
 							<div class="jobs_right text-right pt-2">
 								<div class="apply_now">
+									<span class="bm_count">${bmCount}</span>
 									<img src="img/bookmark.png" class="bm mr-2" onclick="bookmark();">
 									<img src="img/bookmark2.png" class="on mr-2" onclick="delmark();">
-									<span class="rec_no">1</span>
+									<span class="rec_no">${recNo}</span>
 								</div>
-								<span class="bm_count">count</span>
 							</div>
 						</div>
 					</div>
@@ -117,41 +135,56 @@ img.on {
 					<div class="descript_wrap white-bg"
 						style="border-bottom: 1px solid #EAEAEA;">
 						<div class="single_wrap team_info">
-							<h4>팀소개</h4>
-							<p>팀설명 (파일에서 읽어올 부분)</p>
+							<h4 class="mb-2">소개</h4>
+							<ul>
+							<li>${detail.about}</li>
+							</ul>
+							<h4 class="mb-2 mt-2">목적</h4>
+							<ul>
+							<li>${detail.purpose}</li>
+							</ul>
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
 								<h4 class="mt-3">팀원</h4>
-								<div class="single_candidates mb-5">
+								<c:forEach items="${member}" var = "member" varStatus="status">
+								<div class="single_candidates mb-4 mr-3" style="display: inline-block;">
 									<div class="thumb text-center mr-2">
-										<img src="img/candiateds/1.png" alt=""> <span>이름</span>
+										<img src="img/candiateds/1.png" alt="" onclick="modal(this);">
+										<span class="customerNo">${member.customerNo}</span>
+										<span style="font-size: 0.9em;">${member.name}</span>
 									</div>
 								</div>
+								</c:forEach>
 								<!-- 프로필 끝 -->
 							</div>
 						</div>
 						<div class="single_wrap project_info">
 							<h4>프로젝트 소개</h4>
-							<ul>
-								<li>모집직무 :</li>
-								<li>모집인원 :</li>
-								<li>요구사항 :</li>
-								<li>요구사항내용</li>
+							<ul class="rec_wanna">
+							<c:forEach items="${detail.recruits}" var="rec" varStatus="status">
+							<c:if test="${recNo eq rec.recruitNo}">
+								<li>모집직무 : ${rec.position.name}</li>
+								<li>모집인원 : ${rec.headCount}</li>
+								<li>요구사항 : ${rec.requirement}</li>
+							</c:if>
+							</c:forEach>
 							</ul>
 						</div>
 					</div>
 					<!-- 컨텐츠 끝 -->
-					<div class="single_jobs white-bg d-flex justify-content-between">
+					<div class="single_jobs white-bg d-flex justify-content-between" style="height: 160px !important;">
 						<div class="rec_foot_left">
 							<!-- 팀장 프로필 -->
 							<div class="thumb text-center mr-2">
-								<img src="img/candiateds/1.png" alt="프로필">
+								<span>[팀장]</span>
+								<img src="img/candiateds/1.png" alt="프로필" class="mt-1" onclick="modal(this);">
+								<span class="customerNo">${manager.customerNo}</span>
+								<span>${manager.name}</span>
 							</div>
-							<span>[팀장]이름</span>
 						</div>
 						<div class="rec_foot_right">						
-							<button class="boxed-btn mt-2 message">메세지</button>
-							<button class="boxed-btn mt-2 rec" >지원하기</button>
+							<button class="boxed-btn mt-4 message" onclick="message(this);">메세지</button>
+							<button class="boxed-btn mt-4 rec" onclick="apply();">지원하기</button>
 						</div>
 					</div>
 				</div>
@@ -201,18 +234,52 @@ img.on {
 	<!-- script -->
 	<script>
 	
+	//북마크 추가
 	function bookmark(){
-		$("img.bm").css("display","none");
-		$("img.on").css("display", "inline-block");
 		let no = $("span.rec_no").text();
 		console.log(no);
+		$.ajax({
+			url : "${contextPath}/bmToRec",
+			method : "POST",
+			data : {recruitNo : no},
+			success : function(data){
+				if(data == "success"){
+					alert("북마크 추가");
+					$("img.bm").css("display","none");
+					$("img.on").css("display", "inline-block");
+					count();
+				}
+			}
+		});
 	}
 	
+	//북마크 삭제
 	function delmark(){
 		$("img.bm").css("display","inline-block");
 		$("img.on").css("display", "none");
 		let no = $("span.rec_no").text();
 		console.log(no);
+	}
+	
+	//팀원 모달
+	function modal(e){
+		let $cNo = $(e).siblings("span.customerNo").html();
+		alert($cNo);
+	}
+	
+	//메세지 보내기
+	function message(e){
+		let $cNo = $(e).parents("div.rec_foot_right").siblings("div.rec_foot_left").find("span.customerNo").html();
+		alert($cNo);
+	}
+	
+	//지원하기
+	function apply(){
+		alert("${recNo}");
+		
+	}
+	
+	function count(){
 	}
 	
 	</script>

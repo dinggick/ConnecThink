@@ -13,12 +13,14 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.11.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
+<!-- 트랜잭션 관리자 활성화 -->
+    <tx:annotation-driven/>
+    
 	<bean id="viewResolver"
       class="org.springframework.web.servlet.view.InternalResourceViewResolver">
    <property name="prefix" value="/WEB-INF/views/"></property>
    <property name="suffix" value=".jsp"></property>
    </bean>
-	<tx:annotation-driven/>
 	
 	<mvc:resources mapping="img/**" location="/resources/images/"/>
 	<mvc:resources mapping="css/**" location="/resources/css/"/>
