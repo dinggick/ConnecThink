@@ -70,7 +70,6 @@
 }
 ul.list>li {
     border-bottom: 1px solid #f0e9ff;
-    transition: all 0.3s ease 0s;
     padding-bottom: 12px;
     text-align: center;
 }
@@ -90,6 +89,13 @@ ul.list>li {
 	cursor: pointer;
 	transition: all 0.3s ease 0s;
 }
+.person:hover, .system:hover {
+	color: #0056b3;
+	font-weight: 1000;
+}
+.customerNo {
+	display: none;
+}
 .new {
 	color: #fff;
 	background: #ff5e13;
@@ -97,6 +103,7 @@ ul.list>li {
 	font-size: 0.8em;
 	margin-left: 10px;
 	padding: 5px;
+	transition: all 0s ease 0s;
 }
 .message {
 	height: 700px;
@@ -114,7 +121,11 @@ ul.list>li {
     background-color: rgba(256,256,256,0.95);
 }
 .msg_sender>img {
+	padding-left: 20px;
 	height: 50px;
+}
+.personName {
+	padding-left: 20px;
 }
 .message .content {
 	height: 560px;
@@ -223,16 +234,16 @@ ul.list>li {
                     <div class="row">
                     	<div class="system">커넥띵크 알림<a href="#" class="new">1</a></div>
                     	<div class="col-12 list_wrap">
-                    		<ul class="list cat-list">
-                    			<li class="person">고디바<a href="#" class="new">7</a></li>
-                    			<li class="person">길리안<a href="#" class="new">3</a></li>
-                    			<li class="person">로이스<a href="#" class="new"></a></li>
-                    			<li class="person">페레로로쉐<a href="#" class="new"></a></li>
-                    			<li class="person">허쉬<a href="#" class="new"></a></li>
-                    			<li class="person">가나<a href="#" class="new"></a></li>
-                    			<li class="person">토블론<a href="#" class="new"></a></li>
-                    			<li class="person">엠앤엠<a href="#" class="new"></a></li>
-                    			<li class="person">ABC<a href="#" class="new"></a></li>
+                    		<ul class="list cat-list personList">
+                    			<li class="person"><span class="customerNo"></span>고디바<span class="new">7</span></li>
+                    			<li class="person"><span class="customerNo"></span>길리안<span class="new">3</span></li>
+                    			<li class="person"><span class="customerNo"></span>로이스<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>페레로로쉐<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>허쉬<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>가나<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>토블론<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>엠앤엠<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>ABC<span class="new"></span></li>
                     		</ul>
                     	</div>
                     </div>
@@ -244,7 +255,7 @@ ul.list>li {
                     			<div class="col-12 content">
                     			    <div class="msg_header">
                     					<div class="msg_sender">
-                    						<img src="img/person.png"><span>고디바</span>
+                    						<img src="img/person.png"><span class="customerNo"></span><span class="personName">고디바</span>
                     					</div>
                     				</div>
                     				<div class="msg_body">
@@ -329,7 +340,28 @@ ul.list>li {
     <script src="js/mail-script.js"></script>
 
     <script src="js/main.js"></script>
-    <script>
-    </script>
+    
+<script>
+var listSection = $("ul.list");
+
+listSection.click(function(){
+	alert("클릭");
+});
+
+function loadInbox(){
+	$.ajax({
+		url:"${contextPath}/manageInvited"
+		,method:"POST"
+			//{managerNo : ${sessionScope.loginInfo},
+		,data: {managerNo : testManager,
+			${_csrf.parameterName} : '${_csrf.token}'}
+		,success:function(personList){
+			personList.forEach(function(person, index){
+				<li class="person"><span class="customerNo"></span>고디바<span class="new">7</span></li>
+			});
+		}
+	});
+}
+</script>
 </body>
 </html>

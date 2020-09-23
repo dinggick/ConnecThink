@@ -1,7 +1,12 @@
 package com.connecthink.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.connecthink.entity.Customer;
 
 @Controller
 public class InboxController {
@@ -11,8 +16,9 @@ public class InboxController {
 		
 	}
 	
-	@RequestMapping("/manageTeam")
-	public void manageTeam() {
-		
-	}
+//	@RequestMapping("/loadInbox")
+//	@ResponseBody
+//	public List<Customer> loadInbox() {
+//		return 
+//	}
 }
