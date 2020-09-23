@@ -22,7 +22,6 @@ import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
 
 @Service
-@Transactional
 public class BoardService {
 	
 	@Autowired
@@ -84,19 +83,16 @@ public class BoardService {
 	/*
 	 * 해당 프로젝트 포스트잇 전체 조회
 	 */
-//	@Transactional
+	@Transactional
 	public List<Task> lookUpTask(Integer project_no){
-		System.out.println("--------------test01");
 		List<Task> tasks = new ArrayList<>();
 //		projectRepository.findById(project_no).get().getTasks().forEach(r ->{
 //			tasks.add(r);
 //		});
 		Project p = projectRepository.findById(project_no).get();
-		System.out.println("--------------test02");
 //		p.getTasks().get(0).getTaskNo();
 //		Hibernate.initialize(p.getTasks());
 		tasks.addAll(p.getTasks());
-		System.out.println("--------------test03");
 		
 		return tasks;
 		
@@ -107,6 +103,7 @@ public class BoardService {
 	 * 포스트잇 한개 추가
 	 * @author 변재
 	 */
+	@Transactional
 	public void add(Task task,Integer customerNo,Integer projectNo) {
 		Customer c = customerRepository.findById(customerNo).get();
 		Project p = projectRepository.findById(projectNo).get();
@@ -122,6 +119,7 @@ public class BoardService {
 	 */
 	public void updateByComment(Task task) {
 		Task t = taskRepository.findById(task.getTaskNo()).get();
+		System.out.println("*******************************" + t.getTaskNo());
 		
 		taskRepository.save(t);
 	}
@@ -131,7 +129,8 @@ public class BoardService {
 	 * @author 변재
 	 */
 	public void updateByState(Task task) {
-		Task t = taskRepository.findById(task.getTaskStatus()).get();
+		Task t = taskRepository.findById(task.getTaskNo()).get();
+		System.out.println("*******************************" + t.getTaskNo());
 		
 		taskRepository.save(t);
 	}

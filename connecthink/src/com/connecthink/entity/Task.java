@@ -52,7 +52,7 @@ public class Task {
 	@Column(name = "task_status")
 	private Integer taskStatus;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "writer_no")
 	private Customer customer;
 }

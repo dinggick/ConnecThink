@@ -54,11 +54,11 @@ public class Project {
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
 }

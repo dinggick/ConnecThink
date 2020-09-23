@@ -30,13 +30,12 @@ public class BoardController {
 	private BoardService service;
 	
 	@RequestMapping("/board")
-	ModelAndView board(HttpServletRequest req,@RequestParam("project_no") String project_no) {
+	ModelAndView board(HttpServletRequest req,@RequestParam("project_no") int project_no) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println("board임");
-		System.out.println("project_No : "+project_no);
-		req.setAttribute("project_no",project_no);
+		
 		int customer_no = 0;
 		
+		List<Task> taskList = tList(project_no);
 		//Http session 에 저장할 userid 대체용
 		for(int i = 0; i < 100; i++) {
 
@@ -46,9 +45,10 @@ public class BoardController {
 		}
         
         HttpSession session = req.getSession();        
-        session.setAttribute("LoginInfo",customer_no);
+        //session.setAttribute("LoginInfo",customer_no);
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
+        mv.addObject("list", taskList);
 		return mv;
 	}
 	
@@ -104,30 +104,53 @@ public class BoardController {
 		return mav;
 	}
 	
-	@RequestMapping("/board")
-	public ModelAndView tList(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		//Integer no = Integer.parseInt(request.getParameter("projectNo"));
+	
+	public List<Task> tList(int project_no) {
 		
-		List<Task> list = service.lookUpTask(2);
-		
-		mav.addObject("list", list);
-		mav.setViewName("board");
-		
-		return mav;
+		List<Task> list = service.lookUpTask(project_no);
+
+		return list;
 	}
 	
 	@RequestMapping("/updateContent")
 	public ModelAndView updateContent(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String content = request.getParameter("content");
+		System.out.println("***************************" + content);
+		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 		Task task = new Task();
+		Customer c = new Customer();
+		c.setCustomerNo(3);
 		
+		task.setCustomer(c);
+		task.setTaskNo(taskNo);
 		task.setContent(content);
 		
 		service.updateByComment(task);
 		mav.setViewName("board");
 		
+		return mav;
+	}
+	
+	@RequestMapping("/updateStatus")
+	public ModelAndView updateState(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		Task task = new Task();
+		
+		Integer status = Integer.parseInt(request.getParameter("status"));
+		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
+		
+		System.out.println("상태가ㅏㄱ가ㅏㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ" + status);
+		
+		Customer c = new Customer();
+		c.setCustomerNo(3);
+		
+		task.setTaskNo(taskNo);
+		task.setCustomer(c);
+		task.setTaskStatus(status);
+		
+		service.updateByState(task);
+		mav.setViewName("board");
 		return mav;
 	}
 	
@@ -142,6 +165,7 @@ public class BoardController {
 	
 		
 		service.removeByTask(3, taskNo);
+		mav.setViewName("board");
 		return mav;
 	}
 }
