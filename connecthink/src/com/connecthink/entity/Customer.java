@@ -6,13 +6,11 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -58,17 +56,19 @@ public class Customer {
 	@Column(name = "drop_status", nullable = true)
 	private Integer dropStatus;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	@JsonIgnore
 	private Set<Experience> experiences;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	@JsonIgnore
 	private List<Notification> notifications;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	private Set<CustomerPosition> customerPositions;
 }

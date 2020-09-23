@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -50,15 +49,16 @@ public class Project {
 	@Column(name = "manager_no")
 	private Integer managerNo;
 	
-	@OneToMany
+
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
-
-	@OneToOne
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
 }
