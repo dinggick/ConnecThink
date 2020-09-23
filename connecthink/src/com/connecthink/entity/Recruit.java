@@ -42,8 +42,6 @@ public class Recruit {
 	@Column(name = "recruit_status")
 	private Integer recruitStatus;
 	
-	
-	@OneToOne
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "recruit_no")
 	private Set<Member> members;
