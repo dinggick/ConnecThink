@@ -1,9 +1,7 @@
 package com.connecthink.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +11,6 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -51,10 +48,13 @@ public class Message {
 	@Column(name = "create_date")
 	private String createDate;
 	
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne
 	@JoinColumn(name = "writer_no")
 	private Customer writer;
 	
 	@Transient
 	private boolean reception;
+	
+	@Transient
+	private String project_no;
 }

@@ -862,8 +862,6 @@ scale
 </body>
 <script>
 	
-	var writer = "";
-	
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -900,28 +898,28 @@ scale
 		   msgs : [],
 		   wrts : [],
 		   memberList : [],
-		   project_no : ""
+		   project_no : 0,
+		   writer : 0
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
 			  console.log('created');
 			  this.connect();
-			  console.log(${project_no});
-// 			  this.project_no = ev.target.getAttribute("project_no");
-// 			  alert(this.project_no);
+			  this.project_no = ${project_no};
+			  
 			  //이전에 메세지 들고오기
-			  axios
-			  	.get('board/lookUpMsg', {
-			  	    params: {
-			  	      project_no: 1
-			  	    }
-			  	 })
-			  	.then(result => {
-					  var msgList = result.data;	   
-					  msgList.forEach(msg => 
-					  	this.msgs.push({createDate : this.getTime(),content : msg.content,reception :msg.reception,writer : msg.writer.name}) 
-					  );
-			  })//axios
+// 			  axios
+// 			  	.get('board/lookUpMsg', {
+// 			  	    params: {
+// 			  	      project_no: 1
+// 			  	    }
+// 			  	 })
+// 			  	.then(result => {
+// 					  var msgList = result.data;	   
+// 					  msgList.forEach(msg => 
+// 					  	this.msgs.push({createDate : this.getTime(),content : msg.content,reception :msg.reception,writer : msg.writer.name}) 
+// 					  );
+// 			  })//axios
     		}//created
 		  
 		   //변화가 있을경우
@@ -956,7 +954,7 @@ scale
 			 },//sendMsg 
 			 
 			 //메세지 전송
-			 send(){
+			 send(msg){
 				 if(this.status == "Connected"){
 					 this.msgs.push({createDate : this.getTime(),content : this.message,reception :false});	 
 					 //this.socket.send(this.message);
@@ -964,8 +962,11 @@ scale
 							 createDate : this.getTime()
 							 ,content : this.message
 							 ,reception :false
+							 ,project_no : this.project_no
 					 }
 					 this.socket.send(JSON.stringify(messageForm));
+				 }else if(this.status == "ready"){					 
+					 this.socket.send(msg);
 				 }else{
 					alert('연결 상태가 올바르지 않습니다.'); 
 				 }
@@ -974,8 +975,12 @@ scale
 			  connect(){
 				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/boardEcho");
 				  console.log(this.socket);
+				  
 				  //onopen
 				  this.socket.onopen = () => {
+					  this.status = "ready";
+					  this.send("ready:"+this.project_no);
+					  
 					  console.log('connected');
 					  this.status = "Connected";
 					  //수신 메세지
@@ -984,13 +989,19 @@ scale
 						var datas = data.split(":");
 						console.log(datas);
 						if(datas[0] == "userid"){
-							writer = datas[1];
+							this.writer = datas[1];
 						}else{
+							
 							var user = datas[0];
 							var msg = datas[1];
+							//읽어온 데이터가 내가보낸 메세지 일 경우
+							if(this.writer == user){
+								 this.msgs.push({createDate : this.getTime(),content : msg,reception :false});	 
+							}else{
+								//전송한 사람이 내가 아닐경우
+								this.msgs.push({createDate : this.getTime(),content : msg,reception :true,writer : user});
+							}
 							
-							//전송한 사람이 내가 아닐경우
-							this.msgs.push({createDate : this.getTime(),content : msg,reception :true,writer : user});
 						}
 												
 						
@@ -1012,7 +1023,7 @@ scale
 				  axios
 				  	.get('board/lookUpMemeber', {
 				  	    params: {
-				  	      project_no: 1
+				  	      project_no: this.project_no
 				  	    }
 				  	 })
 				  	.then(result => {

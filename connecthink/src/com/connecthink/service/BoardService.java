@@ -3,6 +3,8 @@ package com.connecthink.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,14 +38,18 @@ public class BoardService {
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
 	 */
+	@Transactional
 	public void sendMessage(int project_no,List<Message> messages) {
 		System.out.println("sendMessage service 들어옴");
 		Project p = projectRepository.findById(project_no).get();
 		ChatRoom cr_no = p.getChatRoom();
 		List<Message> msgs = cr_no.getMessages();
 		messages.forEach(message -> {
+			System.out.println("In service message Info : "+message);
 			msgs.add(message);
 		});
+		System.out.println("size : "+messages.size());
+		System.out.println("save 진행 직전");
 		projectRepository.save(p);
 	}
 	

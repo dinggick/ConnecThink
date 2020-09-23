@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -54,15 +53,15 @@ public class Customer {
 	@Column(name = "drop_status", nullable = true)
 	private Integer dropStatus;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	private Set<Experience> experiences;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	private List<Notification> notifications;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	private Set<CustomerPosition> customerPositions;
 }

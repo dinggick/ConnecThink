@@ -1,12 +1,9 @@
 package com.connecthink.entity;
 
-import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
@@ -30,12 +27,12 @@ public class BookmarkUser{
 	private BookmarkUserId id;
 	
 	@MapsId(value = "send")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "send")
 	private Customer send;
 	
 	@MapsId(value = "receive")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "receive")
 	private Customer receive;
 }
