@@ -19,6 +19,9 @@ public class RecruitService {
 	public List<Recruit> findAll(){
 		return recruitRepository.findAll();
 	}
+	public List<Recruit> findTopRecruit(){
+		return recruitRepository.findTop8By();
+	}
 	
 	
 	

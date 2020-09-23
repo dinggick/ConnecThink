@@ -6,9 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.connecthink.entity.BookmarkRecruit;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
@@ -72,7 +72,11 @@ public class RecruitController {
 		mnv.setViewName("/rec_detail");
 		
 		return mnv;
-
+	}
+	@RequestMapping("/projectList")
+	@ResponseBody
+	public List<Recruit> findTopRecruit(){
+		return recruitService.findTopRecruit();
 	}
 
 }

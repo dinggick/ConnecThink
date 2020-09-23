@@ -55,8 +55,7 @@ public class CustomerController {
 		
 	}
 	@RequestMapping("/memberList")
-	public List<Customer> findTopMembers(){
-		System.out.println("드러옴");
+	public List<Customer> findTopMembers(){		
 		return service.findTopMembers();
 	}
 }

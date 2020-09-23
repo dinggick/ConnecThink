@@ -47,6 +47,13 @@
     height: 700px;
     width: 1400px !important;
 }
+
+.rec_title{
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
 </style>
 <body>
 	<!--[if lte IE 9]>
@@ -237,7 +244,7 @@
 								<div class="col-lg-11">
 									<div class="single_testmonial d-flex align-items-center">
 										<div class="thumb">
-											<img src="img/testmonial/author.png" alt="">
+											<img src="img/kkugi.jpg" alt="">
 											<div class="quote_icon">
 												<i class=" Flaticon flaticon-quote"></i>
 											</div>
