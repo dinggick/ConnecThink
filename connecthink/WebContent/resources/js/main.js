@@ -330,9 +330,50 @@ mailChimp();
       //      rightIcon: '<span class="fa fa-caret-down"></span>'
       //  }
       // });
+      var csrfToken = $("#csrf").val();
+      	//로그아웃 버튼 클릭시 로그아웃 요청 전송
+		$("#logoutBtn").click(() => {
+			console.log(csrfToken);
+			$.ajax({
+				url : "/connecthink/logout",
+				method : "POST",
+				data : {_csrf : csrfToken},
+				success : (data, textStatus, jqXHR) => {
+					location.reload();
+				}
+			});
+		});
 
-
-
-
-
+		//이메일 인증 버튼 클릭 시 인증 요청 전송
+		$("#requestVerifyCodeBtn").click(function() {
+			var email = $(this).parent().prev().find("input").val();
+			
+			$.ajax({
+				url : "/connecthink/all/requestVerifyCode",
+				data : {'email' : email, 
+						'_csrf' : csrfToken},
+				success : (data, textStatus, jqXHR) => {
+					
+				}
+			});
+		});
+		
+		$("#verifyBtn").click(function() {
+			var verifyCode = $(this).parent().prev().find("input").val();
+			
+			$.ajax({
+				url : "/connecthink/all/verify",
+				data : {'code' : verifyCode, 
+						'_csrf' : csrfToken},
+				success : (data, textStatus, jqXHR) => {
+					alert("인증 성공");
+					$("#verifyModal").css("display", "none");
+					$("#isVerified").val("y");
+					console.log($("#isVerified").val());
+				},
+				error : () => {
+					alert("인증 코드가 올바르지 않습니다.");
+				}
+			});
+		});
 })(jQuery);	

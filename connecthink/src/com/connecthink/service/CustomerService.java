@@ -20,13 +20,34 @@ public class CustomerService {
 		return customerRepository.findAll();
 	}
 	
+	/**
+	 * 회원 번호로 회원 정보 조회
+	 * @param customerNo
+	 * @return Customer (Entity type)
+	 */
 	public Customer findByNo(Integer customerNo) {
 		Customer c = customerRepository.findById(customerNo).get();
-		c.getCustomerPositions();
-		c.getExperiences();
-		c.getNotifications();
+		c.getExperiences().forEach(e -> {
+			e.getExplain();
+		});
+		c.getNotifications().forEach(n -> {
+			n.getId();
+		});
+		c.getCustomerPositions().forEach(cp -> {
+			cp.getPosition().getName();
+		});
 
 		return c;
+	}
+	
+	/**
+	 * email로 회원 정보 조회
+	 * @author CJK
+	 * @param email
+	 * @return Customer (Entity type)
+	 */
+	public Customer findByEmail(String email) {
+		return customerRepository.findByEmail(email);
 	}
 	
 	public void add(Customer c) {

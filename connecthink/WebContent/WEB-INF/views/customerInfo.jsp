@@ -71,17 +71,17 @@
                                 <div class="jobs_conetent">
                                     <!-- user name -->
                                     <a href="#">
-                                        <h4>사람 이름</h4>
+                                        <h4 id="customerName"></h4>
                                     </a>
                                     <div class="links_locat d-flex align-items-center">
                                         <!-- position -->
                                         <div class="location">
-                                            <p> <i class="fa fa-male"></i> 기획자, 백엔드 개발자
+                                            <p id="customerPositions"> <i class="fa fa-male"></i>
                                             </p>
                                         </div>
                                         <!-- graduation status -->
                                         <div class="location">
-                                            <p> <i class="fa fa-book"></i> 졸업</p>
+                                            <p id="customerGraduationStatus"> <i class="fa fa-book"></i> </p>
                                         </div>
                                     </div>
                                 </div>
@@ -92,36 +92,29 @@
                     	<!-- email -->
                     	<div class="single_wrap">
                     		<h4>이메일</h4>
-                    		<p>jjj1211@hanmir.com</p>
+                    		<p id="customerEmail"></p>
                     	</div>
                     	<!-- birth date -->
                     	<div class="single_wrap">
                     		<h4>생년월일</h4>
-                    		<p>1992/12/11</p>
+                    		<p id="customerBirthDate"></p>
                     	</div>
                         <!-- about -->
                         <div class="single_wrap">
                             <h4>한 줄 소개</h4>
-                            <p>한 줄 소개입니다.</p>
+                            <p id="customerAbout"></p>
                         </div>
                         <!-- experiences -->
                         <div class="single_wrap">
                             <h4>경험</h4>
-                            <ul>
-                                <li>공모전 1 2019/01 ~ 2020/01</li>
-                                <li>공모전 2 2019/02 ~ 2020/02</li>
-                                <li>공모전 3 2019/03 ~ 2020/03</li>
-                                <li>공모전 4 2019/04 ~ 2020/04</li>
+                            <ul id="customerExps">
+                                
                             </ul>
                         </div>
                         <!-- project history (in connecThink service) -->
                         <div class="single_wrap">
                             <h4>connecThink 프로젝트 경험</h4>
-                            <ul>
-                                <li>프로젝트 1 2019/01 ~ 2020/01</li>
-                                <li>프로젝트 2 2019/02 ~ 2020/02</li>
-                                <li>프로젝트 3 2019/03 ~ 2020/03</li>
-                                <li>프로젝트 4 2019/04 ~ 2020/04</li>
+                            <ul id="projectHistories">
                             </ul>
                         </div>
                         <div class="single_wrap" style="text-align: right;">
@@ -176,13 +169,63 @@
     <script>
     	$(() => {
     		$.ajax({
-    			url : "/connecthink/logined/findCustomerByNo",
+    			url : "/connecthink/findCustomerByNo",
     			method : "POST",
     			data : {customerNo : ${sessionScope.loginInfo},
     					${_csrf.parameterName} : '${_csrf.token}'},
     			success : (data, textStatus, jqXHR) => {
-    				console.log(data);
+    				//이름
+    				$("#customerName").html(data.name);
+    				//역할군
+    				data.customerPositions.forEach(cp => {
+    					$("#customerPositions").html($("#customerPositions").html() + cp.position.name);
+    				});
+    				//졸업여부
+    				if(data.graduation == 1) $("#customerGraduationStatus").html($("#customerGraduationStatus").html() + '졸업');
+    				else $("#customerGraduationStatus").html($("#customerGraduationStatus").html() + '미졸업');
+    				//이메일
+    				$("#customerEmail").html(data.email);
+    				//생년월일
+    			    var birthDate = new Date(data.birthDate.substr(0, 4), data.birthDate.substr(4, 2) - 1, data.birthDate.substr(6, 2));
+    			    var y = birthDate.getFullYear();
+    			    var m = (birthDate.getMonth() + 1) >= 10 ? (birthDate.getMonth() + 1) : '0' + (birthDate.getMonth() + 1);
+    			    var d = birthDate.getDate() >= 10 ? birthDate.getDate() : '0' + birthDate.getDate();
+    				$("#customerBirthDate").html(y + "/" + m + "/" + d);
+    				//한 줄 소개
+    				$("#customerAbout").html(data.about);
+    				data.experiences.forEach(e => {
+    					$("#customerExps").html($("#customerExps").html() + "<li>" + e.explain + " " + e.term + "</li>");
+    				});
     			}
+    		});
+    		
+    		$.ajax({
+    			url : "/connecthink/findProjectHistoryByNo",
+    			method : "POST",
+    			data : {customerNo : ${sessionScope.loginInfo},
+					${_csrf.parameterName} : '${_csrf.token}'},
+				success : (data, textStatus, jqXHR) => {
+					console.log(data);
+					data.forEach(h => {
+						var startDate = new Date(h.startDate);
+						var endDate = h.endDate != null ? new Date(h.endDate) : null;
+						
+						var sy = startDate.getFullYear();
+	    			    var sm = (startDate.getMonth() + 1) >= 10 ? (startDate.getMonth() + 1) : '0' + (startDate.getMonth() + 1);
+	    			    var sd = startDate.getDate() >= 10 ? startDate.getDate() : '0' + startDate.getDate();
+	    			    
+	    			    if(endDate != null) {
+	    			    	var ey = endDate.getFullYear();
+		    			    var em = (endDate.getMonth() + 1) >= 10 ? (endDate.getMonth() + 1) : '0' + (endDate.getMonth() + 1);
+		    			    var ed = endDate.getDate() >= 10 ? endDate.getDate() : '0' + endDate.getDate();
+		    			    
+		    			    $("#projectHistories").html($("#projectHistories").html() +  "<li>" + h.title + " " + sy + "/" + sm + "/" + sd + "~" + ey + "/" + em + "/" + ed + "</li>");
+	    			    } else {
+	    			    	$("#projectHistories").html($("#projectHistories").html() + "<li>" + h.title + " " + sy + "/" + sm + "/" + sd + "~" + "</li>");
+	    			    }
+					});
+					
+				}
     		});
     	});
     </script>

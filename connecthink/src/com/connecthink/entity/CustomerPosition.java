@@ -28,7 +28,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "customer_position")
-public class CustomerPosition implements Serializable{
+public class CustomerPosition {
 	@EmbeddedId
 	private CustomerPositionId id;
 	

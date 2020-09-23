@@ -108,7 +108,7 @@
 							onfocus="this.placeholder = ''"
 							onblur="this.placeholder = '비밀번호'" required class="single-input">
 					</div>
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</div>
 				<div class="modal-footer">
 	                    <a style="text-decoration: underline; color: #367FFF;" href="#findEmailModal" data-toggle="modal" data-backdrop="false">이메일 찾기</a>
@@ -137,7 +137,8 @@
                             	<input type="email" name="username" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
 	                        </div>
 	                        <div class="col-md-6">
-	                            <a href="#" class="genric-btn info-border">이메일 인증</a>
+	                            <a id="requestVerifyCodeBtn" href="#verifyModal" class="genric-btn info-border" data-toggle="modal" data-backdrop="false">이메일 인증</a>
+	                            <input type="hidden" id="isVerified" value="n">
 	                        </div>
 	                    </div>
                         <div class="mt-10">
@@ -146,6 +147,9 @@
                         <div class="mt-10">
                             <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
                         </div>
+                        <div class="mt-10">
+                            <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19980404" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19980404'" required class="single-input">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -153,6 +157,36 @@
                     <button type="button" class="btn btn-primary">회원가입</button>
                 </div>
             </div>
+        </div>
+    </div>
+    <!-- 이메일 인증 Modal -->
+    <div class="modal" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verifyModalLongTitle">이메일 인증</h5>
+<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 		                <span aria-hidden="true">&times;</span> -->
+<!-- 		            </button> -->
+                </div>
+				<div class="modal-body">
+					<br> <br> <br>
+					<div class="row">
+						<div class="col-md-6">
+							<input type="text" name="verifyCode" placeholder="코드 6자리 ex)123456" onfocus="this.placeholder = ''" onblur="this.placeholder = '코드 6자리 ex)123456'" required class="single-input">
+						</div>
+						<div class="col-md-6">
+							<button id="verifyBtn" class="genric-btn info-border">이메일인증</button> 
+							<input type="hidden" id="isVerified" value="n">
+						</div>
+					</div>
+					<br> <br> <br>
+				</div>
+				<div class="modal-footer">
+	                <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
+	                <button type="button" class="btn btn-primary">인증</button>
+	            </div>
+	        </div>
         </div>
     </div>
         <div class="header-area ">
@@ -199,6 +233,7 @@
                                          			</c:when>
                                          			<c:otherwise>
                                          				<li><a href="${contextPath}/customerInfo">내 정보 보기</a></li>
+                                         				<li><a id="logoutBtn" href="">로그아웃</a></li>
                                          			</c:otherwise>
                                          		</c:choose>
                                             </ul>                                                                               

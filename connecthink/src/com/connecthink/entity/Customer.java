@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -60,15 +61,16 @@ public class Customer {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
-	@JsonIgnore
+	@JsonManagedReference
 	private Set<Experience> experiences;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<Notification> notifications;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
+	@JsonManagedReference
 	private Set<CustomerPosition> customerPositions;
 }
