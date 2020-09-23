@@ -12,58 +12,70 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.11.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
-	
+
 	<context:annotation-config />
-    
-    <!-- 트랜잭션 관리자 활성화 -->
-    <tx:annotation-driven/>
-    
-    <!-- 트랜잭션 관리자 등록 -->
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-    
-    <!-- JPA 예외를 스프링 예외로 변환 -->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-    
-    <!-- JPA 설정 ( 엔티티 매니저 팩토리 등록 ) -->
-    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        
-        <!-- @Entity 탐색 범위 -->
-        <property name="packagesToScan" value="com.connecthink.entity" />
-        
-        <!-- 하이버네이트 구현체 사용 -->
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-            <property name="database" value="ORACLE" /> <!--DB종류 -->
-            <property name="generateDdl" value="false" /> <!--DDL생성시 DB고유 기능사용 -->
-            <property name="showSql" value="true"></property><!--SQL문 로그보여주기 -->
-            </bean>
-        </property>
-        
-        <!-- 하이버네이트 상세 설정 -->
-        <property name="jpaProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> <!-- dialect : Hibernate가 db마다 다른 SQL문법을 처리하기 위한 클래스입니다 -->
-                <prop key="hibernate.id.new_generator_mappings">true</prop>         <!-- JPA 표준에 맞게 새로운 키 생성 전략을 사용-->
-                <prop key="hibernate.ddl.auto">update</prop>                    <!-- DDL 자동 생성 -->
-            </props>
-        </property>
-    </bean>
 
-    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-      <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-      <property name="jdbcUrl" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
-      <property name="username" value="connecthink"></property>
-      <property name="password" value="connecthink"></property>
-   </bean>
+	<!-- 트랜잭션 관리자 활성화 -->
+	<tx:annotation-driven />
 
-   <!-- HikariCP configuration -->
-   <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-      <constructor-arg ref="hikariConfig" />
-   </bean>
-   
-   <jpa:repositories base-package="com.connecthink.repository"></jpa:repositories>
+	<!-- 트랜잭션 관리자 등록 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- JPA 예외를 스프링 예외로 변환 -->
+	<bean
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<!-- JPA 설정 ( 엔티티 매니저 팩토리 등록 ) -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- @Entity 탐색 범위 -->
+		<property name="packagesToScan"
+			value="com.connecthink.entity" />
+
+		<!-- 하이버네이트 구현체 사용 -->
+		<property name="jpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="database" value="ORACLE" /> <!--DB종류 -->
+				<property name="generateDdl" value="false" /> <!--DDL생성시 DB고유 기능사용 -->
+				<property name="showSql" value="true"></property><!--SQL문 로그보여주기 -->
+			</bean>
+		</property>
+
+		<!-- 하이버네이트 상세 설정 -->
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> <!-- dialect : Hibernate가 db마다 다른 SQL문법을 처리하기 위한 클래스입니다 -->
+				<prop key="hibernate.id.new_generator_mappings">true</prop>         <!-- JPA 표준에 맞게 새로운 키 생성 전략을 사용 -->
+				<prop key="hibernate.ddl.auto">update</prop>                    <!-- DDL 자동 생성 -->
+			</props>
+		</property>
+	</bean>
+
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl"
+			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+		<property name="username" value="connecthink"></property>
+		<property name="password" value="connecthink"></property>
+	</bean>
+
+	<!-- HikariCP configuration -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<jpa:repositories
+		base-package="com.connecthink.repository"></jpa:repositories>
+
+	<context:component-scan
+		base-package="com.connecthink.service"></context:component-scan>
 
 </beans>

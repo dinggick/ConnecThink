@@ -1,7 +1,5 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -14,13 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.connecthink.controller.CustomerController;
-import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
-import com.connecthink.repository.CustomerRepository;
+import com.connecthink.repository.ManageMemberRepository;
 import com.connecthink.repository.ProjectRepository;
 
 import lombok.extern.log4j.Log4j;
@@ -31,83 +28,19 @@ import lombok.extern.log4j.Log4j;
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
 		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml") })
 @Log4j
-class JPATest {
-	@Autowired
-	private CustomerController controller;
+public class ManageMemberTest {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
 	
-	
-//	@Test
-	void recDetailTest() {
-		Project p = projectRepository.findByRecruits("45R2");
-		System.out.println(p.getPurpose());
-		System.out.println(p.getProjectNo());
-		Set<Recruit> r = p.getRecruits();
-		Iterator<Recruit> iter = r.iterator();
-		while(iter.hasNext()) {
-			System.out.println(iter.next().getRecruitNo());
-			Set<Member> m = iter.next().getMembers();
-			Iterator<Member> iterm = m.iterator();
-			System.out.println(m.size());
-			while(iterm.hasNext()) {
-			System.out.println(iterm.next().getCustomer().getName());
-			}
-		}
-	}
-	
-	
-//	@Test
-	public void controllerTest() {
-		if(controller == null) fail("controller null");
-	}
-	
-//	@Test
-	public void findByEmailTest() {
-		Customer c = controller.findByEmail("user2@naver.com");
-	}
+	@Autowired
+	private ManageMemberRepository mmrepo;
 
-//	@Test
-	public void saveTest() {
-		Customer c = new Customer();
-		c.setCustomerNo(202);
-		c.setEmail("test03@gmail.com");
-		controller.add(c);
-	}
-	
-//	@Test
-	public void deleteTest() {
-		int customerNo = 202;
-		controller.remove(customerNo);
-	}
-	
-//	@Test
-	public void myProjectsAsLeaderTest() {
-		projectRepository.findByManagerNo(2);
-	}
-	
-//	@Test
-	public void myProjectAsMemberTest() {
-		List<Project> list = projectRepository.test(2);
-		list.forEach(p -> {
-			System.out.println("----프로젝트 번호 : " + p.getProjectNo());
-			System.out.println("팀장 번호 : " + p.getManagerNo());
-			p.getRecruits().forEach(r -> {
-				System.out.println("----모집 번호 : " + r.getRecruitNo());
-				
-				r.getMembers().forEach(m -> {
-					System.out.println("멤버 번호 : " + m.getCustomer().getCustomerNo());
-					
-				});
-			});
-		});
-	}
-	
-//	@Test
+	@Test
+	@javax.transaction.Transactional
 	@DisplayName("내가 지원한 프로젝트 목록")
 	public void myAppliedProjectTest() {
-		int memberNo = 102;
+		int memberNo = 101;
 		List<Project> list = projectRepository.findMyApplication(memberNo);
 		for(Project p : list) {
 			Set<Recruit> recruits = p.getRecruits();
@@ -127,7 +60,7 @@ class JPATest {
 		}
 	}
 	
-	@Test
+//	@Test
 	@DisplayName("내가 초대받은 프로젝트 목록")
 	public void myInvitedProjectTest() {
 		int memberNo = 161;
@@ -136,9 +69,7 @@ class JPATest {
 			System.out.println("프로젝트 명 : " + p.getTitle());
 		}
 	}
-
-
-
+	
 //	@Test
 	@DisplayName("내 프로젝트에 지원한 사람 목록")
 	public void applicantOfMyProjectTest() {
@@ -178,5 +109,19 @@ class JPATest {
 			}
 		}
 	}
-
+	
+//	@Test
+	@DisplayName("지원 취소하기")
+	@Transactional(rollbackFor = Exception.class)
+	public void denyApplication() {
+		String recruitNo = "6R2";
+		Integer memberNo = 101;
+		try {
+			mmrepo.deleteByIdRecruitNoAndIdMemberNo(recruitNo, memberNo);
+			System.out.println("지원 취소 완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("지원 취소 실패");
+		}
+	}
 }

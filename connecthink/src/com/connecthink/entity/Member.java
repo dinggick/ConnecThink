@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -24,7 +25,6 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-
 @Entity
 @Table(name = "member")
 public class Member{
@@ -32,13 +32,13 @@ public class Member{
 	private MemberId id;
 	
 	@MapsId(value = "recruitNo")
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "recruit_no")
 	@JsonBackReference
 	private Recruit recruit;
 	
 	@MapsId(value = "memberNo")
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_no")
 	private Customer customer;
 	
@@ -53,4 +53,7 @@ public class Member{
 	
 	@Column(name = "invited")
 	private Integer invited;
+	
+	@Transient
+	private Customer manager;
 }

@@ -47,4 +47,10 @@
 		<!-- <beanclass="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />-->
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
+
+	<bean id="jackson2ObjectMapper" class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+		<property name="modulesToInstall"
+			value="com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module">
+		</property>
+	</bean>
 </beans>

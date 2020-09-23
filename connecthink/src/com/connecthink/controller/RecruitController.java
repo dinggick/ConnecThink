@@ -32,7 +32,10 @@ public class RecruitController {
 	private BookmarkService bmService;
 	
 	
-
+	/**
+	 * @author 홍지수
+	 * 모집 전체 목록 조회
+	 */
 	@RequestMapping("/rec")
 	public ModelAndView findAll(){
 		ModelAndView mnv = new ModelAndView();
@@ -45,6 +48,10 @@ public class RecruitController {
 		return mnv;
 	}
 
+	/**
+	 * @author 홍지수
+	 * 모집 상세 보기
+	 */
 	@RequestMapping("/rec_detail")
 	public ModelAndView findByRecruitNo(String recNo) {
 		ModelAndView mnv = new ModelAndView();

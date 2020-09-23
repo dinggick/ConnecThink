@@ -1,9 +1,11 @@
-package test;
+	package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +20,7 @@ import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.TaskRepository;
+import com.connecthink.service.BoardService;
 
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
@@ -27,6 +30,9 @@ import com.connecthink.repository.TaskRepository;
 class TaskTest {
 	@Autowired
 	private TaskRepository repository;
+	
+	@Autowired
+	private BoardService service;
 	
 	@Autowired
 	private ProjectRepository projectRepository;
@@ -39,12 +45,26 @@ class TaskTest {
 		repository.findAll();
 	}
 	
-//	@Test
+//	@Transactional
+	@Test
 	public void lists(){
-		List<Task> tasks = new ArrayList<>();
-		projectRepository.findById(2).get().getTasks().forEach(r ->{
-			tasks.add(r);
+		service.lookUpTask(2).forEach(t -> {
+			System.out.println(t.getTaskNo() + "--------------------");
 		});
+//		List<Task> tasks = new ArrayList<>();
+//		Project p = projectRepository.findById(2).get();
+//		tasks.addAll(p.getTasks());
+//		tasks.forEach(t ->{
+//			
+//			System.out.println("asdfdghjhdsafdg" + t.getTaskNo());
+//		});
+		
+		
+//		p.getRecruits().forEach(r -> {
+//			r.getMembers().forEach(m -> {
+//				System.out.println("customer no : " + m.getCustomer().getCustomerNo());
+//			});
+//		});
 	}
 	
 	//@Test
@@ -64,6 +84,16 @@ class TaskTest {
 	
 //	@Test
 	public void delete() {
+		//현재 사용자 아이디가져오기
+		
+		
+		Task t = repository.findById(12).get();
+		
+		Customer c = t.getCustomer();
+		
+		if(c.getCustomerNo() == 3) {
+			repository.delete(t);
+		}
 		
 	}
 	
@@ -73,11 +103,12 @@ class TaskTest {
 		Task t = repository.findById(1).get();
 		
 		t.setTaskStatus(3);
+		
 		repository.save(t);
 	}
 	
 	//내용수정
-	@Test
+//	@Test
 	public void updateContent() {
 		Task t = repository.findById(1).get();
 		

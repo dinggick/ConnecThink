@@ -21,12 +21,13 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	
-	@RequestMapping("/mateList")
+	@RequestMapping("/all/mateList")
 	public ModelAndView findAll() {
+		System.out.println("matelist test");
 		ModelAndView mnv = new ModelAndView();
 		List<Customer> list = service.findAll();
 		mnv.addObject("customer", list);
-		mnv.setViewName("/mate");
+		mnv.setViewName("mate");
 		
 		return mnv; 
 	}
