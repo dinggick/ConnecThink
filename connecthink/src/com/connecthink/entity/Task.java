@@ -2,6 +2,7 @@ package com.connecthink.entity;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,6 +17,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 각 프로젝트에서 진행하고 있는 작업 정보
@@ -24,7 +26,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-
+@ToString
 @Entity
 @Table(name = "task")
 @SequenceGenerator(
@@ -50,7 +52,7 @@ public class Task {
 	@Column(name = "task_status")
 	private Integer taskStatus;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "writer_no")
 	private Customer customer;
 }

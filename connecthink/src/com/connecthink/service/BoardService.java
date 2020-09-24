@@ -105,11 +105,11 @@ public class BoardService {
 	 * @author 변재
 	 */
 	@Transactional
-	public void add(Task task,Integer customerNo,Integer projectNo) {
-		Customer c = customerRepository.findById(customerNo).get();
+	public void add(Task task,Integer projectNo) {
+		
 		Project p = projectRepository.findById(projectNo).get();
-		task.setCustomer(c);
 		p.getTasks().add(task);
+		
 		
 		projectRepository.save(p);
 	}
@@ -118,10 +118,11 @@ public class BoardService {
 	 * 포스트잇 내용 수정
 	 * @author 변재
 	 */
+	@Transactional
 	public void updateByComment(Task task) {
 		Task t = taskRepository.findById(task.getTaskNo()).get();
-		System.out.println("*******************************" + t.getTaskNo());
 		
+		t.setContent(task.getContent());
 		taskRepository.save(t);
 	}
 	
@@ -129,9 +130,11 @@ public class BoardService {
 	 * 포스트잇 상태 변경(드래그앤 드롭)
 	 * @author 변재
 	 */
+	@Transactional
 	public void updateByState(Task task) {
 		Task t = taskRepository.findById(task.getTaskNo()).get();
-		System.out.println("*******************************" + t.getTaskNo());
+		
+		t.setTaskStatus(task.getTaskStatus());
 		
 		taskRepository.save(t);
 	}

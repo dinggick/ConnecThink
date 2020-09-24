@@ -45,7 +45,7 @@ public class BoardController {
 		}
         
         HttpSession session = req.getSession();        
-        //session.setAttribute("LoginInfo",customer_no);
+        session.setAttribute("LoginInfo",customer_no);
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
         mv.addObject("list", taskList);
@@ -86,19 +86,18 @@ public class BoardController {
 	public ModelAndView insert(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		//Integer id = (Integer) session.getAttribute("loginInfo");
+		Integer id = (Integer) session.getAttribute("LoginInfo");
 		Customer c = new Customer();
-		c.setCustomerNo(3);
+		c.setCustomerNo(id);
 		Integer status = Integer.parseInt(request.getParameter("status"));
 		String content = request.getParameter("content");
-		
 		
 		Task task = new Task();
 		
 		task.setCustomer(c);
 		task.setTaskStatus(status);
 		task.setContent(content);
-		service.add(task, 3, 2);
+		service.add(task, 2);
 		mav.setViewName("board");
 		
 		return mav;
@@ -112,11 +111,14 @@ public class BoardController {
 		return list;
 	}
 	
+	/*
+	 * 내용변경
+	 */
 	@RequestMapping("/updateContent")
 	public ModelAndView updateContent(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		String content = request.getParameter("content");
-		System.out.println("***************************" + content);
+		
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 		Task task = new Task();
 		Customer c = new Customer();
@@ -132,6 +134,9 @@ public class BoardController {
 		return mav;
 	}
 	
+	/*
+	 * 상태변경
+	 */
 	@RequestMapping("/updateStatus")
 	public ModelAndView updateState(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
@@ -140,13 +145,8 @@ public class BoardController {
 		Integer status = Integer.parseInt(request.getParameter("status"));
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 		
-		System.out.println("상태가ㅏㄱ가ㅏㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ" + status);
-		
-		Customer c = new Customer();
-		c.setCustomerNo(3);
 		
 		task.setTaskNo(taskNo);
-		task.setCustomer(c);
 		task.setTaskStatus(status);
 		
 		service.updateByState(task);
@@ -154,17 +154,20 @@ public class BoardController {
 		return mav;
 	}
 	
+	/*
+	 * 삭제하기
+	 */
 	@RequestMapping("/deleteTask")
 	public ModelAndView deleteTask(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		//Integer id = (Integer) session.getAttribute("loginInfo");
+		Integer id = (Integer) session.getAttribute("loginInfo");
 		
 		
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 	
 		
-		service.removeByTask(3, taskNo);
+		service.removeByTask(id, taskNo);
 		mav.setViewName("board");
 		return mav;
 	}

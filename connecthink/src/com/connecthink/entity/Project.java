@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 프로젝트 정보
@@ -23,7 +24,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-
+@ToString
 @Entity
 @Table(name = "project")
 public class Project {
@@ -54,7 +55,7 @@ public class Project {
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
 	
