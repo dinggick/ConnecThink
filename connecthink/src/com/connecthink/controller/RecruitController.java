@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
@@ -31,6 +35,9 @@ public class RecruitController {
 
 	@Autowired
 	private BookmarkService bmService;
+	
+	@Autowired
+    ServletContext context;
 
 
 	/**
@@ -89,7 +96,19 @@ public class RecruitController {
 	 * 모집 등록하기
 	 */
 	@PostMapping(value="addRec")
-	public String addRec(Integer projectNo, Integer positionNo, Date deadline, Integer headCount,String requirement, Integer recruitStatus) {
+//	public String addRec(Integer projectNo, Integer positionNo, Date deadline,
+//						 Integer headCount,String requirement, Integer recruitStatus) {
+		
+	public String addRec() {
+	//설정
+		String saveDirectory = context.getRealPath("/storage");
+		
+		
+		System.out.println("테스트 : " + saveDirectory);
+		
+		//내용 보기
+		System.out.println();
+		
 		//첫 등록시 모집중 (1)
 		recruitStatus = 1;
 		recruitService.save(projectNo, positionNo, deadline, headCount, requirement, recruitStatus);
