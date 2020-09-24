@@ -84,7 +84,6 @@ public class RecruitController {
 
 		return mnv;
 	}
-<<<<<<< HEAD
 
 	/**
 	 * @author 홍지수
@@ -96,12 +95,12 @@ public class RecruitController {
 		recruitStatus = 1;
 		recruitService.save(projectNo, positionNo, deadline, headCount, requirement, recruitStatus);
 		return "success";
-=======
+	}
 	@RequestMapping("/projectList")
 	@ResponseBody
 	public List<Recruit> findTopRecruit(){
 		return recruitService.findTopRecruit();
->>>>>>> origin/hyi
+
 	}
 
 	/**

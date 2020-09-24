@@ -7,25 +7,19 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.security.core.Authentication;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
-<<<<<<< HEAD
+
 import com.connecthink.mail.VerificationMail;
 import com.connecthink.service.CustomerService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-=======
 import com.connecthink.entity.Project;
-import com.connecthink.service.CustomerService;
 import com.connecthink.service.ProjectService;
->>>>>>> origin/hyi
+
 
 /**
  * Customer 정보에 대한 요청을 처리할 Controller

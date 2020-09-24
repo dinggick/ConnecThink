@@ -39,19 +39,11 @@
          <version>2.11.2</version>
       </dependency>
       <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5 -->
-<<<<<<< HEAD
 		<dependency>
 		    <groupId>com.fasterxml.jackson.datatype</groupId>
 		    <artifactId>jackson-datatype-hibernate5</artifactId>
 		    <version>2.11.2</version>
 		</dependency>
-=======
-      <dependency>
-    <groupId>com.fasterxml.jackson.datatype</groupId>
-    <artifactId>jackson-datatype-hibernate5</artifactId>
-    <version>2.11.2</version>
-</dependency>
->>>>>>> origin/hyi
       
       <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
       <dependency>
