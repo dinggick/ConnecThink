@@ -41,8 +41,7 @@ public class ProjectController {
 		List<Project> pList = service.findInvited(managerNo);
 		return pList;
 	}
-	
-
+	////
 	@PostMapping(value="/manageApplied")
 	public List<Project> manageApplied(Integer managerNo) {
 		System.out.println("지원자 찾기 콘트롤러 진입");
