@@ -1,5 +1,6 @@
 package com.connecthink.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -11,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -71,4 +70,6 @@ public class Customer {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	private Set<CustomerPosition> customerPositions;
+	
+	
 }

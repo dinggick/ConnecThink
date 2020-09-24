@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -43,11 +42,13 @@ public class Recruit {
 	@Column(name = "recruit_status")
 	private Integer recruitStatus;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "recruit_no")
 	private Set<Member> members;
 	
 	@OneToOne
 	@JoinColumn(name = "position_no")
 	private Position position;
+	
+	
 }

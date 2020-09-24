@@ -1,6 +1,5 @@
 package com.connecthink.service;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -106,8 +105,20 @@ public class ProjectService {
 		return pList;
 	}
 	
+	/**
+	 * @author 홍지수
+	 * 모집 상세보기
+	 */
 	public Project findByRecruits(String recruitNo) {
-		return projectRepository.findByRecruits(recruitNo);
+		Project p = projectRepository.findByRecruits(recruitNo);
+
+		p.getRecruits().forEach(r->{
+			r.getPosition().getName();
+			r.getMembers().forEach(m ->{
+				m.getCustomer().getName();
+			});
+		});
+		return p;
 	}
 
 	public List<Project> findApplied(Integer managerNo){
