@@ -727,7 +727,10 @@ scale
             </ul>
         </div>
          
-    <!-- 상세 내용 모달 -->
+       
+    	
+				  	<div id="dashBoard"  v-drag-and-drop:options="options">
+				  	<!-- 상세 내용 모달 -->
     <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
@@ -739,6 +742,7 @@ scale
                 <div class="modal-body">
                     <div class="mt-10">
                       <input id="inputInModal" v-model="updateText" name="text" required class="single-input">
+                      <input type="hidden" id="taskNo" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -747,54 +751,75 @@ scale
                 </div>
             </div>
         </div>
-    </div>   
-    	
-				  	<div id="dashBoard"  v-drag-and-drop:options="options">		   
+    </div>		   
 						<div class="todo" id="do">
 							<div class="title">TO DO
 						  		<div class="content">
-				  					<ul class="usty">
+				  					<ul class="usty section1" id="sectionOneStatus" value="1">
 				  					<c:forEach items="${requestScope.list}" var="p">
 				  						<c:if test="${p.taskStatus==1}">
-				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal" v-on:click="tt">${p.content}</a></div></li>
+				  						<li>
+				  							<div class='card editable'>
+				  								<a data-toggle="modal" href="#contentModal" v-on:click="tt">
+				  									<input type="hidden" value="${p.taskNo}">
+				  									<input type="hidden" value="${p.taskStatus}">
+				  									${p.content},${p.taskNo},${p.customer.name}
+				  								</a>
+				  							</div>
+				  						</li>
 				  						</c:if>
 				  					</c:forEach>
 				  						<li v-for="item in list"><div class='card editable'>{{item.id}}</div></li>
 				  					</ul>
 								</div>
-				    			<div class="add-task"><input v-model="addName" required class="single-input"><button class="btn btn-primary" v-on:click="getData">작업 추가하기</button></div>
+				    			<div class="add-task"><input v-model="addName" required class="single-input"><button v-on:click="getData">작업 추가하기</button></div>
 				    		</div>
 				    	</div>
 				    
 				    	<div class="doing" id="doing">
 				    		<div class="title">Doing
 								<div class="content">
-				  					<ul class="usty">
+				  					<ul class="usty section2" id="sectionTwoStatus" value="2">
 				  					<c:forEach items="${requestScope.list}" var="p">
 				  						<c:if test="${p.taskStatus==2}">
-				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal">${p.content}</a></div></li>
+				  						<li>
+				  							<div class='card editable'>		
+				  								<a data-toggle="modal" href="#contentModal" v-on:click="tt">
+				  									<input type="hidden" value="${p.taskNo}">
+				  									<input type="hidden" value="${p.taskStatus}">
+				  									${p.content}
+				  								</a>
+				  							</div>
+				  						</li>
 				  						</c:if>
 				  					</c:forEach>
 				  						<li v-for="item in list2"><div class='card editable'>{{item.id2}}</div></li>
 									</ul>
 								</div>
-						    <div class="add-task"><input v-model="addName"><button v-on:click="getData">작업 추가하기</button></div>
+						    <div class="add-task"><input v-model="addName1"><button v-on:click="getData">작업 추가하기</button></div>
 						    </div>
 						</div>
 				    
 				    	<div class="done" id="done">
 				    		<div class="title">Done
 					  			<div class="content">
-								    <ul class="usty">
+								    <ul class="usty section3" id="sectionThreeStatus" value="3">
 								    <c:forEach items="${requestScope.list}" var="p">
 				  						<c:if test="${p.taskStatus==3}">
-				  						<li><div class='card editable'><a data-toggle="modal" href="#contentModal">${p.content}</a></div></li>
+				  						<li>
+				  							<div class='card editable'>
+				  								<a data-toggle="modal" href="#contentModal" v-on:click="tt">
+				  									<input type="hidden" value="${p.taskNo}">
+				  									<input type="hidden" value="${p.taskStatus}">${p.content}
+				  								</a>
+				  							</div>
+				  						</li>
 				  						</c:if>
 				  					</c:forEach>
 				  						<li v-for="item in list3"><div class='card editable'>{{item.id3}}</div></li>
 								    </ul>
 								</div>
-							<div class="add-task"><input v-model="addName"><button v-on:click="getData">작업 추가하기</button></div>
+							<div class="add-task"><input v-model="addName2"><button v-on:click="getData">작업 추가하기</button></div>
 							</div>
 						</div>
 				    </div>
@@ -877,8 +902,6 @@ scale
 </body>
 <script>
 	
-	var writer = "";
-	
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -915,28 +938,27 @@ scale
 		   msgs : [],
 		   wrts : [],
 		   memberList : [],
-		   project_no : ""
+		   project_no : 0,
+		   writer : 0
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
 			  console.log('created');
 			  this.connect();
-			  console.log(${project_no});
-// 			  this.project_no = ev.target.getAttribute("project_no");
-// 			  alert(this.project_no);
+			  this.project_no = ${project_no};
 			  //이전에 메세지 들고오기
-			  axios
-			  	.get('board/lookUpMsg', {
-			  	    params: {
-			  	      project_no: 1
-			  	    }
-			  	 })
-			  	.then(result => {
-					  var msgList = result.data;	   
-					  msgList.forEach(msg => 
-					  	this.msgs.push({createDate : this.getTime(),content : msg.content,reception :msg.reception,writer : msg.writer.name}) 
-					  );
-			  })//axios
+// 			  axios
+// 			  	.get('board/lookUpMsg', {
+// 			  	    params: {
+// 			  	      project_no: 1
+// 			  	    }
+// 			  	 })
+// 			  	.then(result => {
+// 					  var msgList = result.data;	   
+// 					  msgList.forEach(msg => 
+// 					  	this.msgs.push({createDate : this.getTime(),content : msg.content,reception :msg.reception,writer : msg.writer.name}) 
+// 					  );
+// 			  })//axios
     		}//created
 		  
 		   //변화가 있을경우
@@ -971,7 +993,7 @@ scale
 			 },//sendMsg 
 			 
 			 //메세지 전송
-			 send(){
+			 send(msg){
 				 if(this.status == "Connected"){
 					 this.msgs.push({createDate : this.getTime(),content : this.message,reception :false});	 
 					 //this.socket.send(this.message);
@@ -979,8 +1001,11 @@ scale
 							 createDate : this.getTime()
 							 ,content : this.message
 							 ,reception :false
+							 ,project_no : this.project_no
 					 }
 					 this.socket.send(JSON.stringify(messageForm));
+				 }else if(this.status == "ready"){					 
+					 this.socket.send(msg);
 				 }else{
 					alert('연결 상태가 올바르지 않습니다.'); 
 				 }
@@ -989,8 +1014,12 @@ scale
 			  connect(){
 				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/boardEcho");
 				  console.log(this.socket);
+				  
 				  //onopen
 				  this.socket.onopen = () => {
+					  this.status = "ready";
+					  this.send("ready:"+this.project_no);
+					  
 					  console.log('connected');
 					  this.status = "Connected";
 					  //수신 메세지
@@ -999,13 +1028,19 @@ scale
 						var datas = data.split(":");
 						console.log(datas);
 						if(datas[0] == "userid"){
-							writer = datas[1];
+							this.writer = datas[1];
 						}else{
+							
 							var user = datas[0];
 							var msg = datas[1];
+							//읽어온 데이터가 내가보낸 메세지 일 경우
+							if(this.writer == user){
+								 this.msgs.push({createDate : this.getTime(),content : msg,reception :false});	 
+							}else{
+								//전송한 사람이 내가 아닐경우
+								this.msgs.push({createDate : this.getTime(),content : msg,reception :true,writer : user});
+							}
 							
-							//전송한 사람이 내가 아닐경우
-							this.msgs.push({createDate : this.getTime(),content : msg,reception :true,writer : user});
 						}
 												
 						
@@ -1027,7 +1062,7 @@ scale
 				  axios
 				  	.get('board/lookUpMemeber', {
 				  	    params: {
-				  	      project_no: 1
+				  	      project_no: this.project_no
 				  	    }
 				  	 })
 				  	.then(result => {
@@ -1070,29 +1105,65 @@ scale
 			list2:[
 			],
 			list3:[
-			],	
+			],
+			addName:'',
+			addName1:'',
+			addName2:'',
 			options:{
 				 onDragend(event){
-					 console.log(event.items[0].innerText);
+					 console.log(event);
+							 
+					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
+					 
+					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
+					 console.log('태스크너버' + getTaskNo);
+					 axios.get('/connecthink/updateStatus',{
+		                	params:{
+		                		taskNo:getTaskNo,
+		       					status:event.droptarget.attributes[1].nodeValue
+		                	}
+		             })
+		             .then(function(response){
+		                    alert(response); 
+		             });
+					 
 				 }
-			}
+			},
+			updateText:''
 		},
 		methods: {
 			tt(ev){
+				var taskNo = ev.target.firstChild.value;
 				var inputInModal = document.getElementById('inputInModal');
 				inputInModal.value = ev.target.innerText;
+				var modalTaskNo = document.getElementById('taskNo');
+				modalTaskNo.value=taskNo;
+				
+				console.log(modalTaskNo);
+				
+				
 			},
-			add() {
-				console.log("do add event!!");
-				this.list.push({id:this.addName});
+			updateContent(){	
+				axios.get('/connecthink/updateContent',{
+                	params:{
+       					content:this.updateText,
+       					taskNo:document.getElementById('taskNo').value
+                	}
+                })
+                .then(function(response){
+                    alert(response); 
+                });
+				
 			},
-			add2() {
-				console.log("doing add event!!");
-				this.list2.push({id:this.addName});
-			},
-			add3() {
-				console.log("done add event!!");
-				this.list3.push({id:this.addName});
+			deleteTask(){
+				axios.get('/connecthink/deleteTask',{
+                	params:{
+       					taskNo:document.getElementById('taskNo').value
+                	}
+                })
+                .then(function(response){
+                    alert(response); 
+                });
 			},
 			someDummyMethod() {
 			     console.log('Hello from someDummyMethod');
@@ -1109,15 +1180,13 @@ scale
 	                	}
 	                })
 	                .then(function(response){	
-	        			this.list.push({id:this.addName});
+	        			
 	                });
-					
-					
 				}else if(evPath == 'doing'){
 					status = 2;
 					axios.get('/connecthink/addTask',{
 	                	params:{
-	                		content:this.addName,
+	                		content:this.addName1,
 	                		status:status
 	                	}
 	                })
@@ -1128,7 +1197,7 @@ scale
 					status = 3;
 					axios.get('/connecthink/addTask',{
 	                	params:{
-	                		content:this.addName,
+	                		content:this.addName2,
 	                		status:status
 	                	}
 	                })
@@ -1141,21 +1210,37 @@ scale
 		}
 	});
 
-	new Vue({
+	/* new Vue({
 		el:'#contentModal',
 		data:{
-			
+			updateText:''
 		},
 		methods:{
 			updateContent(){
-				console.log('qwretry');
+				
+				
+				axios.get('/connecthink/updateContent',{
+                	params:{
+       					content:this.updateText
+                	}
+                })
+                .then(function(response){
+                    alert(response); 
+                });
 				
 			},
 			deleteTask(){
-				console.log('dbfvcxbcx');
+				axios.get('/connecthink/deleteTask',{
+                	params:{
+       					taskNo:updateText
+                	}
+                })
+                .then(function(response){
+                    alert(response); 
+                });
 			}
 		}
-	})
+	}) */
 	
 </script>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>

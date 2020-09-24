@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
-
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +19,6 @@ import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
 
 @Service
-@Transactional
 public class BoardService {
 	
 	@Autowired
@@ -41,14 +37,18 @@ public class BoardService {
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
 	 */
+	@Transactional
 	public void sendMessage(int project_no,List<Message> messages) {
 		System.out.println("sendMessage service 들어옴");
 		Project p = projectRepository.findById(project_no).get();
 		ChatRoom cr_no = p.getChatRoom();
 		List<Message> msgs = cr_no.getMessages();
 		messages.forEach(message -> {
+			System.out.println("In service message Info : "+message);
 			msgs.add(message);
 		});
+		System.out.println("size : "+messages.size());
+		System.out.println("save 진행 직전");
 		projectRepository.save(p);
 	}
 	
@@ -84,19 +84,16 @@ public class BoardService {
 	/*
 	 * 해당 프로젝트 포스트잇 전체 조회
 	 */
-//	@Transactional
+	@Transactional
 	public List<Task> lookUpTask(Integer project_no){
-		System.out.println("--------------test01");
 		List<Task> tasks = new ArrayList<>();
 //		projectRepository.findById(project_no).get().getTasks().forEach(r ->{
 //			tasks.add(r);
 //		});
 		Project p = projectRepository.findById(project_no).get();
-		System.out.println("--------------test02");
 //		p.getTasks().get(0).getTaskNo();
 //		Hibernate.initialize(p.getTasks());
 		tasks.addAll(p.getTasks());
-		System.out.println("--------------test03");
 		
 		return tasks;
 		
@@ -107,11 +104,12 @@ public class BoardService {
 	 * 포스트잇 한개 추가
 	 * @author 변재
 	 */
-	public void add(Task task,Integer customerNo,Integer projectNo) {
-		Customer c = customerRepository.findById(customerNo).get();
+	@Transactional
+	public void add(Task task,Integer projectNo) {
+		
 		Project p = projectRepository.findById(projectNo).get();
-		task.setCustomer(c);
 		p.getTasks().add(task);
+		
 		
 		projectRepository.save(p);
 	}
@@ -120,9 +118,11 @@ public class BoardService {
 	 * 포스트잇 내용 수정
 	 * @author 변재
 	 */
+	@Transactional
 	public void updateByComment(Task task) {
 		Task t = taskRepository.findById(task.getTaskNo()).get();
 		
+		t.setContent(task.getContent());
 		taskRepository.save(t);
 	}
 	
@@ -130,8 +130,11 @@ public class BoardService {
 	 * 포스트잇 상태 변경(드래그앤 드롭)
 	 * @author 변재
 	 */
+	@Transactional
 	public void updateByState(Task task) {
-		Task t = taskRepository.findById(task.getTaskStatus()).get();
+		Task t = taskRepository.findById(task.getTaskNo()).get();
+		
+		t.setTaskStatus(task.getTaskStatus());
 		
 		taskRepository.save(t);
 	}

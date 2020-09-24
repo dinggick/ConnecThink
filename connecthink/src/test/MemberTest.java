@@ -40,11 +40,9 @@ class MemberTest {
 	
 //	@Test
 	void findAllMember() {
-		
 		repository.findTop8By().forEach(s -> {
 			System.out.println("멤버: " + s.getCustomer().getExperiences());
 		});
-		
 	}
 	
 	@Test

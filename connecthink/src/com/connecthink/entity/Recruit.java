@@ -46,7 +46,7 @@ public class Recruit {
 	@JoinColumn(name = "recruit_no")
 	private Set<Member> members;
 	
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "position_no")
 	private Position position;
 	

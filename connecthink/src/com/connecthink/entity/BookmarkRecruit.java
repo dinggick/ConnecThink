@@ -26,12 +26,12 @@ public class BookmarkRecruit {
 	private BookmarkRecruitId id;
 	
 	@MapsId(value = "customerNo")
-	@ManyToOne (cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
 	private Customer customer;
 	
 	@MapsId(value = "recruitNo")
-	@ManyToOne (cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "recruit_no")
 	private Recruit recruit;
 	

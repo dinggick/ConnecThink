@@ -1,21 +1,23 @@
 package com.connecthink.entity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.transaction.Transactional;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 프로젝트 정보
@@ -24,7 +26,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-
+@ToString
 @Entity
 @Table(name = "project")
 public class Project {
@@ -50,15 +52,20 @@ public class Project {
 	@Column(name = "manager_no")
 	private Integer managerNo;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "project_no")
+	private List<Task> tasks;
+	
 	@OneToMany(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "project_no")
-	private List<Task> tasks;
 
 	@OneToOne
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
+	
+	@CreationTimestamp
+	@Column(name = "create_date")
+	private Date createDate;
 }
