@@ -2,12 +2,14 @@ package com.connecthink.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.BookmarkRecruit;
 import com.connecthink.entity.BookmarkUser;
@@ -56,10 +58,24 @@ public class BookmarkController {
 	@PostMapping(value="/bmToRec")
 	@ResponseBody
 	public String bmRecruit(String recruitNo, Integer customerNo) {
-		System.out.println("컨트롤러 호출");
-		customerNo = 1;;
+		System.out.println(customerNo);
 		service.bmRecruit(recruitNo, customerNo);
-		
 		return "success";
+	}
+	
+	@PostMapping(value="delBmToRec")
+	@ResponseBody
+	public String delBmRecruit(String recruitNo, Integer customerNo) {
+		service.delBmRecruit(recruitNo, customerNo);
+		return "success";
+	}
+	
+	@PostMapping(value="/count")
+	@ResponseBody
+	public String bmCount(String recruitNo) {
+
+		int bmCount = service.findByIdRecruitNo(recruitNo);
+		String count = Integer.toString(bmCount);
+		return count;
 	}
 }

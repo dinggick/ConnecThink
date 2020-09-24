@@ -22,27 +22,26 @@ import com.connecthink.service.BoardService;
 
 @Controller
 public class BoardController {
-//	@Autowired
-//	private CustomerService service;
-//	
-	
-	@Autowired
-	private BoardService service;
-	
-	@RequestMapping("/board")
-	ModelAndView board(HttpServletRequest req,@RequestParam("project_no") int project_no) {
-		ModelAndView mv = new ModelAndView();
-		
-		int customer_no = 0;
-		
-		List<Task> taskList = tList(project_no);
-		//Http session 에 저장할 userid 대체용
-		for(int i = 0; i < 100; i++) {
 
-		    double dValue = Math.random();
+//   
+   
+   @Autowired
+   private BoardService service;
+   
+   @RequestMapping("/board")
+   ModelAndView board(HttpServletRequest req,@RequestParam("project_no") int project_no) {
+      ModelAndView mv = new ModelAndView();
+      
+      int customer_no = 0;
+      
+      List<Task> taskList = tList(project_no);
+      //Http session 에 저장할 userid 대체용
+      for(int i = 0; i < 100; i++) {
 
-		   customer_no = (int)(dValue * 10);
-		}
+          double dValue = Math.random();
+
+         customer_no = (int)(dValue * 10);
+      }
         
         HttpSession session = req.getSession();        
         session.setAttribute("LoginInfo",customer_no);
@@ -171,5 +170,5 @@ public class BoardController {
 		mav.setViewName("board");
 		return mav;
 	}
-
+   
 }

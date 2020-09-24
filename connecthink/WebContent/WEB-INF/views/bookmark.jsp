@@ -223,7 +223,8 @@
 					.ajax({
 						url : "${contextPath}/mateBm",
 						method : "POST",
-						data : "customerNo=1",
+						data : {customerNo : ${sessionScope.loginInfo},
+				        ${_csrf.parameterName} : '${_csrf.token}'},
 						success : function(mates) {
 							let data = "";
 							//forEach
@@ -275,11 +276,11 @@
 		function ttab() {
 			let $section = $('div.list');
 
-			$
-					.ajax({
+			$.ajax({
 						url : "${contextPath}/recBm",
 						method : "POST",
-						data : "customerNo=1",
+						data : {customerNo : ${sessionScope.loginInfo},
+					        ${_csrf.parameterName} : '${_csrf.token}'},
 						success : function(teams) {
 							let data = "";
 							let size = teams.length;

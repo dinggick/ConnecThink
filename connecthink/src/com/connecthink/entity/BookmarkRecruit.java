@@ -21,9 +21,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "bookmark_recruit")
-public class BookmarkRecruit{
+public class BookmarkRecruit {
 	@EmbeddedId
-	private BookmarkRecruitId id = new BookmarkRecruitId();
+	private BookmarkRecruitId id;
 	
 	@MapsId(value = "customerNo")
 	@ManyToOne(cascade = CascadeType.PERSIST)
@@ -34,4 +34,6 @@ public class BookmarkRecruit{
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "recruit_no")
 	private Recruit recruit;
+	
+	
 }

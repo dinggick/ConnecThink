@@ -50,16 +50,16 @@ public class Project {
 	@Column(name = "manager_no")
 	private Integer managerNo;
 	
-
-	@OneToMany(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "project_no")
-	private Set<Recruit> recruits;
-	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "project_no")
+	private Set<Recruit> recruits;
+	
+
+	@OneToOne
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
 }

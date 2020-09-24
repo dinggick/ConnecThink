@@ -49,4 +49,6 @@ public class Recruit {
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "position_no")
 	private Position position;
+	
+	
 }
