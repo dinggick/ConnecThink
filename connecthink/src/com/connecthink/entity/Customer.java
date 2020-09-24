@@ -6,9 +6,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,10 +33,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name="customer")
+@Table(name = "customer")
+@SequenceGenerator(name = "customer_no_seq_generator", 
+					sequenceName = "customer_no_seq", 
+					initialValue = 205, 
+					allocationSize = 1)
 public class Customer {
 	@Id
 	@Column(name = "customer_no")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_no_seq_generator")
 	private Integer customerNo;
 	
 	@Column(name = "email", nullable = true, length = 50)
