@@ -1,10 +1,7 @@
 package com.connecthink.service;
 
-<<<<<<< HEAD
 import java.util.Date;
-=======
 import java.util.Iterator;
->>>>>>> origin/hyi
 import java.util.List;
 import java.util.Set;
 
@@ -12,25 +9,17 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
 import com.connecthink.entity.Position;
 import com.connecthink.entity.Project;
-=======
 import com.connecthink.entity.Member;
->>>>>>> origin/hyi
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.PositionRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.RecruitRepository;
 
 @Service
-<<<<<<< HEAD
-
-=======
 @Transactional
->>>>>>> origin/hyi
 public class RecruitService {	
 	@Autowired
 	private RecruitRepository recruitRepository;

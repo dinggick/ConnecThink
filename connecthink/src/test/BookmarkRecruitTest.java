@@ -19,11 +19,7 @@ import com.connecthink.repository.BookmarkRecruitRepository;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.RecruitRepository;
 
-<<<<<<< HEAD
-=======
 
-
->>>>>>> origin/hyi
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")

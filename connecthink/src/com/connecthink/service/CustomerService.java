@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
-<<<<<<< HEAD
 
 import javax.transaction.Transactional;
-=======
->>>>>>> origin/hyi
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +14,8 @@ import org.springframework.stereotype.Service;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.CustomerPosition;
 import com.connecthink.entity.Experience;
-<<<<<<< HEAD
 import com.connecthink.entity.Position;
-=======
->>>>>>> origin/hyi
+
 import com.connecthink.repository.CustomerRepository;
 
 @Service
