@@ -14,8 +14,12 @@ import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
+<<<<<<< HEAD
 import com.connecthink.repository.RecruitRepository;
 
+=======
+@WebAppConfiguration
+>>>>>>> origin/hyi
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -40,6 +44,7 @@ class MemberTest {
 	
 //	@Test
 	void findAllMember() {
+<<<<<<< HEAD
 		repository.findTop8By().forEach(s -> {
 			System.out.println("멤버: " + s.getCustomer().getExperiences());
 		});
@@ -61,6 +66,9 @@ class MemberTest {
 		member.setRecruit(r);
 		member.setEnterStatus(0);
 		
+=======
+		repository.findByIdMemberNo(101);
+>>>>>>> origin/hyi
 		
 		repository.save(member);
 	}

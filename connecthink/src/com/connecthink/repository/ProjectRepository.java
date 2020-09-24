@@ -139,6 +139,13 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"where rec.recruit_no= ?1"
 			)
 	public Project findByRecruits(String recruitNo);
+	@Query(nativeQuery = true, value=
+			"select * from project p\r\n" + 
+			"join recruit r on r.project_no = p.project_no\r\n" + 
+			"join member m on m.recruit_no = r.recruit_no\r\n" + 
+			"where  m.member_no = ?1 AND quit_date is not null"
+			)
+	public List<Project> findProjectByCustomerNo(Integer customerNo);
 	
 	/**
 	 * 팀장, 팀원 구분없이 특정 사용자가 소속된 프로젝트 리스트 가져오기

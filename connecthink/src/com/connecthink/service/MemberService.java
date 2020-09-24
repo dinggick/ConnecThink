@@ -1,13 +1,19 @@
 package com.connecthink.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.CustomerRepository;
+=======
+import com.connecthink.entity.Member;
+>>>>>>> origin/hyi
 import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.RecruitRepository;
 

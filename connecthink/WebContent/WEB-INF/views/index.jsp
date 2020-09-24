@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <head>
    
@@ -47,6 +48,13 @@
     height: 700px;
     width: 1400px !important;
 }
+
+.rec_title{
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: nowrap;
+}
+
 </style>
 <body>
 	<!--[if lte IE 9]>
@@ -146,54 +154,7 @@
 				</div>
 			</div>
 			<div class="row">
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="member_recruit"><h4>MEMBER 1</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 2</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 3</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 4</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 5</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 6</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 7</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-lg-4 col-xl-3 col-md-6"> -->
-<!-- 					<div class="single_catagory"> -->
-<!-- 						<a href="jobs.html"><h4>MEMBER 8</h4></a> -->
-<!-- 						<p>Available position</p> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
+
 			</div>
 		</div>
 	</div>
@@ -237,7 +198,7 @@
 								<div class="col-lg-11">
 									<div class="single_testmonial d-flex align-items-center">
 										<div class="thumb">
-											<img src="img/testmonial/author.png" alt="">
+											<img src="img/kkugi.jpg" alt="">
 											<div class="quote_icon">
 												<i class=" Flaticon flaticon-quote"></i>
 											</div>
@@ -312,11 +273,71 @@
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/mail-script.js"></script>
 	<script src="js/main.js"></script>
-	<script src="js/index.js"></script>
+	
 	<script>
-		$(() => {
-			
-		});
+
+	$(document).ready(function(){
+
+	loadMemberList();
+	loadProjectList();
+
+	});
+
+	function loadMemberList() {
+		var $memberSection = $("div.main_member_area > .container > .row:nth-child(2)");
+		$.ajax({
+	    	url : "/connecthink/customerList",  
+	    	method: "GET",
+	    	data:  { ${_csrf.parameterName} : '${_csrf.token}'},   
+			success: function(responseObj) {
+				
+				var txt = "";
+				for (x in responseObj) {
+					txt += "<div class='col-md-6 col-lg-3'><div class='single_catagory'>" +
+							"<div class='thumb' style='float: right;'> " +
+							"<img src='img/candiateds/1.png' alt=''></div>"+
+							"<a href='#' onclick='memberDetail("+responseObj[x].customerNo+")'><h4>"+responseObj[x].name+"</h4></a>" +
+							" <input type='text' id='customerNo' value='"+responseObj[x].customerNo + "' hidden='hidden'>";							 
+					
+					for(p in responseObj[x].customerPositions) {
+						txt += "<p style='font-weight: bold;'>"+ responseObj[x].customerPositions[p].position.name+"</p>"
+					}	
+					txt += "<p>" + responseObj[x].about + "</p>";
+					txt += "</div></div>";
+				} 
+				
+				$memberSection.html(txt);
+			}
+	    });
+	}
+	function loadProjectList() {
+		var $teamSection =  $("div.popular_catagory_area > .container > .row:nth-child(2)");
+		$.ajax({
+	    	url : "/connecthink/projectList",  
+	    	method: "GET",
+	    	data:   {${_csrf.parameterName} : '${_csrf.token}'},    
+			success: function(responseObj) {
+				console.log(responseObj);
+				var txt = "";
+				for (x in responseObj) {
+					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='recDetail(this);'>" +
+							"<div class='thumbnail'><div class='test'><img src='img/default.png' alt='모집 사진'></div></div>" +
+							"<h4 class='mt-4 mr-4 ml-4 rec_title'>" + responseObj[x].requirement + "</h4>" +
+					"<ul style='list-style: none;'><li class='wanna'>" + responseObj[x].position.name + "</li>" +
+						
+						"<li class='peorid'>" + responseObj[x].deadline+ "</li>" +
+						" <input type='text' id='customerNo' value='"+responseObj[x].recruitNo + "' hidden='hidden'></ul></div></div>";
+				} 
+				
+				$teamSection.html(txt);
+				
+			}
+	    });
+	}
+	function memberDetail(customerNo) {
+		let url = "${contextPath}/member_detail?customerNo=" + customerNo ;
+		location.href = url;
+	}
 	</script>
 </body>
 

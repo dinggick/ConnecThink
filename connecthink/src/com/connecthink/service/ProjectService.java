@@ -150,5 +150,25 @@ public class ProjectService {
 		}
 		return pList;
 	}
+	public List<Project> findByCustomerNo(Integer customerNo) {
+		
+		List<Project> pList =  projectRepository.findProjectByCustomerNo(customerNo);
+		for(Project p : pList) {
+			System.out.println("지원자 찾기 프로젝트 : " + p.getProjectNo());
+			Iterator<Recruit> rIter = p.getRecruits().iterator();
+			while (rIter.hasNext()) {
+				Recruit r = rIter.next();
+				System.out.println("지원자 찾기 모집글 : " + r.getRecruitNo());
+				Set<Member> Members = r.getMembers();
+				Iterator<Member> mIter = Members.iterator();
+				while (mIter.hasNext()) {
+					Member m = mIter.next();
+					System.out.println("지원자 찾기 멤버 : " + m.getCustomer().getCustomerNo());			
+				}
+		
+			}
+		}
+		return pList;
+	}
 
 }

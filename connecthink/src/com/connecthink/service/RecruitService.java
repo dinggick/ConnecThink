@@ -1,21 +1,36 @@
 package com.connecthink.service;
 
+<<<<<<< HEAD
 import java.util.Date;
+=======
+import java.util.Iterator;
+>>>>>>> origin/hyi
 import java.util.List;
+import java.util.Set;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+<<<<<<< HEAD
 import com.connecthink.entity.Position;
 import com.connecthink.entity.Project;
+=======
+import com.connecthink.entity.Member;
+>>>>>>> origin/hyi
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.PositionRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.RecruitRepository;
 
 @Service
+<<<<<<< HEAD
 
+=======
+@Transactional
+>>>>>>> origin/hyi
 public class RecruitService {	
 	@Autowired
 	private RecruitRepository recruitRepository;
@@ -32,6 +47,19 @@ public class RecruitService {
 	 */
 	public List<Recruit> findAll(){
 		return recruitRepository.findAll();
+	}
+	public List<Recruit> findTopRecruit(){
+		List<Recruit> rec = recruitRepository.findTop8By();
+		rec.forEach(r -> {
+			Set<Member> members = r.getMembers();
+			Iterator<Member> mIter = members.iterator();
+			while(mIter.hasNext()) {
+				Member m = mIter.next();
+				m.getCustomer().getCustomerNo();
+				System.out.println(m.getCustomer().getCustomerNo());
+			}
+		});
+		return rec;
 	}
 	
 	/**

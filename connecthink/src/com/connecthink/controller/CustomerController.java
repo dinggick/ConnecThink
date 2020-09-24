@@ -16,10 +16,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
+<<<<<<< HEAD
 import com.connecthink.mail.VerificationMail;
 import com.connecthink.service.CustomerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+=======
+import com.connecthink.entity.Project;
+import com.connecthink.service.CustomerService;
+import com.connecthink.service.ProjectService;
+>>>>>>> origin/hyi
 
 /**
  * Customer 정보에 대한 요청을 처리할 Controller
@@ -30,7 +36,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CustomerController {
 	@Autowired
 	private CustomerService service;
-	
+	@Autowired
+	private ProjectService pservice;
 	@RequestMapping("/all/mateList")
 	public ModelAndView findAll() {
 		System.out.println("matelist test");
@@ -126,8 +133,27 @@ public class CustomerController {
 		
 	}
 	@RequestMapping("/memberList")
-	public List<Customer> findTopMembers(){
-		System.out.println("드러옴");
+	public List<Customer> findTopMembers(){		
 		return service.findTopMembers();
 	}
+	//멤버상세 
+	@RequestMapping("/member_detail")	
+	public ModelAndView findByNo(Integer customerNo) {
+		ModelAndView mnv = new ModelAndView();
+		//멤버상세
+		Customer c = service.findByCustomerNo(customerNo);		
+		mnv.addObject("customer", c);
+		
+		//컨넥띵크 히스토리
+		List<Project> m = pservice.findByCustomerNo(customerNo);
+		
+		mnv.addObject("project",m);
+		
+		
+		
+		mnv.setViewName("member_recruit");
+		
+		return mnv;
+	}
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
@@ -34,7 +35,7 @@ public class RecruitController {
 
 
 	/**
-	 * @author 홍지수
+	 * @author 홍지수 
 	 * 모집 전체 목록 조회
 	 */
 	@RequestMapping("rec")
@@ -83,6 +84,7 @@ public class RecruitController {
 
 		return mnv;
 	}
+<<<<<<< HEAD
 
 	/**
 	 * @author 홍지수
@@ -94,6 +96,12 @@ public class RecruitController {
 		recruitStatus = 1;
 		recruitService.save(projectNo, positionNo, deadline, headCount, requirement, recruitStatus);
 		return "success";
+=======
+	@RequestMapping("/projectList")
+	@ResponseBody
+	public List<Recruit> findTopRecruit(){
+		return recruitService.findTopRecruit();
+>>>>>>> origin/hyi
 	}
 
 	/**

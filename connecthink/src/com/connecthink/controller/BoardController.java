@@ -23,8 +23,6 @@ import com.connecthink.service.BoardService;
 @Controller
 public class BoardController {
 
-//   
-   
    @Autowired
    private BoardService service;
    

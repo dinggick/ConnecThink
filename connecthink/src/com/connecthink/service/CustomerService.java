@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Set;
 
 import javax.transaction.Transactional;
+<<<<<<< HEAD
 
 import javax.transaction.Transactional;
+=======
+>>>>>>> origin/hyi
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +17,10 @@ import org.springframework.stereotype.Service;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.CustomerPosition;
 import com.connecthink.entity.Experience;
+<<<<<<< HEAD
 import com.connecthink.entity.Position;
+=======
+>>>>>>> origin/hyi
 import com.connecthink.repository.CustomerRepository;
 
 @Service
@@ -24,7 +30,9 @@ public class CustomerService {
 	private CustomerRepository customerRepository;
 	
 	public List<Customer> findAll() {
-		return customerRepository.findAll();
+		List<Customer> clist = customerRepository.findAll();
+		
+		return clist;
 	}
 	
 	/**
@@ -102,6 +110,36 @@ public class CustomerService {
 	}	
 	
 	public List<Customer> findTopMembers() {
-		return customerRepository.findTop8By();
+		List<Customer> clist = customerRepository.findTop8By();
+		clist.forEach(c -> {
+			Set<CustomerPosition> cp = c.getCustomerPositions();
+			Iterator<CustomerPosition> iter = cp.iterator();
+			while(iter.hasNext()) {
+				CustomerPosition cp1 = iter.next();
+				cp1.getPosition().getName();
+				System.out.println("!!!!!!!!!!!!!!!!!!!" +cp1.getPosition().getName());
+			}
+			Set<Experience> exp = c.getExperiences();
+			Iterator<Experience> expiter = exp.iterator();
+			while(expiter.hasNext()) {
+				Experience ex = expiter.next();
+				ex.getExplain();
+				ex.getTerm();
+				
+			}
+			
+		});
+		return clist;
+	}
+	public Customer findByCustomerNo(Integer customerNo) {
+		Customer c = customerRepository.findByCustomerNo(customerNo);
+		Set<Experience> exp = c.getExperiences();
+		Iterator<Experience> exps = exp.iterator();
+		while(exps.hasNext()) {
+			Experience ex = exps.next();
+			ex.getExplain();
+			ex.getTerm();
+		}
+		return c;
 	}
 }

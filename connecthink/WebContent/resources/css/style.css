@@ -3221,7 +3221,8 @@ h3 {
 /* line 55, ../../Arafath/CL/December/235. Job board/HTML/scss/_testmonial.scss */
 .testimonial_area .owl-carousel .owl-item img {
   display: inline-block;
-  width: auto;
+  width: 228px;
+  hight: 228px;
 }
 
 /* line 61, ../../Arafath/CL/December/235. Job board/HTML/scss/_testmonial.scss */
@@ -4006,7 +4007,7 @@ h3 {
 
 /* line 5, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_details.scss */
 .job_details_area .single_jobs {
-  padding: 30px;
+  padding: 30px 30px 50px;
   border-bottom: 1px solid #EAEAEA;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
