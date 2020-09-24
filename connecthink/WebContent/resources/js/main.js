@@ -368,6 +368,7 @@ mailChimp();
 				success : (data, textStatus, jqXHR) => {
 					alert("인증 성공");
 					$("#verifyModal").modal("hide");
+					$("#isVerified").val("y");
 				},
 				error : () => {
 					alert("인증 코드가 올바르지 않습니다.");
