@@ -1,6 +1,6 @@
 package com.connecthink.entity;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -42,10 +42,10 @@ public class Member{
 	private Customer customer;
 	
 	@Column(name = "enter_date")
-	private Timestamp enterDate;
+	private Date enterDate;
 	
 	@Column(name = "quit_date")
-	private Timestamp quitDate;
+	private Date quitDate;
 	
 	@Column(name = "enter_status")
 	private Integer enterStatus;

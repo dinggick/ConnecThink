@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -69,9 +71,11 @@
 	overflow: auto;
 }
 ul.list>li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
     border-bottom: 1px solid #f0e9ff;
-    padding-bottom: 12px;
-    text-align: center;
+/*     text-align: center; */
 }
 .system {
 	width: 100%;
@@ -79,19 +83,23 @@ ul.list>li {
 	text-align: center;
 	font-weight: 500;
 	font-size: 1.5em;
-	padding: 20px 0px 20px 0px;
+	padding: 15px 10px 15px 10px;
 	cursor: pointer;
 	transition: all 0.3s ease 0s;
 }
 .person {
-	font-size: 1.2em;
 	padding: 20px 0px 20px 0px;
 	cursor: pointer;
 	transition: all 0.3s ease 0s;
+	text-overflow: ellipsis;
 }
 .person:hover, .system:hover {
 	color: #0056b3;
 	font-weight: 1000;
+}
+.msgPreview {
+	padding-left: 10px;
+	font-size: 0.9em;
 }
 .customerNo {
 	display: none;
@@ -126,6 +134,8 @@ ul.list>li {
 }
 .personName {
 	padding-left: 20px;
+	font-size: 1.2em;
+	font-weight: 800;
 }
 .message .content {
 	height: 560px;
@@ -145,9 +155,10 @@ ul.list>li {
 }
 .receive_msg {
 	float: left;
-	border: 1px solid #E6E6E6;
-	background-color: #E6E6E6;
+	border: 1px solid #F2F2F2;
+	background-color: #F2F2F2;
 	margin-left: 30px;
+	margin-right: 10px;
 }
 .send_msg {
 	float: right;
@@ -155,6 +166,20 @@ ul.list>li {
 	background-color: #00D363;
 	color: #fff;
 	margin-right: 30px;
+	margin-left: 10px;
+}
+.msg_date {
+	text-align: center;
+	text-decoration: underline;
+	margin-bottom: 10px;
+}
+.receive_time, .send_time {
+	margin-top:25px;
+	font-size:0.8em;
+	color:#A4A4A4;
+}
+.send_time {
+	float:right;
 }
 .message .send {
 	height: 120px;
@@ -232,18 +257,10 @@ ul.list>li {
                 	</div>
                 	</div>
                     <div class="row">
-                    	<div class="system">커넥띵크 알림<a href="#" class="new">1</a></div>
+                    	<div class="system">커넥띵크 알림<span class="new">1</span></div>
                     	<div class="col-12 list_wrap">
                     		<ul class="list cat-list personList">
-                    			<li class="person"><span class="customerNo"></span>고디바<span class="new">7</span></li>
-                    			<li class="person"><span class="customerNo"></span>길리안<span class="new">3</span></li>
-                    			<li class="person"><span class="customerNo"></span>로이스<span class="new"></span></li>
-                    			<li class="person"><span class="customerNo"></span>페레로로쉐<span class="new"></span></li>
-                    			<li class="person"><span class="customerNo"></span>허쉬<span class="new"></span></li>
-                    			<li class="person"><span class="customerNo"></span>가나<span class="new"></span></li>
-                    			<li class="person"><span class="customerNo"></span>토블론<span class="new"></span></li>
-                    			<li class="person"><span class="customerNo"></span>엠앤엠<span class="new"></span></li>
-                    			<li class="person"><span class="customerNo"></span>ABC<span class="new"></span></li>
+                    			<li class="person"><span class="customerNo"></span>테스트<span class="new">7</span></li>
                     		</ul>
                     	</div>
                     </div>
@@ -259,29 +276,7 @@ ul.list>li {
                     					</div>
                     				</div>
                     				<div class="msg_body">
-                    					<div class="receive_msg">안녕하세요 저는 고디바라고 합니다 잘 부탁 드립니다.</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">안녕하세요! 저는 출출이예요!</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">배고프다 ㅎ</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">스크롤 테스트</div>
-                    					<div style="clear:both;"></div>
-                    					<div class="send_msg">가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트 가로 테스트</div>
+                    					<div class="receive_msg">테스트.</div>
                     					<div style="clear:both;"></div>
                     				</div>
                     			</div>
@@ -340,25 +335,132 @@ ul.list>li {
     <script src="js/mail-script.js"></script>
 
     <script src="js/main.js"></script>
-    
-<script>
-var listSection = $("ul.list");
 
-listSection.click(function(){
-	alert("클릭");
+	<script>
+var $listSection = $("ul.list");
+var $otherInfoSection = $(".msg_sender");
+var $msgSection = $(".msg_body");
+var $notiCnt = $(".system>.new");
+var testCustomer = 101;
+//------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
+fxLoadInbox(testCustomer);
+fxLoadNotiCnt(testCustomer);
+fxLoadNoti(testCustomer);
+
+//------------------------ 클릭 이벤트 -------------------------
+$listSection.on("click","li.person",function(e){
+	let otherNo = $(this).find("span.customerNo").html();
+ 	fxLoadMSGs(testCustomer, otherNo);
+	return false;
 });
 
-function loadInbox(){
+$(".system").click(function(e){
+	fxLoadNoti(testCustomer);
+	return false;
+});
+
+//-------------------------- 함수 ----------------------------
+//메세지함 목록을 불러오는 함수
+function fxLoadInbox(customerNo){
 	$.ajax({
-		url:"${contextPath}/manageInvited"
-		,method:"POST"
+		url:"${contextPath}/inbox/loadPerson"
+		,method:"GET"
 			//{managerNo : ${sessionScope.loginInfo},
-		,data: {managerNo : testManager,
+		,data: {customerNo : customerNo,
 			${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(personList){
+			let sectionData = "";
 			personList.forEach(function(person, index){
-				<li class="person"><span class="customerNo"></span>고디바<span class="new">7</span></li>
+				sectionData += '<li class="person"><span class="customerNo">' + person.send.customerNo + '</span>';
+				sectionData += '<span class="personName">' + person.send.name + '</span>';
+				sectionData += '<span class="new">ㅎ</span>';
+				sectionData += '<br><span class="msgPreview">' + person.content + '</span></li>';
 			});
+			$listSection.html(sectionData);
+		}
+	});
+}
+
+//특정 회원과 나눈 메세지를 불러오는 함수
+function fxLoadMSGs(customerNo, otherNo){
+	$.ajax({
+		url:"${contextPath}/inbox/loadMSGs"
+		,method:"GET"
+			//{customerNo : ${sessionScope.loginInfo},
+		,data: {customerNo : customerNo,
+			otherNo : otherNo,
+			${_csrf.parameterName} : '${_csrf.token}'}
+		,success:function(MSGs){
+			let otherData = "";
+			otherData += '<img src="img/person.png"><span class="customerNo">' + otherNo + '</span>';
+			let first_msg = MSGs[Object.keys(MSGs)[0]];
+			if(first_msg.receive.customerNo == otherNo){
+				otherData += '<span class="personName">' + first_msg.receive.name + '</span>';
+			} else {
+				otherData += '<span class="personName">' + first_msg.send.name + '</span>';
+			}
+			let sectionData = "";
+			let newDate = new Date(0);
+			MSGs.forEach(function(msg, index){
+				let sendDate = new Date(msg.createDate);
+				if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+					sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+					newDate = sendDate;
+				}
+				if(msg.receive.customerNo == customerNo) {
+					sectionData += '<div class="receive_msg">' + msg.content + '</div>';
+					sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+					sectionData += '<div style="clear:both;"></div>';
+				} else {
+					sectionData += '<div class="send_msg">' + msg.content + '</div>';
+					sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+					sectionData += '<div style="clear:both;"></div>';
+				}
+			});
+			$otherInfoSection.html(otherData);
+			$msgSection.html(sectionData);
+		}
+	});
+}
+	
+//읽지않은 notification의 갯수를 불러오는 함수
+function fxLoadNotiCnt(customerNo){
+	$.ajax({
+		url:"${contextPath}/inbox/unreadNoti"
+		,method:"GET"
+			//{customerNo : ${sessionScope.loginInfo},
+		,data: {customerNo : customerNo,
+			${_csrf.parameterName} : '${_csrf.token}'}
+		,success:function(count){
+			$notiCnt.html(count);
+		}
+	});
+}
+	
+//내가 받은 notification 전체를 불러오는 함수
+function fxLoadNoti(customerNo){
+	$.ajax({
+		url:"${contextPath}/inbox/allNoti"
+		,method:"GET"
+			//{customerNo : ${sessionScope.loginInfo},
+		,data: {customerNo : customerNo,
+			${_csrf.parameterName} : '${_csrf.token}'}
+		,success:function(noties){
+			let otherData = '<img src="img/person.png"><span class="personName">컨넥띵크</span>';
+			let sectionData = "";
+			let newDate = new Date(0);
+			noties.forEach(function(noti, index){
+				let sendDate = new Date(noti.notifyDate);
+				if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+					sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+					newDate = sendDate;
+				}
+				sectionData += '<div class="receive_msg">' + noti.content + '</div>';
+				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				sectionData += '<div style="clear:both;"></div>';
+			});
+			$otherInfoSection.html(otherData);
+			$msgSection.html(sectionData);
 		}
 	});
 }

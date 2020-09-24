@@ -25,7 +25,6 @@ public class ProjectService {
 		return projectRepository.findByManagerNo(managerNo);
 	}
 	
-	
 	public List<Project> findMyApplication(Integer memberNo) {
 		List<Project> pList = projectRepository.findMyApplication(memberNo);
 		for(Project p : pList) {

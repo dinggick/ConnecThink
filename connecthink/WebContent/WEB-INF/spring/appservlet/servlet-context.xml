@@ -30,7 +30,6 @@
 
 	<mvc:annotation-driven>
 		<mvc:message-converters>
-
 			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 				<property name="objectMapper" ref="jackson2ObjectMapper"></property>
 			</bean>
