@@ -118,7 +118,7 @@
                             </ul>
                         </div>
                         <div class="single_wrap" style="text-align: right;">
-                            <a href="#" class="genric-btn info-border">수정</a>
+                            <a href="/connecthink/modifyCustomerInfo" class="genric-btn info-border">수정</a>
                             <a href="#" class="genric-btn danger-border">탈퇴</a>
                         </div>
                     </div>
@@ -165,10 +165,6 @@
 
 
     <script src="js/main.js"></script>
-<<<<<<< HEAD
-
-=======
-    
     <script>
     	$(() => {
     		$.ajax({
@@ -208,7 +204,6 @@
     			data : {customerNo : ${sessionScope.loginInfo},
 					${_csrf.parameterName} : '${_csrf.token}'},
 				success : (data, textStatus, jqXHR) => {
-					console.log(data);
 					data.forEach(h => {
 						var startDate = new Date(h.startDate);
 						var endDate = h.endDate != null ? new Date(h.endDate) : null;
@@ -232,7 +227,6 @@
     		});
     	});
     </script>
->>>>>>> origin/cjk
 </body>
 
 </html>

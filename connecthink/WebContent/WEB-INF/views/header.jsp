@@ -96,7 +96,7 @@
 		                <span aria-hidden="true">&times;</span>
 		            </button>
                 </div>
-                <form action="/connecthink/login" method="POST">
+                <form>
 				<div class="modal-body">
 					<div class="mt-10">
 						<input type="email" name="username" placeholder="이메일"
@@ -130,7 +130,7 @@
 		                <span aria-hidden="true">&times;</span>
 		            </button>
                 </div> 
-                <form action="/connecthink/all/register" method="POST">
+                <form>
 	                <div class="modal-body">
 	                        <div class="row">
 	                    		<div class="col-md-6">
@@ -197,7 +197,7 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="/connecthink/index">
                                         <img src="${contextPath}/img/logo.png" alt="">
                                     </a>
                                 </div>

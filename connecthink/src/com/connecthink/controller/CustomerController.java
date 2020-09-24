@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -89,17 +89,31 @@ public class CustomerController {
 		}
 	}
 	
+	/**
+	 * 회원 가입 요청
+	 * @author 최종국
+	 * @param email
+	 * @param password
+	 * @param name
+	 * @param birthDate
+	 * @return
+	 */
 	@RequestMapping("/all/register")
-	public String register(String email, String password, String name, String birthDate) {
+	public ResponseEntity<String> register(String email, String password, String name, String birthDate) {
 		Customer customerForRegister = new Customer();
+		//이메일
 		customerForRegister.setEmail(email);
-		customerForRegister.setPassword(password);
+		//비밀번호
+		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
+		customerForRegister.setPassword(pwdEncoder.encode(password));
+		//이름
 		customerForRegister.setName(name);
+		//생년월일
 		customerForRegister.setBirthDate(birthDate);
 		
 		service.add(customerForRegister);
 		
-		return "index";
+		return ResponseEntity.status(HttpStatus.OK).body("success");
 	}
 	
 	public void add(Customer c) {
