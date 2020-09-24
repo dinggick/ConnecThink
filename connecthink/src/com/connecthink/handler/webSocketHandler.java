@@ -155,7 +155,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 					for(int member_no : teamArray) {
 						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
 							System.out.println("message send Info----");
-							System.out.println(member_no+"에게 "+msgParsing.getContent()+"내용 전송");
+							System.out.println(member_no+"에게 "+msgParsing.getContent()+"내용 을"+msgParsing.getWriter().getCustomerNo()+"전송");
 							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()));
 							isChat = true;
 						}
@@ -229,7 +229,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 							//찾은 index 로 접속해제 클라이언트 정보 삭제
 							entry.getValue().remove(index);
 							
-							System.out.println("삭제 후 배열 사이즈 : "+entry.getValue().size());
+							System.out.println("맴버 정보 배열 삭제 후 사이즈 : "+entry.getValue().size());
 							//접속자 구분을 둔 logUser 에서 접속해제 하려는 클라이언트 정보 삭제
 							logUser.remove(session);
 							System.out.println("session 삭제");
