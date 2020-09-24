@@ -367,13 +367,19 @@ mailChimp();
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
 					alert("인증 성공");
-					$("#verifyModal").css("display", "none");
-					$("#isVerified").val("y");
-					console.log($("#isVerified").val());
+					$("#verifyModal").modal("hide");
 				},
 				error : () => {
 					alert("인증 코드가 올바르지 않습니다.");
 				}
 			});
+		});
+		
+		$("#registerModal").find("form").submit(function() {
+			if($("#isVerified").val() == "n") {
+				alert("이메일 인증이 필요합니다");
+				return false;
+			}
+			
 		});
 })(jQuery);	

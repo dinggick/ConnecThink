@@ -127,35 +127,36 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="registerModalLongTitle">회원가입</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-                </div>
-                <div class="modal-body">
-                    <form action="#">
-                        <div class="row">
-                    		<div class="col-md-6">
-                            	<input type="email" name="username" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
+		                <span aria-hidden="true">&times;</span>
+		            </button>
+                </div> 
+                <form action="/connecthink/all/register">
+	                <div class="modal-body">
+	                   
+	                        <div class="row">
+	                    		<div class="col-md-6">
+	                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
+		                        </div>
+		                        <div class="col-md-6">
+		                            <a id="requestVerifyCodeBtn" href="#verifyModal" class="genric-btn info-border" data-toggle="modal" data-backdrop="false">이메일 인증</a>
+		                            <input type="hidden" id="isVerified" value="n">
+		                        </div>
+		                    </div>
+	                        <div class="mt-10">
+	                            <input type="password" name="password" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'" required class="single-input">
 	                        </div>
-	                        <div class="col-md-6">
-	                            <a id="requestVerifyCodeBtn" href="#verifyModal" class="genric-btn info-border" data-toggle="modal" data-backdrop="false">이메일 인증</a>
-	                            <input type="hidden" id="isVerified" value="n">
+	                        <div class="mt-10">
+	                            <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
 	                        </div>
-	                    </div>
-                        <div class="mt-10">
-                            <input type="password" name="password" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'" required class="single-input">
-                        </div>
-                        <div class="mt-10">
-                            <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
-                        </div>
-                        <div class="mt-10">
-                            <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19980404" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19980404'" required class="single-input">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
-                    <button type="button" class="btn btn-primary">회원가입</button>
-                </div>
+	                        <div class="mt-10">
+	                            <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19980404" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19980404'" required class="single-input">
+	                        </div>
+	                </div>
+	                <div class="modal-footer">
+	<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
+	                    <button type="submit" class="btn btn-primary">회원가입</button>
+	                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -88,6 +88,19 @@ public class CustomerController {
 		}
 	}
 	
+	@RequestMapping("/all/register")
+	public ResponseEntity<String> register(String email, String password, String name, String birthDate) {
+		Customer customerForRegister = new Customer();
+		customerForRegister.setEmail(email);
+		customerForRegister.setPassword(password);
+		customerForRegister.setName(name);
+		customerForRegister.setBirthDate(birthDate);
+		
+		service.add(customerForRegister);
+		
+		return ResponseEntity.status(HttpStatus.OK).body("success");
+	}
+	
 	public void add(Customer c) {
 		service.add(c);
 	}
