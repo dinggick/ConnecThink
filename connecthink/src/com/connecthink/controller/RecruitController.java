@@ -1,8 +1,9 @@
 package com.connecthink.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,8 @@ import com.connecthink.service.CustomerService;
 import com.connecthink.service.ProjectService;
 import com.connecthink.service.RecruitService;
 
+import upload.RecruitCommand;
+
 @Controller
 public class RecruitController {
 	@Autowired
@@ -32,6 +35,9 @@ public class RecruitController {
 
 	@Autowired
 	private BookmarkService bmService;
+	
+	@Autowired
+    ServletContext context;
 
 
 	/**
@@ -90,10 +96,18 @@ public class RecruitController {
 	 * 모집 등록하기
 	 */
 	@PostMapping(value="addRec")
-	public String addRec(Integer projectNo, Integer positionNo, Date deadline, Integer headCount,String requirement, Integer recruitStatus) {
+	public String addRec(RecruitCommand recruitCommand) {
+		//설정
+		String saveDirectory = context.getRealPath("/storage");
+		System.out.println("테스트 : " + saveDirectory);
+		
+		//내용 보기
+		System.out.println();
+		
 		//첫 등록시 모집중 (1)
-		recruitStatus = 1;
-		recruitService.save(projectNo, positionNo, deadline, headCount, requirement, recruitStatus);
+		recruitCommand.setRecruitStatus(1);
+		
+//		recruitService.save(projectNo, positionNo, deadline, headCount, requirement, recruitStatus);
 		return "success";
 	}
 	@RequestMapping("/projectList")

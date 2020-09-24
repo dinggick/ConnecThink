@@ -91,7 +91,7 @@
 				<div class="col-lg-10 offset-lg-1">
 					<div class="apply_job_form white-bg mt-0">
 						<h4>모집 등록하기</h4>
-						<form action="#" class="insertRec">
+						<form action="${contextPath}/addRec" method="post" enctype="multipart/form-data">
 							<div class="row">
 								<div class="col-md-2">
 									<h5 class="mt-3" style="font-weight: bold;">모집분야</h5>
@@ -203,8 +203,8 @@
 								</div>
 								<div class="col-md-12">
 									<div class="submit_btn text-center">
-										<button class="boxed-btn3 mr-1" >취소하기</button>
-										<button class="boxed-btn3 submit">등록하기</button>
+										<button class="boxed-btn3 mr-1 clear" >취소하기</button>
+										<button class="boxed-btn3" type="submit">등록하기</button>
 									</div>
 								</div>
 							</div>
