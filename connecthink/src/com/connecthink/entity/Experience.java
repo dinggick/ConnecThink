@@ -40,8 +40,7 @@ public class Experience{
 	@MapsId(value = "customerNo")
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_no")
-//	@Transient
-//	@JsonBackReference
+	@JsonBackReference
 	private Customer customer;
 	
 	@Column(name = "term", nullable = true, length = 30)
@@ -49,9 +48,4 @@ public class Experience{
 	
 	@Column(name = "explain", nullable = true, length = 150)
 	private String explain;
-	
-//	@ManyToOne
-//	@JoinColumn(name = "customer_no")
-//	@JsonBackReference
-//	private Customer customer;
 }

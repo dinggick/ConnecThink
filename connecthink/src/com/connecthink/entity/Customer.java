@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -57,18 +58,19 @@ public class Customer {
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
-	@JsonIgnore
+	@JsonManagedReference
 	private Set<Experience> experiences;
 	
 
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
-	@JsonIgnore
+	@JsonManagedReference
 	private List<Notification> notifications;
 	
 
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
+	@JsonManagedReference
 	private Set<CustomerPosition> customerPositions;
 	
 	

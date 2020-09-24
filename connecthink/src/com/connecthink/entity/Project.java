@@ -1,5 +1,6 @@
 package com.connecthink.entity;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -11,7 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.transaction.Transactional;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -62,4 +64,8 @@ public class Project {
 	@OneToOne
 	@JoinColumn(name = "project_no")
 	private ChatRoom chatRoom;
+	
+	@CreationTimestamp
+	@Column(name = "create_date")
+	private Date createDate;
 }
