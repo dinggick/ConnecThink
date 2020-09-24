@@ -90,7 +90,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/all/register")
-	public ResponseEntity<String> register(String email, String password, String name, String birthDate) {
+	public String register(String email, String password, String name, String birthDate) {
 		Customer customerForRegister = new Customer();
 		customerForRegister.setEmail(email);
 		customerForRegister.setPassword(password);
@@ -99,7 +99,7 @@ public class CustomerController {
 		
 		service.add(customerForRegister);
 		
-		return ResponseEntity.status(HttpStatus.OK).body("success");
+		return "index";
 	}
 	
 	public void add(Customer c) {

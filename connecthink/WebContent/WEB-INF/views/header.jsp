@@ -130,9 +130,8 @@
 		                <span aria-hidden="true">&times;</span>
 		            </button>
                 </div> 
-                <form action="/connecthink/all/register">
+                <form action="/connecthink/all/register" method="POST">
 	                <div class="modal-body">
-	                   
 	                        <div class="row">
 	                    		<div class="col-md-6">
 	                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
@@ -151,6 +150,7 @@
 	                        <div class="mt-10">
 	                            <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19980404" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19980404'" required class="single-input">
 	                        </div>
+	                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                </div>
 	                <div class="modal-footer">
 	<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->

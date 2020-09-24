@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -60,9 +62,11 @@ public class Customer {
 	private String about;
 	
 	@Column(name = "graduation", nullable = true)
+	@ColumnDefault(value = "0")
 	private Integer graduation;
 	
 	@Column(name = "drop_status", nullable = true)
+	@ColumnDefault(value = "1")
 	private Integer dropStatus;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
