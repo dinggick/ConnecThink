@@ -45,7 +45,7 @@ public class BoardController {
 		}
         
         HttpSession session = req.getSession();        
-        //session.setAttribute("LoginInfo",customer_no);
+        session.setAttribute("LoginInfo",customer_no);
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
         mv.addObject("list", taskList);
