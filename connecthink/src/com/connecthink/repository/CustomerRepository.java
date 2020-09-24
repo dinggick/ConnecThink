@@ -39,4 +39,5 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 			"where rec.recruit_no= ?1)"
 			)
 	public Customer findManager(String recruitNo);
+	public Customer findByCustomerNo(Integer customerNo);
 }

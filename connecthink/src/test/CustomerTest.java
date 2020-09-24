@@ -38,12 +38,17 @@ public class CustomerTest {
 		System.out.println(c.getName());
 	}
 	
-	@Test
+	//@Test
 	void findAll() {
 		List<Customer> list = repository.findAll();
 		list.forEach(c -> {
 			System.out.println(c.getName());
 		});
+		
+	}
+	@Test
+	void findByNo() {
+		Customer c = repository.findByCustomerNo(1);
 		
 	}
 	

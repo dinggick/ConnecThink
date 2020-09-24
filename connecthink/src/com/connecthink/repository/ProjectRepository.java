@@ -139,5 +139,12 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"where rec.recruit_no= ?1"
 			)
 	public Project findByRecruits(String recruitNo);
+	@Query(nativeQuery = true, value=
+			"select * from project p\r\n" + 
+			"join recruit r on r.project_no = p.project_no\r\n" + 
+			"join member m on m.recruit_no = r.recruit_no\r\n" + 
+			"where  m.member_no = ?1 AND quit_date is not null"
+			)
+	public List<Project> findProjectByCustomerNo(Integer customerNo);
 	
 }

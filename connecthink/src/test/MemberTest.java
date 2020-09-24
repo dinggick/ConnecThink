@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.entity.Member;
 import com.connecthink.repository.MemberRepository;
-
+@WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -30,10 +31,7 @@ class MemberTest {
 	}
 	@Test
 	void findAllMember() {
-		
-		repository.findTop8By().forEach(s -> {
-			System.out.println("멤버: " + s.getCustomer().getExperiences());
-		});
+		repository.findByIdMemberNo(101);
 		
 	}
 }

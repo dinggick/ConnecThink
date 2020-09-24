@@ -1,21 +1,15 @@
 package com.connecthink.controller;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import javax.transaction.Transactional;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
-import com.connecthink.entity.Recruit;
 import com.connecthink.service.ProjectService;
 
 @RestController
@@ -56,5 +50,12 @@ public class ProjectController {
 		System.out.println(pList);
 		System.out.println("지원자 찾기 서비스 끝");
 		return pList;
+	}
+	@PostMapping(value="/memberModal")
+	public List<Project> memberModal(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int managerNo = (int) session.getAttribute("loginInfo");
+		List<Project> p = service.findByCustomerNo(managerNo);
+		return p;
 	}
 }

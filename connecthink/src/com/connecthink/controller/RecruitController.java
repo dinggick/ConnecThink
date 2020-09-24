@@ -33,7 +33,7 @@ public class RecruitController {
 	
 	
 	/**
-	 * @author 홍지수
+	 * @author 홍지수 
 	 * 모집 전체 목록 조회
 	 */
 	@RequestMapping("/rec")

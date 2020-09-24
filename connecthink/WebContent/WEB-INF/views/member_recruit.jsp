@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var = "customer" value="${requestScope.customer}"/>
+<c:set var = "project" value="${requestScope.project}"/>
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -59,10 +62,10 @@
 							<div class="jobs_left d-flex align-items-center">
 
 								<div class="jobs_conetent">
-									<a href="#"><h4>이혜림</h4></a>
+									<a href="#"><h4>${customer.name}</h4></a>
 									<div class="links_locat d-flex align-items-center">
 										<div class="location">
-											<p>백엔드 개발자</p>
+<%-- 											<p>${customer.postion.name }</p> --%>
 											<div class="bookmark">
 												<span> <img src="img/bookmark2.png" alt=""
 													style="width: 18px; height: 18px;">북마크
@@ -83,7 +86,7 @@
 									<img src="img/dogpic.png" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
-										<button class="smallbtn">초대하기</button>
+										<button class="smallbtn" onclick="openModal()">초대하기</button>
 									</div>
 								</div>
 
@@ -98,25 +101,42 @@
 					<div class="descript_wrap white-bg">
 						<div class="single_wrap">
 							<h4>학력</h4>
-							<p>서울대학교 졸업</p>
+							<p>
+							<c:out value="${customer.graduation eq 1 ? '졸업': '미졸업'}"/>								
+							</p>
 						</div>
 						<div class="single_wrap">
 							<h4>한줄소개</h4>
-							<ul>
-								<li>소개1</li>
-								<li>소개2</li>
+							<ul style="list-style: none;">
+								<p>${customer.about }</p>								
 							</ul>
 						</div>
 						<div class="single_wrap">
 							<h4>경력</h4>
-							<ul>
-								<li>공모전: 이런공모전 했음 12.01.2011</li>
-								<li>포트폴리오: 이런포트폴리오 있음</li>
+							<ul style="list-style: none;">
+							<c:forEach items="${customer.experiences}" var = "experience" varStatus="status">
+								<p>날짜 : ${experience.term }  | 설명 : ${experience.explain }</p>
+								
+							</c:forEach>
 							</ul>
 						</div>
 						<div class="single_wrap">
 							<h4>ConnecThink 히스토리</h4>
-							<p>히스토리 여기</p>
+							<c:forEach items="${project}" var = "p" varStatus="status">
+							<div>
+								<p>프로젝트 날짜 : 
+								<c:forEach items="${p.recruits}" var = "r" varStatus="status">
+									<c:forEach items="${r.members}" var ="m" varStatus="status">
+									<fmt:formatDate var="enterdate" value="${m.enterDate}" pattern="yyyy-MM-dd"/>
+									<fmt:formatDate var="quitdate" value="${m.quitDate}" pattern="yyyy-MM-dd"/>
+										${enterdate} ~ ${quitdate } 
+									</c:forEach>
+								</c:forEach>
+							</p>
+								<p>프로젝트 이름: ${p.title }</p>
+								<p>프로젝트 소개 : ${p.theme}</p>
+							</div>	
+							</c:forEach>
 						</div>
 					</div>
 
@@ -163,6 +183,16 @@
 	<script src="js/jquery.validate.min.js"></script>
 	<script src="js/mail-script.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		function openModal(){
+			$.ajax({
+				url: "${contextPath}/memberModal",
+				success: function(data) {
+					console.log(data);
+				} 
+			});
+		}
+	</script>
 </body>
 
 </html>

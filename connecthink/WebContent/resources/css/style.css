@@ -4007,7 +4007,7 @@ h3 {
 
 /* line 5, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_details.scss */
 .job_details_area .single_jobs {
-  padding: 30px;
+  padding: 30px 30px 50px;
   border-bottom: 1px solid #EAEAEA;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;

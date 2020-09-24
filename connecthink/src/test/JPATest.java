@@ -178,5 +178,9 @@ class JPATest {
 			}
 		}
 	}
+	@Test
+	public void findProjectByNo() {
+		projectRepository.findProjectByCustomerNo(101);
+	}
 
 }

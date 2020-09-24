@@ -11,6 +11,7 @@ function loadMemberList() {
 	$.ajax({
     	url : "/connecthink/customerList",  
     	method: "GET",
+    	data:  { ${_csrf.parameterName} : '${_csrf.token}'},   
 		success: function(responseObj) {
 			
 			var txt = "";
@@ -37,6 +38,7 @@ function loadProjectList() {
 	$.ajax({
     	url : "/connecthink/projectList",  
     	method: "GET",
+    	data:   {${_csrf.parameterName} : '${_csrf.token}'},    
 		success: function(responseObj) {
 			console.log(responseObj);
 			var txt = "";
