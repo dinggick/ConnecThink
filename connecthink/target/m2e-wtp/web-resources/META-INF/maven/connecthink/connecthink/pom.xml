@@ -39,11 +39,11 @@
          <version>2.11.2</version>
       </dependency>
       <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5 -->
-      <dependency>
-    <groupId>com.fasterxml.jackson.datatype</groupId>
-    <artifactId>jackson-datatype-hibernate5</artifactId>
-    <version>2.11.2</version>
-</dependency>
+		<dependency>
+		    <groupId>com.fasterxml.jackson.datatype</groupId>
+		    <artifactId>jackson-datatype-hibernate5</artifactId>
+		    <version>2.11.2</version>
+		</dependency>
       
       <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
       <dependency>
@@ -185,8 +185,14 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>5.1.5.RELEASE</version>
 		</dependency>
-
 		
+		<!-- https://mvnrepository.com/artifact/javax.mail/mail -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>mail</artifactId>
+		    <version>1.4.7</version>
+		</dependency>
+
 	</dependencies>
 
 

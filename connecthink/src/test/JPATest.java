@@ -62,11 +62,6 @@ class JPATest {
 	public void controllerTest() {
 		if(controller == null) fail("controller null");
 	}
-	
-//	@Test
-	public void findByEmailTest() {
-		Customer c = controller.findByEmail("user2@naver.com");
-	}
 
 //	@Test
 	public void saveTest() {

@@ -33,11 +33,11 @@
 	<mvc:resources mapping="html/**" location="/resources/html/"></mvc:resources>
 
 	<mvc:annotation-driven>
-	  <mvc:message-converters>
-         <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-            <property name="objectMapper" ref="jackson2ObjectMapper"></property>
-         </bean>
-      </mvc:message-converters>
+		<mvc:message-converters>
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="objectMapper" ref="jackson2ObjectMapper"></property>
+			</bean>
+		</mvc:message-converters>
 	</mvc:annotation-driven>
 
 	<context:component-scan
@@ -51,8 +51,8 @@
 	<websocket:handlers>
 		<websocket:mapping handler="webSocketHandler" path="/boardEcho" />
 		<websocket:handshake-interceptors>
-			<bean class="com.connecthink.handler.HandshakeInterceptor"/>
-		<!-- <beanclass="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />-->
+			<!-- <bean class="com.connecthink.handler.HandshakeInterceptor"/> -->
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 
@@ -61,4 +61,6 @@
 			value="com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module">
 		</property>
 	</bean>
+	
+	<bean id="mailBean" class="com.connecthink.mail.Mail"></bean>
 </beans>

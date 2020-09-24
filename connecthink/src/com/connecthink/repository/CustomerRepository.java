@@ -9,6 +9,12 @@ import com.connecthink.entity.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 	
+	/**
+	 * email로 회원 정보 Entity 조회
+	 * @author CJK
+	 * @param email
+	 * @return Customer (Entity type)
+	 */
 	public Customer findByEmail(String email);
 	public List<Customer> findTop8By();
 	

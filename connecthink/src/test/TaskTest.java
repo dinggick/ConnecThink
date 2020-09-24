@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Project;
@@ -26,7 +27,7 @@ import com.connecthink.service.BoardService;
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
 		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml") })
-
+@WebAppConfiguration
 class TaskTest {
 	@Autowired
 	private TaskRepository repository;
@@ -98,9 +99,9 @@ class TaskTest {
 	}
 	
 	//상태변경
-//	@Test
+	@Test
 	public void update() {
-		Task t = repository.findById(1).get();
+		Task t = repository.findById(11).get();
 		
 		t.setTaskStatus(3);
 		

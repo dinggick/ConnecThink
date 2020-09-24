@@ -77,5 +77,12 @@
 
 	<context:component-scan
 		base-package="com.connecthink.service"></context:component-scan>
-
+	
+	<!-- 파일 업로드 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="100000000" />  <!-- 10MB -->
+		<property name="maxInMemorySize" value="100000000" /> <!-- 10MB -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
 </beans>

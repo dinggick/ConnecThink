@@ -147,4 +147,26 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			)
 	public List<Project> findProjectByCustomerNo(Integer customerNo);
 	
+	/**
+	 * 팀장, 팀원 구분없이 특정 사용자가 소속된 프로젝트 리스트 가져오기
+	 * @author CJK
+	 * @param customerNo
+	 * @return
+	 */
+	@Query(nativeQuery = true, value = "SELECT\r\n" + 
+			"    *\r\n" + 
+			"FROM\r\n" + 
+			"    project\r\n" + 
+			"WHERE\r\n" + 
+			"    manager_no = ?1\r\n" + 
+			"UNION\r\n" + 
+			"SELECT\r\n" + 
+			"    p.*\r\n" + 
+			"FROM\r\n" + 
+			"         member m\r\n" + 
+			"    JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
+			"    JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
+			"WHERE\r\n" + 
+			"    m.member_no = ?1")
+	public List<Project> findByCustomerNo(Integer customerNo);
 }

@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var = "detail" value="${requestScope.detail}"/>
-<c:set var = "manager" value="${requestScope.manager}"/>
-<c:set var = "member" value="${requestScope.member}"/>
-<c:set var = "recNo" value="${requestScope.recNo}"/>
-<c:set var = "bmCount" value="${requestScope.bmCount}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="detail" value="${requestScope.detail}" />
+<c:set var="manager" value="${requestScope.manager}" />
+<c:set var="member" value="${requestScope.member}" />
+<c:set var="recNo" value="${requestScope.recNo}" />
+<c:set var="bmCount" value="${requestScope.bmCount}" />
 
 <head>
 <meta charset="utf-8">
@@ -35,50 +36,50 @@
 
 <style>
 .thumb {
- width: 55px !important;
- height: 55px !important;
- display: inline-block;
+	width: 55px !important;
+	height: 55px !important;
+	display: inline-block;
 }
 
 .thumb img {
- width: 100%;
- -webkit-border-radius: 50%; 
- -moz-border-radius: 50%;
- border-radius: 50%;
+	width: 100%;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
 }
 
 img.bm {
- width: 5%;
- overflow: hidden;
- transition: 0.5s;
- display: inline-block;
+	width: 5%;
+	overflow: hidden;
+	transition: 0.5s;
+	display: inline-block;
 }
 
 img.on {
- width: 5%;
- overflow:hidden;
- transition: 0.5s;
- display: none;
+	width: 5%;
+	overflow: hidden;
+	transition: 0.5s;
+	display: none;
 }
 
 .boxed-btn {
- width: 140px !important;
+	width: 140px !important;
 }
 
 .rec_no {
- display: none;
+	display: none;
 }
 
 li::before {
- content : unset !important;
+	content: unset !important;
 }
 
-li{
- color: black !important;
+li {
+	color: black !important;
 }
 
-span.customerNo{
- display: none;
+span.customerNo {
+	display: none;
 }
 </style>
 
@@ -91,7 +92,7 @@ span.customerNo{
 
 	<!-- header-start -->
 	<header>
-		<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+		<jsp:include page="/header"></jsp:include>
 	</header>
 
 	<!-- header-end -->
@@ -118,7 +119,7 @@ span.customerNo{
 						<div class="single_jobs white-bg d-flex justify-content-between">
 							<div class="jobs_left">
 								<div class="jobs_conetent mt-1 text-center">
-									<h2>팀이름</h2>
+									<h2>${detail.title}</h2>
 								</div>
 							</div>
 							<div class="jobs_right text-right pt-2">
@@ -137,23 +138,24 @@ span.customerNo{
 						<div class="single_wrap team_info">
 							<h4 class="mb-2">소개</h4>
 							<ul>
-							<li>${detail.about}</li>
+								<li>${detail.about}</li>
 							</ul>
 							<h4 class="mb-2 mt-2">목적</h4>
 							<ul>
-							<li>${detail.purpose}</li>
+								<li>${detail.purpose}</li>
 							</ul>
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
 								<h4 class="mt-3">팀원</h4>
-								<c:forEach items="${member}" var = "member" varStatus="status">
-								<div class="single_candidates mb-4 mr-3" style="display: inline-block;">
-									<div class="thumb text-center mr-2">
-										<img src="img/candiateds/1.png" alt="" onclick="modal(this);">
-										<span class="customerNo">${member.customerNo}</span>
-										<span style="font-size: 0.9em;">${member.name}</span>
+								<c:forEach items="${member}" var="member" varStatus="status">
+									<div class="single_candidates mb-4 mr-3"
+										style="display: inline-block;">
+										<div class="thumb text-center mr-2">
+											<img src="img/candiateds/1.png" alt="" onclick="modal(this);">
+											<span class="customerNo">${member.customerNo}</span> <span
+												style="font-size: 0.9em;">${member.name}</span>
+										</div>
 									</div>
-								</div>
 								</c:forEach>
 								<!-- 프로필 끝 -->
 							</div>
@@ -161,28 +163,29 @@ span.customerNo{
 						<div class="single_wrap project_info">
 							<h4>프로젝트 소개</h4>
 							<ul class="rec_wanna">
-							<c:forEach items="${detail.recruits}" var="rec" varStatus="status">
-							<c:if test="${recNo eq rec.recruitNo}">
-								<li>모집직무 : ${rec.position.name}</li>
-								<li>모집인원 : ${rec.headCount}</li>
-								<li>요구사항 : ${rec.requirement}</li>
-							</c:if>
-							</c:forEach>
+								<c:forEach items="${detail.recruits}" var="rec"
+									varStatus="status">
+									<c:if test="${recNo eq rec.recruitNo}">
+										<li>모집직무 : ${rec.position.name}</li>
+										<li>모집인원 : ${rec.headCount}</li>
+										<li>요구사항 : ${rec.requirement}</li>
+									</c:if>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>
 					<!-- 컨텐츠 끝 -->
-					<div class="single_jobs white-bg d-flex justify-content-between" style="height: 160px !important;">
+					<div class="single_jobs white-bg d-flex justify-content-between"
+						style="height: 160px !important;">
 						<div class="rec_foot_left">
 							<!-- 팀장 프로필 -->
 							<div class="thumb text-center mr-2">
-								<span>[팀장]</span>
-								<img src="img/candiateds/1.png" alt="프로필" class="mt-1" onclick="modal(this);">
-								<span class="customerNo">${manager.customerNo}</span>
-								<span>${manager.name}</span>
+								<span>[팀장]</span> <img src="img/candiateds/1.png" alt="프로필"
+									class="mt-1" onclick="modal(this);"> <span
+									class="customerNo">${manager.customerNo}</span> <span>${manager.name}</span>
 							</div>
 						</div>
-						<div class="rec_foot_right">						
+						<div class="rec_foot_right">
 							<button class="boxed-btn mt-4 message" onclick="message(this);">메세지</button>
 							<button class="boxed-btn mt-4 rec" onclick="apply();">지원하기</button>
 						</div>
@@ -191,7 +194,7 @@ span.customerNo{
 			</div>
 		</div>
 	</div>
-<!-- 본문 끝 -->
+	<!-- 본문 끝 -->
 	<!-- footer start -->
 	<footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
@@ -230,58 +233,132 @@ span.customerNo{
 
 
 	<script src="js/main.js"></script>
-	
+
 	<!-- script -->
 	<script>
+	$(function(){
+		bookClick();
+	});
 	
-	//북마크 추가
-	function bookmark(){
-		let no = $("span.rec_no").text();
-		console.log(no);
-		$.ajax({
-			url : "${contextPath}/bmToRec",
-			method : "POST",
-			data : {recruitNo : no},
-			success : function(data){
-				if(data == "success"){
-					alert("북마크 추가");
-					$("img.bm").css("display","none");
-					$("img.on").css("display", "inline-block");
-					count();
+		//북마크 추가
+		function bookmark() {
+			let no = $("span.rec_no").text();
+			$.ajax({
+				url : "${contextPath}/bmToRec",
+				method : "POST",
+				data : {
+					recruitNo : no,
+					customerNo : ${sessionScope.loginInfo},
+					${_csrf.parameterName} : '${_csrf.token}'
+				},
+				success : function(data) {
+					console.log(data);
+					
+					if (data == "success") {
+						count();
+						$("img.bm").css("display", "none");
+						$("img.on").css("display", "inline-block");
+					}
 				}
+			});
+		}
+
+		//북마크 삭제
+		function delmark() {
+			let no = $("span.rec_no").text();
+			
+			$.ajax({
+				url : "${contextPath}/delBmToRec",
+				method : "POST",
+				data : {
+					recruitNo : no,
+					customerNo : ${sessionScope.loginInfo},
+					${_csrf.parameterName} : '${_csrf.token}'
+				},
+				success : function(data) {
+					console.log(data);
+					if(data == "success") {
+						count();
+					$("img.bm").css("display", "inline-block");
+					$("img.on").css("display", "none");
+					}
+				}
+			});
+			
+		}
+
+		//팀원 모달
+		function modal(e) {
+			let $cNo = $(e).siblings("span.customerNo").html();
+			alert($cNo);
+		}
+
+		//메세지 보내기
+		function message(e) {
+			let $cNo = $(e).parents("div.rec_foot_right").siblings("div.rec_foot_left").find("span.customerNo").html();
+			alert($cNo);
+		}
+
+		//지원하기
+		function apply() {
+			console.log("버튼 클릭");
+			let recNo = "${recNo}";
+			let answer = confirm("${detail.title}" + "에 지원하시겠습니까?");
+			if(answer == true){
+			$.ajax({
+				url : "${contextPath}/recruit",
+				method : "POST",
+				data : {recruitNo : recNo,
+						customerNo : ${sessionScope.loginInfo},
+						${_csrf.parameterName} : '${_csrf.token}'},
+				success : function(data){
+					if(data == "success"){
+						alert("지원 완료");						
+					}
+				}
+			});
+			} else {
+				
 			}
-		});
-	}
-	
-	//북마크 삭제
-	function delmark(){
-		$("img.bm").css("display","inline-block");
-		$("img.on").css("display", "none");
-		let no = $("span.rec_no").text();
-		console.log(no);
-	}
-	
-	//팀원 모달
-	function modal(e){
-		let $cNo = $(e).siblings("span.customerNo").html();
-		alert($cNo);
-	}
-	
-	//메세지 보내기
-	function message(e){
-		let $cNo = $(e).parents("div.rec_foot_right").siblings("div.rec_foot_left").find("span.customerNo").html();
-		alert($cNo);
-	}
-	
-	//지원하기
-	function apply(){
-		alert("${recNo}");
+			return false;
+		}
 		
-	}
-	
-	function count(){
-	}
-	
+		//북마크 카운트
+		function count(){
+			let recNo = "${recNo}";
+			$.ajax({
+				url : "${contextPath}/count",
+				method:"POST",
+				data : {recruitNo : recNo,
+						${_csrf.parameterName} : '${_csrf.token}'},
+				success : function(data){
+					console.log(data);
+					let $section = $(".apply_now");
+					$sectionReplace = $section.replaceWith($section);
+					$sectionReplace.find("span.bm_count").html(data);				
+				}
+			});
+		}
+		
+		//북마크 한 목록 과 비교
+		function bookClick (){
+			let recNo = "${recNo}";
+			$.ajax({
+				url : "${contextPath}/recBm",
+				method : "POST",
+				data : {recruitNo : recNo,
+					customerNo : ${sessionScope.loginInfo},
+					${_csrf.parameterName} : '${_csrf.token}'},
+				success :  function(list) {
+					list.forEach(function(bm, index){
+						if(bm.recruit.recruitNo == recNo){
+							$("img.bm").css("display", "none");
+							$("img.on").css("display", "inline-block");
+						}
+					});
+				}	
+			});
+		}
 	</script>
 </body>
 

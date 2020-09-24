@@ -68,7 +68,7 @@
 
 	<!-- header-start -->
 	<header>
-		<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+		<jsp:include page="/header"></jsp:include>
 	</header>
 	<!-- header-end -->
 
@@ -85,14 +85,13 @@
 		</div>
 	</div>
 	<!--/ bradcam_area  -->
-
 	<div class="job_details_area">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="apply_job_form white-bg mt-0">
 						<h4>모집 등록하기</h4>
-						<form action="#">
+						<form action="${contextPath}/addRec" method="post" enctype="multipart/form-data">
 							<div class="row">
 								<div class="col-md-2">
 									<h5 class="mt-3" style="font-weight: bold;">모집분야</h5>
@@ -172,7 +171,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" placeholder="EX) 브랜딩 / 공모전 경험 / SPRING BOOT 사용 가능자" required>
+										<input type="text" name = "req" placeholder="EX) 브랜딩 / 공모전 경험 / SPRING BOOT 사용 가능자" required>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -204,7 +203,7 @@
 								</div>
 								<div class="col-md-12">
 									<div class="submit_btn text-center">
-										<button class="boxed-btn3 mr-1" >취소하기</button>
+										<button class="boxed-btn3 mr-1 clear" >취소하기</button>
 										<button class="boxed-btn3" type="submit">등록하기</button>
 									</div>
 								</div>
@@ -279,14 +278,17 @@
     
 	function position_p(obj){
 		alert(obj.value);
+		var pVal = obj.value;
 	}
 	
 	function position_ds(obj){
 		alert(obj.value);
+		var dsVal = obj.value;
 	}
 	
 	function position_dv(obj){
 		alert(obj.value);
+		var dvVal = obj.value;
 	}
 	
 	function upload(obj){
@@ -294,8 +296,6 @@
 		let display = $("label.fileName");
 		display.css("display", "inline").html(file);
 	}
-
-
 		
 		</script>
 </body>
