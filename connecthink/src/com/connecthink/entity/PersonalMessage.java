@@ -1,6 +1,7 @@
 package com.connecthink.entity;
 
 import java.util.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,5 +46,5 @@ public class PersonalMessage {
 	
 	@CreationTimestamp
 	@Column(name = "create_date")
-	private Date createDate;
+	private Timestamp createDate;
 }

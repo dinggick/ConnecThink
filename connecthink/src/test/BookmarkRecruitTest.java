@@ -16,8 +16,6 @@ import com.connecthink.repository.BookmarkRecruitRepository;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.RecruitRepository;
 
-import jdk.internal.org.jline.utils.Log;
-
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
