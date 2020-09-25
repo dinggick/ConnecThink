@@ -81,9 +81,13 @@ public class webSocketHandler extends TextWebSocketHandler{
 						System.out.println("방존재");
 						if(msgList.get(project_no).size() != 0 ) {
 							System.out.println("000000000000000000000존재한다");
+							int newMsgIndex = msgList.get(project_no).lastIndexOf(diviMsg)+1;
+							System.out.println(newMsgIndex);
 							//해당 메세지 리스트 의 작성자 와 글 내용 보내주기
 							for(Message msg : msgList.get(project_no)) {
-								session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()));
+								if(!msg.getContent().equals(division)) {
+									session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()));
+								}
 							}
 						}
 						chatCnt++;
@@ -166,8 +170,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 					for(int member_no : teamArray) {
 						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
 							System.out.println("message send Info----");
+							System.out.println(msgParsing.getCreateDate()+"시 분 ");
 							System.out.println(member_no+"에게 "+msgParsing.getContent()+"내용 을"+msgParsing.getWriter().getCustomerNo()+"전송");
-							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()));
+							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()+":"+msgParsing.getCreateDate()));
 							
 						}//if
 					}//for
