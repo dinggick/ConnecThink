@@ -119,7 +119,7 @@
                         </div>
                         <div class="single_wrap" style="text-align: right;">
                             <a href="/connecthink/modifyUserInfo" class="genric-btn info-border">수정</a>
-                            <a href="#" class="genric-btn danger-border">탈퇴</a>
+                            <button id="dropBtn" class="genric-btn danger-border">탈퇴</button>
                         </div>
                     </div>
                 </div>
@@ -224,6 +224,30 @@
 					});
 					
 				}
+    		});
+    		
+    		$("#dropBtn").click(() => {
+    			$.ajax({
+        			url : "/connecthink/dropCustomer",
+        			method : "POST",
+        			data : {customerNo : ${sessionScope.loginInfo},
+    					${_csrf.parameterName} : '${_csrf.token}'},
+    				success : (data, textStatus, jqXHR) => {
+    					alert("탈퇴 성공");
+    					//탈퇴 성공시 로그아웃
+    					$.ajax({
+    						url : "/connecthink/logout",
+    						method : "POST",
+    						data : {${_csrf.parameterName} : '${_csrf.token}'},
+    						success : (data, textStatus, jqXHR) => {
+    							location.href = "http://localhost/connecthink/index";
+    						}
+    					});
+    				},
+    				error : () => {
+    					alert("탈퇴 실패");
+    				}
+        		});
     		});
     	});
     </script>

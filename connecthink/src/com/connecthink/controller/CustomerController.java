@@ -202,6 +202,14 @@ public class CustomerController {
 		return ResponseEntity.status(HttpStatus.OK).body("success");
 	}
 	
+	@RequestMapping("/dropCustomer")
+	public ResponseEntity<String> dropCustomer(Integer customerNo) {
+		Customer customerForDrop = service.findByNo(customerNo);
+		service.drop(customerForDrop);
+		
+		return ResponseEntity.status(HttpStatus.OK).body("success");
+	}
+	
 	@RequestMapping("/memberList")
 	public List<Customer> findTopMembers(){		
 		return service.findTopMembers();

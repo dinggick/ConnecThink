@@ -78,6 +78,11 @@ public class CustomerService {
 	public void modify(Customer c) {
 		customerRepository.save(c);
 	}
+	
+	public void drop(Customer c) {
+		c.setDropStatus(0);
+		customerRepository.save(c);
+	}
 
 	public Customer findManager(String recruitNo) {
 		Customer c = customerRepository.findManager(recruitNo);

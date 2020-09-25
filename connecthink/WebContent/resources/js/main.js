@@ -349,7 +349,6 @@ mailChimp();
       
       	//로그아웃 버튼 클릭시 로그아웃 요청 전송
 		$("#logoutBtn").click(() => {
-			console.log(csrfToken);
 			$.ajax({
 				url : "/connecthink/logout",
 				method : "POST",
