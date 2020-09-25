@@ -99,8 +99,8 @@
 								<div class="col-md-5 ">
 									<div class="input_field text-center position0">
 										<select name="projectNo" class="position" id="projectNo">
-<!-- 											<option value="0">프로젝트 번호</option> -->
-<!-- 											<option value="1">1</option> -->
+											<!-- 											<option value="0">프로젝트 번호</option> -->
+											<!-- 											<option value="1">1</option> -->
 										</select>
 									</div>
 								</div>
@@ -139,7 +139,7 @@
 									</div>
 									<!-- 2 -->
 									<div class="input_field position2" style="display: none;">
-										<select class="position21" name="positionNo"  id="positionNo2">
+										<select class="position21" name="positionNo" id="positionNo2">
 											<option value="0">직무선택</option>
 											<option value="9">디자이너</option>
 											<option value="10">UI/UX디자이너</option>
@@ -280,6 +280,9 @@
 	<script>
 	
 	$(function(){
+
+		let $section = $("#projectNo");
+		
 		$.ajax({
  			url : "${contextPath}/managerAddRec",
  			method : "POST",
@@ -287,25 +290,21 @@
  		        	${_csrf.parameterName} : '${_csrf.token}'},
  			success : function(teams){
  				let size = teams.length;
- 				let data = "";
  				alert(size);
- 				let $section = ("#projectNo");
- 				data += '<option value="0">프로젝트번호</option>';
+				let data = '<option value="0">프로젝트번호</option>';
  				if(size > 0){
  	 				teams.forEach(function(team, index){
- 	 					console.log(team.projectNo);
- 	 					console.log(team.title);
- 	 					data += '<option value=';
- 	 					data += team.projectNo;
- 	 					data +='>';
+ 	 					alert(team.projectNo);
+ 	 					data += '<option value="'+ team.projectNo +'">';
  	 					data += team.title;
  	 					data += '</option>'
  	 					});
+ 	 				$section.html(data);
+ 	 				alert(data);
  					} else {
  						alert("팀을 먼저 등록해 주세요");
  						loction.href="${contaxtPath}/add_project";
  					}
- 				$section.html(data);
  				}
  		});
 	});
@@ -319,8 +318,6 @@
 			
 			$("select.position21 option:eq(0)").prop("selected", true);
 			$("select.position31 option:eq(0)").prop("selected", true);
-			$("select.position21").removeAttr("id");
-			$("select.position31").removeAttr("id");
 			
 		} else if(obj.value == 2) {
 			$("div.position1").css("display","none")
@@ -329,8 +326,6 @@
 			
 			$("select.position11 option:eq(0)").prop("selected", true);
 			$("select.position31 option:eq(0)").prop("selected", true);
-			$("select.position11").removeAttr("id");
-			$("select.position31").removeAttr("id");
 
 			
 		} else if(obj.value == 3) {
@@ -349,10 +344,6 @@
 			$("select.position11 option:eq(0)").prop("selected", true);
 			$("select.position21 option:eq(0)").prop("selected", true);
 			$("select.position31 option:eq(0)").prop("selected", true);
-			
-			$("select.position11").removeAttr("id");
-			$("select.position21").removeAttr("id");
-			$("select.position31").removeAttr("id");
 		}
 	}
 
@@ -369,11 +360,11 @@
 			alert("프로젝트 번호 입력 안 됨");
 		} else if( $("#pos option:selected").val() == 0 ){
 			alert("포지션 입력 안 됨");
-		} else if($("#pos option:selected").val() == 1 || $("#positionNo1 option:selected").val() == 0){
+		} else if($("#pos option:selected").val() == 1 && $("#positionNo1 option:selected").val() == 0){
 			alert("직무 입력 안 됨");
-		}else if($("#pos option:selected").val() == 2 || $("#positionNo2 option:selected").val() == 0){
+		}else if($("#pos option:selected").val() == 2 && $("#positionNo2 option:selected").val() == 0){
 			alert("직무 입력 안 됨");
-		}else if($("#pos option:selected").val() == 3 || $("#positionNo3 option:selected").val() == 0){
+		}else if($("#pos option:selected").val() == 3 && $("#positionNo3 option:selected").val() == 0){
 			alert("직무 입력 안 됨");
 		} else if($("input[name=deadline]").val() == "" ){
 			alert("마감 날짜 입력 안 됨");
@@ -382,7 +373,7 @@
 		} else if($("input[name=requirement]").val()  == "" ){
 			alert("요구사항 입력 안 됨");
 		} else if ($("textarea[name=recExplain]").val() == ""){
-			alert("상세 설명 누락");
+			alert("상세 설명 누락");		
 		} else {
 			$.ajax({
 	 			url : "${contextPath}/addRec",

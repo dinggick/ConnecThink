@@ -22,18 +22,7 @@ public class ProjectService {
 	private ProjectRepository projectRepository;
 	
 	public List<Project> findByManagerNo(Integer managerNo) {
-		List<Project> list = projectRepository.findByManagerNo(managerNo);
-		list.forEach(p ->{
-			Iterator<Recruit> iter = p.getRecruits().iterator();
-			while(iter.hasNext()) {
-				iter.next().getPosition().getName();
-				Iterator<Member> miter  = iter.next().getMembers().iterator();
-				while(miter.hasNext()){
-					miter.next().getCustomer().getCustomerNo();
-				}
-			}
-		});
-		return list;
+		return projectRepository.findByManagerNo(managerNo);
 	}
 	
 	public List<Project> findMyApplication(Integer memberNo) {
