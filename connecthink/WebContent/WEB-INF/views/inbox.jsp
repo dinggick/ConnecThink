@@ -347,6 +347,7 @@ var testCustomer = 101;
 fxLoadInbox(testCustomer);
 fxLoadNotiCnt(testCustomer);
 fxLoadNoti(testCustomer);
+fxLoadAllPm(testCustomer);
 
 //------------------------ 클릭 이벤트 -------------------------
 $listSection.on("click","li.person",function(e){
@@ -462,6 +463,23 @@ function fxLoadNoti(customerNo){
 			});
 			$otherInfoSection.html(otherData);
 			$msgSection.html(sectionData);
+		}
+	});
+}
+	
+//내가 주고 받은 personal message 전체를 불러오는 함수
+function fxLoadAllPm(testNo){
+   	$.ajax({
+   		url:"${contextPath}/inbox/allPm"
+   		,method:"GET"
+   			//{customerNo : ${sessionScope.loginInfo},
+   		,data: {customerNo : testNo,
+   			${_csrf.parameterName} : '${_csrf.token}'}
+   		,success:function(personalMsgsObj){
+    		let personalMsgs = JSON.stringify(personalMsgsObj);
+    		console.log(typeof(personalMsgs));
+    		console.log(personalMsgs);
+			wSocket.send(personalMsgs);
 		}
 	});
 }

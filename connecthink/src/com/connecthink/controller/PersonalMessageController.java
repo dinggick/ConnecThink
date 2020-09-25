@@ -33,4 +33,10 @@ public class PersonalMessageController {
 	public List<PersonalMessage> loadMSGs(Integer customerNo, Integer otherNo) {
 		return service.findByReceiveAndSend(customerNo, otherNo);
 	}
+	
+	@RequestMapping(value="/inbox/allPm")
+	@ResponseBody
+	public List<PersonalMessage> allPm(Integer customerNo) {
+		return service.findByReceive(customerNo);
+	}
 }

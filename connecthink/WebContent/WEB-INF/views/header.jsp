@@ -286,6 +286,8 @@ var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/boardEcho/inbox");
 
 // 웹소켓 테스트용 변수
 var testNo = 101;
+//fxLoadAllPm(testNo);
+// fxLoadNoti(testNo);
 
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
@@ -300,7 +302,12 @@ var testNo = 101;
    }
    //메세지 수신시
    function onMessage(e) {
-    alert("메시지 수신 : " + e.data);
+	   msgContent = e.data;
+	   if(msgContent == "connecthinksystem : there is no personal msg list") {
+// 		   fxLoadAllPm(testNo);
+	   }
+    console.log(e);
+	console.log(msgContent);
    }
    //에러 발생시
    function onError(e) {
@@ -313,17 +320,34 @@ var testNo = 101;
 
 //----------------------- 기능 함수 -------------------------------
 //내가 받은 notification 전체를 불러오는 함수
-   function fxLoadNoti(customerNo){
-   	$.ajax({
-   		url:"${contextPath}/inbox/allNoti"
-   		,method:"GET"
-   			//{customerNo : ${sessionScope.loginInfo},
-   		,data: {customerNo : customerNo,
-   			${_csrf.parameterName} : '${_csrf.token}'}
-   		,success:function(noties){
-   			wSocket.send(noties);
-   		}
-   	});
-   }
+//    function fxLoadNoti(testNo){
+//    	$.ajax({
+//    		url:"${contextPath}/inbox/allNoti"
+//    		,method:"GET"
+//    			//{customerNo : ${sessionScope.loginInfo},
+//    		,data: {customerNo : testNo,
+//    			${_csrf.parameterName} : '${_csrf.token}'}
+//    		,success:function(notiesObj){
+//    			let noties = JSON.parse(notiesObj);
+//    			console.log(typeof(noties));
+//    			wSocket.send(noties);
+//    		}
+//    	});
+//    }
+//내가 주고 받은 personal message 전체를 불러오는 함수
+//    function fxLoadAllPm(testNo){
+// 	   	$.ajax({
+// 	   		url:"${contextPath}/inbox/allPm"
+// 	   		,method:"GET"
+// 	   			//{customerNo : ${sessionScope.loginInfo},
+// 	   		,data: {customerNo : testNo,
+// 	   			${_csrf.parameterName} : '${_csrf.token}'}
+// 	   		,success:function(personalMsgsObj){
+// 	   			let personalMsgs = JSON.parse(personalMsgsObj);
+// 	   			console.log(typeof(personalMsgs));
+// 	   			wSocket.send(personalMsgs);
+// 	   		}
+// 	   	});
+// 	}
 </script>
 </html>
