@@ -131,8 +131,7 @@ public class RecruitController {
 //	멤버 초대 메소드
 	@PostMapping(value="/inviteMember")	
 	@ResponseBody
-	public String inviteMember(Integer customerNo, String recruitNo) {
-		System.out.println("!!!!!!!!!!!!"+ customerNo + "?????????" + recruitNo);
+	public String inviteMember(Integer customerNo, String recruitNo) {		
 		recruitService.saveInvite(recruitNo, customerNo);
 		return "success";
 	}

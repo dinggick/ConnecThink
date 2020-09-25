@@ -193,8 +193,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 			}
 		}//boardChat 동준
 		}//boardEcho 동준
-		
-	}//handleTextMessage
+		//handleTextMessage
 
 	@Override
 	//클라이언트 에서 연결을 종료 할 경우

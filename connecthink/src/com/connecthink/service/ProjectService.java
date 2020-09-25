@@ -131,6 +131,7 @@ public class ProjectService {
 		p.getTasks().forEach(t->{
 			t.getContent();
 		});
+
 		p.getRecruits().forEach(r->{
 			r.getPosition().getName();
 			r.getMembers().forEach(m ->{
