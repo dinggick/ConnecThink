@@ -30,6 +30,29 @@
 
 <link rel="stylesheet" href="css/style.css">
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+<style>
+.position, .position11{
+	height: 30px !important;
+	border: 1px solid #E8E8E8 !important;
+	width: 100% !important;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	margin-bottom: 20px;
+	font-size: 15px !important;
+/* 	padding-top: 10px !important; */
+}
+	
+.position11 .option {
+		padding-right: 11.5em !important;
+		font-size: 15px !important;
+	}
+.instruction{
+	font-size: 13px !important;
+	margin-left: 15px;
+}
+		
+</style>
 </head>
 
 <body>
@@ -86,7 +109,8 @@
 									<img src="img/dogpic.png" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
-										<button class="smallbtn" onclick="openModal()">초대하기</button>
+										<button class="smallbtn" onclick="openModal()" data-toggle="modal" data-target="#myModal" id="inviteButton">초대하기</button>
+										<button class="cancelbtn" id ="uninviteButton" onclick="uninviteMember()" >초대취소</button>
 									</div>
 								</div>
 
@@ -122,16 +146,14 @@
 						</div>
 						<div class="single_wrap">
 							<h4>ConnecThink 히스토리</h4>
-							<c:forEach items="${project}" var = "p" varStatus="status">
+							<c:forEach items="${project}" var = "p" varStatus="status" >
 							<div>
 								<p>프로젝트 날짜 : 
-								<c:forEach items="${p.recruits}" var = "r" varStatus="status">
-									<c:forEach items="${r.members}" var ="m" varStatus="status">
-									<fmt:formatDate var="enterdate" value="${m.enterDate}" pattern="yyyy-MM-dd"/>
-									<fmt:formatDate var="quitdate" value="${m.quitDate}" pattern="yyyy-MM-dd"/>
-										${enterdate} ~ ${quitdate } 
-									</c:forEach>
-								</c:forEach>
+								
+									<fmt:formatDate var="enterdate" value="${p.startDate}" pattern="yyyy-MM-dd"/>
+									<fmt:formatDate var="quitdate" value="${p.endDate}" pattern="yyyy-MM-dd"/>
+										${enterdate} ~ ${quitdate} 
+
 							</p>
 								<p>프로젝트 이름: ${p.title }</p>
 								<p>프로젝트 소개 : ${p.theme}</p>
@@ -144,6 +166,33 @@
 
 				</div>
 			</div>
+		</div>	
+	</div>
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				 <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLongTitle">프로젝트 선택</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		            </button>					
+				</div>
+				<div class="modal-body">
+				<p class="instruction">멤버를 초대할 프로젝트를 선택해주세요.</p>
+					<div class="col-md-9">					
+										
+						<div class="input_field position1">
+						
+						</div>					
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id ="inviteButton" onclick="inviteMember()">초대하기</button>
+				
+				</div>
+			</div>
+
 		</div>
 	</div>
 
@@ -184,12 +233,73 @@
 	<script src="js/mail-script.js"></script>
 	<script src="js/main.js"></script>
 	<script>
+	$(document).ready(function(){
+	    $(".cancelbtn").hide();
+	});
 		function openModal(){
+			var $selectSection = $('.input_field.position1');
+			
 			$.ajax({
 				url: "${contextPath}/memberModal",
+				data:  { 
+// 					managerNo: ${sessionScope.loginInfo},
+					${_csrf.parameterName} : '${_csrf.token}'
+					},   
+				method: "GET",
 				success: function(data) {
 					console.log(data);
+					var txt = "<select class='position11' form='inviteForm' id='project_no'><option value=''  selected>프로젝트</option>";
+					
+					for (i in data) {	
+						for(x in data[i].recruits) {
+					txt += "<option value='"+data[i].recruits[x].recruitNo+"'>"+data[i].recruits[x].requirement+"</option>";
+					
+					console.log(txt);
+						}
+					}
+					txt += "</select>";
+					$selectSection.html(txt);
 				} 
+			});
+		}
+		function inviteMember(){			
+			var recruitNo = document.getElementById('project_no').value;
+			
+			$.ajax({
+				url: "${contextPath}/inviteMember",
+				method: "POST",
+				data: {
+					customerNo: ${customer.customerNo}, 
+					recruitNo: recruitNo,
+					${_csrf.parameterName} : '${_csrf.token}'
+					},
+				success: function(data){
+					if (data == "success") {
+						$('.close').click();
+						$('.smallbtn').hide();
+						$('.cancelbtn').show();						
+					}
+				}
+			});
+			
+		}
+		function uninviteMember(){
+			var recruitNo = document.getElementById('project_no').value;
+			$.ajax({
+				url:"${contextPath}/manageTeam/deny",
+				data:{ 
+					memberNo: ${customer.customerNo}, 
+					recruitNo: recruitNo,
+					${_csrf.parameterName} : '${_csrf.token}'
+				},
+				success: function(data){
+					if (data == "success") {
+						$('.close').click();
+						$('.smallbtn').show();
+						$('.cancelbtn').hide();
+						
+					}
+				}
 			});
 		}
 	</script>

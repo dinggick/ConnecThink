@@ -26,6 +26,8 @@ import com.connecthink.entity.Project;
 import com.connecthink.mail.VerificationMail;
 import com.connecthink.service.CustomerService;
 import com.connecthink.service.PositionService;
+import com.connecthink.dto.ProjectHistoryDTO;
+import com.connecthink.service.ProjectHistoryService;
 import com.connecthink.service.ProjectService;
 
 
@@ -39,11 +41,12 @@ public class CustomerController {
 	@Autowired
 	private CustomerService service;
 	@Autowired
-	private ProjectService pservice;
-	@Autowired
 	private PositionService positionService;
-	
-	
+	@Autowired
+	private ProjectHistoryService pservice;
+	@Autowired
+	private ProjectService projectService;
+
 	@RequestMapping("/all/mateList")
 	public ModelAndView findAll() {
 		System.out.println("matelist test");
@@ -223,11 +226,13 @@ public class CustomerController {
 		mnv.addObject("customer", c);
 		
 		//컨넥띵크 히스토리
-		List<Project> m = pservice.findByCustomerNo(customerNo);
-		
-		mnv.addObject("project",m);
-		
-		
+		List<ProjectHistoryDTO> m = pservice.findByNo(customerNo);		
+		mnv.addObject("project",m);		
+		//매니저 유무확인 (초대하기 버튼 보여줄지 유무 결정)
+		List<Project> p = projectService.findByManagerNo(customerNo);
+		if (p.size() == 0) {
+			
+		}
 		
 		mnv.setViewName("member_recruit");
 		

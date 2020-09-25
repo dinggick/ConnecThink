@@ -207,9 +207,9 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="jobs.html">모집중인 멤버</a></li>
+                                            <li><a href="all/mateList">모집중인 멤버</a></li>
                                            
-                                            <li><a href="#">모집중인팀</a></li>
+                                            <li><a href="rec">모집중인팀</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
@@ -274,6 +274,7 @@ function openNav() {
 function closeNav() {
 	 document.getElementById("mySidenav").style.width = "0";
 }
+
 
 </script>
 </html>

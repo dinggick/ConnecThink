@@ -25,13 +25,13 @@ public class ProjectHistoryService {
 		pList.forEach(p -> {
 			if(p.getManagerNo() == customerNo) { //팀장인 경우
 				result.add(new ProjectHistoryDTO(p.getTitle(), p.getCreateDate(),
-						p.getRecruits().iterator().next().getMembers().iterator().next().getQuitDate())); //종료날짜는 멤버의 quitDate와 동일하다
+						p.getRecruits().iterator().next().getMembers().iterator().next().getQuitDate(),p.getTheme())); //종료날짜는 멤버의 quitDate와 동일하다
 			} else {
 				p.getRecruits().forEach(r -> {
 					r.getMembers().forEach(m -> {
 						if(m.getCustomer().getCustomerNo() == customerNo) { //팀원의 경우
 							result.add(new ProjectHistoryDTO(p.getTitle(), m.getEnterDate(),
-									p.getRecruits().iterator().next().getMembers().iterator().next().getQuitDate())); //종료날짜는 멤버의 quitDate와 동일하다
+									p.getRecruits().iterator().next().getMembers().iterator().next().getQuitDate(),p.getTheme())); //종료날짜는 멤버의 quitDate와 동일하다
 						}
 					});
 				});

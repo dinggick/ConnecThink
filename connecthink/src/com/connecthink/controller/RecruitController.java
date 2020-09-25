@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
+import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.service.BookmarkService;
 import com.connecthink.service.CustomerService;
+import com.connecthink.service.MemberService;
 import com.connecthink.service.ProjectService;
 import com.connecthink.service.RecruitService;
 
@@ -37,7 +39,11 @@ public class RecruitController {
 
 	@Autowired
 	private BookmarkService bmService;
-
+	
+	@Autowired
+    ServletContext context;
+	@Autowired
+	private MemberService memberService;
 
 	/**
 	 * @author 홍지수 
@@ -139,5 +145,13 @@ public class RecruitController {
 	@RequestMapping(value = "/add_rec")
 	public void add_rec() {
 		System.out.println("모집등록페이지 호출");
+	}
+//	멤버 초대 메소드
+	@PostMapping(value="/inviteMember")	
+	@ResponseBody
+	public String inviteMember(Integer customerNo, String recruitNo) {
+		System.out.println("!!!!!!!!!!!!"+ customerNo + "?????????" + recruitNo);
+		recruitService.saveInvite(recruitNo, customerNo);
+		return "success";
 	}
 }
