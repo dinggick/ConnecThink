@@ -62,6 +62,4 @@
 			value="com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module">
 		</property>
 	</bean>
-	
-	<bean id="mailBean" class="com.connecthink.mail.Mail"></bean>
 </beans>
