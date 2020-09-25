@@ -275,5 +275,55 @@ function closeNav() {
 	 document.getElementById("mySidenav").style.width = "0";
 }
 
+//------------------------ 웹소켓 --------------------------------
+
+var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/boardEcho/inbox");
+    wSocket.onopen = function(e) { onOpen(e) };
+    wSocket.onclose = function(e) { onClose(e) };
+    wSocket.onmessage = function(e) { onMessage(e) };
+    wSocket.onerror = function(e) { onError(e) };
+//    wSocket.send = function(e) {SendMsg(e) };
+
+// 웹소켓 테스트용 변수
+var testNo = 101;
+
+//---------------------- 웹소켓 함수 -------------------------------
+   //연결이 정상적으로 이루어졌을때
+   function onOpen(e) {
+	wSocket.send(testNo + "가 접속하였습니다.");
+    alert("Welcome, " + testNo + "! WebSocket opened!");
+	
+   }
+   //연결이 끊어졌을때
+   function onClose(e) {
+    alert("WebSocket closed!");
+   }
+   //메세지 수신시
+   function onMessage(e) {
+    alert("메시지 수신 : " + e.data);
+   }
+   //에러 발생시
+   function onError(e) {
+    alert( "오류발생 : " + e.data );
+   }
+   //메세지 전송시 = 웹소캣 핸들러로 전달
+//    function SendMsg(e){
+//  	wSocket.send("보낼 메세지 내용 : "+ e);
+//    }
+
+//----------------------- 기능 함수 -------------------------------
+//내가 받은 notification 전체를 불러오는 함수
+   function fxLoadNoti(customerNo){
+   	$.ajax({
+   		url:"${contextPath}/inbox/allNoti"
+   		,method:"GET"
+   			//{customerNo : ${sessionScope.loginInfo},
+   		,data: {customerNo : customerNo,
+   			${_csrf.parameterName} : '${_csrf.token}'}
+   		,success:function(noties){
+   			wSocket.send(noties);
+   		}
+   	});
+   }
 </script>
 </html>

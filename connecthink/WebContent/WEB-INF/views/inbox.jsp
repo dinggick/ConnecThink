@@ -342,6 +342,7 @@ var $otherInfoSection = $(".msg_sender");
 var $msgSection = $(".msg_body");
 var $notiCnt = $(".system>.new");
 var testCustomer = 101;
+
 //------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
 fxLoadInbox(testCustomer);
 fxLoadNotiCnt(testCustomer);

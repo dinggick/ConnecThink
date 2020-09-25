@@ -1012,7 +1012,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/boardEcho");
+				  this.socket = new WebSocket("ws://192.168.0.121/connecthink/boardEcho");
 				  console.log(this.socket);
 				  
 				  //onopen

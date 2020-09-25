@@ -35,7 +35,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		log.warn("ROLE NAMES: " + roleNames);
 
 		if (roleNames.contains("ROLE_CUSTOMER")) {
-			System.out.println(auth.getPrincipal());
 			request.getSession().setAttribute("loginInfo", ((CustomUser)auth.getPrincipal()).getCustomer().getCustomerNo());
 			response.sendRedirect("index");
 			return;

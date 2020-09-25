@@ -35,9 +35,19 @@ public class webSocketHandler extends TextWebSocketHandler{
 	//key -> project_no value -> List<customer_no>
 	Map<Integer, List<Integer>> logMember = new HashMap<Integer, List<Integer>>();
 	
+	/* personal_msg 용 변수 */
+	//WebSocketSession에 접속한 사용자의 customerNo를 담음
+	Map<WebSocketSession, Integer> personalLogUser = new HashMap<WebSocketSession, Integer>();
+	
+	//customerNo에 해당하는 사용자의 Message List를 담음
+	Map<Integer,List<Message>> personalMsgMap = new HashMap<Integer,List<Message>>();
+	
+	
 	@Override
 	//클라이언트 에서 접속을 성공할때 발생
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
+		System.out.println("웹소켓 접속 성공");
+		System.out.println("ws info : "+session.getId());
 		String[] url = session.getUri().toString().split("/");
 		int size = url.length;
 		if(url[size-1].equals("boardEcho")) {
@@ -52,8 +62,18 @@ public class webSocketHandler extends TextWebSocketHandler{
 			System.out.println("HttpSession ID : "+customer_no+" webSocketID : "+session.getId()+" 접속");
 			
 			session.sendMessage(new TextMessage("userid:"+customer_no));
+		} else if(url[size-1].equals("inbox")) {
+			//handShakeInterceptor 에서 추가한 Httpsesion 값 가져오기
+			System.out.println("로그인 한 유저번호는 : " + session.getAttributes().get("LoginInfo"));
+			Integer customer_no = 101;
+					//(Integer)session.getAttributes().get("LoginInfo");
+			
+			//접속한 유저의 웹소캣 id & 해당 유저의 HttpSession 에 저장되어 있는 userId
+			personalLogUser.put(session,customer_no);
+
+			//제대로 가져왔는지 확인
+			System.out.println("HttpSession ID : "+customer_no+" webSocketID : "+session.getId()+" 접속");
 		}
-		
 	}
 	
 	@Override
@@ -178,6 +198,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 				}//for
 			}
 		}//boardEcho 동준
+		else if (url[size-1].equals("inbox")) {
+			System.out.println(message.getPayload());
+		}
 		
 		
 	}//handleTextMessage
