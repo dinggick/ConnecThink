@@ -23,7 +23,6 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
 @Entity
 @SequenceGenerator(
         name="messageNo_SEQ", //시퀀스 제너레이터 이름

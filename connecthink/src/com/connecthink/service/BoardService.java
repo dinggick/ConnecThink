@@ -3,6 +3,7 @@ package com.connecthink.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Transient;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,15 +15,12 @@ import com.connecthink.entity.Message;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
-import com.connecthink.repository.MessageRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
 
 @Service
+@Transactional
 public class BoardService {
-	
-	@Autowired
-	private MessageRepository msgRepository;
 	
 	@Autowired
 	private ProjectRepository projectRepository;
@@ -37,17 +35,18 @@ public class BoardService {
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
 	 */
-	@Transactional
-	public void sendMessage(int project_no,List<Message> messages) {
+	
+	public void sendMessage(int project_no,List<Message> messageList) {
 		System.out.println("sendMessage service 들어옴");
+		System.out.println("websocket 에게 받은 메세지 리스트 사이즈 : "+messageList.size());
 		Project p = projectRepository.findById(project_no).get();
 		ChatRoom cr_no = p.getChatRoom();
 		List<Message> msgs = cr_no.getMessages();
-		messages.forEach(message -> {
+		messageList.forEach(message -> {
 			System.out.println("In service message Info : "+message);
 			msgs.add(message);
 		});
-		System.out.println("size : "+messages.size());
+		System.out.println("size : "+messageList.size());
 		System.out.println("save 진행 직전");
 		projectRepository.save(p);
 	}
@@ -55,9 +54,17 @@ public class BoardService {
 	/**
 	 * 해당 프로젝트의 메세지 정보 가져오기
 	 * @author DongJun
-	 */
+	 */	
+	
 	public List<Message> lookUpMsg(Integer project_no){
-		return msgRepository.lookUpMsg(project_no);
+		Project p = projectRepository.findById(project_no).get();
+		ChatRoom cr_no = p.getChatRoom();
+		if(cr_no.getMessages() != null) {
+			cr_no.getMessages().forEach(msg -> {
+				msg.getContent();
+			});
+		}
+		return cr_no.getMessages();
 	}
 	
 	/**
