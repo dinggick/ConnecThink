@@ -67,7 +67,7 @@ public class Customer {
 	@Column(name = "drop_status", nullable = true)
 	private Integer dropStatus = 1;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	@JsonManagedReference
 	private Set<Experience> experiences;
@@ -79,7 +79,7 @@ public class Customer {
 	private List<Notification> notifications;
 	
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	@JsonManagedReference
 	private Set<CustomerPosition> customerPositions;

@@ -120,7 +120,7 @@
                         		</div>
                         		<div class="col-md-10">
                         			<div class="input_field">
-                        				<input type="password" name="password" placeholder="비밀번호 ">
+                        				<input type="password" name="password" placeholder="비밀번호 " required>
                         			</div>
                         		</div>
                         		<%-- 한 줄 소개 --%>
@@ -129,7 +129,7 @@
                         		</div>
                         		<div class="col-md-10">
                         			<div class="input_field">
-                        				<input type="text" name="about" placeholder="한 줄 소개 ">
+                        				<input type="text" name="about" placeholder="한 줄 소개 " required>
                         			</div>
                         		</div>
                         		<%-- 졸업 여부 --%>
@@ -152,24 +152,12 @@
 								<div class="col-md-2" id="exprs">
 									<h5 class="mt-3" style="font-weight: bold;">경험</h5>
 								</div>
-<!-- 								<div class="col-md-4"> -->
-<!-- 									<div class="input_field"> -->
-<!--                         				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행"> -->
-<!--                         			</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-md-4"> -->
-<!-- 									<div class="input_field"> -->
-<!--                         				<input type="text" name="term" placeholder="기간 ex)2019/01 ~ 2020/01"> -->
-<!--                         			</div> -->
-<!-- 								</div> -->
-<!-- 								<div class="col-md-2"> -->
-<!-- 									<a class="boxed-btn3 addExpBtn"><i class="gj-icon plus"></i></a> -->
-<!-- 								</div> -->
                         	</div>
                             <div class="single_wrap" style="text-align: right;">
-                                <a href="#" class="genric-btn info-border">수정</a>
+                                <button type="submit" class="genric-btn info-border">수정</button>
                                 <a href="#" class="genric-btn danger-border">취소</a>
                             </div>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
                     </div>
                 </div>
@@ -218,7 +206,7 @@
 
     <script>
     	function planner() {
-    		return `<select class="position" name="position">
+    		return `<select class="position" name="position" required>
 						<option selected disabled hidden style='display: none' value=''>직무선택</option>
 						<option value="1">사업기획자</option>
 						<option value="2">컨텐츠기획자</option>
@@ -232,7 +220,7 @@
     	}
     	
     	function designer() {
-    		return `<select class="position" name="position">
+    		return `<select class="position" name="position" required>
 						<option selected disabled hidden style='display: none' value=''>직무선택</option>
 						<option value="9">디자이너</option>
 						<option value="10">UI/UX디자이너</option>
@@ -246,7 +234,7 @@
     	}
     	
     	function developer() {
-    		return `<select class="position" name="position">
+    		return `<select class="position" name="position" required>
 						<option selected disabled hidden style='display: none' value=''>직무선택</option>
 						<option value="17">개발자</option>
 						<option value="18">백엔드 개발자</option>
@@ -456,6 +444,23 @@
         				$(".apply_job_form").find(".row>div:last-child").find(".removeExpBtn").removeClass("removeExpBtn").addClass("addExpBtn").find("i").removeClass("minus").addClass("plus");
         			}
     			}
+            });
+            
+            $("form").submit(function() {
+            	$.ajax({
+            		url : "/connecthink/modifyCustomerInfo",
+            		method : "POST",
+            		data : $(this).serialize(),
+            		success : (data, textStatus, jqXHR) => {
+            			alert("수정 성공");
+            			window.history.back();
+            		},
+            		error : () => {
+            			alert("수정 실패");
+            		}
+            	});
+            	
+            	return false;
             });
     	});
     </script>

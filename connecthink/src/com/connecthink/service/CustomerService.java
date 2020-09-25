@@ -32,6 +32,7 @@ public class CustomerService {
 	
 	/**
 	 * 회원 번호로 회원 정보 조회
+	 * @author CJK
 	 * @param customerNo
 	 * @return Customer (Entity type)
 	 */
@@ -60,12 +61,22 @@ public class CustomerService {
 		return customerRepository.findByEmail(email);
 	}
 	
+	/**
+	 * 회원 정보 삽입
+	 * @author CJK
+	 * @param c
+	 */
 	public void add(Customer c) {
 		customerRepository.save(c);
 	}
 	
-	public void removeByCustomerNo(Integer customerNo) {
-		customerRepository.deleteById(customerNo);
+	/**
+	 * 회원 정보 수정
+	 * @author CJK
+	 * @param c
+	 */
+	public void modify(Customer c) {
+		customerRepository.save(c);
 	}
 
 	public Customer findManager(String recruitNo) {

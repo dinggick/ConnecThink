@@ -118,7 +118,7 @@
                             </ul>
                         </div>
                         <div class="single_wrap" style="text-align: right;">
-                            <a href="/connecthink/modifyCustomerInfo" class="genric-btn info-border">수정</a>
+                            <a href="/connecthink/modifyUserInfo" class="genric-btn info-border">수정</a>
                             <a href="#" class="genric-btn danger-border">탈퇴</a>
                         </div>
                     </div>
