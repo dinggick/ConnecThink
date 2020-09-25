@@ -18,4 +18,6 @@ public class ProjectHistoryDTO {
 	private Date startDate;
 	
 	private Date endDate;
+	
+	private String theme;
 }

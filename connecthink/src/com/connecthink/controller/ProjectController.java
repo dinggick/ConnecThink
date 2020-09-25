@@ -2,20 +2,14 @@ package com.connecthink.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-
-import org.springframework.web.bind.annotation.RestController;
-
 
 import com.connecthink.entity.Project;
 import com.connecthink.service.ProjectService;
@@ -25,6 +19,7 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService service;
+
 	
 	@PostMapping(value="/manageMyProject")
 	@ResponseBody
@@ -70,7 +65,7 @@ public class ProjectController {
 	public List<Project> Invited(Integer managerNo) {
 		return service.findInvited(managerNo);
 	}
-<<<<<<< HEAD
+
 	////
 	@PostMapping(value="/manageApplied")
 	public List<Project> manageApplied(Integer managerNo) {
@@ -79,8 +74,7 @@ public class ProjectController {
 		System.out.println(pList);
 		System.out.println("지원자 찾기 서비스 끝");
 		return pList;
-=======
-	
+	}
 	/**
 	 * @author 임수정
 	 * 내 프로젝트에 지원한 멤버 목록 보기
@@ -89,13 +83,14 @@ public class ProjectController {
 	@ResponseBody
 	public List<Project> Applied(Integer managerNo) {
 		return service.findApplied(managerNo);
->>>>>>> fec1f418828f024ae3e917aebf2788169d16fca8
+
 	}
-	@PostMapping(value="/memberModal")
-	public List<Project> memberModal(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int managerNo = (int) session.getAttribute("loginInfo");
-		List<Project> p = service.findByCustomerNo(managerNo);
+	@GetMapping(value="/memberModal")
+	@ResponseBody
+	public List<Project> memberModal(HttpSession session) {		
+		int managerNo = (int) session.getAttribute("loginInfo");		
+		List<Project> p = service.findByManagerNo(managerNo);			
 		return p;
 	}
+	
 }

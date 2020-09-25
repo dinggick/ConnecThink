@@ -20,9 +20,18 @@ public class ProjectService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+	//매니저 번호로 프로젝트 찾기
 	public List<Project> findByManagerNo(Integer managerNo) {
-		return projectRepository.findByManagerNo(managerNo);
+		List<Project> p = projectRepository.findByManagerNo(managerNo);
+		p.forEach(c -> {
+			Set<Recruit> r = c.getRecruits();
+			Iterator<Recruit> ir = r.iterator();
+			while (ir.hasNext()) {
+				Recruit t = ir.next();
+				System.out.println("##############" +t.getRecruitNo());
+			}
+		});
+		return p;
 	}
 	
 	public List<Project> findMyApplication(Integer memberNo) {
@@ -150,8 +159,8 @@ public class ProjectService {
 		}
 		return pList;
 	}
-	public List<Project> findByCustomerNo(Integer customerNo) {
-		
+	
+	public List<Project> findByCustomerNo(Integer customerNo) {		
 		List<Project> pList =  projectRepository.findProjectByCustomerNo(customerNo);
 		for(Project p : pList) {
 			System.out.println("지원자 찾기 프로젝트 : " + p.getProjectNo());
