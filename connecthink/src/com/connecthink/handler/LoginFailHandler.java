@@ -15,9 +15,12 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
 		// TODO Auto-generated method stub
+		System.out.println("-------------------login fail-----------------");
 		System.out.println(request.getParameter("username"));
 		System.out.println(request.getParameter("password"));
-		System.out.println("-------------------login fail-----------------");
+		System.out.println("----------------------------------------------");
+		
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 	}
 
 }

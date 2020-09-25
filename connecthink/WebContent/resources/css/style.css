@@ -37,6 +37,25 @@
   font-weight: 500;
   font-family: "IBMPlexSansKR-Regular", sans-serif;
 }
+.cancelbtn {
+	 position: absolute;
+  top: 0;
+  right: 0;
+  height: 40px;
+  border: none;
+  font-size: 14px;
+  color: #fff;
+  background: red;
+  padding: 10px;
+  padding: 0 22px;
+  cursor: pointer;
+  border-radius: 5px;
+  top: 90px;
+  right: 30px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "IBMPlexSansKR-Regular", sans-serif;
+}
 
 /* Normal desktop :1200px. */
 /* Normal desktop :992px. */
@@ -2954,7 +2973,7 @@ h3 {
 }
 .main_member_area {
   background: #F5F7FA;
-  padding: 70px 80px 0px;
+  padding: 70px 80px 70px;
 }
 .popular_catagory_area {
   background: #F5F7FA;
@@ -4007,7 +4026,7 @@ h3 {
 
 /* line 5, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_details.scss */
 .job_details_area .single_jobs {
-  padding: 30px 30px 50px;
+  padding: 30px 30px 30px;
   border-bottom: 1px solid #EAEAEA;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
@@ -4055,7 +4074,7 @@ h3 {
 /* line 34, ../../Arafath/CL/December/235. Job board/HTML/scss/_job_details.scss */
 .job_details_area .single_jobs .jobs_left .jobs_conetent h4 {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 35px;
   font-weight: 400;
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;

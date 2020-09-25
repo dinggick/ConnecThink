@@ -62,14 +62,12 @@ public class Customer {
 	private String about;
 	
 	@Column(name = "graduation", nullable = true)
-	@ColumnDefault(value = "0")
-	private Integer graduation;
-	
+	private Integer graduation = 0;
+
 	@Column(name = "drop_status", nullable = true)
-	@ColumnDefault(value = "1")
-	private Integer dropStatus;
+	private Integer dropStatus = 1;
 	
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	@JsonManagedReference
 	private Set<Experience> experiences;
@@ -81,7 +79,7 @@ public class Customer {
 	private List<Notification> notifications;
 	
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "customer_no")
 	@JsonManagedReference
 	private Set<CustomerPosition> customerPositions;

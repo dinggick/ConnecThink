@@ -2,6 +2,7 @@ package test;
 
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +33,6 @@ class BoardTest {
 	@Autowired
 	private BoardService service;
 	
-	@Autowired
-	private ProjectRepository pj;
-	
-	@Autowired
-	private CustomerRepository cr;
-	
 	//@Test
 	void findAllTest() {
 		
@@ -47,13 +42,14 @@ class BoardTest {
 		
 		msg.setContent("test");
 		msg.setCreateDate("09:11");
-		msg.setMessageNo(1000);
 		msg.setWriter(ct);
+		List<Message> msgs = new ArrayList<Message>();
+		msgs.add(msg);
 		
-		//service.sendMessage(1,msg);
+		service.sendMessage(1,msgs);
 	}
 
-	@Test
+	//@Test
 	void lookUpMember() {
 		List<Member> members = service.lookUpMember(2);
 		
@@ -70,7 +66,7 @@ class BoardTest {
 		
 	}
 	
-	//@Test
+	@Test
 	void lookUpMessage() {
 		List<Message> msgs = service.lookUpMsg(1);
 		for(Message msg : msgs) {

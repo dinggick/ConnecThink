@@ -39,6 +39,7 @@ public class CustomerService {
 	
 	/**
 	 * 회원 번호로 회원 정보 조회
+	 * @author CJK
 	 * @param customerNo
 	 * @return Customer (Entity type)
 	 */
@@ -67,12 +68,27 @@ public class CustomerService {
 		return customerRepository.findByEmail(email);
 	}
 	
+	/**
+	 * 회원 정보 삽입
+	 * @author CJK
+	 * @param c
+	 */
 	public void add(Customer c) {
 		customerRepository.save(c);
 	}
 	
-	public void removeByCustomerNo(Integer customerNo) {
-		customerRepository.deleteById(customerNo);
+	/**
+	 * 회원 정보 수정
+	 * @author CJK
+	 * @param c
+	 */
+	public void modify(Customer c) {
+		customerRepository.save(c);
+	}
+	
+	public void drop(Customer c) {
+		c.setDropStatus(0);
+		customerRepository.save(c);
 	}
 
 	public Customer findManager(String recruitNo) {
@@ -89,7 +105,7 @@ public class CustomerService {
 		});
 		return c;
 	}
-	
+	//리쿠룻 번호로 회원 찾기
 	public List<Customer> findByProject(String recruitNo){
 		List<Customer> list = customerRepository.findByProject(recruitNo);
 		list.forEach(c -> {
@@ -101,7 +117,7 @@ public class CustomerService {
 			}
 			c.getNotifications().forEach(n -> {
 				n.getContent();
-			});;
+			});
 			Set<CustomerPosition> ps = c.getCustomerPositions();
 			Iterator<CustomerPosition> psIter = ps.iterator();
 			while(psIter.hasNext()) {
@@ -110,7 +126,7 @@ public class CustomerService {
 		});
 		return list;
 	}	
-	
+	//메인에 뿌려줄 8개의 멤버 찾기
 	public List<Customer> findTopMembers() {
 		List<Customer> clist = customerRepository.findTop8By();
 		clist.forEach(c -> {
@@ -119,7 +135,7 @@ public class CustomerService {
 			while(iter.hasNext()) {
 				CustomerPosition cp1 = iter.next();
 				cp1.getPosition().getName();
-				System.out.println("!!!!!!!!!!!!!!!!!!!" +cp1.getPosition().getName());
+				
 			}
 			Set<Experience> exp = c.getExperiences();
 			Iterator<Experience> expiter = exp.iterator();

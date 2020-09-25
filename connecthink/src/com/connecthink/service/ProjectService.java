@@ -1,5 +1,10 @@
 package com.connecthink.service;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -14,15 +19,27 @@ import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.ProjectRepository;
 
+import oracle.net.aso.p;
+import upload.ProjectCommand;
+
 @Service
 @Transactional
 public class ProjectService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+	//매니저 번호로 프로젝트 찾기
 	public List<Project> findByManagerNo(Integer managerNo) {
-		return projectRepository.findByManagerNo(managerNo);
+		List<Project> p = projectRepository.findByManagerNo(managerNo);
+		p.forEach(c -> {
+			Set<Recruit> r = c.getRecruits();
+			Iterator<Recruit> ir = r.iterator();
+			while (ir.hasNext()) {
+				Recruit t = ir.next();
+				System.out.println("##############" +t.getRecruitNo());
+			}
+		});
+		return p;
 	}
 	
 	public List<Project> findMyApplication(Integer memberNo) {
@@ -153,8 +170,8 @@ public class ProjectService {
 		}
 		return pList;
 	}
-	public List<Project> findByCustomerNo(Integer customerNo) {
-		
+	
+	public List<Project> findByCustomerNo(Integer customerNo) {		
 		List<Project> pList =  projectRepository.findProjectByCustomerNo(customerNo);
 		for(Project p : pList) {
 			System.out.println("지원자 찾기 프로젝트 : " + p.getProjectNo());
@@ -172,6 +189,41 @@ public class ProjectService {
 			}
 		}
 		return pList;
+	}
+
+	/**
+	 * @author 홍지수
+	 * 프로젝트(팀) 등록
+	 */
+	public void addProject(ProjectCommand projectCommand) {
+		Project project = new Project();
+		
+		//파일 저장 경로
+		String saveDirectory = "C:\\storage\\";
+		
+		//파일 - 모집 상세 설명 형식
+		String ext1 = ".txt";
+		Integer projectNo = projectCommand.getProjectNo();
+		File txt = new File(saveDirectory+projectNo+ext1);
+		
+		OutputStream output;
+		try {
+			output = new FileOutputStream(txt);
+			byte[] data = projectCommand.getPurpose().getBytes();
+			output.write(data);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//project에 담아주기
+		project.setProjectNo(projectNo);
+		project.setTitle(projectCommand.getTitle());
+		project.setAbout(projectCommand.getAbout());
+		project.setTheme(projectCommand.getTheme());
+		project.setProjectStatus(1);
+		project.setManagerNo(projectCommand.getManagerNo());
+		
+		projectRepository.save(project);		
 	}
 
 }

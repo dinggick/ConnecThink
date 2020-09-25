@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,11 +37,12 @@ public class BoardController {
       //Http session 에 저장할 userid 대체용
       for(int i = 0; i < 100; i++) {
 
-          double dValue = Math.random();
+         double dValue = Math.random();
 
          customer_no = (int)(dValue * 10);
+         
       }
-        
+      	customer_no = (customer_no == 0) ? 1 : customer_no;
         HttpSession session = req.getSession();        
         session.setAttribute("LoginInfo",customer_no);
         mv.setViewName("board");
@@ -58,21 +60,8 @@ public class BoardController {
 		return mv;
 	}
 	
-	@RequestMapping("/board/lookUpMsg")
-	@ResponseBody
-	List<Message> readMsg(HttpServletRequest req) {
-		int project_no = Integer.parseInt(req.getParameter("project_no"));
-		HttpSession session = req.getSession();
-		int accessor = (Integer)session.getAttribute("LoginInfo");
-		//int accessor = 6;
-		List<Message> messageList = service.lookUpMsg(project_no);
-		
-		for(int i = 0; i < messageList.size(); i++) {
-			Message msg = messageList.get(i);
-			boolean isReception = (msg.getWriter().getCustomerNo() != accessor) ? true : false;
-			msg.setReception(isReception);
-		}
-		return messageList;
+	public List<Message> lookUpMsg(int project_no){
+		return service.lookUpMsg(project_no);
 	}
 	
 	public void sendMsg(int project_no, List<Message> msgs) {

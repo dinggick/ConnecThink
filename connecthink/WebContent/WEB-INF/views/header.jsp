@@ -96,7 +96,7 @@
 		                <span aria-hidden="true">&times;</span>
 		            </button>
                 </div>
-                <form action="/connecthink/login" method="POST">
+                <form>
 				<div class="modal-body">
 					<div class="mt-10">
 						<input type="email" name="username" placeholder="이메일"
@@ -130,7 +130,7 @@
 		                <span aria-hidden="true">&times;</span>
 		            </button>
                 </div> 
-                <form action="/connecthink/all/register" method="POST">
+                <form>
 	                <div class="modal-body">
 	                        <div class="row">
 	                    		<div class="col-md-6">
@@ -197,7 +197,7 @@
                         <div class="row align-items-center">
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
-                                    <a href="index.html">
+                                    <a href="/connecthink/index">
                                         <img src="${contextPath}/img/logo.png" alt="">
                                     </a>
                                 </div>
@@ -207,10 +207,11 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="jobs.html">모집중인 멤버</a></li>
+                                            <li><a href="all/mateList">모집중인 멤버</a></li>
                                            
-                                            <li><a href="#">모집중인팀</a></li>
+                                            <li><a href="rec">모집중인팀</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
+                                            <li><a href="add_project">팀 등록</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
@@ -274,6 +275,7 @@ function openNav() {
 function closeNav() {
 	 document.getElementById("mySidenav").style.width = "0";
 }
+
 
 </script>
 </html>

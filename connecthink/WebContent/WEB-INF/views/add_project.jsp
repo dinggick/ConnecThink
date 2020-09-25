@@ -58,14 +58,20 @@
 				<div class="col-lg-10 offset-lg-1">
 					<div class="apply_job_form white-bg mt-0">
 						<h4>팀등록하기</h4>
-						<form action="#">
+						<form>
 							<div class="row">
+							<div class="col-md-5" style="display:none;">
+									<div class="input_field">
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+										<input type="hidden" name="managerNo" value="${sessionScope.loginInfo}">
+									</div>
+								</div>
 								<div class="col-md-2">
 								<h5 class="mt-3" style="font-weight: bold;">팀 이름</h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" placeholder="팀 이름 (20자 내)">
+										<input type="text" name="title" placeholder="팀 이름 (20자 내)">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -73,7 +79,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" placeholder="팀에 대해 한 줄로 적어주세요(50자 내)">
+										<input type="text" name="about" placeholder="팀에 대해 한 줄로 적어주세요(50자 내)">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -81,7 +87,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" placeholder="팀 주제를 적어주세요 (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)">
+										<input type="text" name = "theme" placeholder="팀 주제를 적어주세요 (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -89,7 +95,7 @@
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<textarea name="#" id="" cols="30" rows="10" placeholder="팀의 목적에 대해 자유롭게 기재 해주세요"></textarea>
+										<textarea name="purpose" id="" cols="30" rows="10" placeholder="팀의 목적에 대해 자유롭게 기재 해주세요"></textarea>
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -144,6 +150,11 @@
 
 
 	<script src="js/main.js"></script>
+	
+	<script>
+	
+	</script>
+	
 </body>
 
 </html>

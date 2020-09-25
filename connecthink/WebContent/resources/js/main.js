@@ -330,10 +330,25 @@ mailChimp();
       //      rightIcon: '<span class="fa fa-caret-down"></span>'
       //  }
       // });
-      var csrfToken = $("#csrf").val();
+      	var csrfToken = $("#csrf").val();
+		$("#loginModal").find("form").submit(function() {
+			$.ajax({
+				url : "/connecthink/login",
+				method : "POST",
+				data : $(this).serialize(),
+				success : (data, textStatus, jqXHR) => {
+					alert("로그인 성공");
+					location.reload();
+				},
+				error : () => {
+					alert("로그인 실패");
+				}
+			});
+			return false;
+		});
+      
       	//로그아웃 버튼 클릭시 로그아웃 요청 전송
 		$("#logoutBtn").click(() => {
-			console.log(csrfToken);
 			$.ajax({
 				url : "/connecthink/logout",
 				method : "POST",
@@ -344,7 +359,7 @@ mailChimp();
 			});
 		});
 
-		//이메일 인증 버튼 클릭 시 인증 요청 전송
+		//회원가입 모달에서 이메일 인증 버튼 클릭 시 인증 코드 요청 전송
 		$("#requestVerifyCodeBtn").click(function() {
 			var email = $(this).parent().prev().find("input").val();
 			
@@ -354,10 +369,13 @@ mailChimp();
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
 					
+				},
+				error : () => {
+					alert("중복 이메일");
 				}
 			});
 		});
-		
+		//이메일 인증 모달에서 버튼 클릭 시 인증 요청 전송
 		$("#verifyBtn").click(function() {
 			var verifyCode = $(this).parent().prev().find("input").val();
 			
@@ -379,8 +397,21 @@ mailChimp();
 		$("#registerModal").find("form").submit(function() {
 			if($("#isVerified").val() == "n") {
 				alert("이메일 인증이 필요합니다");
-				return false;
+			} else {
+				$.ajax({
+					url : "/connecthink/all/register",
+					method : "POST",
+					data : $(this).serialize(),
+					success : (data, textStatus, jqXHR) => {
+						alert("회원가입 성공");
+						location.reload();
+					},
+					error : () => {
+						alert("회원가입 실패");
+					}
+				});
 			}
 			
+			return false;
 		});
 })(jQuery);	

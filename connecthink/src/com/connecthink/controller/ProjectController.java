@@ -2,36 +2,25 @@ package com.connecthink.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-
-import org.springframework.web.bind.annotation.RestController;
-
-
 import com.connecthink.entity.Project;
 import com.connecthink.service.ProjectService;
+
+import upload.ProjectCommand;
 
 @Controller
 public class ProjectController {
 	
 	@Autowired
 	private ProjectService service;
-	
-	@RequestMapping(value="/managerAddRec")
-	@ResponseBody
-	public List<Project> manageMyProject(Integer managerNo) {
-		System.out.println("모집등록 호출");
-		return service.findByManagerNo(managerNo);
-	}
 	
 	/**
 	 * @author 임수정
@@ -71,7 +60,16 @@ public class ProjectController {
 	public List<Project> Invited(Integer managerNo) {
 		return service.findInvited(managerNo);
 	}
-	
+
+	////
+	@PostMapping(value="/manageApplied")
+	public List<Project> manageApplied(Integer managerNo) {
+		System.out.println("지원자 찾기 콘트롤러 진입");
+		List<Project> pList = service.findApplied(managerNo);
+		System.out.println(pList);
+		System.out.println("지원자 찾기 서비스 끝");
+		return pList;
+	}
 	/**
 	 * @author 임수정
 	 * 내 프로젝트에 지원한 멤버 목록 보기
@@ -80,12 +78,29 @@ public class ProjectController {
 	@ResponseBody
 	public List<Project> Applied(Integer managerNo) {
 		return service.findApplied(managerNo);
+
 	}
-	@PostMapping(value="/memberModal")
-	public List<Project> memberModal(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int managerNo = (int) session.getAttribute("loginInfo");
-		List<Project> p = service.findByCustomerNo(managerNo);
+	@GetMapping(value="/memberModal")
+	@ResponseBody
+	public List<Project> memberModal(HttpSession session) {		
+		int managerNo = (int) session.getAttribute("loginInfo");		
+		List<Project> p = service.findByManagerNo(managerNo);			
 		return p;
+	}
+	
+	/**
+	 * @author 홍지수
+	 * 프로젝트 등록하기
+	 */
+	@PostMapping(value="addProject")
+	@ResponseBody
+	public String addProject(ProjectCommand projectCommand) {
+		service.addProject(projectCommand);
+		return "succees";
+	}
+	
+	@RequestMapping(value="add_project")
+	public void add_project() {
+		System.out.println("프로젝트 추가하기");
 	}
 }

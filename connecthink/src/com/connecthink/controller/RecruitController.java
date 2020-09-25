@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
+import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.service.BookmarkService;
 import com.connecthink.service.CustomerService;
+import com.connecthink.service.MemberService;
 import com.connecthink.service.ProjectService;
 import com.connecthink.service.RecruitService;
 
@@ -37,7 +39,11 @@ public class RecruitController {
 
 	@Autowired
 	private BookmarkService bmService;
-
+	
+	@Autowired
+    ServletContext context;
+	@Autowired
+	private MemberService memberService;
 
 	/**
 	 * @author 홍지수 
@@ -98,24 +104,6 @@ public class RecruitController {
 	@ResponseBody
 	public String addRec(RecruitCommand recruitCommand) {
 		recruitCommand.setRecruitStatus(1);
-		Integer[] ps = recruitCommand.getPositionNo();
-		
-		System.out.println(Arrays.toString(ps));
-		
-		Arrays.sort(ps);
-		Integer positionNo = ps[ps.length-1];
-		System.out.println(positionNo);
-		
-		
-		//테스트
-		System.out.println(recruitCommand.getRequirement());
-		System.out.println(recruitCommand.getRecruitStatus());
-		System.out.println(recruitCommand.getRecPic());
-		System.out.println(recruitCommand.getRecExplain());
-		System.out.println(recruitCommand.getProjectNo());
-		System.out.println(positionNo);
-		System.out.println(recruitCommand.getHeadCount());
-		System.out.println(recruitCommand.getDeadline());
 		
 		try {
 			recruitService.addRec(recruitCommand);
@@ -139,5 +127,13 @@ public class RecruitController {
 	@RequestMapping(value = "/add_rec")
 	public void add_rec() {
 		System.out.println("모집등록페이지 호출");
+	}
+//	멤버 초대 메소드
+	@PostMapping(value="/inviteMember")	
+	@ResponseBody
+	public String inviteMember(Integer customerNo, String recruitNo) {
+		System.out.println("!!!!!!!!!!!!"+ customerNo + "?????????" + recruitNo);
+		recruitService.saveInvite(recruitNo, customerNo);
+		return "success";
 	}
 }

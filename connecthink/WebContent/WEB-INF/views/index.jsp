@@ -54,6 +54,9 @@
  text-overflow: ellipsis;
  white-space: nowrap;
 }
+.featured_candidates_area.candidate_page_padding{
+	padding: 50px 70px;
+}
 
 </style>
 <body>
@@ -98,24 +101,7 @@
 </div>
 				<div class="row align-items-center">
 
-<!-- 					<div class="col-lg-7 col-md-6"> -->
-<!-- 						<div class="slider_text"> -->
-<!-- 							<h5 class="wow fadeInLeft" data-wow-duration="1s" -->
-<!-- 								data-wow-delay=".2s">등록된 멤버 3000명!</h5> -->
-<!-- 							<h3 class="wow fadeInLeft" data-wow-duration="1s" -->
-<!-- 								data-wow-delay=".3s">Find your Dream Job</h3> -->
-<!-- 							<p class="wow fadeInLeft" data-wow-duration="1s" -->
-<!-- 								data-wow-delay=".4s">We provide online instant cash loans -->
-<!-- 								with quick approval that suit your term length</p> -->
-<!-- 							<div class="sldier_btn wow fadeInLeft" data-wow-duration="1s" -->
-<!-- 								data-wow-delay=".5s"> -->
-<!-- 								<a href="#" class="boxed-btn3">Upload your Resume</a> -->
-<!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 					<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"> -->
-<!--   		</div> -->
 
-<!-- 				</div> -->
 			</div>
 		</div>
 		<div
@@ -128,7 +114,7 @@
 	<!-- slider_area_end -->
 
 	<!-- popular_catagory_area_start  -->
-	<div class="popular_catagory_area">
+	<div class="featured_candidates_area candidate_page_padding">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
@@ -311,7 +297,7 @@
 	    });
 	}
 	function loadProjectList() {
-		var $teamSection =  $("div.popular_catagory_area > .container > .row:nth-child(2)");
+		var $teamSection =  $("div.featured_candidates_area > .container > .row:nth-child(2)");
 		$.ajax({
 	    	url : "/connecthink/projectList",  
 	    	method: "GET",
@@ -320,13 +306,14 @@
 				console.log(responseObj);
 				var txt = "";
 				for (x in responseObj) {
+					var deadline = new Date(responseObj[x].deadline).toISOString().substring(0, 10);;
 					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='recDetail(this);'>" +
 							"<div class='thumbnail'><div class='test'><img src='img/default.png' alt='모집 사진'></div></div>" +
 							"<h4 class='mt-4 mr-4 ml-4 rec_title'>" + responseObj[x].requirement + "</h4>" +
 					"<ul style='list-style: none;'><li class='wanna'>" + responseObj[x].position.name + "</li>" +
 						
-						"<li class='peorid'>" + responseObj[x].deadline+ "</li>" +
-						" <input type='text' id='customerNo' value='"+responseObj[x].recruitNo + "' hidden='hidden'></ul></div></div>";
+						"<li class='peorid'>" + deadline + "</li>" +
+						" <input type='text' id='recruitNo' value='"+responseObj[x].recruitNo + "' hidden='hidden'></ul></div></div>";
 				} 
 				
 				$teamSection.html(txt);

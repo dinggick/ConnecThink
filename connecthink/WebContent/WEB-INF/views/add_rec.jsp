@@ -93,21 +93,12 @@
 						<h4>모집 등록하기</h4>
 						<form id="form">
 							<div class="row">
-								<div class="col-md-2">
-									<h5 class="mt-3" style="font-weight: bold;">프로젝트 번호</h5>
-								</div>
-								<div class="col-md-5 ">
-									<div class="input_field text-center position0">
-										<select name="projectNo" class="position" id="projectNo">
-											<!-- 											<option value="0">프로젝트 번호</option> -->
-											<!-- 											<option value="1">1</option> -->
-										</select>
-									</div>
-								</div>
-								<div class="col-md-5 ">
+								<div class="col-md-5" style="display:none;">
 									<div class="input_field">
 										<input type="hidden" name="${_csrf.parameterName}"
 											value="${_csrf.token}">
+										<input type="hidden" name="projectNo"
+											value="2">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -279,36 +270,6 @@
 
 	<script>
 	
-	$(function(){
-
-		let $section = $("#projectNo");
-		
-		$.ajax({
- 			url : "${contextPath}/managerAddRec",
- 			method : "POST",
- 			data : {managerNo : ${sessionScope.loginInfo},
- 		        	${_csrf.parameterName} : '${_csrf.token}'},
- 			success : function(teams){
- 				let size = teams.length;
- 				alert(size);
-				let data = '<option value="0">프로젝트번호</option>';
- 				if(size > 0){
- 	 				teams.forEach(function(team, index){
- 	 					alert(team.projectNo);
- 	 					data += '<option value="'+ team.projectNo +'">';
- 	 					data += team.title;
- 	 					data += '</option>'
- 	 					});
- 	 				$section.html(data);
- 	 				alert(data);
- 					} else {
- 						alert("팀을 먼저 등록해 주세요");
- 						loction.href="${contaxtPath}/add_project";
- 					}
- 				}
- 		});
-	});
-	
 	
 	function position(obj){
 		if(obj.value == 1){
@@ -356,9 +317,7 @@
 	
 	
 	$(".submit").click(function(){
-		if($("#projectNo option:selected").val() == 0){
-			alert("프로젝트 번호 입력 안 됨");
-		} else if( $("#pos option:selected").val() == 0 ){
+		if( $("#pos option:selected").val() == 0 ){
 			alert("포지션 입력 안 됨");
 		} else if($("#pos option:selected").val() == 1 && $("#positionNo1 option:selected").val() == 0){
 			alert("직무 입력 안 됨");
