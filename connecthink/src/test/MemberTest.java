@@ -14,12 +14,8 @@ import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
-<<<<<<< HEAD
 import com.connecthink.repository.RecruitRepository;
 
-=======
-@WebAppConfiguration
->>>>>>> origin/hyi
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -35,20 +31,19 @@ class MemberTest {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	//@Test
-	void findByMemberNoTest() {
-		repository.findByIdMemberNo(102).forEach(m -> {
-			System.out.println("멤버 번호 : " + m.getCustomer().getCustomerNo());
-		});
-	}
-	
-//	@Test
-	void findAllMember() {
-<<<<<<< HEAD
-		repository.findTop8By().forEach(s -> {
-			System.out.println("멤버: " + s.getCustomer().getExperiences());
-		});
-	}
+//	//@Test
+//	void findByMemberNoTest() {
+//		repository.findByIdMemberNo(102).forEach(m -> {
+//			System.out.println("멤버 번호 : " + m.getCustomer().getCustomerNo());
+//		});
+//	}
+//	
+////	@Test
+//	void findAllMember() {
+//		repository.findTop8By().forEach(s -> {
+//			System.out.println("멤버: " + s.getCustomer().getExperiences());
+//		});
+//	}
 	
 	@Test
 	void recruit() {
@@ -65,10 +60,8 @@ class MemberTest {
 		member.setCustomer(c);
 		member.setRecruit(r);
 		member.setEnterStatus(0);
-		
-=======
-		repository.findByIdMemberNo(101);
->>>>>>> origin/hyi
+
+		//repository.findByIdMemberNo(101);
 		
 		repository.save(member);
 	}

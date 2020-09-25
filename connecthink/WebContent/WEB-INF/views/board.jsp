@@ -747,7 +747,7 @@ scale
                 </div>
                 <div class="modal-footer">
                  	<button type="button" class="btn btn-primary" v-on:click="updateContent">수정하기</button>
-	                <button type="button" class="btn btn-secondary" v-on:click="deleteTask">삭제하기</button>
+	                <button type="button" class="btn btn-secondary" v-on:click="deleteTask" data-dismiss="modal">삭제하기</button>
                 </div>
             </div>
         </div>
@@ -756,20 +756,20 @@ scale
 							<div class="title">TO DO
 						  		<div class="content">
 				  					<ul class="usty section1" id="sectionOneStatus" value="1">
-				  					<c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==1}">
-				  						<li>
+				  					<%-- <c:forEach items="${requestScope.list}" var="p">
+				  						<c:if test="${p.taskStatus==1}"> --%>
+				  						<li v-for="item in list">
 				  							<div class='card editable'>
-				  								<a data-toggle="modal" href="#contentModal" v-on:click="tt">
+				  								<%-- <a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 				  									<input type="hidden" value="${p.taskNo}">
 				  									<input type="hidden" value="${p.taskStatus}">
-				  									${p.content},${p.taskNo},${p.customer.name}
-				  								</a>
-				  							</div>
+				  									${p.content}
+				  								</a> --%>
+				  							{{item.content}}</div>
 				  						</li>
-				  						</c:if>
-				  					</c:forEach>
-				  						<li v-for="item in list"><div class='card editable'>{{item.id}}</div></li>
+				  						<%-- </c:if>
+				  					</c:forEach> --%>
+				  						<!-- <li v-for="item in list"><div class='card editable'>{{item.id}}</div></li> -->
 				  					</ul>
 								</div>
 				    			<div class="add-task"><input v-model="addName" required class="single-input"><button v-on:click="getData">작업 추가하기</button></div>
@@ -784,7 +784,7 @@ scale
 				  						<c:if test="${p.taskStatus==2}">
 				  						<li>
 				  							<div class='card editable'>		
-				  								<a data-toggle="modal" href="#contentModal" v-on:click="tt">
+				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 				  									<input type="hidden" value="${p.taskNo}">
 				  									<input type="hidden" value="${p.taskStatus}">
 				  									${p.content}
@@ -808,7 +808,7 @@ scale
 				  						<c:if test="${p.taskStatus==3}">
 				  						<li>
 				  							<div class='card editable'>
-				  								<a data-toggle="modal" href="#contentModal" v-on:click="tt">
+				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 				  									<input type="hidden" value="${p.taskNo}">
 				  									<input type="hidden" value="${p.taskStatus}">${p.content}
 				  								</a>
@@ -901,7 +901,6 @@ scale
 
 </body>
 <script>
-	
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -1109,6 +1108,7 @@ scale
 			addName:'',
 			addName1:'',
 			addName2:'',
+			project_no : 0,
 			options:{
 				 onDragend(event){
 					 console.log(event);
@@ -1124,15 +1124,26 @@ scale
 		                	}
 		             })
 		             .then(function(response){
-		                    alert(response); 
+		            	
 		             });
 					 
 				 }
 			},
 			updateText:''
 		},
+		created(ev){
+			axios.get('/connecthink/board',{
+				params: {
+			  	      project_no: ${project_no}
+			  	}
+            })
+            .then(function(response){
+            	console.log(response);
+            	this.list = response.data
+            });
+		},
 		methods: {
-			tt(ev){
+			goModal(ev){
 				var taskNo = ev.target.firstChild.value;
 				var inputInModal = document.getElementById('inputInModal');
 				inputInModal.value = ev.target.innerText;
@@ -1165,9 +1176,6 @@ scale
                     alert(response); 
                 });
 			},
-			someDummyMethod() {
-			     console.log('Hello from someDummyMethod');
-			   },
 			getData(ev) {
 				var status = 0;
 				var evPath = ev.path[3].id;	   
@@ -1180,7 +1188,7 @@ scale
 	                	}
 	                })
 	                .then(function(response){	
-	        			
+	                	this.list = response.list
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;

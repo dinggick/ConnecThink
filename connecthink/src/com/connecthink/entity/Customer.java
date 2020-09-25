@@ -62,12 +62,10 @@ public class Customer {
 	private String about;
 	
 	@Column(name = "graduation", nullable = true)
-	@ColumnDefault(value = "0")
-	private Integer graduation;
-	
+	private Integer graduation = 0;
+	   
 	@Column(name = "drop_status", nullable = true)
-	@ColumnDefault(value = "1")
-	private Integer dropStatus;
+	private Integer dropStatus = 1;
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "customer_no")
