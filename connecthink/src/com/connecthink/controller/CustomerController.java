@@ -142,14 +142,17 @@ public class CustomerController {
 		mnv.addObject("customer", c);
 		
 		//컨넥띵크 히스토리
-		List<ProjectHistoryDTO> m = pservice.findByNo(customerNo);		
+		List<ProjectHistoryDTO> m = pservice.findByNo(customerNo);	
+		m.forEach(v -> {
+			System.out.println("@@@@@" +v.getTitle());
+		});
+		System.out.println("SIZE"+ m.size());
 		mnv.addObject("project",m);		
 		//매니저 유무확인 (초대하기 버튼 보여줄지 유무 결정)
 		List<Project> p = projectService.findByManagerNo(customerNo);
-		if (p.size() == 0) {
-			
-		}
+		String isManager = p.size() == 0 ? "n" : "y";
 		
+		mnv.addObject("isManager", isManager);			
 		mnv.setViewName("member_recruit");
 		
 		return mnv;

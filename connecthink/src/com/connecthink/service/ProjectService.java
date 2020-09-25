@@ -119,7 +119,6 @@ public class ProjectService {
 	 */
 	public Project findByRecruits(String recruitNo) {
 		Project p = projectRepository.findByRecruits(recruitNo);
-
 		p.getRecruits().forEach(r->{
 			r.getPosition().getName();
 			r.getMembers().forEach(m ->{

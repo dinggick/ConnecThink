@@ -22,6 +22,7 @@ import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.RecruitRepository;
+import com.connecthink.service.ProjectHistoryService;
 
 import lombok.extern.log4j.Log4j;
 
@@ -39,6 +40,8 @@ class JPATest {
 	private ProjectRepository projectRepository;
 	@Autowired
 	private RecruitRepository recruitRepository;
+	@Autowired
+	private ProjectHistoryService phService;
 	
 //	@Test
 	void recDetailTest() {
@@ -174,11 +177,11 @@ class JPATest {
 			}
 		}
 	}
-	//@Test
-	public void recruittest() {
-		recruitRepository.findByCustomerNo(2);
-	}
 	@Test
+	public void recruittest() {
+		phService.findByNo(131);
+	}
+	//@Test
 	public void test() {
 		recruitRepository.findTop9By();
 	}

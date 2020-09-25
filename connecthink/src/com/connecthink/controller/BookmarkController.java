@@ -2,14 +2,13 @@ package com.connecthink.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.BookmarkRecruit;
 import com.connecthink.entity.BookmarkUser;
@@ -78,4 +77,12 @@ public class BookmarkController {
 		String count = Integer.toString(bmCount);
 		return count;
 	}
+	@PostMapping(value="/bmUser")
+	@ResponseBody
+	public String bmUser(Integer customerNo, HttpSession session) {
+		Integer user = (Integer) session.getAttribute("loginInfo");
+		service.bmMember(customerNo, user);
+		return "success";
+	}
+	
 }

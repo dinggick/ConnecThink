@@ -5,6 +5,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var = "customer" value="${requestScope.customer}"/>
 <c:set var = "project" value="${requestScope.project}"/>
+<c:set var="isManager" value="${requestScope.isManager }"/>
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -90,7 +91,7 @@
 										<div class="location">
 <%-- 											<p>${customer.postion.name }</p> --%>
 											<div class="bookmark">
-												<span> <img src="img/bookmark2.png" alt=""
+												<span onclick="addBookmark()"> <img src="img/bookmark2.png" alt="" class="bm"
 													style="width: 18px; height: 18px;">북마크
 												</span> &nbsp; <span><img src="img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span>
@@ -148,16 +149,16 @@
 							<h4>ConnecThink 히스토리</h4>
 							<c:forEach items="${project}" var = "p" varStatus="status" >
 							<div>
-								<p>프로젝트 날짜 : 
-								
+								<p>프로젝트 날짜 : 								
 									<fmt:formatDate var="enterdate" value="${p.startDate}" pattern="yyyy-MM-dd"/>
 									<fmt:formatDate var="quitdate" value="${p.endDate}" pattern="yyyy-MM-dd"/>
-										${enterdate} ~ ${quitdate} 
+										${enterdate} ~ ${quitdate}  |  프로젝트 이름: ${p.title }
 
 							</p>
-								<p>프로젝트 이름: ${p.title }</p>
+								
 								<p>프로젝트 소개 : ${p.theme}</p>
 							</div>	
+							<br>
 							</c:forEach>
 						</div>
 					</div>
@@ -234,7 +235,11 @@
 	<script src="js/main.js"></script>
 	<script>
 	$(document).ready(function(){
-	    $(".cancelbtn").hide();
+		 $(".cancelbtn").hide();		
+		if ('${isManager}' == 'n') {			
+			$(".smallbtn").hide();
+		}
+	   
 	});
 		function openModal(){
 			var $selectSection = $('.input_field.position1');
@@ -298,6 +303,24 @@
 						$('.smallbtn').show();
 						$('.cancelbtn').hide();
 						
+					}
+				}
+			});
+		}
+		function addBookmark() {
+			var no = document.getElementById('project_no').value;
+			$.ajax({
+				url : "${contextPath}/bmUser",
+				method : "POST",
+				data : {
+					recruitNo : no,					
+					${_csrf.parameterName} : '${_csrf.token}'
+				},
+				success : function(data) {
+					console.log(data);					
+					if (data == "success") {						
+						$("img.bm").css("display", "none");
+						$("img.on").css("display", "inline-block");
 					}
 				}
 			});
