@@ -6,16 +6,12 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.CustomerPosition;
 import com.connecthink.entity.Experience;
-import com.connecthink.entity.Position;
-
 import com.connecthink.repository.CustomerRepository;
 
 @Service
@@ -26,6 +22,17 @@ public class CustomerService {
 	
 	public List<Customer> findAll() {
 		List<Customer> clist = customerRepository.findAll();
+		clist.forEach(c->{
+			c.getCustomerPositions().forEach(cp -> {
+				cp.getPosition().getName();
+			});
+			c.getExperiences().forEach(e->{
+				e.getExplain();
+			});
+			c.getNotifications().forEach(n->{
+				n.getNotifyDate();
+			});
+		});
 		
 		return clist;
 	}

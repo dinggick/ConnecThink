@@ -12,6 +12,10 @@ public class MemberController {
 	@Autowired
 	private MemberService service;
 	
+	/**
+	 * @author 홍지수
+	 * 모집에 지원하기
+	 */
 	@PostMapping(value = "recruit")
 	@ResponseBody
 	public String recruit(Integer customerNo, String recruitNo) {

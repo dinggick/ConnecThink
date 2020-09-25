@@ -24,6 +24,10 @@ public class MemberService {
 	@Autowired
 	private RecruitRepository recruitRepository;
 
+	/**
+	 * @author 홍지수
+	 * 모집에 지원하기
+	 */
 	public void recruit(Integer customerNo, String recruitNo) {
 		Member member = new Member();
 		MemberId ids = new MemberId();

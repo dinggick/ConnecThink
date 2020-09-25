@@ -16,6 +16,10 @@ import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.RecruitRepository;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/hong
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
@@ -31,6 +35,7 @@ class MemberTest {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
+<<<<<<< HEAD
 //	//@Test
 //	void findByMemberNoTest() {
 //		repository.findByIdMemberNo(102).forEach(m -> {
@@ -41,6 +46,18 @@ class MemberTest {
 ////	@Test
 //	void findAllMember() {
 //		repository.findTop8By().forEach(s -> {
+=======
+	//@Test
+//	void findByMemberNoTest() {
+//		customerRepository.findByIdMemberNo(102).forEach(m -> {
+//			System.out.println("멤버 번호 : " + m.getCustomer().getCustomerNo());
+//		});
+//	}
+	
+//	@Test
+//	void findAllMember() {
+//		customerRepository.findTop8By().forEach(s -> {
+>>>>>>> origin/hong
 //			System.out.println("멤버: " + s.getCustomer().getExperiences());
 //		});
 //	}
@@ -60,8 +77,11 @@ class MemberTest {
 		member.setCustomer(c);
 		member.setRecruit(r);
 		member.setEnterStatus(0);
+<<<<<<< HEAD
 
 		//repository.findByIdMemberNo(101);
+=======
+>>>>>>> origin/hong
 		
 		repository.save(member);
 	}

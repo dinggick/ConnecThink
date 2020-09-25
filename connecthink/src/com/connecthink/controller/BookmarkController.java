@@ -22,7 +22,7 @@ public class BookmarkController {
 
 	/**
 	 * @author 홍지수
-	 * 모집상세보기
+	 * 북마크 페이지 호출
 	 */
 	@RequestMapping(value="/bookmark")
 	public void bookmark() {

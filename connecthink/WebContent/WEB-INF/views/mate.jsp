@@ -50,7 +50,7 @@ span.customerNo{
 
 	<!-- header-start -->
 	<header>
-		<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+		<jsp:include page="/header"></jsp:include>
 	</header>
 	<!-- header-end -->
 
@@ -159,7 +159,7 @@ span.customerNo{
 
 	<script>
 	$(function(){
-		fetch("${contextPath}/mateList").then(function(data){
+		fetch("${contextPath}/all/mateList").then(function(data){
 			console.log("fetch ajax 성공");
 		});
 	});

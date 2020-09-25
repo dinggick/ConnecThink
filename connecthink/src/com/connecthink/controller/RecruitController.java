@@ -1,6 +1,8 @@
 package com.connecthink.controller;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -35,16 +37,13 @@ public class RecruitController {
 
 	@Autowired
 	private BookmarkService bmService;
-	
-	@Autowired
-    ServletContext context;
 
 
 	/**
 	 * @author 홍지수 
 	 * 모집 전체 목록 조회
 	 */
-	@RequestMapping("rec")
+	@RequestMapping("/rec")
 	public ModelAndView findAll(){
 		ModelAndView mnv = new ModelAndView();
 		List<Recruit> list = new ArrayList<Recruit>();
@@ -60,7 +59,7 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 모집 상세 보기
 	 */
-	@RequestMapping("rec_detail")
+	@RequestMapping("/rec_detail")
 	public ModelAndView findByRecruitNo(String recNo) {
 		ModelAndView mnv = new ModelAndView();
 
@@ -95,21 +94,37 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 모집 등록하기
 	 */
-	@PostMapping(value="addRec")
+	@PostMapping(value="/addRec")
+	@ResponseBody
 	public String addRec(RecruitCommand recruitCommand) {
-		//설정
-		String saveDirectory = context.getRealPath("/storage");
-		System.out.println("테스트 : " + saveDirectory);
-		
-		//내용 보기
-		System.out.println();
-		
-		//첫 등록시 모집중 (1)
 		recruitCommand.setRecruitStatus(1);
+		Integer[] ps = recruitCommand.getPositionNo();
 		
-//		recruitService.save(projectNo, positionNo, deadline, headCount, requirement, recruitStatus);
+		System.out.println(Arrays.toString(ps));
+		
+		Arrays.sort(ps);
+		Integer positionNo = ps[ps.length-1];
+		System.out.println(positionNo);
+		
+		
+		//테스트
+		System.out.println(recruitCommand.getRequirement());
+		System.out.println(recruitCommand.getRecruitStatus());
+		System.out.println(recruitCommand.getRecPic());
+		System.out.println(recruitCommand.getRecExplain());
+		System.out.println(recruitCommand.getProjectNo());
+		System.out.println(positionNo);
+		System.out.println(recruitCommand.getHeadCount());
+		System.out.println(recruitCommand.getDeadline());
+		
+		try {
+			recruitService.addRec(recruitCommand);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		return "success";
 	}
+	
 	@RequestMapping("/projectList")
 	@ResponseBody
 	public List<Recruit> findTopRecruit(){
@@ -121,7 +136,7 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 모집 등록 페이지
 	 */
-	@RequestMapping(value = "add_rec")
+	@RequestMapping(value = "/add_rec")
 	public void add_rec() {
 		System.out.println("모집등록페이지 호출");
 	}
