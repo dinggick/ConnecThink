@@ -104,24 +104,6 @@ public class RecruitController {
 	@ResponseBody
 	public String addRec(RecruitCommand recruitCommand) {
 		recruitCommand.setRecruitStatus(1);
-		Integer[] ps = recruitCommand.getPositionNo();
-		
-		System.out.println(Arrays.toString(ps));
-		
-		Arrays.sort(ps);
-		Integer positionNo = ps[ps.length-1];
-		System.out.println(positionNo);
-		
-		
-		//테스트
-		System.out.println(recruitCommand.getRequirement());
-		System.out.println(recruitCommand.getRecruitStatus());
-		System.out.println(recruitCommand.getRecPic());
-		System.out.println(recruitCommand.getRecExplain());
-		System.out.println(recruitCommand.getProjectNo());
-		System.out.println(positionNo);
-		System.out.println(recruitCommand.getHeadCount());
-		System.out.println(recruitCommand.getDeadline());
 		
 		try {
 			recruitService.addRec(recruitCommand);

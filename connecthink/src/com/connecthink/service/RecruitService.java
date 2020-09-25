@@ -12,12 +12,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.connecthink.entity.Member;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
@@ -48,6 +48,10 @@ public class RecruitService {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private MemberRepository memberRepository;
+	
+	@Autowired
+	private ServletContext context;
+	
 	/**
 	 * @author 홍지수
 	 * 모집 전체보기
@@ -55,6 +59,7 @@ public class RecruitService {
 	public List<Recruit> findAll(){
 		return recruitRepository.findAll();
 	}
+	
 	//메인에 뿌려줄 9개 프로젝트 찾기
 	public List<Recruit> findTopRecruit(){
 		List<Recruit> rec = recruitRepository.findTop9By();
@@ -74,11 +79,13 @@ public class RecruitService {
 	 * @author 홍지수
 	 * 모집 등록
 	 */
-	@Transactional
 	public void addRec(RecruitCommand recruitCommand) throws ParseException {
 		Recruit recruit = new Recruit();
+		
+		//projectNo
 		Project project = projectRepository.findById(recruitCommand.getProjectNo()).get();
-		//positionNo
+		
+		//positionNo -배열로 받아 정렬 후 가장 큰 값 받아 오기 
 		Integer[] psArr = recruitCommand.getPositionNo();
 		Arrays.sort(psArr);
 		Integer positionNo = psArr[psArr.length-1];
@@ -89,15 +96,22 @@ public class RecruitService {
 		String rNo = project.getProjectNo()+"R"+ (num+1);
 		
 		//파일 저장 경로
-		String saveDirectory = "C:\\storage\\";
+		//기본경로 바꿔주기
+		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
+		System.out.println(context.getRealPath("/"));
+		System.out.println(rootUploadPath);
+		//모집 - 이미지 경로
+		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img"  + File.separator;
+		//모집 - 파일경로
+		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt"  + File.separator;
 		
 		//이미지 형식
 		String ext = ".jpg";
-		File pic = new File(saveDirectory+rNo+ext);
+		File pic = new File(saveImgPath, rNo+ext);
 		
 		//파일 - 모집 상세 설명 형식
 		String ext1 = ".txt";
-		File txt = new File(saveDirectory+rNo+ext1);
+		File txt = new File(saveTxtPath, rNo+ext1);
 		
 		
 		try {
@@ -127,6 +141,7 @@ public class RecruitService {
 		recruit.setDeadline(deadline);
 		recruit.setRequirement(recruitCommand.getRequirement());
 		recruit.setRecruitStatus(recruitCommand.getRecruitStatus());
+		
 		//project에 recruit 담기(더하기)
 		project.getRecruits().add(recruit);
 		

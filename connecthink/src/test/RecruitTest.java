@@ -72,7 +72,7 @@ class RecruitTest {
 //		repository.save(recruit);
 //	}
 	
-//	@Test
+	@Test
 	@Transactional
 	void InsertRec() {
 		Project project = projectRepository.findById(50).get();
@@ -100,11 +100,6 @@ class RecruitTest {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	@Test
-	void findByManagerNo() {
-		projectRepository.findByManagerNo(1);
 	}
 	
 }

@@ -7,10 +7,13 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,10 +31,15 @@ import lombok.ToString;
 @Setter
 @ToString
 @Entity
+@SequenceGenerator(name = "project_no_seq_generator", 
+sequenceName = "project_no_seq", 
+initialValue = 55, 
+allocationSize = 1)
 @Table(name = "project")
 public class Project {
 	@Id
 	@Column(name = "project_no")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_no_seq_generator")
 	private Integer projectNo;
 	
 	@Column(name = "title", length = 60, nullable = true)

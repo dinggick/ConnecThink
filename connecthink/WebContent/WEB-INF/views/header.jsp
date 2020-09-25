@@ -211,6 +211,7 @@
                                            
                                             <li><a href="rec">모집중인팀</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
+                                            <li><a href="add_project">팀 등록</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->

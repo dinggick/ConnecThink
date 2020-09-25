@@ -14,19 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.connecthink.entity.Project;
 import com.connecthink.service.ProjectService;
 
+import upload.ProjectCommand;
+
 @Controller
 public class ProjectController {
 	
 	@Autowired
 	private ProjectService service;
-
-	
-	@RequestMapping(value="/managerAddRec")
-	@ResponseBody
-	public List<Project> manageMyProject(Integer managerNo) {
-		System.out.println("모집등록 호출");
-		return service.findByManagerNo(managerNo);
-	}
 	
 	/**
 	 * @author 임수정
@@ -94,4 +88,19 @@ public class ProjectController {
 		return p;
 	}
 	
+	/**
+	 * @author 홍지수
+	 * 프로젝트 등록하기
+	 */
+	@PostMapping(value="addProject")
+	@ResponseBody
+	public String addProject(ProjectCommand projectCommand) {
+		service.addProject(projectCommand);
+		return "succees";
+	}
+	
+	@RequestMapping(value="add_project")
+	public void add_project() {
+		System.out.println("프로젝트 추가하기");
+	}
 }

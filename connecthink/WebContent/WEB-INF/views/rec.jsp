@@ -75,7 +75,14 @@
 					<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">
 						<div class="thumbnail">
 							<div class="test">
-								<img src="img/default.png" alt="모집 사진">
+<%-- 							<c:choose> --%>
+<%-- 							<c:when test="${not empty C:\\storage\\rec.recruitNo.jpg}"> --%>
+								<img src="http://localhost/storage/recruit/img/2R8.jpg" alt="모집사진">
+<%-- 							</c:when> --%>
+<%-- 							<c:otherwise> --%>
+<!-- 								<img src="img/default.png" alt="모집 사진"> -->
+<%-- 							</c:otherwise> --%>
+<%-- 							</c:choose> --%>
 							</div>
 						</div>
 						<h4 class="mt-4 mr-4 ml-4 rec_title">${rec.requirement}</h4>
