@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -30,5 +31,6 @@ public class ChatRoom {
 	
 	@OneToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "chat_room_no")
+	@OrderBy("message_no asc")
 	private List<Message> messages;
 }

@@ -991,7 +991,6 @@ scale
 						if(datas[0] == "userid"){
 							this.writer = datas[1];
 						}else{
-							
 							var user = datas[0];
 							var msg = datas[1];
 							var receptionTime = datas[2]+":"+datas[3];
