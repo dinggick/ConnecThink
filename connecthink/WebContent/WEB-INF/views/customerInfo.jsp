@@ -118,8 +118,8 @@
                             </ul>
                         </div>
                         <div class="single_wrap" style="text-align: right;">
-                            <a href="#" class="genric-btn info-border">수정</a>
-                            <a href="#" class="genric-btn danger-border">탈퇴</a>
+                            <a href="/connecthink/modifyUserInfo" class="genric-btn info-border">수정</a>
+                            <button id="dropBtn" class="genric-btn danger-border">탈퇴</button>
                         </div>
                     </div>
                 </div>
@@ -165,10 +165,6 @@
 
 
     <script src="js/main.js"></script>
-<<<<<<< HEAD
-
-=======
-    
     <script>
     	$(() => {
     		$.ajax({
@@ -208,7 +204,6 @@
     			data : {customerNo : ${sessionScope.loginInfo},
 					${_csrf.parameterName} : '${_csrf.token}'},
 				success : (data, textStatus, jqXHR) => {
-					console.log(data);
 					data.forEach(h => {
 						var startDate = new Date(h.startDate);
 						var endDate = h.endDate != null ? new Date(h.endDate) : null;
@@ -230,9 +225,32 @@
 					
 				}
     		});
+    		
+    		$("#dropBtn").click(() => {
+    			$.ajax({
+        			url : "/connecthink/dropCustomer",
+        			method : "POST",
+        			data : {customerNo : ${sessionScope.loginInfo},
+    					${_csrf.parameterName} : '${_csrf.token}'},
+    				success : (data, textStatus, jqXHR) => {
+    					alert("탈퇴 성공");
+    					//탈퇴 성공시 로그아웃
+    					$.ajax({
+    						url : "/connecthink/logout",
+    						method : "POST",
+    						data : {${_csrf.parameterName} : '${_csrf.token}'},
+    						success : (data, textStatus, jqXHR) => {
+    							location.href = "http://localhost/connecthink/index";
+    						}
+    					});
+    				},
+    				error : () => {
+    					alert("탈퇴 실패");
+    				}
+        		});
+    		});
     	});
     </script>
->>>>>>> origin/cjk
 </body>
 
 </html>

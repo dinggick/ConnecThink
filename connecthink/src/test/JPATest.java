@@ -74,7 +74,7 @@ class JPATest {
 //	@Test
 	public void deleteTest() {
 		int customerNo = 202;
-		controller.remove(customerNo);
+		//controller.remove(customerNo);
 	}
 	
 //	@Test

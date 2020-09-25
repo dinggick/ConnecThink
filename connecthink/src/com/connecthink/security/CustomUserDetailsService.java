@@ -29,6 +29,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		log.warn("Load User By Email : " + username);
 		
 		Customer c = customerRepository.findByEmail(username);
+		if(c.getDropStatus() == 0) {
+			throw new UsernameNotFoundException("로그인 실패");
+		}
 		CustomerAuth ca = customerAuthRepository.findById(username).get();
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority(ca.getAuth()));

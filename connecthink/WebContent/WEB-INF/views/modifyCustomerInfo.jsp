@@ -105,14 +105,14 @@
                                 <div class="jobs_conetent">
                                     <!-- user name -->
                                     <a href="#">
-                                        <h4>사람 이름</h4>
+                                        <h4 id="customerName"></h4>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="apply_job_form white-bg ">
-                        <form action="# " role="form ">
+                        <form role="form">
                         	<div class="row">
                         		<%-- 비밀번호 --%>
                         		<div class="col-md-2">
@@ -120,7 +120,7 @@
                         		</div>
                         		<div class="col-md-10">
                         			<div class="input_field">
-                        				<input type="password" name="password" placeholder="비밀번호 ">
+                        				<input type="password" name="password" placeholder="비밀번호 " required>
                         			</div>
                         		</div>
                         		<%-- 한 줄 소개 --%>
@@ -129,7 +129,7 @@
                         		</div>
                         		<div class="col-md-10">
                         			<div class="input_field">
-                        				<input type="text" name="about" placeholder="한 줄 소개 ">
+                        				<input type="text" name="about" placeholder="한 줄 소개 " required>
                         			</div>
                         		</div>
                         		<%-- 졸업 여부 --%>
@@ -139,8 +139,8 @@
                         		<div class="col-md-10">
                         			<div class="input_field">
 	                                    <select name="graduation" class="position">
-	                                        <option value="1">미졸업</option>
-	                                        <option value="2">졸업</option>
+	                                        <option value="0">미졸업</option>
+	                                        <option value="1">졸업</option>
 	                                    </select>
                                 	</div>
                         		</div>
@@ -148,46 +148,16 @@
                         		<div class="col-md-2">
                         			<h5 class="mt-3" style="font-weight: bold;">역할군</h5>
                         		</div>
-								<div class="col-md-4">
-									<div class="input_field position0">
-										<select name="position0" class="position" required>
-											<option selected disabled hidden style='display: none' value=''>직군선택</option>
-											<option value="1">기획자</option>
-											<option value="2">디자이너</option>
-											<option value="3">개발자</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input_field position_div_second" style="display: none;">
-										
-									</div>
-								</div>
-								<div class="col-md-2">
-									<a class="boxed-btn3 addPositionBtn"><i class="gj-icon plus"></i></a>
-								</div>
 								<%-- 경험 --%>
-								<div class="col-md-2">
+								<div class="col-md-2" id="exprs">
 									<h5 class="mt-3" style="font-weight: bold;">경험</h5>
-								</div>
-								<div class="col-md-4">
-									<div class="input_field">
-                        				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
-                        			</div>
-								</div>
-								<div class="col-md-4">
-									<div class="input_field">
-                        				<input type="text" name="term" placeholder="기간 ex)2019/01 ~ 2020/01">
-                        			</div>
-								</div>
-								<div class="col-md-2">
-									<a class="boxed-btn3 addExpBtn"><i class="gj-icon plus"></i></a>
 								</div>
                         	</div>
                             <div class="single_wrap" style="text-align: right;">
-                                <a href="#" class="genric-btn info-border">수정</a>
+                                <button type="submit" class="genric-btn info-border">수정</button>
                                 <a href="#" class="genric-btn danger-border">취소</a>
                             </div>
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
                     </div>
                 </div>
@@ -235,69 +205,60 @@
     <script src="js/main.js "></script>
 
     <script>
-	    function position(obj){
-	    	console.log(obj);
-			if(obj.value == 1){
-				$position = $(obj).parent().parent().next().find(".position_div_second");
-				$position.html(`<select class="position" name="position" onchange="position_p(this);">
-									<option selected disabled hidden style='display: none' value=''>직무선택</option>
-									<option value="1">사업기획자</option>
-									<option value="2">컨텐츠기획자</option>
-									<option value="3">기획자</option>
-									<option value="4">마케터</option>
-									<option value="5">서비스운영자</option>
-									<option value="6">마케팅</option>
-									<option value="7">상품기획자</option>
-									<option value="8">모바일서비스기획자</option>
-								</select>`);
-				$position.css("display","block");
-				$("select").niceSelect();
-			} else if(obj.value == 2) {
-				$position = $(obj).parent().parent().next().find(".position_div_second");
-				$position.html(`<select class="position" name="position" onchange="position_ds(this);">
-									<option selected disabled hidden style='display: none' value=''>직무선택</option>
-									<option value="9">디자이너</option>
-									<option value="10">UI/UX디자이너</option>
-									<option value="11">그래픽디자이너</option>
-									<option value="12">웹 디자이너</option>
-									<option value="13">영상디자이너</option>
-									<option value="14">산업디자이너</option>
-									<option value="15">일러스트레이터</option>
-									<option value="16">모바일 디자이너</option>
-								</select>`);
-				$position.css("display","block");
-				$("select").niceSelect();
-			} else if(obj.value == 3) {
-				$position = $(obj).parent().parent().next().find(".position_div_second");
-				$position.html(`<select class="position" name="position" onchange="position_dv(this);">
-									<option selected disabled hidden style='display: none' value=''>직무선택</option>
-									<option value="17">개발자</option>
-									<option value="18">백엔드 개발자</option>
-									<option value="19">웹개발자</option>
-									<option value="20">프로트엔드개발자</option>
-									<option value="21">안드로이드개발자</option>
-									<option value="22">IOS</option>
-									<option value="23">임베디드 개발자</option>
-									<option value="24">DB 개발자</option>
-								</select>`);
-				$position.css("display","block");
-				$("select").niceSelect();
-			} 
-		}
-	    
-		function position_p(obj){
-			alert(obj.value);
-		}
-		
-		function position_ds(obj){
-			alert(obj.value);
-		}
-		
-		function position_dv(obj){
-			alert(obj.value);
+    	function planner() {
+    		return `<select class="position" name="position" required>
+						<option selected disabled hidden style='display: none' value=''>직무선택</option>
+						<option value="1">사업기획자</option>
+						<option value="2">컨텐츠기획자</option>
+						<option value="3">기획자</option>
+						<option value="4">마케터</option>
+						<option value="5">서비스운영자</option>
+						<option value="6">마케팅</option>
+						<option value="7">상품기획자</option>
+						<option value="8">모바일서비스기획자</option>
+					</select>`;
+    	}
+    	
+    	function designer() {
+    		return `<select class="position" name="position" required>
+						<option selected disabled hidden style='display: none' value=''>직무선택</option>
+						<option value="9">디자이너</option>
+						<option value="10">UI/UX디자이너</option>
+						<option value="11">그래픽디자이너</option>
+						<option value="12">웹 디자이너</option>
+						<option value="13">영상디자이너</option>
+						<option value="14">산업디자이너</option>
+						<option value="15">일러스트레이터</option>
+						<option value="16">모바일 디자이너</option>
+					</select>`;
+    	}
+    	
+    	function developer() {
+    		return `<select class="position" name="position" required>
+						<option selected disabled hidden style='display: none' value=''>직무선택</option>
+						<option value="17">개발자</option>
+						<option value="18">백엔드 개발자</option>
+						<option value="19">웹개발자</option>
+						<option value="20">프로트엔드개발자</option>
+						<option value="21">안드로이드개발자</option>
+						<option value="22">IOS</option>
+						<option value="23">임베디드 개발자</option>
+						<option value="24">DB 개발자</option>
+					</select>`;
+    	}
+    	
+	    function showPositions(obj){
+			$position = $(obj).parent().parent().next().find(".position_div_second");
+
+			if(obj.value == 1) $position.html(planner());
+			else if(obj.value == 2) $position.html(designer());
+			else if(obj.value == 3) $position.html(developer());
+			
+			$position.css("display","block");
+			$("select").niceSelect();
 		}
     	$(() => {
-    		//역할군 추가 및 삭제
+    		//역할군 추가 및 삭제 버튼 이벤트 처리
 	        $(".apply_job_form").on("click", ".addPositionBtn", function(e) {
                 var new_inputs = `<div class="col-md-4 offset-2">
 	    							<div class="input_field position0">
@@ -325,13 +286,12 @@
                 var $btnCol = $(this).parent();
                 $btnCol.prev().remove();
                 $btnCol.prev().remove();
-                console.log($btnCol.prev().children());
                 if($btnCol.prev().children().hasClass("mt-3")) $btnCol.next().removeClass("offset-2");
                 $btnCol.remove();
             });
     		//직군 선택 시 직무 select box 생성
     		$(".apply_job_form").on("change", "select.position", function(e) {
-    			position(e.target);
+    			showPositions(e.target);
     		});
 
             //경험 추가 및 삭제
@@ -363,6 +323,144 @@
 			//프로필 클릭시 사진 업로드
             $(".thumb").on("click", "img", function(e) {
                 $(this).next().trigger("click");
+            });
+			
+            $.ajax({
+    			url : "/connecthink/findCustomerByNo",
+    			method : "POST",
+    			data : {customerNo : ${sessionScope.loginInfo},
+    					${_csrf.parameterName} : '${_csrf.token}'},
+    			success : (data, textStatus, jqXHR) => {
+    				//이름
+    				$("#customerName").html(data.name);
+    				//한 줄 소개
+    				if(data.about != null) $("input[name=about]").val(name.about);
+    				//졸업여부
+    				if(data.graduation == 1) $("select[name=graduation] op:eq(0)").attr("selected", "selected");
+    				else $("select[name=graduation] op:eq(1)").attr("selected", "selected");
+    				//역할군
+    				if(data.customerPositions.length == 0) {
+    					$("#exprs").before(`<div class="col-md-4">
+													<div class="input_field position0">
+														<select name="position0" class="position" required>
+															<option selected disabled hidden style='display: none' value=''>직군선택</option>
+															<option value="1">기획자</option>
+															<option value="2">디자이너</option>
+															<option value="3">개발자</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="input_field position_div_second" style="display: none;">
+														
+													</div>
+												</div>
+												<div class="col-md-2">
+													<a class="boxed-btn3 addPositionBtn"><i class="gj-icon plus"></i></a>
+												</div>`);
+    				} else {
+    					data.customerPositions.forEach(cp => {
+        					var positionElement;
+        					if($("#exprs").prev().children().hasClass("mt-3")) positionElement = `<div class="col-md-4">`;
+        					else positionElement = `<div class="col-md-4 offset-2">`;
+        					
+        					positionElement += `<div class="input_field position0">
+    												<select name="position0" class="position" required>
+    													<option selected disabled hidden style='display: none' value=''>직군선택</option>
+    													<option value="1">기획자</option>
+    													<option value="2">디자이너</option>
+    													<option value="3">개발자</option>
+    												</select>
+    											</div>
+    										</div>
+    										<div class="col-md-4">
+    											<div class="input_field position_div_second" style="display: none;">
+    												
+    											</div>
+    										</div>
+    										<div class="col-md-2">
+    											<a class="boxed-btn3 removePositionBtn"><i class="gj-icon minus"></i></a>
+    										</div>`;
+    										
+        					$("#exprs").before(positionElement);
+            				$("select").niceSelect();
+            				
+        					if(1 <= cp.position.positionNo && cp.position.positionNo <= 8) {
+								$("#exprs").prev().prev().prev().find(".nice-select").trigger("click");
+								$("#exprs").prev().prev().prev().find(".nice-select>ul>li:eq(1)").trigger("click");
+        					} else if(9 <= cp.position.positionNo && cp.position.positionNo <= 16) {
+								$("#exprs").prev().prev().prev().find(".nice-select").trigger("click");
+								$("#exprs").prev().prev().prev().find(".nice-select>ul>li:eq(2)").trigger("click");
+        					} else if(17 <= cp.position.positionNo && cp.position.positionNo <= 24) {
+								$("#exprs").prev().prev().prev().find(".nice-select").trigger("click");
+								$("#exprs").prev().prev().prev().find(".nice-select>ul>li:eq(3)").trigger("click");
+        					}
+
+							$("#exprs").prev().prev().find(".nice-select").trigger("click");
+							var positionSelectIndex = cp.position.positionNo % 8 == 0 ? cp.position.positionNo : cp.position.positionNo % 8;
+							$("#exprs").prev().prev().find(".nice-select>ul>li:eq("+ positionSelectIndex +")").trigger("click");
+        				});
+    					
+    					$("#exprs").prev().find(".removePositionBtn").removeClass("removePositionBtn").addClass("addPositionBtn").find("i").removeClass("minus").addClass("plus");
+    				}
+    				//경험
+        			if(data.experiences.length == 0) {
+        				$("#exprs").after(`<div class="col-md-4 offset-2">
+												<div class="input_field">
+								    				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
+								    			</div>
+											</div>
+											<div class="col-md-4">
+												<div class="input_field">
+								    				<input type="text" name="term" placeholder="기간 ex)2019/01 ~ 2020/01">
+								    			</div>
+											</div>
+											<div class="col-md-2">
+												<a class="boxed-btn3 addExpBtn"><i class="gj-icon plus"></i></a>
+											</div>`);
+        			} else {
+        				data.experiences.forEach(e => {
+        					var expElement;
+            				if($(".apply_job_form").find(".row>div:last-child").children().hasClass("mt-3")) expElement = `<div class="col-md-4">`;
+            				else expElement = `<div class="col-md-4">`;
+            				expElement += `<div class="input_field">
+    					    					<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
+    						    			</div>
+    									</div>
+    									<div class="col-md-4">
+    										<div class="input_field">
+    						    				<input type="text" name="term" placeholder="기간 ex)2019/01 ~ 2020/01">
+    						    			</div>
+    									</div>
+    									<div class="col-md-2">
+    										<a class="boxed-btn3 removeExpBtn"><i class="gj-icon minus"></i></a>
+    									</div>`;
+            				
+            				$(".apply_job_form").find(".row").append(expElement);
+            				$(".apply_job_form").find(".row>div:last-child").prev().prev().find("input").val(e.explain);
+            				$(".apply_job_form").find(".row>div:last-child").prev().find("input").val(e.term);
+        				});
+        				
+        				$(".apply_job_form").find(".row>div:last-child").find(".removeExpBtn").removeClass("removeExpBtn").addClass("addExpBtn").find("i").removeClass("minus").addClass("plus");
+        			}
+    			}
+            });
+            
+            $("form").submit(function() {
+            	$.ajax({
+            		url : "/connecthink/modifyCustomerInfo",
+            		method : "POST",
+            		data : $(this).serialize(),
+            		success : (data, textStatus, jqXHR) => {
+            			alert("수정 성공");
+            			window.history.back();
+            		},
+            		error : () => {
+            			alert("수정 실패");
+            		}
+            	});
+            	
+            	return false;
             });
     	});
     </script>
