@@ -756,20 +756,13 @@ scale
 							<div class="title">TO DO
 						  		<div class="content">
 				  					<ul class="usty section1" id="sectionOneStatus" value="1">
-				  					<%-- <c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==1}"> --%>
-				  						<li v-for="item in list">
+				  						<li v-for="(item,index) in lists">
 				  							<div class='card editable'>
-				  								<%-- <a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="${p.taskNo}">
-				  									<input type="hidden" value="${p.taskStatus}">
-				  									${p.content}
-				  								</a> --%>
-				  							{{item.content}}</div>
-				  						</li>
-				  						<%-- </c:if>
-				  					</c:forEach> --%>
-				  						<!-- <li v-for="item in list"><div class='card editable'>{{item.id}}</div></li> -->
+				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+				  									<input type="hidden" :value="item.taskNo">{{item.content}},{{item.taskNo}}
+				  								</a>
+				  							</div>
+				  						</li>		
 				  					</ul>
 								</div>
 				    			<div class="add-task"><input v-model="addName" required class="single-input"><button v-on:click="getData">작업 추가하기</button></div>
@@ -780,20 +773,13 @@ scale
 				    		<div class="title">Doing
 								<div class="content">
 				  					<ul class="usty section2" id="sectionTwoStatus" value="2">
-				  					<c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==2}">
-				  						<li>
-				  							<div class='card editable'>		
+				  						<li v-for="item in list2">
+				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="${p.taskNo}">
-				  									<input type="hidden" value="${p.taskStatus}">
-				  									${p.content}
+				  									<input type="hidden" value="">{{item.content}}
 				  								</a>
 				  							</div>
 				  						</li>
-				  						</c:if>
-				  					</c:forEach>
-				  						<li v-for="item in list2"><div class='card editable'>{{item.id2}}</div></li>
 									</ul>
 								</div>
 						    <div class="add-task"><input v-model="addName1"><button v-on:click="getData">작업 추가하기</button></div>
@@ -804,19 +790,13 @@ scale
 				    		<div class="title">Done
 					  			<div class="content">
 								    <ul class="usty section3" id="sectionThreeStatus" value="3">
-								    <c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==3}">
-				  						<li>
+								    	<li v-for="item in list3">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="${p.taskNo}">
-				  									<input type="hidden" value="${p.taskStatus}">${p.content}
+				  									<input type="hidden" value="">{{item.content}}
 				  								</a>
 				  							</div>
 				  						</li>
-				  						</c:if>
-				  					</c:forEach>
-				  						<li v-for="item in list3"><div class='card editable'>{{item.id3}}</div></li>
 								    </ul>
 								</div>
 							<div class="add-task"><input v-model="addName2"><button v-on:click="getData">작업 추가하기</button></div>
@@ -1073,21 +1053,12 @@ scale
 
 	Vue.use(VueDraggable.default);
 	
-	/*drag&drop시작*/
-	Vue.component('AddCard', {
-		template: `<li><div class='card editable'><input type="text"><div v-on:click="getData" class="add-task">등록</div></div></li>`
-	})
-	
 	var todo = new Vue({
-		
 		el: '#dashBoard',
 		data: {
-			list:[
-			],
-			list2:[
-			],
-			list3:[
-			],
+			lists:[],
+			list2:[],
+			list3:[],
 			addName:'',
 			addName1:'',
 			addName2:'',
@@ -1095,7 +1066,7 @@ scale
 			options:{
 				 onDragend(event){
 					 console.log(event);
-							 
+					
 					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
@@ -1113,17 +1084,27 @@ scale
 				 }
 			},
 			updateText:''
+			
 		},
-		created(ev){
-			axios.get('/connecthink/board',{
+		created(){
+			axios.get('/connecthink/taskList',{
 				params: {
 			  	      project_no: ${project_no}
 			  	}
             })
-            .then(function(response){
-            	console.log(response);
-            	this.list = response.data
-            });
+            .then(response => {
+            	var taskList = response.data;
+            	console.log(taskList);
+            	taskList.forEach(task =>{
+            		if(task.taskStatus==1){
+            			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus});
+            		}else if(task.taskStatus==2){
+            			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus});
+            		}else{
+            			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus});	
+            		}
+            	})
+            })
 		},
 		methods: {
 			goModal(ev){
@@ -1134,8 +1115,6 @@ scale
 				modalTaskNo.value=taskNo;
 				
 				console.log(modalTaskNo);
-				
-				
 			},
 			updateContent(){	
 				axios.get('/connecthink/updateContent',{
@@ -1155,8 +1134,8 @@ scale
        					taskNo:document.getElementById('taskNo').value
                 	}
                 })
-                .then(function(response){
-                    alert(response); 
+                .then(response => {	
+                	this.lists.push({content:this.addName});
                 });
 			},
 			getData(ev) {
@@ -1170,8 +1149,8 @@ scale
 	                		status:status
 	                	}
 	                })
-	                .then(function(response){	
-	                	this.list = response.list
+	                .then(response => {	
+	                	this.lists.push({content:this.addName});
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;
@@ -1181,8 +1160,8 @@ scale
 	                		status:status
 	                	}
 	                })
-	                .then(function(response){
-	                    console.log(response); 
+	                .then(response => {	
+	                	this.list2.push({content:this.addName1});
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1192,8 +1171,8 @@ scale
 	                		status:status
 	                	}
 	                })
-	                .then(function(response){
-	                    alert(response);
+	                .then(response => {	
+	                	this.list3.push({content:this.addName2});
 	                });
 				}
                 
@@ -1201,38 +1180,6 @@ scale
 		}
 	});
 
-	/* new Vue({
-		el:'#contentModal',
-		data:{
-			updateText:''
-		},
-		methods:{
-			updateContent(){
-				
-				
-				axios.get('/connecthink/updateContent',{
-                	params:{
-       					content:this.updateText
-                	}
-                })
-                .then(function(response){
-                    alert(response); 
-                });
-				
-			},
-			deleteTask(){
-				axios.get('/connecthink/deleteTask',{
-                	params:{
-       					taskNo:updateText
-                	}
-                })
-                .then(function(response){
-                    alert(response); 
-                });
-			}
-		}
-	}) */
-	
 </script>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="js/vendor/jquery-1.12.4.min.js"></script>

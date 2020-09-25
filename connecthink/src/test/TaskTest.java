@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.connecthink.controller.BoardController;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
@@ -41,31 +42,20 @@ class TaskTest {
 	@Autowired
 	private CustomerRepository crpo;
 	
+	
+	@Autowired
+	private BoardController con;
 	//@Test
 	void findAllTest() {
 		repository.findAll();
 	}
 	
-//	@Transactional
+	@Transactional
 	@Test
 	public void lists(){
-		service.lookUpTask(2).forEach(t -> {
-			System.out.println(t.getTaskNo() + "--------------------");
-		});
-//		List<Task> tasks = new ArrayList<>();
-//		Project p = projectRepository.findById(2).get();
-//		tasks.addAll(p.getTasks());
-//		tasks.forEach(t ->{
-//			
-//			System.out.println("asdfdghjhdsafdg" + t.getTaskNo());
-//		});
-		
-		
-//		p.getRecruits().forEach(r -> {
-//			r.getMembers().forEach(m -> {
-//				System.out.println("customer no : " + m.getCustomer().getCustomerNo());
-//			});
-//		});
+		List<Task> list = con.tList(2);
+		System.out.println("사이즈으으으응" + list.size());
+	
 	}
 	
 	//@Test

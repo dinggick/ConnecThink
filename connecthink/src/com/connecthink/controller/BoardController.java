@@ -89,7 +89,8 @@ public class BoardController {
 		return mav;
 	}
 	
-	
+	@RequestMapping("/taskList")
+	@ResponseBody
 	public List<Task> tList(int project_no) {
 		
 		List<Task> list = service.lookUpTask(project_no);

@@ -94,12 +94,9 @@ public class BoardService {
 	@Transactional
 	public List<Task> lookUpTask(Integer project_no){
 		List<Task> tasks = new ArrayList<>();
-//		projectRepository.findById(project_no).get().getTasks().forEach(r ->{
-//			tasks.add(r);
-//		});
+
 		Project p = projectRepository.findById(project_no).get();
-//		p.getTasks().get(0).getTaskNo();
-//		Hibernate.initialize(p.getTasks());
+
 		tasks.addAll(p.getTasks());
 		
 		return tasks;
