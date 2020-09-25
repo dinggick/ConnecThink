@@ -22,7 +22,18 @@ public class ProjectService {
 	private ProjectRepository projectRepository;
 	
 	public List<Project> findByManagerNo(Integer managerNo) {
-		return projectRepository.findByManagerNo(managerNo);
+		List<Project> list = projectRepository.findByManagerNo(managerNo);
+		list.forEach(p ->{
+			Iterator<Recruit> iter = p.getRecruits().iterator();
+			while(iter.hasNext()) {
+				iter.next().getPosition().getName();
+				Iterator<Member> miter  = iter.next().getMembers().iterator();
+				while(miter.hasNext()){
+					miter.next().getCustomer().getCustomerNo();
+				}
+			}
+		});
+		return list;
 	}
 	
 	public List<Project> findMyApplication(Integer memberNo) {
@@ -110,7 +121,10 @@ public class ProjectService {
 	 */
 	public Project findByRecruits(String recruitNo) {
 		Project p = projectRepository.findByRecruits(recruitNo);
-
+		
+		p.getTasks().forEach(t->{
+			t.getContent();
+		});
 		p.getRecruits().forEach(r->{
 			r.getPosition().getName();
 			r.getMembers().forEach(m ->{

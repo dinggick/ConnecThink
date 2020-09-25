@@ -32,6 +32,7 @@ public class CustomerController {
 	private CustomerService service;
 	@Autowired
 	private ProjectService pservice;
+	
 	@RequestMapping("/all/mateList")
 	public ModelAndView findAll() {
 		System.out.println("matelist test");

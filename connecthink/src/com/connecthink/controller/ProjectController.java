@@ -26,9 +26,10 @@ public class ProjectController {
 	@Autowired
 	private ProjectService service;
 	
-	@PostMapping(value="/manageMyProject")
+	@RequestMapping(value="/managerAddRec")
 	@ResponseBody
 	public List<Project> manageMyProject(Integer managerNo) {
+		System.out.println("모집등록 호출");
 		return service.findByManagerNo(managerNo);
 	}
 	

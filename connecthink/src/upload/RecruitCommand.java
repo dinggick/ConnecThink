@@ -1,7 +1,5 @@
 package upload;
 
-import java.util.Date;
-
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Getter;
@@ -11,12 +9,12 @@ import lombok.Setter;
 @Setter
 public class RecruitCommand {
 	private Integer projectNo;
-	private Integer positionNo;
-	private Date deadline;
+	private Integer[] positionNo;
+	private String deadline;
 	private Integer headCount;
 	private String requirement;
 	private Integer recruitStatus;
 	private MultipartFile recPic;
-	private MultipartFile recExplain;
+	private String recExplain;
 
 }
