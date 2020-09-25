@@ -24,9 +24,7 @@ import com.connecthink.entity.ExperienceId;
 import com.connecthink.entity.Position;
 import com.connecthink.entity.Project;
 import com.connecthink.mail.VerificationMail;
-import com.connecthink.service.CustomerPositionService;
 import com.connecthink.service.CustomerService;
-import com.connecthink.service.ExperienceService;
 import com.connecthink.service.PositionService;
 import com.connecthink.service.ProjectService;
 
@@ -44,10 +42,6 @@ public class CustomerController {
 	private ProjectService pservice;
 	@Autowired
 	private PositionService positionService;
-	@Autowired
-	private CustomerPositionService customerPositionService;
-	@Autowired
-	private ExperienceService experienceService;
 	
 	
 	@RequestMapping("/all/mateList")
