@@ -18,4 +18,9 @@ public interface PersonalMessageRepository extends JpaRepository<PersonalMessage
 			"WHERE receive IN (?1,?2) AND send IN (?1,?2)\r\n" + 
 			"ORDER BY create_date")
 	public List<PersonalMessage> findByReceiveAndSend(Integer customerNo, Integer otherNo);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM personal_msg\r\n" + 
+			"WHERE receive = ?1 OR send = ?1\r\n" + 
+			"ORDER BY create_date")
+	public List<PersonalMessage> findByCustomerNo(Integer customerNo);
 }

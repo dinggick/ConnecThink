@@ -192,6 +192,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 				
 			}
 		}//boardChat 동준
+		}//boardEcho 동준
+		
 	}//handleTextMessage
 
 	@Override
