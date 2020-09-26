@@ -66,7 +66,7 @@
                             <div class="jobs_left d-flex align-items-center">
                                 <!-- profile img -->
                                 <div class="thumb">
-                                    <img src="img/svg_icon/1.svg" alt="">
+                                    <img src="img/svg_icon/1.svg" onerror="this.src='img/svg_icon/1.svg'" alt="">
                                 </div>
                                 <div class="jobs_conetent">
                                     <!-- user name -->
@@ -173,6 +173,8 @@
     			data : {customerNo : ${sessionScope.loginInfo},
     					${_csrf.parameterName} : '${_csrf.token}'},
     			success : (data, textStatus, jqXHR) => {
+    				//프로필 사진
+    				$(".thumb>img").attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg");
     				//이름
     				$("#customerName").html(data.name);
     				//역할군
