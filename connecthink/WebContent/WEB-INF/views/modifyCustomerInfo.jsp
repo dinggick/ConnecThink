@@ -155,7 +155,7 @@
                         	</div>
                             <div class="single_wrap" style="text-align: right;">
                                 <button type="submit" class="genric-btn info-border">수정</button>
-                                <a href="#" class="genric-btn danger-border">취소</a>
+                                <button onclick="history.back()" class="genric-btn danger-border">취소</button>
                             </div>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
@@ -403,9 +403,10 @@
     					
     					$("#exprs").prev().find(".removePositionBtn").removeClass("removePositionBtn").addClass("addPositionBtn").find("i").removeClass("minus").addClass("plus");
     				}
+    				$("select").niceSelect();
     				//경험
         			if(data.experiences.length == 0) {
-        				$("#exprs").after(`<div class="col-md-4 offset-2">
+        				$("#exprs").after(`<div class="col-md-4">
 												<div class="input_field">
 								    				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
 								    			</div>
