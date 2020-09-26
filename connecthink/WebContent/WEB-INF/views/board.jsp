@@ -746,7 +746,7 @@ scale
                     </div>
                 </div>
                 <div class="modal-footer">
-                 	<button type="button" class="btn btn-primary" v-on:click="updateContent">수정하기</button>
+                 	<button type="button" class="btn btn-primary" v-on:click="updateContent" data-dismiss="modal">수정하기</button>
 	                <button type="button" class="btn btn-secondary" v-on:click="deleteTask" data-dismiss="modal">삭제하기</button>
                 </div>
             </div>
@@ -759,7 +759,7 @@ scale
 				  						<li v-for="(item,index) in lists">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" :value="item.taskNo">{{item.content}},{{item.taskNo}}
+				  									<input type="hidden" :value="item.taskNo">{{item.content}},{{item.taskNo}},{{item.cName}}
 				  								</a>
 				  							</div>
 				  						</li>		
@@ -773,10 +773,10 @@ scale
 				    		<div class="title">Doing
 								<div class="content">
 				  					<ul class="usty section2" id="sectionTwoStatus" value="2">
-				  						<li v-for="item in list2">
+				  						<li v-for="(item,index) in list2">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="">{{item.content}}
+				  									<input type="hidden" :value="item.taskNo">{{item.content}}
 				  								</a>
 				  							</div>
 				  						</li>
@@ -790,10 +790,10 @@ scale
 				    		<div class="title">Done
 					  			<div class="content">
 								    <ul class="usty section3" id="sectionThreeStatus" value="3">
-								    	<li v-for="item in list3">
+								    	<li v-for="(item,index) in list3">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="">{{item.content}}
+				  									<input type="hidden" :value="item.taskNo">{{item.content}}
 				  								</a>
 				  							</div>
 				  						</li>
@@ -1065,7 +1065,11 @@ scale
 			options:{
 				 onDragend(event){
 					 console.log(event);
-					
+					 
+					 if(event.droptarget == null){
+						 
+					 }
+					 
 					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
@@ -1076,8 +1080,8 @@ scale
 		       					status:event.droptarget.attributes[1].nodeValue
 		                	}
 		             })
-		             .then(function(response){
-		            	
+		             .then(response => {	
+		                	
 		             });
 					 
 				 }
@@ -1093,14 +1097,14 @@ scale
             })
             .then(response => {
             	var taskList = response.data;
-            	console.log(taskList);
+            	
             	taskList.forEach(task =>{
             		if(task.taskStatus==1){
-            			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus});
+            			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
             		}else if(task.taskStatus==2){
-            			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus});
+            			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
             		}else{
-            			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus});	
+            			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});	
             		}
             	})
             })
@@ -1113,17 +1117,50 @@ scale
 				var modalTaskNo = document.getElementById('taskNo');
 				modalTaskNo.value=taskNo;
 				
-				console.log(modalTaskNo);
+				//console.log(taskNo);
+				
+				//console.log(modalTaskNo);
 			},
-			updateContent(){	
+			updateContent(){
 				axios.get('/connecthink/updateContent',{
                 	params:{
        					content:this.updateText,
        					taskNo:document.getElementById('taskNo').value
                 	}
                 })
-                .then(function(response){
-                    alert(response); 
+                .then(response => {	
+                	var taskNoForUpdate = document.getElementById('taskNo').value;
+                	this.lists.forEach(t => {
+                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+                	});
+                	this.list2.forEach(t => {
+                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+                	});
+                	this.list3.forEach(t => {
+                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+                	});
+                	this.$forceUpdate();
+//                 	axios.get('/connecthink/taskList',{
+//         				params: {
+//         			  	      project_no: ${project_no}
+//         			  	}
+//                     })
+//                     .then(response => {
+//                     	this.lists.splice(0, this.lists.length);
+//                     	this.list2.splice(0, this.lists.length);
+//                     	this.list3.splice(0, this.lists.length);
+//                     	var taskList = response.data;
+                    	
+//                     	taskList.forEach(task =>{
+//                     		if(task.taskStatus==1){
+//                     			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
+//                     		}else if(task.taskStatus==2){
+//                     			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
+//                     		}else{
+//                     			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});	
+//                     		}
+//                     	})
+//                     })
                 });
 				
 			},
@@ -1133,8 +1170,28 @@ scale
        					taskNo:document.getElementById('taskNo').value
                 	}
                 })
-                .then(response => {	
-                	this.lists.push({content:this.addName});
+                .then(response => {
+                	var taskNoForDelete = document.getElementById('taskNo').value;
+                	this.lists.forEach((t, index) => {
+                		if(t.taskNo == taskNoForDelete) {
+                			this.lists.splice(index, 1);
+                			return true;
+                		}
+                	});
+                	this.list2.forEach((t, index) => {
+                		if(t.taskNo == taskNoForDelete) {
+                			this.list2.splice(index, 1);
+                			return true;
+                		}
+                	});
+                	this.list3.forEach((t, index) => {
+                		if(t.taskNo == taskNoForDelete) {
+                			this.list3.splice(index, 1);
+                			return true;
+                		}
+                	});
+                	
+                	this.$forceUpdate();
                 });
 			},
 			getData(ev) {
@@ -1145,7 +1202,8 @@ scale
 					axios.get('/connecthink/addTask',{
 	                	params:{
 	                		content:this.addName,
-	                		status:status
+	                		status:status,
+	                		project_no: ${project_no}
 	                	}
 	                })
 	                .then(response => {	
@@ -1156,7 +1214,8 @@ scale
 					axios.get('/connecthink/addTask',{
 	                	params:{
 	                		content:this.addName1,
-	                		status:status
+	                		status:status,
+	                		project_no: ${project_no}
 	                	}
 	                })
 	                .then(response => {	
@@ -1167,7 +1226,8 @@ scale
 					axios.get('/connecthink/addTask',{
 	                	params:{
 	                		content:this.addName2,
-	                		status:status
+	                		status:status,
+	                		project_no: ${project_no}
 	                	}
 	                })
 	                .then(response => {	

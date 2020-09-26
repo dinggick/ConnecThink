@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,13 +79,14 @@ public class BoardController {
 		c.setCustomerNo(id);
 		Integer status = Integer.parseInt(request.getParameter("status"));
 		String content = request.getParameter("content");
+		Integer pNo = Integer.parseInt(request.getParameter("project_no"));
 		
 		Task task = new Task();
 		
 		task.setCustomer(c);
 		task.setTaskStatus(status);
 		task.setContent(content);
-		service.add(task, 2);
+		service.add(task, pNo);
 		mav.setViewName("board");
 		
 		return mav;
@@ -102,23 +105,24 @@ public class BoardController {
 	 * 내용변경
 	 */
 	@RequestMapping("/updateContent")
-	public ModelAndView updateContent(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		String content = request.getParameter("content");
+	public ResponseEntity<String> updateContent(HttpServletRequest request) {
 		
+		HttpSession session = request.getSession();
+		Integer id = (Integer) session.getAttribute("LoginInfo");
+		
+		String content = request.getParameter("content");
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 		Task task = new Task();
 		Customer c = new Customer();
-		c.setCustomerNo(3);
+		c.setCustomerNo(id);
 		
 		task.setCustomer(c);
 		task.setTaskNo(taskNo);
 		task.setContent(content);
 		
 		service.updateByComment(task);
-		mav.setViewName("board");
 		
-		return mav;
+		return ResponseEntity.status(HttpStatus.OK).body("success");
 	}
 	
 	/*
@@ -145,18 +149,18 @@ public class BoardController {
 	 * 삭제하기
 	 */
 	@RequestMapping("/deleteTask")
-	public ModelAndView deleteTask(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
+	public ResponseEntity<String> deleteTask(HttpServletRequest request) {
+		
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("loginInfo");
-		
-		
+		Integer id = (Integer) session.getAttribute("LoginInfo");
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 	
+		System.out.println("asdasdasdasdasd" + id);
+		System.out.println(taskNo);
 		
 		service.removeByTask(id, taskNo);
-		mav.setViewName("board");
-		return mav;
+		
+		return ResponseEntity.status(HttpStatus.OK).body("success");
 	}
    
 }
