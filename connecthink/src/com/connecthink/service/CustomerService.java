@@ -86,6 +86,11 @@ public class CustomerService {
 		customerRepository.save(c);
 	}
 	
+	/**
+	 * 회원 탈퇴(drop status 변경)
+	 * @author CJK
+	 * @param c
+	 */
 	public void drop(Customer c) {
 		c.setDropStatus(0);
 		customerRepository.save(c);

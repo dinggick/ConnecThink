@@ -100,7 +100,7 @@
                                 <!-- profile img -->
                                 <div class="thumb">
                                     <img src="img/svg_icon/1.svg" alt="">
-                                    <input type="file" name="profile_img" hidden>
+                                    <input type="file" id="profile_img" hidden>
                                 </div>
                                 <div class="jobs_conetent">
                                     <!-- user name -->
@@ -155,7 +155,7 @@
                         	</div>
                             <div class="single_wrap" style="text-align: right;">
                                 <button type="submit" class="genric-btn info-border">수정</button>
-                                <a href="#" class="genric-btn danger-border">취소</a>
+                                <button onclick="history.back()" class="genric-btn danger-border">취소</button>
                             </div>
                             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                         </form>
@@ -324,6 +324,23 @@
             $(".thumb").on("click", "img", function(e) {
                 $(this).next().trigger("click");
             });
+			//프로필 클릭 후 input file에 사진 등록하면 화면에 해당 사진을 보여주기
+			$(".thumb").find("input[type=file]").change(function() {
+// 				$(this).prev().attr("src", $(this).val());
+				$.ajax({
+					url : "/connecthink/uploadProfileImg",
+					method : "POST",
+		 			enctype : "multipart/form-data",
+		 			data : {profileImg : $("#profile_img").val(),
+		 					${_csrf.parameterName} : '${_csrf.token}'},
+		 			success : (data, textStatus, jqXHR) => {
+		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg");
+		 			},
+		 			error : () => {
+		 				
+		 			}
+				});
+			});
 			
             $.ajax({
     			url : "/connecthink/findCustomerByNo",
@@ -403,9 +420,10 @@
     					
     					$("#exprs").prev().find(".removePositionBtn").removeClass("removePositionBtn").addClass("addPositionBtn").find("i").removeClass("minus").addClass("plus");
     				}
+    				$("select").niceSelect();
     				//경험
         			if(data.experiences.length == 0) {
-        				$("#exprs").after(`<div class="col-md-4 offset-2">
+        				$("#exprs").after(`<div class="col-md-4">
 												<div class="input_field">
 								    				<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
 								    			</div>

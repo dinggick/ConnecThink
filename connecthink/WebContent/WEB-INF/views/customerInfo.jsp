@@ -70,9 +70,9 @@
                                 </div>
                                 <div class="jobs_conetent">
                                     <!-- user name -->
-                                    <a href="#">
-                                        <h4 id="customerName"></h4>
-                                    </a>
+<!--                                     <a href="#"> -->
+                                        <h4 id="customerName" style="margin-bottom: 20px !important;"></h4>
+<!--                                     </a> -->
                                     <div class="links_locat d-flex align-items-center">
                                         <!-- position -->
                                         <div class="location">
