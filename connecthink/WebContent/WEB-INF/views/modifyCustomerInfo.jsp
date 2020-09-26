@@ -99,8 +99,8 @@
                             <div class="jobs_left d-flex align-items-center">
                                 <!-- profile img -->
                                 <div class="thumb">
-                                    <img src="img/svg_icon/1.svg" alt="">
-                                    <input type="file" id="profile_img" hidden>
+                                    <img src="img/svg_icon/1.svg" onerror="this.src='img/svg_icon/1.svg'" alt="">
+                                    <input type="file" name="profileImg" hidden>
                                 </div>
                                 <div class="jobs_conetent">
                                     <!-- user name -->
@@ -327,14 +327,20 @@
 			//프로필 클릭 후 input file에 사진 등록하면 화면에 해당 사진을 보여주기
 			$(".thumb").find("input[type=file]").change(function() {
 // 				$(this).prev().attr("src", $(this).val());
+				var formData = new FormData();
+				formData.append("profileImg", $(this)[0].files[0]);
 				$.ajax({
 					url : "/connecthink/uploadProfileImg",
 					method : "POST",
 		 			enctype : "multipart/form-data",
-		 			data : {profileImg : $("#profile_img").val(),
-		 					${_csrf.parameterName} : '${_csrf.token}'},
+		 			processData : false,
+		 			contentType : false,
+		 			beforeSend : function(xhr) {
+		 				xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
+		 			},
+		 			data : formData,
 		 			success : (data, textStatus, jqXHR) => {
-		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg");
+		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?t=" + Math.random());
 		 			},
 		 			error : () => {
 		 				
@@ -348,6 +354,8 @@
     			data : {customerNo : ${sessionScope.loginInfo},
     					${_csrf.parameterName} : '${_csrf.token}'},
     			success : (data, textStatus, jqXHR) => {
+    				//프로필 사진
+    				$(".thumb>img").attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg");
     				//이름
     				$("#customerName").html(data.name);
     				//한 줄 소개

@@ -17,10 +17,11 @@ public class FileController {
 	@RequestMapping("/uploadProfileImg")
 	public ResponseEntity<String> uploadProfileImg(MultipartFile profileImg, HttpSession session) {
 		String savePath = session.getServletContext().getRealPath("/").replace(
-				"webapps" + File.separator + "connecthink" + File.separator, "webapps" + File.separator + "ROOT")
+				"wtpwebapps" + File.separator + "connecThink" + File.separator, "webapps" + File.separator + "ROOT")
 				+ File.separator + "storage" + File.separator + "customer" + File.separator
 				+ Integer.toString((Integer) session.getAttribute("loginInfo")) + ".jpg";
-
+		System.out.println(session.getServletContext().getRealPath("/").replace(
+				"wtpwebapps" + File.separator + "connecThink" + File.separator, "webapps" + File.separator + "ROOT"));
 		try {
 			if (profileImg != null) {
 				File newProfileImg = new File(savePath);
