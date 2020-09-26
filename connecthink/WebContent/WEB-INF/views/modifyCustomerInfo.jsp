@@ -100,7 +100,7 @@
                                 <!-- profile img -->
                                 <div class="thumb">
                                     <img src="img/svg_icon/1.svg" alt="">
-                                    <input type="file" name="profile_img" hidden>
+                                    <input type="file" id="profile_img" hidden>
                                 </div>
                                 <div class="jobs_conetent">
                                     <!-- user name -->
@@ -324,6 +324,23 @@
             $(".thumb").on("click", "img", function(e) {
                 $(this).next().trigger("click");
             });
+			//프로필 클릭 후 input file에 사진 등록하면 화면에 해당 사진을 보여주기
+			$(".thumb").find("input[type=file]").change(function() {
+// 				$(this).prev().attr("src", $(this).val());
+				$.ajax({
+					url : "/connecthink/uploadProfileImg",
+					method : "POST",
+		 			enctype : "multipart/form-data",
+		 			data : {profileImg : $("#profile_img").val(),
+		 					${_csrf.parameterName} : '${_csrf.token}'},
+		 			success : (data, textStatus, jqXHR) => {
+		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg");
+		 			},
+		 			error : () => {
+		 				
+		 			}
+				});
+			});
 			
             $.ajax({
     			url : "/connecthink/findCustomerByNo",
