@@ -246,10 +246,7 @@
 								<div id="mySidenav" class="sidenav">
 									<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
 										<h4 style="padding-left: 20px;">나의 프로젝트 스페이스</h4>
-										<hr>
-										<a href="#">프로젝트1</a> 
-										<a href="#">프로젝트2</a> 
-										<a href="#">프로젝트3</a> 										
+										<hr>							
 								</div>
 							</div>
 						</div>
@@ -276,6 +273,7 @@ function closeNav() {
 	 document.getElementById("mySidenav").style.width = "0";
 }
 
+	
 
 var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/boardEcho/inbox");
     wSocket.onopen = function(e) { onOpen(e) };

@@ -191,6 +191,14 @@ public class ProjectService {
 		}
 		return pList;
 	}
+	
+	/**
+	 * @author kimdongjun
+	 * 프로젝트 협업 으로 가기위한 내 프로젝트 보여주기
+	 */
+	public List<Project> lookUpMyProject(int customer_no) {
+		return projectRepository.findByCustomerNo(customer_no);
+	}
 
 	/**
 	 * @author 홍지수
