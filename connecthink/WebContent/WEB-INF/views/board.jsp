@@ -743,6 +743,7 @@ scale
                     <div class="mt-10">
                       <input id="inputInModal" v-model="updateText" name="text" required class="single-input">
                       <input type="hidden" id="taskNo" value="">
+                      <input type="hidden" id="cusNo" value="">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -759,7 +760,9 @@ scale
 				  						<li v-for="(item,index) in lists">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" :value="item.taskNo">{{item.content}},{{item.taskNo}},{{item.cName}}
+				  									<input type="hidden" :value="item.taskNo">
+				  									<input type="hidden" :value="item.cusNo">
+				  									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
 				  								</a>
 				  							</div>
 				  						</li>		
@@ -776,7 +779,9 @@ scale
 				  						<li v-for="(item,index) in list2">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" :value="item.taskNo">{{item.content}}
+				  									<input type="hidden" :value="item.taskNo">
+				  									<input type="hidden" :value="item.cusNo">
+				  									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
 				  								</a>
 				  							</div>
 				  						</li>
@@ -793,7 +798,9 @@ scale
 								    	<li v-for="(item,index) in list3">
 				  							<div class='card editable'>
 				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" :value="item.taskNo">{{item.content}}
+				  									<input type="hidden" :value="item.taskNo">
+				  									<input type="hidden" :value="item.cusNo">
+				  									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
 				  								</a>
 				  							</div>
 				  						</li>
@@ -1081,7 +1088,7 @@ scale
 		                	}
 		             })
 		             .then(response => {	
-		                	
+		                
 		             });
 					 
 				 }
@@ -1098,13 +1105,15 @@ scale
             .then(response => {
             	var taskList = response.data;
             	
+            	//console.log(taskList);
+            	
             	taskList.forEach(task =>{
             		if(task.taskStatus==1){
-            			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
+            			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
             		}else if(task.taskStatus==2){
-            			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
+            			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
             		}else{
-            			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});	
+            			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});	
             		}
             	})
             })
@@ -1117,11 +1126,19 @@ scale
 				var modalTaskNo = document.getElementById('taskNo');
 				modalTaskNo.value=taskNo;
 				
+				//현재 누른 태스크의 고객번호PK가져오기
+				var cusNo = ev.target.childNodes[2].attributes[1].nodeValue;
+				//모달창
+				var cusNoModal = document.getElementById('cusNo');
+				cusNoModal.value = cusNo;
 				//console.log(taskNo);
 				
-				//console.log(modalTaskNo);
+				//console.log(cusNoModal);
 			},
+			//태스크 내용 수정하기
 			updateContent(){
+				var writeCusNo = document.getElementById('cusNo');
+				
 				axios.get('/connecthink/updateContent',{
                 	params:{
        					content:this.updateText,
@@ -1140,30 +1157,10 @@ scale
                 		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
                 	});
                 	this.$forceUpdate();
-//                 	axios.get('/connecthink/taskList',{
-//         				params: {
-//         			  	      project_no: ${project_no}
-//         			  	}
-//                     })
-//                     .then(response => {
-//                     	this.lists.splice(0, this.lists.length);
-//                     	this.list2.splice(0, this.lists.length);
-//                     	this.list3.splice(0, this.lists.length);
-//                     	var taskList = response.data;
-                    	
-//                     	taskList.forEach(task =>{
-//                     		if(task.taskStatus==1){
-//                     			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
-//                     		}else if(task.taskStatus==2){
-//                     			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});
-//                     		}else{
-//                     			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name});	
-//                     		}
-//                     	})
-//                     })
                 });
 				
 			},
+			//태스크 내용 삭제하기
 			deleteTask(){
 				axios.get('/connecthink/deleteTask',{
                 	params:{
@@ -1194,6 +1191,7 @@ scale
                 	this.$forceUpdate();
                 });
 			},
+			//태스크 추가하기
 			getData(ev) {
 				var status = 0;
 				var evPath = ev.path[3].id;	   
@@ -1208,6 +1206,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.lists.push({content:this.addName});
+	                	this.$forceUpdate();
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;
@@ -1220,6 +1219,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list2.push({content:this.addName1});
+	                	this.$forceUpdate();
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1232,6 +1232,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list3.push({content:this.addName2});
+	                	this.$forceUpdate();
 	                });
 				}
                 
