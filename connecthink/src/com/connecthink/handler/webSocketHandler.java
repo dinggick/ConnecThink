@@ -36,15 +36,12 @@ public class webSocketHandler extends TextWebSocketHandler{
 	Map<Integer, List<Integer>> logMember = new HashMap<Integer, List<Integer>>();
 	
 	//메세지 배열 구분자
-	final String division = "NEW MESSAGE";
+	final String DIVISION = "NEW MESSAGE";
 	Message diviMsg = new Message();
 	
 	@Override
 	//클라이언트 에서 접속을 성공할때 발생
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-		String[] url = session.getUri().toString().split("/");
-		int size = url.length;
-		if(url[size-1].equals("boardChat")) {
 			//handShakeInterceptor 에서 추가한 Httpsesion 값 가져오기
 			int customer_no = (Integer)session.getAttributes().get("LoginInfo");
 			
@@ -56,18 +53,13 @@ public class webSocketHandler extends TextWebSocketHandler{
 			System.out.println("HttpSession ID : "+customer_no+" webSocketID : "+session.getId()+" 접속");
 			
 			session.sendMessage(new TextMessage("userid:"+customer_no));
-		}
 		
 	}
 	
 	@Override
 	//클라이언트 에서 send 메소드를 이용하여 메세지 전송을 한 경우
 	protected void handleTextMessage(WebSocketSession session,TextMessage message) throws Exception{
-		String[] url = session.getUri().toString().split("/");
-		int size = url.length;
 		
-		//동준
-		if(url[size-1].equals("boardChat")) {
 			int chatCnt = 0;
 			//client 접속시 이전 message log가 배열의 존재하는지 여부를 알기위해
 			if(message.getPayload().contains("ready")) {
@@ -85,7 +77,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 							System.out.println(newMsgIndex);
 							//해당 메세지 리스트 의 작성자 와 글 내용 보내주기
 							for(Message msg : msgList.get(project_no)) {
-								if(!msg.getContent().equals(division)) {
+								if(!msg.getContent().equals(DIVISION)) {
 									session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()));
 								}
 							}
@@ -108,7 +100,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 							session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()));
 						}
 						//구분자 메세지 넣어주기
-						diviMsg.setContent(division);
+						diviMsg.setContent(DIVISION);
 						msgBox.add(diviMsg);
 					}
 					
@@ -189,19 +181,13 @@ public class webSocketHandler extends TextWebSocketHandler{
 						chatCnt++;
 					}// list add
 				}//for - list add
-				
 			}
-		}//boardChat 동준
 	}//handleTextMessage
 
 	@Override
 	//클라이언트 에서 연결을 종료 할 경우
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
-		String[] url = session.getUri().toString().split("/");
-		int size = url.length;
 		
-		//동준
-		if(url[size-1].equals("boardChat")) {
 			int logOutUser = getUserId(session);
 			for(Map.Entry<Integer,List<Integer>> entry : logMember.entrySet()){
 				for(int ctno : entry.getValue()) {
@@ -253,8 +239,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 					}//if
 				}//for			
 			}//for
-		}//동준
-	}//afterConnectionClosed
+		}//afterConnectionClosed
 	
 	//현재 접속자 ws로 id값 얻기
 	private int getUserId(WebSocketSession session) {

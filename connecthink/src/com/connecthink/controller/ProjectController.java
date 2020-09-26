@@ -94,4 +94,14 @@ public class ProjectController {
 		return p;
 	}
 	
+	/**
+	 * @author kimdongjun
+	 * 프로젝트 협업 으로 가기위한 내 프로젝트 보여주기
+	 */
+	@GetMapping(value="/lookUpMyProject")
+	@ResponseBody
+	public List<Project> lookUpMyProject(HttpSession session){
+		int customer_no = (int) session.getAttribute("loginInfo");
+		return service.lookUpMyProject(customer_no);
+	}
 }
