@@ -209,11 +209,10 @@
 												aria-describedby="inputGroupFileAddon03" accept="image/*"
 												onchange="upload(this);"> <label
 												class="custom-file-label" for="inputGroupFile03">Upload</label>
-											<label class="fileName ml-2 mb-0"
-												style="position: absolute; left: 7%; display: none;">위치테스트</label>
+											<label class="fileName ml-2 mb-0" style="position: absolute; left: 7%; display: none;">위치테스트</label>
 										</div>
 									</div>
-									<span style="color: #7A838B;">※미 등록 시 기본 이미지 사용</span>
+									<span style="color: #7A838B;">※미 등록 시 기본 이미지 사용 / 권장 사이즈 : 350*140px </span>
 								</div>
 								<div class="col-md-12">
 									<div class="submit_btn text-center">
