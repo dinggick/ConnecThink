@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var = "rec" value="${requestScope.rec}"/>
+<c:set var = "img" value="${requestScope.img}"/>
 
 <head>
 <meta charset="utf-8">
@@ -71,18 +72,19 @@
 			<div class="row">
 				<!-- 객체 -->
 				<c:forEach items="${rec}" var="rec" varStatus = "status">
+				<c:forEach items="${img}" var="img" varStatus = "st">
 				<div class="col-md-6 col-lg-4">
 					<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">
 						<div class="thumbnail">
 							<div class="test">
-<%-- 							<c:choose> --%>
-<%-- 							<c:when test="${not empty C:\\storage\\rec.recruitNo.jpg}"> --%>
-								<img src="http://localhost/storage/recruit/img/2R8.jpg" alt="모집사진">
-<%-- 							</c:when> --%>
-<%-- 							<c:otherwise> --%>
-<!-- 								<img src="img/default.png" alt="모집 사진"> -->
-<%-- 							</c:otherwise> --%>
-<%-- 							</c:choose> --%>
+							<c:choose>
+							<c:when test="${rec.recruitNo eq  img}">
+								<img src="http://localhost/storage/recruit/img/${img}.jpg" alt="모집사진">
+							</c:when>
+							<c:otherwise>
+								<img src="img/default.png" alt="모집 사진">
+							</c:otherwise>
+							</c:choose>
 							</div>
 						</div>
 						<h4 class="mt-4 mr-4 ml-4 rec_title">${rec.requirement}</h4>
@@ -94,6 +96,7 @@
 						</ul>
 					</div>
 				</div>
+				</c:forEach>
 				</c:forEach>
 			</div>
 			<!-- 페이징 -->
@@ -159,7 +162,6 @@
 	<script>
 	$(function(){
 		fetch("${contextPath}/rec").then(function(data){
-			console.log("fetch ajax 성공");
 		});
 	});
 	

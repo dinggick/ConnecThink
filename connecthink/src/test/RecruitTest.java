@@ -1,5 +1,6 @@
 package test;
 
+import java.io.File;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -72,7 +73,7 @@ class RecruitTest {
 //		repository.save(recruit);
 //	}
 	
-	@Test
+//	@Test
 	@Transactional
 	void InsertRec() {
 		Project project = projectRepository.findById(50).get();
