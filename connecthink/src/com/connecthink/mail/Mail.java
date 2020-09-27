@@ -48,10 +48,9 @@ public class Mail {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
 			message.setSubject("[이메일인증 - connecThink]");
 			
-			String verifyCode = String.format("%06d", (int) (Math.random()*100000));
+			String verifyCode = String.format("%06d", (int) (Math.random()*1000000));
 			
 			String txt = "";
-//			txt +=  "<br><img style='width: 200px;' src=\"https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FRPxFA%2FbtqGuM2ZBAe%2FUKRpsekkax1dKUJnmM9r4k%2Fimg.png\">";
 			txt += "<br>아래 코드를 입력하여 이메일 인증을 진행해주세요";
 			txt += "<br><strong>" + verifyCode + "</strong>";
 			message.setContent(txt, "text/html; charset=utf-8");

@@ -70,22 +70,36 @@ public class CustomerController {
 	
 	/**
 	 * 이메일 인증 코드를 받기 위한 요청
+	 * 회원 가입시에는 회원의 중복 여부를 검사하고, 비밀번호 찾기 기능에서는 회원의 존재 여부를 검사해야한다.
 	 * @author CJK
 	 * @param email
 	 * @param session
 	 * @return 인증 코드 생성 및 이메일 전송 성공여부
 	 */
 	@RequestMapping("/all/requestVerifyCode")
-	public ResponseEntity<String> verifyCode(String email, HttpSession session) {
+	public ResponseEntity<String> verifyCode(String email, Integer verifyType, HttpSession session) {
 		Customer c = service.findByEmail(email);
-		if(c == null) {
-			Thread t = new Thread(new VerificationMail(email, session));
-			t.start();
-			
-			return ResponseEntity.status(HttpStatus.OK).body("success");
-		} else {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+		if(verifyType == 1) { //회원 가입시 중복 여부 확인
+			if(c == null) {
+				Thread t = new Thread(new VerificationMail(email, session));
+				t.start();
+				
+				return ResponseEntity.status(HttpStatus.OK).body("success");
+			} else {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			}
+		} else { //비밀번호 찾기(회원 존재 여부)
+			if(c != null) {
+				Thread t = new Thread(new VerificationMail(email, session));
+				t.start();
+				
+				session.setAttribute("emailForFindPwd", email);
+				return ResponseEntity.status(HttpStatus.OK).body("success");
+			} else {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+			}
 		}
+		
 	}
 	
 	/**
@@ -96,7 +110,7 @@ public class CustomerController {
 	 */
 	@RequestMapping("/all/verify")
 	public ResponseEntity<String> verify(String code, HttpSession session) {
-		System.out.println((String)session.getAttribute("verifyCode"));
+		
 		if(code.equals((String)session.getAttribute("verifyCode"))) {
 			return ResponseEntity.status(HttpStatus.OK).body("success");
 		} else {
@@ -132,12 +146,23 @@ public class CustomerController {
 	}
 	
 	/**
-	 * 회원 정보 추가(회원 가입)
+	 * 비밀번호 재설정 요청 처리
 	 * @author CJK
-	 * @param c
+	 * @param password
+	 * @param session
+	 * @return
 	 */
-	public void add(Customer c) {
-		service.add(c);
+	@RequestMapping("/all/modifyCustomerPwd")
+	public ResponseEntity<String> modifyCustomerPwd(String password, HttpSession session) {
+		String email = (String)session.getAttribute("emailForFindPwd");
+		Customer customerForModify = service.findByEmail(email);
+		
+		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
+		customerForModify.setPassword(pwdEncoder.encode(password));
+		
+		service.modify(customerForModify);
+		
+		return ResponseEntity.ok("success");
 	}
 	
 	/**
@@ -160,6 +185,13 @@ public class CustomerController {
 		return "modifyCustomerInfo";
 	}
 	
+	/**
+	 * 회원 정보 수정 요청 처리
+	 * @author CJK
+	 * @param data
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/modifyCustomerInfo")
 	public ResponseEntity<String> modifyCustomerInfo(CustomerForModifyDTO data, HttpSession session) {
 		int customerNo = (Integer)session.getAttribute("loginInfo");
@@ -205,12 +237,33 @@ public class CustomerController {
 		return ResponseEntity.status(HttpStatus.OK).body("success");
 	}
 	
+	/**
+	 * 회원 탈퇴 요청 처리
+	 * @author CJK
+	 * @param customerNo
+	 * @return
+	 */
 	@RequestMapping("/dropCustomer")
 	public ResponseEntity<String> dropCustomer(Integer customerNo) {
 		Customer customerForDrop = service.findByNo(customerNo);
 		service.drop(customerForDrop);
 		
 		return ResponseEntity.status(HttpStatus.OK).body("success");
+	}
+	
+	/**
+	 * 이메일 찾기 요청 처리
+	 * @author CJK
+	 * @param name
+	 * @param birthDate
+	 * @return
+	 */
+	@RequestMapping("/all/findEmail")
+	public ResponseEntity<String> findEmail(String name, String birthDate) {
+		Customer c = service.findByNameAndBirthDate(name, birthDate);
+		
+		if(c != null) return ResponseEntity.ok(c.getEmail());
+		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일이 존재하지 않습니다");
 	}
 	
 	@RequestMapping("/memberList")
