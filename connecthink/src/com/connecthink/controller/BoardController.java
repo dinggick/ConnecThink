@@ -162,5 +162,17 @@ public class BoardController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body("success");
 	}
-   
+	
+	
+	/*
+	 * 프로젝트 종료하기
+	 */
+	@RequestMapping("/endProject")
+	public ModelAndView endProject(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		
+		return mav;
+	}
+	
+	
 }
