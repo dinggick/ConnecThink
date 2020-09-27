@@ -346,6 +346,7 @@ mailChimp();
       //  }
       // });
       	var csrfToken = $("#csrf").val();
+      	//로그인 모달에서 로그인 버튼 클릭
 		$("#loginModal").find("form").submit(function() {
 			$.ajax({
 				url : "/connecthink/login",
@@ -381,6 +382,7 @@ mailChimp();
 			$.ajax({
 				url : "/connecthink/all/requestVerifyCode",
 				data : {'email' : email, 
+						verifyType : 1,
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
 					
@@ -396,7 +398,7 @@ mailChimp();
 			
 			$.ajax({
 				url : "/connecthink/all/verify",
-				data : {'code' : verifyCode, 
+				data : {'code' : verifyCode,
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
 					alert("인증 성공");
@@ -409,6 +411,7 @@ mailChimp();
 			});
 		});
 		
+		//회원가입 모달에서 가입 버튼 클릭
 		$("#registerModal").find("form").submit(function() {
 			if($("#isVerified").val() == "n") {
 				alert("이메일 인증이 필요합니다");
@@ -423,6 +426,71 @@ mailChimp();
 					},
 					error : () => {
 						alert("회원가입 실패");
+					}
+				});
+			}
+			
+			return false;
+		});
+		
+		//이메일 찾기 모달에서 찾기 버튼 클릭
+		$("#findEmailModal").find("form").submit(function() {
+			$.ajax({
+				url : "/connecthink/all/findEmail",
+				method : "POST",
+				data : $(this).serialize(),
+				success : (data, textStatus, jqXHR) => {
+					alert(data);
+				}
+			});
+		
+			return false;
+		});
+		
+		//비밀번호 찾기 모달에서 이메일 인증 버튼 클릭 시 인증 코드 요청 전송
+		$("#findPwdModal").find("a").click(function() {
+			var email = $(this).parent().prev().find("input").val();
+			
+			$.ajax({
+				url : "/connecthink/all/requestVerifyCode",
+				data : {'email' : email, 
+						verifyType : 2,
+						'_csrf' : csrfToken},
+				success : (data, textStatus, jqXHR) => {
+					
+				},
+				error : () => {
+					alert("중복 이메일");
+				}
+			});
+		});
+		
+		//이메일 인증 이후 비밀번호 찾기 모달에서 찾기 버튼 클릭
+		$("#findPwdModal").find("form").submit(function() {
+			if($("#isVerified").val() == "n") {
+				alert("이메일 인증이 필요합니다");
+			} else {
+				$("#modifyPwdModal").modal('show');
+			}
+			
+			return false;
+		});
+		
+		//비밀번호 재설정 모달에서 재설정 버튼 클릭
+		$("#modifyPwdModal").find("form").submit(function() {
+			var password = $(this).find("input[name=password]").val();
+			var passwordForCheck = $(this).find("input[name=passwordForCheck]").val();
+
+			if(password != passwordForCheck) {
+				alert("비밀번호를 다시 확인해주세요");
+			} else {
+				$.ajax({
+					url : "/connecthink/all/modifyCustomerPwd",
+					method : "POST",
+					data : $(this).serialize(),
+					success : (data, textStatus, jqXHR) => {
+						alert("비밀번호 재설정 성공");
+						location.reload();
 					}
 				});
 			}

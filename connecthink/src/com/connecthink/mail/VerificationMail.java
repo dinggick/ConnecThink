@@ -15,7 +15,6 @@ public class VerificationMail implements Runnable{
 	@Override
 	public void run() {
 		mail.sendVerification(userMail);
-		System.out.println("mail sended");
 	}
 		
 } 
