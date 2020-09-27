@@ -156,6 +156,15 @@ public class BoardService {
 		}
 	}
 	
-	
-	
+	/*
+	 * 프로젝트 종료
+	 * @author 변재
+	 */
+	public void updateProject(Integer projectNo) {
+		Project p =projectRepository.findById(projectNo).get();
+		
+		p.setProjectStatus(0);
+		
+		projectRepository.save(p);
+	}
 }

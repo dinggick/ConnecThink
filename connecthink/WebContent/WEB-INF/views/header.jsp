@@ -38,20 +38,21 @@
 <!--                 <span aria-hidden="true">&times;</span> -->
 <!--             </button> -->
                 </div>
-                <div class="modal-body">
-                    <form action="#">
-                        <div class="mt-10">
-                            <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
-                        </div>
-                        <div class="mt-10">
-                            <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19921211" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19921211'" required class="single-input">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-                    <button type="button" class="btn btn-primary">찾기</button>
-                </div>
+                <form>
+	                <div class="modal-body">
+	                    <div class="mt-10">
+	                        <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
+	                    </div>
+	                    <div class="mt-10">
+	                        <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19921211" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19921211'" required class="single-input">
+	                    </div>
+	                    <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
+	                    <button type="submit" class="btn btn-primary">찾기</button>
+	                </div>
+                 </form>
             </div>
         </div>
     </div>
@@ -60,32 +61,68 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="findPwdModalLongTitle">패스워드 찾기</h5>
+                    <h5 class="modal-title" id="findPwdModalLongTitle">비밀번호 찾기</h5>
 <!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
 <!--                 <span aria-hidden="true">&times;</span> -->
 <!--             </button> -->
                 </div>
-                <div class="modal-body">
-                    <form action="#">
-	                    <br>
-                    	<div class="row">
-                    		<div class="col-md-5 offset-1">
-                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
-	                        </div>
-	                        <div class="col-md-5">
-	                            <a href="#" class="genric-btn info-border">이메일 인증</a>
-	                        </div>
-	                    </div>
-	                    <br>
-                    </form>
+				<form>
+					<div class="modal-body">
+						<br>
+						<div class="row">
+							<div class="col-md-5 offset-1">
+								<input type="email" name="email" placeholder="이메일"
+									onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '이메일'" required class="single-input">
+							</div>
+							<div class="col-md-5">
+								<a href="#verifyModal" data-toggle="modal" data-backdrop="false"
+									class="genric-btn info-border">이메일 인증</a>
+							</div>
+						</div>
+						<br>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
+						<button type="submit" class="btn btn-primary">찾기</button>
+					</div>
+				</form>
+			</div>
+        </div>
+    </div>
+     <!-- 비밀번호 재설정 Modal -->
+    <div class="modal" id="modifyPwdModal" tabindex="-1" role="dialog" aria-labelledby="modifyModalCenterTitle" aria-hidden="true" style="z-index : 1053;">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modifyModalLongTitle">비밀번호 재설정</h5>
+<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
+<!-- 		                <span aria-hidden="true">&times;</span> -->
+<!-- 		            </button> -->
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-                    <button type="button" class="btn btn-primary">찾기</button>
-                </div>
+                <form>
+				<div class="modal-body">
+					<div class="mt-10">
+						<input type="password" name="password" placeholder="비밀번호"
+							onfocus="this.placeholder = ''"
+							onblur="this.placeholder = '비밀번호'" required class="single-input">
+					</div>
+					<div class="mt-10">
+						<input type="password" name="passwordForCheck" placeholder="비밀번호 확인"
+							onfocus="this.placeholder = ''"
+							onblur="this.placeholder = '비밀번호 확인'" required class="single-input">
+					</div>
+					<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
+				</div>
+				<div class="modal-footer">
+	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
+	                    <button type="submit" class="btn btn-primary">재설정</button>
+	                </div>
+                </form>
             </div>
         </div>
     </div>
+    
         <!-- 로그인 Modal -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -138,7 +175,6 @@
 		                        </div>
 		                        <div class="col-md-6">
 		                            <a id="requestVerifyCodeBtn" href="#verifyModal" class="genric-btn info-border" data-toggle="modal" data-backdrop="false">이메일 인증</a>
-		                            <input type="hidden" id="isVerified" value="n">
 		                        </div>
 		                    </div>
 	                        <div class="mt-10">
@@ -161,7 +197,7 @@
         </div>
     </div>
     <!-- 이메일 인증 Modal -->
-    <div class="modal" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModalCenterTitle" aria-hidden="true" style="z-index: 1052;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -173,11 +209,8 @@
 				<div class="modal-body">
 					<br> <br> <br>
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-12">
 							<input type="text" name="verifyCode" placeholder="코드 6자리 ex)123456" onfocus="this.placeholder = ''" onblur="this.placeholder = '코드 6자리 ex)123456'" required class="single-input">
-						</div>
-						<div class="col-md-6">
-							<button id="verifyBtn" class="genric-btn info-border">이메일인증</button> 
 							<input type="hidden" id="isVerified" value="n">
 						</div>
 					</div>
@@ -185,7 +218,7 @@
 				</div>
 				<div class="modal-footer">
 	                <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-	                <button type="button" class="btn btn-primary">인증</button>
+	                <button id="verifyBtn" class="btn btn-primary">인증</button> 
 	            </div>
 	        </div>
         </div>

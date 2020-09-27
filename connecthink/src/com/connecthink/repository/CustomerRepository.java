@@ -47,4 +47,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 	public Customer findManager(String recruitNo);
 	
 	public Customer findByCustomerNo(Integer customerNo);
+	
+	public Customer findByNameAndBirthDate(String name, String birthDate);
 }

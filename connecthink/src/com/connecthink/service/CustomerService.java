@@ -96,6 +96,10 @@ public class CustomerService {
 		customerRepository.save(c);
 	}
 
+	public Customer findByNameAndBirthDate(String name, String birthDate) {
+		return customerRepository.findByNameAndBirthDate(name, birthDate);
+	}
+	
 	public Customer findManager(String recruitNo) {
 		Customer c = customerRepository.findManager(recruitNo);
 

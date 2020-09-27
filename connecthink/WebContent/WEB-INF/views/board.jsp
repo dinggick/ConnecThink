@@ -649,7 +649,7 @@ scale
 	<a href="#menu-toggle" class="menutoggle" id="menu-toggle">☰</a>
 
 	<div id="sidebar-wrapper" style="display: none">
-		<ul class="sidebar-nav">
+		<ul class="sidebar-nav" id="haha">
 			<li class="sidebarTeamName">
 				<a href="#" id="down">This is Team Name</a>
 			</li>
@@ -719,7 +719,7 @@ scale
 					<div class="status"></div>
 				</div>
 			</li>
-			<li><a href="#">프로젝트 종료</a></li>
+			<li><a v-on:click="endProject">프로젝트 종료</a></li>
 		</ul>
 	</div>
 
@@ -732,24 +732,20 @@ scale
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
 					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						<div class="mt-10">
-							<input id="inputInModal" v-model="updateText" name="text"
-								required class="single-input"> <input type="hidden"
-								id="taskNo" value=""> <input type="hidden" id="cusNo"
-								value="">
+							<input id="inputInModal" v-model="updateText" name="text" required class="single-input"> 
+							<input type="hidden" id="taskNo" value="">
+							<input type="hidden" id="cusNo" value="">
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-primary"
-							v-on:click="updateContent" data-dismiss="modal">수정하기</button>
-						<button type="button" class="btn btn-secondary"
-							v-on:click="deleteTask" data-dismiss="modal">삭제하기</button>
+						<button type="button" class="btn btn-primary" v-on:click="updateContent" data-dismiss="modal">수정하기</button>
+						<button type="button" class="btn btn-secondary" v-on:click="deleteTask" data-dismiss="modal">삭제하기</button>
 					</div>
 				</div>
 			</div>
@@ -1250,7 +1246,26 @@ scale
               }
 		}
 	});
-
+	
+	var endP = new Vue({
+		el:'#haha',
+		data:{
+			memberList:[]
+		},
+		methods:{
+			endProject(){
+				axios.get('/connecthink/endProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
+			}
+		}
+	})
 </script>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="js/vendor/jquery-1.12.4.min.js"></script>
