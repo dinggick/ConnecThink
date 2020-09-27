@@ -124,10 +124,10 @@ span.customerNo {
 							</div>
 							<div class="jobs_right text-right pt-2">
 								<div class="apply_now">
-									<span class="bm_count">${bmCount}</span> <img
-										src="img/bookmark.png" class="bm mr-2" onclick="bookmark();">
-									<img src="img/bookmark2.png" class="on mr-2"
-										onclick="delmark();"> <span class="rec_no">${recNo}</span>
+									<span class="bm_count">${bmCount}</span>
+									<img src="img/bookmark.png" class="bm mr-2" onclick="bookmark();">
+									<img src="img/bookmark2.png" class="on mr-2" onclick="delmark();">
+									<span class="rec_no">${recNo}</span>
 								</div>
 							</div>
 						</div>
@@ -142,10 +142,7 @@ span.customerNo {
 							</ul>
 							<h4 class="mb-2 mt-2">목적</h4>
 							<ul>
-								<c:forEach items="${requestScope.fList1}" var="list1"
-									varStatus="status">
-									<li>${list1}</li>
-								</c:forEach>
+								<li>${detail.purpose}</li>
 							</ul>
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
@@ -164,7 +161,7 @@ span.customerNo {
 							</div>
 						</div>
 						<div class="single_wrap project_info">
-							<h4>모집 소개</h4>
+							<h4>프로젝트 소개</h4>
 							<ul class="rec_wanna">
 								<c:forEach items="${detail.recruits}" var="rec"
 									varStatus="status">
@@ -172,12 +169,6 @@ span.customerNo {
 										<li>모집직무 : ${rec.position.name}</li>
 										<li>모집인원 : ${rec.headCount}</li>
 										<li>요구사항 : ${rec.requirement}</li>
-										<li>모집상세</li>
-											<ul>
-										<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
-											<li style="padding-left: 50px;">${fList}</li>
-										</c:forEach>
-											</ul>
 									</c:if>
 								</c:forEach>
 							</ul>

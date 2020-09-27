@@ -57,14 +57,6 @@
 .position31 .option {
 	padding-right: 12.5em !important;
 }
-h5 .requir{
-	color: red;
-}
-h4 .requir{
-	color: red;
-	font-size: 0.5em !important;
-}
-
 </style>
 
 </head>
@@ -98,18 +90,19 @@ h4 .requir{
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="apply_job_form white-bg mt-0">
-						<h4>모집 등록하기 <span class="requir">*은 필수 입력 값입니다</span></h4>
+						<h4>모집 등록하기</h4>
 						<form id="form">
 							<div class="row">
 								<div class="col-md-5" style="display:none;">
 									<div class="input_field">
 										<input type="hidden" name="${_csrf.parameterName}"
 											value="${_csrf.token}">
-										<input type="hidden" name="projectNo" value="">
+										<input type="hidden" name="projectNo"
+											value="2">
 									</div>
 								</div>
 								<div class="col-md-2">
-									<h5 class="mt-3" style="font-weight: bold;">모집분야 <span class="requir"> *</span></h5>
+									<h5 class="mt-3" style="font-weight: bold;">모집분야</h5>
 								</div>
 								<div class="col-md-5 ">
 									<div class="input_field text-center position0">
@@ -166,7 +159,7 @@ h4 .requir{
 									<!-- 끝-->
 								</div>
 								<div class="col-md-2">
-									<h5 class="mt-3" style="font-weight: bold;">모집인원 <span class="requir"> *</span></h5>
+									<h5 class="mt-3" style="font-weight: bold;">모집인원</h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -175,15 +168,15 @@ h4 .requir{
 									</div>
 								</div>
 								<div class="col-md-2">
-									<h5 class="mt-3" style="font-weight: bold;">모집기한 <span class="requir"> *</span></h5>
+									<h5 class="mt-3" style="font-weight: bold;">모집기한</h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" class="pr-2" name="deadline" required>
+										<input type="date" class="pr-2" name="deadline" required>
 									</div>
 								</div>
 								<div class="col-md-2">
-									<h5 class="mt-3" style="font-weight: bold;">요구사항 <span class="requir"> *</span></h5>
+									<h5 class="mt-3" style="font-weight: bold;">요구사항</h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -192,7 +185,7 @@ h4 .requir{
 									</div>
 								</div>
 								<div class="col-md-2">
-									<h5 class="mt-3" style="font-weight: bold;">상세설명 <span class="requir"> *</span></h5>
+									<h5 class="mt-3" style="font-weight: bold;">상세설명</h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -261,8 +254,8 @@ h4 .requir{
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/plugins.js"></script>
 	<script src="js/gijgo.min.js"></script>
-	
-	
+
+
 
 	<!--contact js-->
 	<script src="js/contact.js"></script>
@@ -276,24 +269,6 @@ h4 .requir{
 
 	<script>
 	
-	$(function(){
-		//url에서 projectNo 받기
-		let pNo = location.search.split('=').pop();
-		//pNo 값 넣어주기
-		$("input[name=projectNo]").val(pNo);
-		
-		//데이트 피커
-		let date = new Date();
-		date.setDate(date.getDate()-1);
-		$("input[name=deadline]").datepicker({
-			minDate: date,
-			calendarWeeks: false,
-            todayHighlight: true,
-            autoclose: true,
-            format: "yyyy/mm/dd",
-            language: "ko"
-			});
-		});
 	
 	function position(obj){
 		if(obj.value == 1){
@@ -333,7 +308,6 @@ h4 .requir{
 	}
 
 	
-	//업로드한 파일 이름 보여주기
 	function upload(obj){
 		let file = obj.value.split("\\").pop();
 		let display = $("label.fileName");
@@ -342,8 +316,23 @@ h4 .requir{
 	
 	
 	$(".submit").click(function(){
-		let pNo = location.search.split('=').pop();
-		if(check() != false){
+		if( $("#pos option:selected").val() == 0 ){
+			alert("포지션 입력 안 됨");
+		} else if($("#pos option:selected").val() == 1 && $("#positionNo1 option:selected").val() == 0){
+			alert("직무 입력 안 됨");
+		}else if($("#pos option:selected").val() == 2 && $("#positionNo2 option:selected").val() == 0){
+			alert("직무 입력 안 됨");
+		}else if($("#pos option:selected").val() == 3 && $("#positionNo3 option:selected").val() == 0){
+			alert("직무 입력 안 됨");
+		} else if($("input[name=deadline]").val() == "" ){
+			alert("마감 날짜 입력 안 됨");
+		} else if($("input[name=headCount]").val() == ""){
+			alert("모집인원 입력 안 됨");	
+		} else if($("input[name=requirement]").val()  == "" ){
+			alert("요구사항 입력 안 됨");
+		} else if ($("textarea[name=recExplain]").val() == ""){
+			alert("상세 설명 누락");		
+		} else {
 			$.ajax({
 	 			url : "${contextPath}/addRec",
 	 			method : "POST",
@@ -355,12 +344,10 @@ h4 .requir{
 	 				if(response == "success"){
 	 					let answer = confirm("등록이 완료 되었습니다. 추가 모집을 등록하시겠습니까?");
 	 					if(answer == true){
-	 						location.href = "${contextPath}/add_rec?ProjectNo="+pNo;
+	 						location.href = "${contextPath}/add_rec";
 	 					} else {
 	 						location.href = "${contextPath}/index";
 	 					}
-	 				} else {
-	 					alert("등록 실패");
 	 				}
 	 			}
 	 		});
@@ -368,52 +355,6 @@ h4 .requir{
 		return false;
 	});
 		
-	function check(){
-		if( $("#pos option:selected").val() == 0){
-			alert("직군은 필수 입력값입니다");
-			$(".nice-select.position").focus();
-			$(".nice-select.position").addClass("open");
-			return false;
-		}
-		if($("#pos option:selected").val() == 1 && $("#positionNo1 option:selected").val() == 0){
-			alert("직무는 필수 입력값입니다");
-			$(".nice-select.position11").focus();
-			$(".nice-select.position11").addClass("open");
-			return false;
-		}
-		if($("#pos option:selected").val() == 2 && $("#positionNo2 option:selected").val() == 0){
-			alert("직무는 필수 입력값입니다");
-			$(".nice-select.position21").focus();
-			$(".nice-select.position21").addClass("open");
-			return false;
-		}
-		if($("#pos option:selected").val() == 3 && $("#positionNo3 option:selected").val() == 0){
-			alert("직무는 필수 입력값입니다");
-			$(".nice-select.position31").focus();
-			$(".nice-select.position31").addClass("open");
-			return false;
-		}
-		if($("input[name=deadline]").val() == "" ){
-			alert("마감 날짜는 필수 입력값입니다");
-			$("input[name=deadline]").focus();
-			return false;
-		}
-		if($("input[name=headCount]").val() == ""){
-			alert("모집인원을 선택해주세요");
-			$("input[name=headCount]").focus();
-			return false;
-		}
-		if($("input[name=requirement]").val()  == "" ){
-			alert("요구사항을 입력해주세요");
-			$("input[name=requirement]").focus();
-			return false;
-		}
-		if ($("textarea[name=recExplain]").val() == ""){
-			alert("상세설명을 입력해주세요");
-			$("input[name=recExplain]").focus();
-			return false;		
-		}
-	}
 		</script>
 </body>
 

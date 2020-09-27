@@ -1,12 +1,8 @@
 package com.connecthink.controller;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -64,7 +60,6 @@ public class RecruitController {
 		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img"  + File.separator;
 		//recruit의 img
 		File f = new File(saveImgPath);
-		
 		//모집 썸네일 존재 여부 확인
 		if(f.isDirectory()) { // 디렉토리 존재 시
 			File[] fList = f.listFiles(); // 디렉토리 내부 파일 리스트로 받아 옴
@@ -74,13 +69,10 @@ public class RecruitController {
 				String name = imgName.substring(0, idx); //맨 처음부터 확장자(.jpg)전까지 잘라 준다
 				imgList.add(name); //리스트에 담아주기
 			}
-			//역순 정렬
-			Collections.reverse(imgList);
 			mnv.addObject("img",imgList); //front로 보낼 mnv 객체
 		}
 		
-		
-		list = recruitService.findAllDesc();
+		list = recruitService.findAll();
 		mnv.addObject("rec", list);
 		mnv.setViewName("/rec");
 
@@ -115,51 +107,6 @@ public class RecruitController {
 		int bmCount = bmService.findByIdRecruitNo(recNo);
 		mnv.addObject("bmCount", bmCount);
 
-		//파일 읽어오기
-		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
-		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt" + File.separator;
-		String saveProjectTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "project" + File.separator;
-		
-		//프로젝트 번호 얻기
-		int idx = recNo.indexOf("R");
-		String name = recNo.substring(0, idx); 
-		int projectNo = Integer.parseInt(name);
-		
-		//recruit/txt 디렉토리 내부에 파일 있는 지 확인
-		File f = new File(saveTxtPath+recNo+".txt");
-		File f1 = new File(saveProjectTxtPath+projectNo+".txt");
-		//담아 줄 리스트
-		List<String> fList = new ArrayList<String>();
-		List<String> fList1 = new ArrayList<String>();
-		
-		try {
-			//모집상세
-			FileReader filereader = new FileReader(f);
-			if(f.exists()) {
-				BufferedReader reader = new BufferedReader(filereader);
-				String line = "";
-				while((line = reader.readLine()) != null) {
-					fList.add(line);
-				}
-				reader.close();
-				mnv.addObject("fList", fList);
-			}
-			
-			//목적
-			FileReader freader = new FileReader(f1);
-			if(f1.exists()) {
-				BufferedReader reader = new BufferedReader(freader);
-				String line = "";
-				while((line = reader.readLine()) != null) {
-					fList1.add(line);
-				}
-				reader.close();
-				mnv.addObject("fList1", fList1);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
 		mnv.setViewName("/rec_detail");
 
 		System.out.println(no + p + c + list + bmCount);
@@ -174,15 +121,14 @@ public class RecruitController {
 	@PostMapping(value="/addRec")
 	@ResponseBody
 	public String addRec(RecruitCommand recruitCommand) {
-		String status ="";
+		recruitCommand.setRecruitStatus(1);
+		
 		try {
 			recruitService.addRec(recruitCommand);
-			status = "success";
-		} catch (Exception e) {
+		} catch (ParseException e) {
 			e.printStackTrace();
-			status = "fail";
 		}
-		return status;
+		return "success";
 	}
 	
 	@RequestMapping("/projectList")
@@ -200,7 +146,6 @@ public class RecruitController {
 	public void add_rec() {
 		System.out.println("모집등록페이지 호출");
 	}
-	
 //	멤버 초대 메소드
 	@PostMapping(value="/inviteMember")	
 	@ResponseBody

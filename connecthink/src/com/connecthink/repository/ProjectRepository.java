@@ -170,18 +170,4 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"WHERE\r\n" + 
 			"    m.member_no = ?1")
 	public List<Project> findByCustomerNo(Integer customerNo);
-	
-	/**
-	 * @author 홍지수
-	 * project_no_seq 마지막 번호 받아오기
-	 */
-	@Query(nativeQuery = true, value="SELECT LAST_NUMBER FROM USER_SEQUENCES WHERE SEQUENCE_NAME = UPPER('project_no_seq')")
-	public Integer seq_lastval();
-	
-	/**
-	 * @author 홍지수
-	 * projectNo로 프로젝트 조회
-	 */
-	@Query(nativeQuery = true, value = "SELECT * FROM PROJECT WHERE PROJECT_NO = ?1")
-	public Project findByProjectNo(Integer projectNo);
 }

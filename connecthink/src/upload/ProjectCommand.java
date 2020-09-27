@@ -11,5 +11,6 @@ public class ProjectCommand {
 	private String about;
 	private String theme;
 	private String purpose;
-	private Integer managerNo;
+	private Integer projectStatus; //등록 시 1
+	private Integer managerNo; 
 }

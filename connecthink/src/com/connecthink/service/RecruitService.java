@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
@@ -15,7 +16,6 @@ import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.connecthink.entity.Customer;
@@ -56,8 +56,8 @@ public class RecruitService {
 	 * @author 홍지수
 	 * 모집 전체보기
 	 */
-	public List<Recruit> findAllDesc(){
-		return recruitRepository.findAllDesc();
+	public List<Recruit> findAll(){
+		return recruitRepository.findAll();
 	}
 	
 	//메인에 뿌려줄 9개 프로젝트 찾기
@@ -91,7 +91,7 @@ public class RecruitService {
 		Integer positionNo = psArr[psArr.length-1];
 		Position ps = positionRepository.findById(positionNo).get();
 		
-		//모집번호 지정 위해  size 받기
+		//모집번호 지정 위해 set size 받기
 		int num = project.getRecruits().size();
 		String rNo = project.getProjectNo()+"R"+ (num+1);
 		
@@ -129,13 +129,18 @@ public class RecruitService {
 			e.printStackTrace();
 		}
 		
+		//String to Date
+		String from = recruitCommand.getDeadline();
+		SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date deadline = transFormat.parse(from);
+		
 		//recruit에 담아주기
 		recruit.setRecruitNo(rNo);
 		recruit.setPosition(ps);
 		recruit.setHeadCount(recruitCommand.getHeadCount());
-		recruit.setDeadline(recruitCommand.getDeadline());
+		recruit.setDeadline(deadline);
 		recruit.setRequirement(recruitCommand.getRequirement());
-		recruit.setRecruitStatus(1); //기본 값 1
+		recruit.setRecruitStatus(recruitCommand.getRecruitStatus());
 		
 		//project에 recruit 담기(더하기)
 		project.getRecruits().add(recruit);
@@ -143,7 +148,6 @@ public class RecruitService {
 		//save 메서드 호출
 		projectRepository.save(project);
 	}
-	
 	//메이트 초대 인서트문
 	@Transactional
 	public void saveInvite(String recruitNo, Integer customerNo) {
