@@ -51,7 +51,7 @@ class TaskTest {
 	}
 	
 	@Transactional
-	@Test
+	//@Test
 	public void lists(){
 		List<Task> list = con.tList(2);
 		System.out.println("사이즈으으으응" + list.size());
@@ -107,7 +107,16 @@ class TaskTest {
 		repository.save(t);
 	}
 	
-	
+	@Test
+	public void tt() {
+		Project p =projectRepository.findById(24).get();
+		
+		p.setProjectStatus(0);
+		
+		
+		
+		projectRepository.save(p);
+	}
 	
 	
 }

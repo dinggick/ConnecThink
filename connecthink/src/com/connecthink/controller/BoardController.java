@@ -171,6 +171,10 @@ public class BoardController {
 	public ModelAndView endProject(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		
+		Integer pNo = Integer.parseInt(request.getParameter("project_no"));
+		
+		service.updateProject(pNo);
+		mav.setViewName("index");
 		return mav;
 	}
 	
