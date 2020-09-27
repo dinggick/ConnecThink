@@ -15,6 +15,7 @@ import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.connecthink.controller.ProjectController;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
@@ -32,6 +33,9 @@ import com.connecthink.service.BoardService;
 class BoardTest {
 	@Autowired
 	private BoardService service;
+	
+	@Autowired
+	private ProjectController controller;
 	
 	//@Test
 	void findAllTest() {
@@ -66,7 +70,7 @@ class BoardTest {
 		
 	}
 	
-	@Test
+	//@Test
 	void lookUpMessage() {
 		List<Message> msgs = service.lookUpMsg(1);
 		for(Message msg : msgs) {
@@ -74,4 +78,5 @@ class BoardTest {
 		}
 		
 	}
+	
 }

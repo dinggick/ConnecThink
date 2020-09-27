@@ -646,185 +646,185 @@ scale
 </head>
 <body>
 	<!-- Sidebar -->
-		<a href="#menu-toggle" class="menutoggle" id="menu-toggle">☰</a>
-	
-        <div id="sidebar-wrapper" style="display: none">
-            <ul class="sidebar-nav">
-                <li class="sidebarTeamName">
-                    <a href="#" id="down">This is Team Name</a>
-                </li>
-                
-            <li v-for = "member in memberList">
+	<a href="#menu-toggle" class="menutoggle" id="menu-toggle">☰</a>
+
+	<div id="sidebar-wrapper" style="display: none">
+		<ul class="sidebar-nav">
+			<li class="sidebarTeamName">
+				<a href="#" id="down">This is Team Name</a>
+			</li>
+			<li v-for="member in memberList">
 				<div class="friend">
 					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
 					<div class="profile">
-						<p><strong>{{member.name}}</strong></p> 
+						<p><strong>{{member.name}}</strong></p>
 						<p><span>{{member.position}}</span></p>
 					</div>
-					<div v-if = msg.isOnline  class="status online"></div>
+					<div v-if=msg.isOnline class="status online"></div>
 					<div v-else class="status offline"></div>
 				</div>
 			</li>
 			
-                <li> 
-                   <div class="friend">
-						<img src="https://t1.daumcdn.net/cfile/blog/2559E33B51368FEF02" />
-						<div class="profile">
-							<p><strong>Modify</strong></p> 
-							<p><span>Web God</span></p>
-						</div>
-						<div class="status offline"></div>
+			<li>
+				<div class="friend">
+					<img src="https://t1.daumcdn.net/cfile/blog/2559E33B51368FEF02" />
+					<div class="profile">
+						<p><strong>Modify</strong></p>
+						<p><span>Web God</span></p>
 					</div>
-                </li>
-                
-                <li>
-                   <div class="friend">
-						<img src="https://pbs.twimg.com/media/EB5Pq3rVUAAYjxI.jpg" />
-						<div class="profile">
-							<p><strong>Ggugi</strong></p> 
-							<p><span>Web Developer</span></p>
-						</div>
-						<div class="status online"></div>
+					<div class="status offline"></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="friend">
+					<img src="https://pbs.twimg.com/media/EB5Pq3rVUAAYjxI.jpg" />
+					<div class="profile">
+						<p><strong>Ggugi</strong></p>
+						<p><span>Web Developer</span></p>
 					</div>
-                </li>
-                
-                <li>
-                    <div class="friend">
-						<img src="https://t1.daumcdn.net/liveboard/realty/b0516b5193334bd089651b49b52d7655.png" />
-						<div class="profile">
-							<p><strong>Seo Kang-Joon</strong></p> 
-							<p><span>git God</span></p>
-						</div>
-						<div class="status online"></div>
+					<div class="status online"></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="friend">
+					<img src="https://t1.daumcdn.net/liveboard/realty/b0516b5193334bd089651b49b52d7655.png" />
+					<div class="profile">
+						<p><strong>Seo Kang-Joon</strong></p>
+						<p><span>git God</span></p>
 					</div>
-				</li>
-                
-                <li>
-                    <div class="friend">
-						<img src="https://cphoto.asiae.co.kr/listimglink/6/2020062421493324321_1593002973.png" />
-						<div class="profile">
-							<p><strong>Dlwlrma</strong></p> 
-							<p><span>God</span></p>
-						</div>
-						<div class="status offline"></div>
+					<div class="status online"></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="friend">
+					<img src="https://cphoto.asiae.co.kr/listimglink/6/2020062421493324321_1593002973.png" />
+					<div class="profile">
+						<p><strong>Dlwlrma</strong></p>
+						<p><span>God</span></p>
 					</div>
-                </li>
-                
-                 <li>
-                    <div class="friend">
-						<img src="https://pbs.twimg.com/profile_images/1274215735070343168/e0rgTWHp_400x400.jpg" />
-						<div class="profile">
-							<p><strong>Ji Chu</strong></p> 
-							<p><span>Buddha</span></p>
-						</div>
-						<div class="status"></div>
+					<div class="status offline"></div>
+				</div>
+			</li>
+
+			<li>
+				<div class="friend">
+					<img src="https://pbs.twimg.com/profile_images/1274215735070343168/e0rgTWHp_400x400.jpg" />
+					<div class="profile">
+						<p><strong>Ji Chu</strong></p>
+						<p><span>Buddha</span></p>
 					</div>
-                </li>
-                
-                <li>
-                    <a href="#">프로젝트 종료</a>
-                </li>
-            </ul>
-        </div>
-         
-       
-    	
-				  	<div id="dashBoard"  v-drag-and-drop:options="options">
-				  	<!-- 상세 내용 모달 -->
-    <div class="modal fade" id="contentModal" tabindex="-1" role="dialog" aria-labelledby="loginModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                		<span aria-hidden="true">&times;</span>
-            		</button>
-                </div>
-                <div class="modal-body">
-                    <div class="mt-10">
-                      <input id="inputInModal" v-model="updateText" name="text" required class="single-input">
-                      <input type="hidden" id="taskNo" value="">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                 	<button type="button" class="btn btn-primary" v-on:click="updateContent">수정하기</button>
-	                <button type="button" class="btn btn-secondary" v-on:click="deleteTask" data-dismiss="modal">삭제하기</button>
-                </div>
-            </div>
-        </div>
-    </div>		   
-						<div class="todo" id="do">
-							<div class="title">TO DO
-						  		<div class="content">
-				  					<ul class="usty section1" id="sectionOneStatus" value="1">
-				  					<%-- <c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==1}"> --%>
-				  						<li v-for="item in list">
-				  							<div class='card editable'>
-				  								<%-- <a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="${p.taskNo}">
-				  									<input type="hidden" value="${p.taskStatus}">
-				  									${p.content}
-				  								</a> --%>
-				  							{{item.content}}</div>
-				  						</li>
-				  						<%-- </c:if>
-				  					</c:forEach> --%>
-				  						<!-- <li v-for="item in list"><div class='card editable'>{{item.id}}</div></li> -->
-				  					</ul>
-								</div>
-				    			<div class="add-task"><input v-model="addName" required class="single-input"><button v-on:click="getData">작업 추가하기</button></div>
-				    		</div>
-				    	</div>
-				    
-				    	<div class="doing" id="doing">
-				    		<div class="title">Doing
-								<div class="content">
-				  					<ul class="usty section2" id="sectionTwoStatus" value="2">
-				  					<c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==2}">
-				  						<li>
-				  							<div class='card editable'>		
-				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="${p.taskNo}">
-				  									<input type="hidden" value="${p.taskStatus}">
-				  									${p.content}
-				  								</a>
-				  							</div>
-				  						</li>
-				  						</c:if>
-				  					</c:forEach>
-				  						<li v-for="item in list2"><div class='card editable'>{{item.id2}}</div></li>
-									</ul>
-								</div>
-						    <div class="add-task"><input v-model="addName1"><button v-on:click="getData">작업 추가하기</button></div>
-						    </div>
+					<div class="status"></div>
+				</div>
+			</li>
+			<li><a href="#">프로젝트 종료</a></li>
+		</ul>
+	</div>
+
+
+
+	<div id="dashBoard" v-drag-and-drop:options="options">
+		<!-- 상세 내용 모달 -->
+		<div class="modal fade" id="contentModal" tabindex="-1" role="dialog"
+			aria-labelledby="loginModalCenterTitle" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="mt-10">
+							<input id="inputInModal" v-model="updateText" name="text"
+								required class="single-input"> <input type="hidden"
+								id="taskNo" value=""> <input type="hidden" id="cusNo"
+								value="">
 						</div>
-				    
-				    	<div class="done" id="done">
-				    		<div class="title">Done
-					  			<div class="content">
-								    <ul class="usty section3" id="sectionThreeStatus" value="3">
-								    <c:forEach items="${requestScope.list}" var="p">
-				  						<c:if test="${p.taskStatus==3}">
-				  						<li>
-				  							<div class='card editable'>
-				  								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-				  									<input type="hidden" value="${p.taskNo}">
-				  									<input type="hidden" value="${p.taskStatus}">${p.content}
-				  								</a>
-				  							</div>
-				  						</li>
-				  						</c:if>
-				  					</c:forEach>
-				  						<li v-for="item in list3"><div class='card editable'>{{item.id3}}</div></li>
-								    </ul>
-								</div>
-							<div class="add-task"><input v-model="addName2"><button v-on:click="getData">작업 추가하기</button></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary"
+							v-on:click="updateContent" data-dismiss="modal">수정하기</button>
+						<button type="button" class="btn btn-secondary"
+							v-on:click="deleteTask" data-dismiss="modal">삭제하기</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 대쉬보드 영역 -->
+		<div class="todo" id="do">
+			<div class="title">
+				TO DO
+				<div class="content">
+					<ul class="usty section1" id="sectionOneStatus" value="1">
+						<li v-for="(item,index) in lists">
+							<div class='card editable'>
+								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+									<input type="hidden" :value="item.taskNo"> 
+									<input type="hidden" :value="item.cusNo">
+									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+								</a>
 							</div>
-						</div>
-				    </div>
-		
-		<!-- chat -->
+						</li>
+					</ul>
+				</div>
+				<div class="add-task">
+					<input v-model="addName" required class="single-input">
+					<button v-on:click="goTask">작업 추가하기</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="doing" id="doing">
+			<div class="title">
+				Doing
+				<div class="content">
+					<ul class="usty section2" id="sectionTwoStatus" value="2">
+						<li v-for="(item,index) in list2">
+							<div class='card editable'>
+								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
+									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="add-task">
+					<input v-model="addName1">
+					<button v-on:click="goTask">작업 추가하기</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="done" id="done">
+			<div class="title">
+				Done
+				<div class="content">
+					<ul class="usty section3" id="sectionThreeStatus" value="3">
+						<li v-for="(item,index) in list3">
+							<div class='card editable'>
+								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
+									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+								</a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="add-task">
+					<input v-model="addName2">
+					<button v-on:click="goTask">작업 추가하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- chat -->
 		<div id="chatApp">
 
 			<div class="chatBox" id="chatBox">
@@ -994,7 +994,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.7:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1011,7 +1011,6 @@ scale
 						if(datas[0] == "userid"){
 							this.writer = datas[1];
 						}else{
-							
 							var user = datas[0];
 							var msg = datas[1];
 							var receptionTime = datas[2]+":"+datas[3];
@@ -1073,31 +1072,26 @@ scale
 
 	Vue.use(VueDraggable.default);
 	
-	/*drag&drop시작*/
-	Vue.component('AddCard', {
-		template: `<li><div class='card editable'><input type="text"><div v-on:click="getData" class="add-task">등록</div></div></li>`
-	})
-	
 	var todo = new Vue({
-		
 		el: '#dashBoard',
 		data: {
-			list:[
-			],
-			list2:[
-			],
-			list3:[
-			],
+			lists:[],
+			list2:[],
+			list3:[],
 			addName:'',
 			addName1:'',
 			addName2:'',
 			project_no : 0,
+			updateText:'',
 			options:{
 				 onDragend(event){
 					 console.log(event);
-							 
-					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 
+					 if(event.droptarget == null){
+						 
+					 }
+					 
+					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
 					 console.log('태스크너버' + getTaskNo);
 					 axios.get('/connecthink/updateStatus',{
@@ -1106,24 +1100,34 @@ scale
 		       					status:event.droptarget.attributes[1].nodeValue
 		                	}
 		             })
-		             .then(function(response){
-		            	
+		             .then(response => {	
+		                
 		             });
 					 
 				 }
-			},
-			updateText:''
+			}
 		},
-		created(ev){
-			axios.get('/connecthink/board',{
+		created(){
+			axios.get('/connecthink/taskList',{
 				params: {
 			  	      project_no: ${project_no}
 			  	}
             })
-            .then(function(response){
-            	console.log(response);
-            	this.list = response.data
-            });
+            .then(response => {
+            	var taskList = response.data;
+            	
+            	//console.log(taskList);
+            	
+            	taskList.forEach(task =>{
+            		if(task.taskStatus==1){
+            			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+            		}else if(task.taskStatus==2){
+            			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+            		}else{
+            			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});	
+            		}
+            	})
+            })
 		},
 		methods: {
 			goModal(ev){
@@ -1133,33 +1137,73 @@ scale
 				var modalTaskNo = document.getElementById('taskNo');
 				modalTaskNo.value=taskNo;
 				
-				console.log(modalTaskNo);
+				//현재 누른 태스크의 고객번호PK가져오기
+				var cusNo = ev.target.childNodes[2].attributes[1].nodeValue;
+				//모달창
+				var cusNoModal = document.getElementById('cusNo');
+				cusNoModal.value = cusNo;
+				//console.log(taskNo);
 				
-				
+				//console.log(cusNoModal);
 			},
-			updateContent(){	
+			//태스크 내용 수정하기
+			updateContent(){
+				var writeCusNo = document.getElementById('cusNo');
+				
 				axios.get('/connecthink/updateContent',{
                 	params:{
        					content:this.updateText,
        					taskNo:document.getElementById('taskNo').value
                 	}
                 })
-                .then(function(response){
-                    alert(response); 
+                .then(response => {	
+                	var taskNoForUpdate = document.getElementById('taskNo').value;
+                	this.lists.forEach(t => {
+                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+                	});
+                	this.list2.forEach(t => {
+                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+                	});
+                	this.list3.forEach(t => {
+                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+                	});
+                	this.$forceUpdate();
                 });
 				
 			},
+			//태스크 내용 삭제하기
 			deleteTask(){
 				axios.get('/connecthink/deleteTask',{
                 	params:{
        					taskNo:document.getElementById('taskNo').value
                 	}
                 })
-                .then(function(response){
-                    alert(response); 
+                .then(response => {
+                	var taskNoForDelete = document.getElementById('taskNo').value;
+                	this.lists.forEach((t, index) => {
+                		if(t.taskNo == taskNoForDelete) {
+                			this.lists.splice(index, 1);
+                			return true;
+                		}
+                	});
+                	this.list2.forEach((t, index) => {
+                		if(t.taskNo == taskNoForDelete) {
+                			this.list2.splice(index, 1);
+                			return true;
+                		}
+                	});
+                	this.list3.forEach((t, index) => {
+                		if(t.taskNo == taskNoForDelete) {
+                			this.list3.splice(index, 1);
+                			return true;
+                		}
+                	});
+                	
+                	this.$forceUpdate();
                 });
 			},
-			getData(ev) {
+			//태스크 추가하기
+			goTask(ev) {
 				var status = 0;
 				var evPath = ev.path[3].id;	   
 				if(evPath == 'do'){
@@ -1167,33 +1211,39 @@ scale
 					axios.get('/connecthink/addTask',{
 	                	params:{
 	                		content:this.addName,
-	                		status:status
+	                		status:status,
+	                		project_no: ${project_no}
 	                	}
 	                })
-	                .then(function(response){	
-	                	this.list = response.list
+	                .then(response => {	
+	                	this.lists.push({content:this.addName});
+	                	this.$forceUpdate();
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;
 					axios.get('/connecthink/addTask',{
 	                	params:{
 	                		content:this.addName1,
-	                		status:status
+	                		status:status,
+	                		project_no: ${project_no}
 	                	}
 	                })
-	                .then(function(response){
-	                    console.log(response); 
+	                .then(response => {	
+	                	this.list2.push({content:this.addName1});
+	                	this.$forceUpdate();
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
 					axios.get('/connecthink/addTask',{
 	                	params:{
 	                		content:this.addName2,
-	                		status:status
+	                		status:status,
+	                		project_no: ${project_no}
 	                	}
 	                })
-	                .then(function(response){
-	                    alert(response);
+	                .then(response => {	
+	                	this.list3.push({content:this.addName2});
+	                	this.$forceUpdate();
 	                });
 				}
                 
@@ -1201,38 +1251,6 @@ scale
 		}
 	});
 
-	/* new Vue({
-		el:'#contentModal',
-		data:{
-			updateText:''
-		},
-		methods:{
-			updateContent(){
-				
-				
-				axios.get('/connecthink/updateContent',{
-                	params:{
-       					content:this.updateText
-                	}
-                })
-                .then(function(response){
-                    alert(response); 
-                });
-				
-			},
-			deleteTask(){
-				axios.get('/connecthink/deleteTask',{
-                	params:{
-       					taskNo:updateText
-                	}
-                })
-                .then(function(response){
-                    alert(response); 
-                });
-			}
-		}
-	}) */
-	
 </script>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="js/vendor/jquery-1.12.4.min.js"></script>

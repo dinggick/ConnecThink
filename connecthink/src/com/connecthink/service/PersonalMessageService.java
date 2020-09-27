@@ -36,6 +36,18 @@ public class PersonalMessageService {
 	public List<PersonalMessage> findByReceiveAndSend(Integer customerNo, Integer otherNo) {
 		List<PersonalMessage> PMList = repository.findByReceiveAndSend(customerNo, otherNo);
 		PMList.forEach(pm -> {
+			pm.getSend().getName();
+		});
+		return PMList;
+	}
+
+	/**
+	 * @author IM CRYSTAL
+	 * 내가 주고 받은 모든 메세지 목록
+	 */
+	public List<PersonalMessage> findByReceive(Integer customerNo) {
+		List<PersonalMessage> PMList = repository.findByCustomerNo(customerNo);
+		PMList.forEach(pm -> {
 			System.out.println(pm.getSend().getName());
 		});
 		return PMList;

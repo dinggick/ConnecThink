@@ -103,4 +103,13 @@ public class ProjectController {
 	public void add_project() {
 		System.out.println("프로젝트 추가하기");
 	}
+	 /* @author kimdongjun
+	 * 프로젝트 협업 으로 가기위한 내 프로젝트 보여주기
+	 */
+	@GetMapping(value="/lookUpMyProject")
+	@ResponseBody
+	public List<Project> lookUpMyProject(HttpSession session){
+		int customer_no = (int) session.getAttribute("loginInfo");
+		return service.lookUpMyProject(customer_no);
+	}
 }

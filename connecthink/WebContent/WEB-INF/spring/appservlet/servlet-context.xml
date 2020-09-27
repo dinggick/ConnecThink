@@ -50,7 +50,7 @@
 	<bean id="webSocketHandler" class="com.connecthink.handler.webSocketHandler"/>
 	<websocket:handlers>
 		<websocket:mapping handler="webSocketHandler" path="/chat/*" />
-		<websocket:mapping handler="webSocketHandler" path="/boardEcho/*" />
+		<websocket:mapping handler="webSocketHandler" path="/header/*" />
 		<websocket:handshake-interceptors>
 			<!-- <bean class="com.connecthink.handler.HandshakeInterceptor"/> -->
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
@@ -62,6 +62,4 @@
 			value="com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module">
 		</property>
 	</bean>
-	
-	<bean id="mailBean" class="com.connecthink.mail.Mail"></bean>
 </beans>

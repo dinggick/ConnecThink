@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.connecthink.entity.BookmarkRecruit;
 import com.connecthink.entity.BookmarkRecruitId;
 import com.connecthink.entity.BookmarkUser;
+import com.connecthink.entity.BookmarkUserId;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.CustomerPosition;
 import com.connecthink.entity.Recruit;
@@ -78,6 +79,20 @@ public class BookmarkService {
 		br.setRecruit(r);
 		
 		bmRecRepository.save(br);
+	}
+	public void bmMember(Integer customerNo, Integer user) {
+		BookmarkUser bu = new BookmarkUser();
+		BookmarkUserId ids = new BookmarkUserId();		
+		Customer c = customerRepository.findById(customerNo).get();
+		Customer p = customerRepository.findById(user).get();
+		ids.setReceive(customerNo);
+		ids.setSend(user);
+		
+		bu.setId(ids);
+		bu.setReceive(c);
+		bu.setSend(p);
+		
+		bmUserRepository.save(bu);
 	}
 	
 
