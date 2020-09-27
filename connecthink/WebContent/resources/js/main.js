@@ -439,12 +439,31 @@ mailChimp();
 				url : "/connecthink/all/findEmail",
 				method : "POST",
 				data : $(this).serialize(),
+				beforeSend : function(xhr) {
+		 				xhr.setRequestHeader('X-CSRF-TOKEN', csrfToken);
+		 		},
 				success : (data, textStatus, jqXHR) => {
-					alert(data);
+					$("#findEmailModalLongTitle").html("당신의 이메일");
+					$("#findEmailModal").find("div.modal-body").html(
+						`<br><h3>${data}</h3><br>`
+					);
 				}
 			});
 		
 			return false;
+		});
+		
+		//이메일 찾기 모달에서 뒤로 버튼 클릭
+		$("#findEmailModal").find("button[type=button]").click(function() {
+			$("#findEmailModalLongTitle").html("이메일 찾기");
+			$("#findEmailModal").find("div.modal-body").html(
+						`<div class="mt-10">
+	                        <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
+	                    </div>
+	                    <div class="mt-10">
+	                        <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19921211" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19921211'" required class="single-input">
+	                    </div>`
+	        );
 		});
 		
 		//비밀번호 찾기 모달에서 이메일 인증 버튼 클릭 시 인증 코드 요청 전송
