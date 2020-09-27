@@ -308,42 +308,42 @@ function closeNav() {
 
 	
 
-var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/boardEcho/inbox");
-    wSocket.onopen = function(e) { onOpen(e) };
-    wSocket.onclose = function(e) { onClose(e) };
-    wSocket.onmessage = function(e) { onMessage(e) };
-    wSocket.onerror = function(e) { onError(e) };
-//    wSocket.send = function(e) {SendMsg(e) };
+// var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/boardEcho/inbox");
+//     wSocket.onopen = function(e) { onOpen(e) };
+//     wSocket.onclose = function(e) { onClose(e) };
+//     wSocket.onmessage = function(e) { onMessage(e) };
+//     wSocket.onerror = function(e) { onError(e) };
+// //    wSocket.send = function(e) {SendMsg(e) };
 
-// 웹소켓 테스트용 변수
-var testNo = 101;
-//fxLoadAllPm(testNo);
-// fxLoadNoti(testNo);
+// // 웹소켓 테스트용 변수
+// var testNo = 101;
+// //fxLoadAllPm(testNo);
+// // fxLoadNoti(testNo);
 
-//---------------------- 웹소켓 함수 -------------------------------
-   //연결이 정상적으로 이루어졌을때
-   function onOpen(e) {
-	wSocket.send(testNo + "가 접속하였습니다.");
-    alert("Welcome, " + testNo + "! WebSocket opened!");
+// //---------------------- 웹소켓 함수 -------------------------------
+//    //연결이 정상적으로 이루어졌을때
+//    function onOpen(e) {
+// 	wSocket.send(testNo + "가 접속하였습니다.");
+//     alert("Welcome, " + testNo + "! WebSocket opened!");
 	
-   }
-   //연결이 끊어졌을때
-   function onClose(e) {
-    alert("WebSocket closed!");
-   }
-   //메세지 수신시
-   function onMessage(e) {
-	   msgContent = e.data;
-	   if(msgContent == "connecthinksystem : there is no personal msg list") {
-// 		   fxLoadAllPm(testNo);
-	   }
-    console.log(e);
-	console.log(msgContent);
-   }
-   //에러 발생시
-   function onError(e) {
-    alert( "오류발생 : " + e.data );
-   }
+//    }
+//    //연결이 끊어졌을때
+//    function onClose(e) {
+//     alert("WebSocket closed!");
+//    }
+//    //메세지 수신시
+//    function onMessage(e) {
+// 	   msgContent = e.data;
+// 	   if(msgContent == "connecthinksystem : there is no personal msg list") {
+// // 		   fxLoadAllPm(testNo);
+// 	   }
+//     console.log(e);
+// 	console.log(msgContent);
+//    }
+//    //에러 발생시
+//    function onError(e) {
+//     alert( "오류발생 : " + e.data );
+//    }
    //메세지 전송시 = 웹소캣 핸들러로 전달
 //    function SendMsg(e){
 //  	wSocket.send("보낼 메세지 내용 : "+ e);
