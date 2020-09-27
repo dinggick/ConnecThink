@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <head>
 <meta charset="utf-8">
@@ -25,6 +27,15 @@
 
 <link rel="stylesheet" href="css/style.css">
 <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+<style>
+h5 .requir{
+	color: red;
+}
+h4 .requir{
+	color: red;
+	font-size: 0.5em !important;
+}
+</style>
 </head>
 
 <body>
@@ -57,8 +68,8 @@
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="apply_job_form white-bg mt-0">
-						<h4>팀등록하기</h4>
-						<form>
+						<h4>팀등록하기 <span class="requir">*은 필수 입력 값입니다</span></h4>
+						<form id="form">
 							<div class="row">
 							<div class="col-md-5" style="display:none;">
 									<div class="input_field">
@@ -67,7 +78,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 이름</h5>
+								<h5 class="mt-3" style="font-weight: bold;">팀 이름 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -75,7 +86,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 소개</h5>
+								<h5 class="mt-3" style="font-weight: bold;">팀 소개 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -83,7 +94,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 주제</h5>
+								<h5 class="mt-3" style="font-weight: bold;">팀 주제 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -91,7 +102,7 @@
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 목적</h5>
+								<h5 class="mt-3" style="font-weight: bold;">팀 목적 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
@@ -101,7 +112,7 @@
 								<div class="col-md-12">
 									<div class="submit_btn text-center">
 										<button class="boxed-btn3 mr-1" >취소하기</button>
-										<button class="boxed-btn3" type="submit">등록하기</button>
+										<button class="boxed-btn3 submit">등록하기</button>
 									</div>
 								</div>
 							</div>
@@ -152,7 +163,56 @@
 	<script src="js/main.js"></script>
 	
 	<script>
+	$(".submit").click(function(){
+		if(check() != false){
+			let data = new FormData($(form)[0]);
+			alert(data);
+			$.ajax({
+				url : "${contextPath}/addProject",
+				method : "POST",
+				enctype : "multipart/form-data",
+	 			processData: false,
+	 		    contentType: false,
+	 			data : data,
+	 			success : function(response){
+	 				if(response.status == "success"){
+	 					let answer = confirm("팀 등록이 완료 되었습니다. 모집을 등록하시겠습니까?");
+	 					if (answer == true){
+	 						location.href="${contextPath}/add_rec?projectNo="+response.projectNo;
+	 					} else {
+	 						location.href = "${contextPath}/index";
+	 					}
+	 				} else {
+	 					alert("등록실패");
+	 				}
+	 			}
+			});
+		}
+		return false;
+	});
 	
+	function check(){
+		if($("input[name=title]").val().length==0){
+			$("input[name=title]").attr("placeholder","필수 입력란입니다").css("border-color","red");
+			$("input[name=title]").focus();
+			return false;
+		}
+		if($("input[name=about]").val().length==0){
+			$("input[name=about]").attr("placeholder","필수 입력란입니다").css("border-color","red");
+			$("input[name=about]").focus();
+			return false;
+		}
+		if($("input[name=theme]").val().length==0){
+			$("input[name=theme]").attr("placeholder","필수 입력란입니다").css("border-color","red");
+			$("input[name=theme]").focus();
+			return false;
+		}
+		if($("textarea[name=purpose]").val().length==0){
+			$("textarea[name=purpose]").attr("placeholder","필수 입력란입니다").css("border-color","red");
+			$("textarea[name=purpose]").focus();
+			return false;
+		}
+	}
 	</script>
 	
 </body>

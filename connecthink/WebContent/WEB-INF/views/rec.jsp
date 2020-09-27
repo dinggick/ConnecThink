@@ -71,24 +71,17 @@
 		<div class="container">
 			<div class="row">
 				<!-- 객체 -->
+	
 				<c:forEach items="${rec}" var="rec" varStatus = "status">
-				<c:forEach items="${img}" var="img" varStatus = "st">
 				<div class="col-md-6 col-lg-4">
 					<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">
 						<div class="thumbnail">
 							<div class="test">
-							<c:choose>
-							<c:when test="${rec.recruitNo eq  img}">
-								<img src="http://localhost/storage/recruit/img/${img}.jpg" alt="모집사진">
-							</c:when>
-							<c:otherwise>
 								<img src="img/default.png" alt="모집 사진">
-							</c:otherwise>
-							</c:choose>
 							</div>
 						</div>
 						<h4 class="mt-4 mr-4 ml-4 rec_title">${rec.requirement}</h4>
-						<ul style="list-style: none;">
+						<ul style="list-style: none;" class="short">
 							<li class="wanna">${rec.position.name}</li>
 							<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
 							<li class="peorid">${dl}</li>
@@ -96,7 +89,6 @@
 						</ul>
 					</div>
 				</div>
-				</c:forEach>
 				</c:forEach>
 			</div>
 			<!-- 페이징 -->
@@ -163,6 +155,28 @@
 	$(function(){
 		fetch("${contextPath}/rec").then(function(data){
 		});
+		
+
+		<c:forEach items="${rec}" var="rec" varStatus = "status">
+		<c:forEach items="${img}" var="img" varStatus = "st">
+		<c:if test="${rec.recruitNo eq img}">
+			//rec 배열에서 li.recNo 찾기
+			var lis = document.querySelectorAll("li.recNo");
+			var recNo = lis[${status.index}];
+			//li.recNo에 해당하는 이미지  들어가는 부분 찾기
+			var $section = $(recNo).parents('ul.short').siblings("div.thumbnail");
+			//이미지 넣기
+			var data = "";
+			data += '<div class="test">';
+			data += '<img src="http://localhost/storage/recruit/img/${img}.jpg" alt="모집사진">';
+			data += '</div>';
+			//요소 바꿔주기
+			$section.html(data);
+		</c:if>
+		</c:forEach>
+		</c:forEach>
+		
+		
 	});
 	
 	function recDetail(e){
