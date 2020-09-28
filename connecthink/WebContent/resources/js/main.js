@@ -353,7 +353,6 @@ mailChimp();
 				method : "POST",
 				data : $(this).serialize(),
 				success : (data, textStatus, jqXHR) => {
-					alert("로그인 성공");
 					location.reload();
 				},
 				error : () => {
@@ -401,7 +400,6 @@ mailChimp();
 				data : {'code' : verifyCode,
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
-					alert("인증 성공");
 					$("#verifyModal").modal("hide");
 					$("#isVerified").val("y");
 				},
@@ -421,7 +419,6 @@ mailChimp();
 					method : "POST",
 					data : $(this).serialize(),
 					success : (data, textStatus, jqXHR) => {
-						alert("회원가입 성공");
 						location.reload();
 					},
 					error : () => {
@@ -508,7 +505,6 @@ mailChimp();
 					method : "POST",
 					data : $(this).serialize(),
 					success : (data, textStatus, jqXHR) => {
-						alert("비밀번호 재설정 성공");
 						location.reload();
 					}
 				});

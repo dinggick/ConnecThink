@@ -267,7 +267,7 @@
 		                                            	<li><a data-toggle="modal" href="#registerModal">회원가입</a></li>
                                          			</c:when>
                                          			<c:otherwise>
-                                         				<li><a href="${contextPath}/customerInfo">내 정보 보기</a></li>
+                                         				<li><a href="${contextPath}/logined/customerInfo">내 정보 보기</a></li>
                                          				<li><a id="logoutBtn" href="">로그아웃</a></li>
                                          			</c:otherwise>
                                          		</c:choose>
@@ -309,6 +309,7 @@ function closeNav() {
 	
 
 // var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/boardEcho/inbox");
+// var wSocket =  new WebSocket("ws://localhost/connecthink/boardEcho/inbox");
 //     wSocket.onopen = function(e) { onOpen(e) };
 //     wSocket.onclose = function(e) { onClose(e) };
 //     wSocket.onmessage = function(e) { onMessage(e) };

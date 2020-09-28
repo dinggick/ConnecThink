@@ -229,27 +229,28 @@
     		});
     		
     		$("#dropBtn").click(() => {
-    			$.ajax({
-        			url : "/connecthink/dropCustomer",
-        			method : "POST",
-        			data : {customerNo : ${sessionScope.loginInfo},
-    					${_csrf.parameterName} : '${_csrf.token}'},
-    				success : (data, textStatus, jqXHR) => {
-    					alert("탈퇴 성공");
-    					//탈퇴 성공시 로그아웃
-    					$.ajax({
-    						url : "/connecthink/logout",
-    						method : "POST",
-    						data : {${_csrf.parameterName} : '${_csrf.token}'},
-    						success : (data, textStatus, jqXHR) => {
-    							location.href = "http://localhost/connecthink/index";
-    						}
-    					});
-    				},
-    				error : () => {
-    					alert("탈퇴 실패");
-    				}
-        		});
+    			if(confirm("정말 탈퇴하시겠습니까?")) {
+    				$.ajax({
+            			url : "/connecthink/dropCustomer",
+            			method : "POST",
+            			data : {customerNo : ${sessionScope.loginInfo},
+        					${_csrf.parameterName} : '${_csrf.token}'},
+        				success : (data, textStatus, jqXHR) => {
+        					//탈퇴 성공시 로그아웃
+        					$.ajax({
+        						url : "/connecthink/logout",
+        						method : "POST",
+        						data : {${_csrf.parameterName} : '${_csrf.token}'},
+        						success : (data, textStatus, jqXHR) => {
+        							location.href = "http://localhost/connecthink/index";
+        						}
+        					});
+        				},
+        				error : () => {
+        					alert("탈퇴 실패");
+        				}
+            		});
+    			}
     		});
     	});
     </script>
