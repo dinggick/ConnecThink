@@ -659,8 +659,7 @@ scale
 					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
 					<div class="profile">
 						<p><strong>{{ member.name }}</strong></p>
-						<p v-if ="member.position === teamLeader"><span>팀장</span></p>
-						<p v-else><span>{{ member.position }}</span></p>
+						<p><span>{{ member.position }}</span></p>
 					</div>
 					<div :id="member.customer_no"></div>
 				</div>
