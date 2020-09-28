@@ -49,7 +49,7 @@ public class CustomerController {
 	 */
 	@RequestMapping("/findCustomerByNo")
 	@ResponseBody
-	public Customer findByNo(int customerNo) {
+	public Customer findCustomerByNo(int customerNo) {
 		return service.findByNo(customerNo);
 	}
 	

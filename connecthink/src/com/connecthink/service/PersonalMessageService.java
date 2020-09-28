@@ -1,11 +1,13 @@
 package com.connecthink.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.connecthink.entity.Experience;
 import com.connecthink.entity.PersonalMessage;
 import com.connecthink.repository.PersonalMessageRepository;
 
@@ -45,11 +47,25 @@ public class PersonalMessageService {
 	 * @author IM CRYSTAL
 	 * 내가 주고 받은 모든 메세지 목록
 	 */
-	public List<PersonalMessage> findByReceive(Integer customerNo) {
+	@Transactional(rollbackFor = Exception.class)
+	public List<PersonalMessage> findByCustomerNo(Integer customerNo) {
 		List<PersonalMessage> PMList = repository.findByCustomerNo(customerNo);
 		PMList.forEach(pm -> {
-			System.out.println(pm.getSend().getName());
+			Set<Experience> experiences = pm.getSend().getExperiences();
+			experiences.forEach(experience -> {
+				System.out.println(experience.getId());
+			});
 		});
 		return PMList;
 	}
+	
+	/**
+	 * @author IM CRYSTAL
+	 * 퍼스널 메세지 저장하기
+	 */
+	@Transactional(rollbackFor = Exception.class)
+	public void insert(PersonalMessage pm) {
+		repository.save(pm);
+	}
+	
 }

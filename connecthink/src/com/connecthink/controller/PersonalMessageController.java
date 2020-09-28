@@ -37,6 +37,10 @@ public class PersonalMessageController {
 	@RequestMapping(value="/inbox/allPm")
 	@ResponseBody
 	public List<PersonalMessage> allPm(Integer customerNo) {
-		return service.findByReceive(customerNo);
+		return service.findByCustomerNo(customerNo);
+	}
+	
+	public void insert(PersonalMessage pm) {
+		service.insert(pm);
 	}
 }
