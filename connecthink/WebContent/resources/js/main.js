@@ -353,7 +353,7 @@ mailChimp();
 				method : "POST",
 				data : $(this).serialize(),
 				success : (data, textStatus, jqXHR) => {
-					location.reload();
+					location.href = "/connecthink/";
 				},
 				error : () => {
 					alert("로그인 실패");
@@ -369,7 +369,7 @@ mailChimp();
 				method : "POST",
 				data : {_csrf : csrfToken},
 				success : (data, textStatus, jqXHR) => {
-					location.reload();
+					location.href = "/connecthink/";
 				}
 			});
 		});

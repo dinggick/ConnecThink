@@ -7,15 +7,18 @@
 
 
 	<security:http>
-		<security:form-login login-page="/header"
+		<security:form-login login-page="/login"
 			authentication-success-handler-ref="customLoginSuccess"
 			authentication-failure-handler-ref="customLoginFail" />
-
+		
 		<security:intercept-url access="permitAll" pattern="/all/**" />
 		<security:intercept-url access="hasRole('ROLE_CUSTOMER')" pattern="/logined/**" />
 
 		<security:logout logout-url="/logout" invalidate-session="true" />
 	</security:http>
+	
+<!-- 	<security:http pattern="/img/**" security="none"/> -->
+	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserDetailsService">
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
