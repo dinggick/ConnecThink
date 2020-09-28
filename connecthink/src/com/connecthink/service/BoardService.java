@@ -15,6 +15,7 @@ import com.connecthink.entity.Message;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
+import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
 
@@ -31,6 +32,8 @@ public class BoardService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
+	@Autowired
+	private MemberRepository memberRepository;
 	/**
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
@@ -163,8 +166,17 @@ public class BoardService {
 	public void updateProject(Integer projectNo) {
 		Project p =projectRepository.findById(projectNo).get();
 		
-		p.setProjectStatus(0);
+		p.setProjectStatus(2);
 		
 		projectRepository.save(p);
 	}
+	
+	/*
+	 * 프로젝트 탈퇴
+	 * @author 변재
+	 */
+	public void exitProject(Integer customerNo) {
+		
+	}
+	
 }

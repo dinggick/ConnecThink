@@ -646,12 +646,13 @@ scale
 </head>
 <body>
 	<!-- Sidebar -->
-	<a href="#menu-toggle" class="menutoggle" id="menu-toggle">☰</a>
+	<div id="sideBar"> 
+	<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
 
-	<div id="sidebar-wrapper" style="display: none">
-		<ul class="sidebar-nav" id="haha">
+	<div id="sidebar-wrapper" v-show='toggle'>
+		<ul class="sidebar-nav">
 			<li class="sidebarTeamName">
-				<a href="#" id="down">This is Team Name</a>
+				<a href="#" id="down" @click="toggle = !toggle">This is Team Name</a>
 			</li>
 			<li v-for="member in memberList">
 				<div class="friend">
@@ -722,8 +723,8 @@ scale
 			<li><a v-on:click="endProject">프로젝트 종료</a></li>
 		</ul>
 	</div>
-
-
+	
+	</div>
 
 	<div id="dashBoard" v-drag-and-drop:options="options">
 		<!-- 상세 내용 모달 -->
@@ -1057,15 +1058,17 @@ scale
 	var cc1 = document.getElementById('sidebar-wrapper');
 	var cc2 = document.getElementById('down');
 	
+	/* var cc = document.getElementById('menu-toggle');
+	var cc1 = document.getElementById('sidebar-wrapper');
+	var cc2 = document.getElementById('down');
 	
 	cc.onclick = function() { 
 		cc1.style.display='block';
 	};
 	cc2.onclick = function() { 
 		cc1.style.display='none';
-	};
+	}; */
 	
-
 	Vue.use(VueDraggable.default);
 	
 	var todo = new Vue({
@@ -1146,26 +1149,29 @@ scale
 			updateContent(){
 				var writeCusNo = document.getElementById('cusNo');
 				
-				axios.get('/connecthink/updateContent',{
-                	params:{
-       					content:this.updateText,
-       					taskNo:document.getElementById('taskNo').value
-                	}
-                })
-                .then(response => {	
-                	var taskNoForUpdate = document.getElementById('taskNo').value;
-                	this.lists.forEach(t => {
-                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-                	});
-                	this.list2.forEach(t => {
-                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-                	});
-                	this.list3.forEach(t => {
-                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-                	});
-                	this.$forceUpdate();
-                });
-				
+				if(${sessionScope.loginInfo} == writeCusNo){
+					axios.get('/connecthink/updateContent',{
+	                	params:{
+	       					content:this.updateText,
+	       					taskNo:document.getElementById('taskNo').value
+	                	}
+	                })
+	                .then(response => {	
+	                	var taskNoForUpdate = document.getElementById('taskNo').value;
+	                	this.lists.forEach(t => {
+	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+	                	});
+	                	this.list2.forEach(t => {
+	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+	                	});
+	                	this.list3.forEach(t => {
+	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+	                	});
+	                	this.$forceUpdate();
+	                });
+				}else{
+					alert('작성자가 아닙니다!');
+				}
 			},
 			//태스크 내용 삭제하기
 			deleteTask(){
@@ -1248,9 +1254,13 @@ scale
 	});
 	
 	var endP = new Vue({
-		el:'#haha',
+		el:'#sideBar',
 		data:{
+			toggle: true,
 			memberList:[]
+		},
+		created(){
+			
 		},
 		methods:{
 			endProject(){
@@ -1263,9 +1273,22 @@ scale
                 	alert('종료완료!')
                 	window.close();
                 });
+			},
+			endMyProject(){
+				axios.get('/connecthink/endMyProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
 			}
 		}
-	})
+	});
+	
+	
 </script>
 <script src="js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="js/vendor/jquery-1.12.4.min.js"></script>

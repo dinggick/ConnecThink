@@ -178,5 +178,17 @@ public class BoardController {
 		return mav;
 	}
 	
+	/*
+	 * 프로젝트 탈퇴하기
+	 */
+	@RequestMapping("endMyProject")
+	public ModelAndView endMyProject(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		
+		service.exitProject(103);
+		return mav;
+		
+	}
+	
 	
 }

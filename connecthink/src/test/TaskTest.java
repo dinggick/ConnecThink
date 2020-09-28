@@ -17,9 +17,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.controller.BoardController;
 import com.connecthink.entity.Customer;
+import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
+import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.service.BoardService;
@@ -42,6 +44,8 @@ class TaskTest {
 	@Autowired
 	private CustomerRepository crpo;
 	
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	@Autowired
 	private BoardController con;
@@ -107,16 +111,19 @@ class TaskTest {
 		repository.save(t);
 	}
 	
-	@Test
+//	@Test
 	public void tt() {
 		Project p =projectRepository.findById(24).get();
 		
 		p.setProjectStatus(0);
 		
-		
-		
 		projectRepository.save(p);
 	}
 	
+	@Test
+	public void ttt() {
+		Member m = memberRepository.findByIdMemberNo(103);
+		
+	}
 	
 }
