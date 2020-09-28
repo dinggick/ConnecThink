@@ -95,16 +95,16 @@ public class ProjectController {
 		int managerNo = (int) session.getAttribute("loginInfo");		
 		List<Project> p = service.findByManagerNo(managerNo);	
 		List<Recruit> n = new ArrayList<>();
-		p.forEach(c->{
-			c.getRecruits().forEach(r -> {				
-				r.getMembers().forEach(m -> {
-					
-					if (m.getCustomer().getCustomerNo() != customerNo && m.getInvited() != 1) {
-						n.add(r);
+		for (Project m : p) {
+			m.getRecruits().forEach(c -> {
+				n.add(c);
+				c.getMembers().forEach(g -> {
+					if (g.getCustomer().getCustomerNo() == customerNo && g.getInvited() ==1 ) {
+						n.remove(c);
 					}
 				});
 			});
-		});
+		}
 		for(Recruit s : n) {
 			System.out.println(s.getRecruitNo());
 		}
@@ -112,3 +112,4 @@ public class ProjectController {
 	}
 	
 }
+ 
