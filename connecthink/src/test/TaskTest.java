@@ -124,6 +124,7 @@ class TaskTest {
 	public void ttt() {
 		Member m = memberRepository.findByIdMemberNo(103);
 		
+		
 	}
 	
 }

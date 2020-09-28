@@ -650,7 +650,7 @@ scale
 	<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
 
 	<div id="sidebar-wrapper" v-show='toggle'>
-		<ul class="sidebar-nav">
+		<ul class="sidebar-nav" id="sidebar-ul">
 			<li class="sidebarTeamName">
 				<a href="#" id="down" @click="toggle = !toggle">This is Team Name</a>
 			</li>	
@@ -662,10 +662,13 @@ scale
 						<p v-if ="member.position === teamLeader"><span>팀장</span></p>
 						<p v-else><span>{{ member.position }}</span></p>
 					</div>
-					<div :id=" member.customer_no " ></div>
+					<div :id="member.customer_no"></div>
 				</div>
 			</li>
-			<li><a v-on:click="endProject">프로젝트 종료</a></li>
+			<li>
+				<p v-if="show"><a v-on:click="endProject">프로젝트 종료</a></p>
+				<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
+			</li>
 		</ul>
 	</div>
 	
@@ -869,12 +872,17 @@ scale
 		el: '#sideBar'
 		,data : {
 			memberList : [],
-			toggle: false
+			toggle: false,
+			show:true
 		},created(){
 			console.log("sidebar 생김");	
 		}//created
-		,methods : {	
+		,methods : {
 			showMemberList(){
+				var led = document.getElementById('sidebar-ul').firstChild.nextSlibing;
+				
+				console.log(led);
+				
 				axios
 			  	.get('/connecthink/lookUpMember', {
 			  	    params: {
@@ -888,33 +896,35 @@ scale
 						  var memberInfo = member.split(":");
 						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
 						  var log = chat.isLogin(memberInfo[0]);
-						  
+						 
+						  console.log(memberInfo[2] == 'teamLeader');
 					  })//forEach for memberList				  
 			  })//axios
 			},//showMemberList
 			//프로젝트 종료
 			endProject(){
-				axios.get('/connecthink/endProject',{
-                	params:{
-                		project_no: ${project_no}
-                	}
-                })
-                .then(response => {	
-                	alert('종료완료!')
-                	window.close();
-                });
+				
+// 				axios.get('/connecthink/endProject',{
+//                 	params:{
+//                 		project_no: ${project_no}
+//                 	}
+//                 })
+//                 .then(response => {	
+//                 	alert('종료완료!')
+//                 	window.close();
+//                 });
 			},
 			//프로젝트탈퇴
 			endMyProject(){
-				axios.get('/connecthink/endMyProject',{
-                	params:{
-                		project_no: ${project_no}
-                	}
-                })
-                .then(response => {	
-                	alert('종료완료!')
-                	window.close();
-                });
+// 				axios.get('/connecthink/endMyProject',{
+//                 	params:{
+//                 		project_no: ${project_no}
+//                 	}
+//                 })
+//                 .then(response => {	
+//                 	alert('종료완료!')
+//                 	window.close();
+//                 });
 			}
 		}
 	});
@@ -1055,21 +1065,6 @@ scale
 		});
 	
 	////////////////////////////////변재 vue.js////////////////////////////////////////////////////////
-	var cc = document.getElementById('menu-toggle');
-	var cc1 = document.getElementById('sidebar-wrapper');
-	var cc2 = document.getElementById('down');
-	
-	/* var cc = document.getElementById('menu-toggle');
-	var cc1 = document.getElementById('sidebar-wrapper');
-	var cc2 = document.getElementById('down');
-	
-	cc.onclick = function() { 
-		cc1.style.display='block';
-	};
-	cc2.onclick = function() { 
-		cc1.style.display='none';
-	}; */
-	
 	Vue.use(VueDraggable.default);
 	
 	var todo = new Vue({
@@ -1101,9 +1096,8 @@ scale
 		                	}
 		             })
 		             .then(response => {	
-		                
+		            	
 		             });
-					 
 				 }
 			}
 		},
@@ -1149,7 +1143,6 @@ scale
 			//태스크 내용 수정하기
 			updateContent(){
 				var writeCusNo = document.getElementById('cusNo').value;
-			
 				
 				if(${sessionScope.loginInfo} == writeCusNo){
 					axios.get('/connecthink/updateContent',{
@@ -1225,9 +1218,9 @@ scale
 	                		project_no: ${project_no}
 	                	}
 	                })
-	                .then(response => {	
+	                .then(response => {
 	                	this.lists.push({content:this.addName});
-	                	this.$forceUpdate();
+	                	this.addName='';	
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;
@@ -1240,7 +1233,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list2.push({content:this.addName1});
-	                	this.$forceUpdate();
+	             
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1253,10 +1246,11 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list3.push({content:this.addName2});
-	                	this.$forceUpdate();
+	                	
 	                });
 				}
                 
+				this.$forceUpdate();
               }
 		}
 	});
