@@ -14,14 +14,21 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileController {
 	
+	/**
+	 * 프로필 사진 업로드 요청 처리
+	 * @author CJK
+	 * @param profileImg
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("/uploadProfileImg")
 	public ResponseEntity<String> uploadProfileImg(MultipartFile profileImg, HttpSession session) {
+		//경로 구성
 		String savePath = session.getServletContext().getRealPath("/").replace(
 				"wtpwebapps" + File.separator + "connecThink" + File.separator, "webapps" + File.separator + "ROOT")
 				+ File.separator + "storage" + File.separator + "customer" + File.separator
 				+ Integer.toString((Integer) session.getAttribute("loginInfo")) + ".jpg";
-		System.out.println(session.getServletContext().getRealPath("/").replace(
-				"wtpwebapps" + File.separator + "connecThink" + File.separator, "webapps" + File.separator + "ROOT"));
+		
 		try {
 			if (profileImg != null) {
 				File newProfileImg = new File(savePath);

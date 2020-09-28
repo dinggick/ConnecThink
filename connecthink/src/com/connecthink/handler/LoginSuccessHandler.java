@@ -37,11 +37,11 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		if (roleNames.contains("ROLE_CUSTOMER")) {
 			System.out.println(auth.getPrincipal());
 			request.getSession().setAttribute("loginInfo", ((CustomUser)auth.getPrincipal()).getCustomer().getCustomerNo());
-			response.sendRedirect("index");
+			response.sendRedirect("/");
 			return;
 		}
 
-		response.sendRedirect("/index");
+		response.sendRedirect("/");
 	}
 }
 

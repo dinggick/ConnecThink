@@ -170,7 +170,7 @@ public class CustomerController {
 	 * @author CJK
 	 * @return 회원정보 페이지
 	 */
-	@RequestMapping("/customerInfo")
+	@RequestMapping("/logined/customerInfo")
 	public String customerInfo() {
 		return "customerInfo";
 	}

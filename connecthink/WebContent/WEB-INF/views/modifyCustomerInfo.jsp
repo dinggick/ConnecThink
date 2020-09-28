@@ -478,7 +478,6 @@
             		method : "POST",
             		data : $(this).serialize(),
             		success : (data, textStatus, jqXHR) => {
-            			alert("수정 성공");
             			window.history.back();
             		},
             		error : () => {
