@@ -634,7 +634,7 @@ scale
 	right:17px;
 }
 
-.friend .status.offline{background:#ffce54;}
+.friend .status.offline{background:#f74710;}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -661,7 +661,7 @@ scale
 						<p><strong>{{ member.name }}</strong></p>
 						<p><span>{{ member.position }}</span></p>
 					</div>
-					<div :id="member.customer_no"></div>
+					<div :id=" member.customer_no+'no'" class="status offline"></div>
 				</div>
 			</li>
 			<li>
@@ -895,7 +895,6 @@ scale
 			  	 })
 			  	.then(result => {
 					  var memberInfo = result.data;	   			
-					  console.log(memberInfo);
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
 						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
@@ -949,8 +948,8 @@ scale
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
 			  console.log('created');
-			  this.connect();
 			  sideBar.showMemberList();
+			  this.connect();
 			  this.project_no = ${project_no};
 			  
     		}//created
@@ -1024,10 +1023,26 @@ scale
 						var datas = data.split(":");
 						console.log(datas);
 						if(datas[0] == "userid"){
-							this.writer = datas[1];
-							
-							//접속중인 유저를 알기위해 접속할때 유저 정보 담아줌
-							this.loginLog.push({customer_no : datas[1]});
+							this.writer = datas[1];						
+						}
+						else if(datas[0] == "loginInfo"){
+							var loguserArray = datas[1].substring(1,datas[1].length-1).split(",");
+							var className = "status online";
+							console.log("login user Info@@");
+							console.log(typeof loguserArray);
+							loguserArray.forEach(customer_no => {
+								console.log(customer_no);
+								var dc = document.getElementById(customer_no.trim()+"no");
+								console.log(dc);
+ 								dc.setAttribute("class",className);
+// 								console.log(document.getElementById(customer_no.trim()));
+							});
+						}else if(datas[0] == "logoutInfo"){
+							var logoutUser_no = datas[1];
+							var className = "status offline";
+							var dc = document.getElementById(logoutUser_no.trim()+"no");
+							console.log(dc);
+							dc.setAttribute("class",className);
 						}else{
 							var user = datas[0];
 							var msg = datas[1];

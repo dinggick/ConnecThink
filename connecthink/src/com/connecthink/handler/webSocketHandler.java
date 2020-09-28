@@ -65,10 +65,34 @@ public class webSocketHandler extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session,TextMessage message) throws Exception{
 		
 			int chatCnt = 0;
-			//client 접속시 이전 message log가 배열의 존재하는지 여부를 알기위해
+			//client 최초 접속시 이전 message log가 배열의 존재하는지 여부를 알기위해
 			if(message.getPayload().contains("ready")) {
+				
 				String [] logs = message.getPayload().split(":");
 				int project_no = Integer.parseInt(logs[1]);
+				
+				if(logMember.containsKey(project_no)) {//해당 프로젝트 넘버의 해당하는 배열이 있을경우
+					logMember.get(project_no).add(getUserId(session));
+					
+					//해당 프로젝트 넘버의 자료구조가 있는경우 접속중인 맴버 정보들을 같은 프로젝트 유저들에게 전송
+					for(Map.Entry<WebSocketSession,Integer> ws : logUser.entrySet()) {
+						for(int member : logMember.get(project_no)) {
+							if(ws.getValue() == member) {
+								ws.getKey().sendMessage(new TextMessage("loginInfo:"+logMember.get(project_no)));
+							}
+						}
+					}
+					
+				}else {//없을경우 배열을 생성해서 배열안에 접속중인 customer_no 를 넣고 그 배열을 map 에 넣어준다
+					List<Integer> members = new ArrayList<Integer>();
+					members.add(getUserId(session));
+					logMember.put(project_no,members);
+					
+					//해당 프로젝트 넘버의 자료구조가 없는 경우 는 최초의 접속 이므로 본인이 접속했다는 걸 알리기 위해 생성한 members List 보냄
+					session.sendMessage(new TextMessage("loginInfo:"+members));
+				}
+				
+				
 				
 				//접속자의 프로젝트 넘버의 해당하는 메세지 배열이 존재하는지 유효성
 				for(Map<Integer,List<Message>> msgList : messageList) {
@@ -79,6 +103,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 							System.out.println("000000000000000000000존재한다");
 							int newMsgIndex = msgList.get(project_no).lastIndexOf(diviMsg)+1;
 							System.out.println(newMsgIndex);
+							
 							//해당 메세지 리스트 의 작성자 와 글 내용 보내주기
 							for(Message msg : msgList.get(project_no)) {
 								if(!msg.getContent().equals(DIVISION)) {
@@ -128,13 +153,13 @@ public class webSocketHandler extends TextWebSocketHandler{
 					}
 					chatCnt = 0;
 				}
-				if(logMember.containsKey(project_no)) {//해당 프로젝트 넘버의 해당하는 배열이 있을경우
-					logMember.get(project_no).add(getUserId(session));
-				}else {//없을경우 배열을 생성해서 배열안에 접속중인 customer_no 를 넣고 그 배열을 map 에 넣어준다
-					List<Integer> members = new ArrayList<Integer>();
-					members.add(getUserId(session));
-					logMember.put(project_no,members);
-				}
+//				if(logMember.containsKey(project_no)) {//해당 프로젝트 넘버의 해당하는 배열이 있을경우
+//					logMember.get(project_no).add(getUserId(session));
+//				}else {//없을경우 배열을 생성해서 배열안에 접속중인 customer_no 를 넣고 그 배열을 map 에 넣어준다
+//					List<Integer> members = new ArrayList<Integer>();
+//					members.add(getUserId(session));
+//					logMember.put(project_no,members);
+//				}
 				
 			}else {
 				ObjectMapper mapper = new ObjectMapper();
@@ -191,10 +216,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 				}//for - list add
 			}
 		}//boardChat 동준
-//boardEcho 동준
-		//handleTextMessage
-	//handleTextMessage
-
+	
 	@Override
 	//클라이언트 에서 연결을 종료 할 경우
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
@@ -206,10 +228,20 @@ public class webSocketHandler extends TextWebSocketHandler{
 					System.out.println("ctno : "+ctno);
 					System.out.println("logOutUser : "+logOutUser);
 					if(ctno == logOutUser) {
+						
+						//접속 해제 전 같은 프로젝트 클라이언트 에게 접속해제 알림
+						for(Map.Entry<WebSocketSession,Integer> ws : logUser.entrySet()) {
+									//로그아웃 하는 유저와 같은 프로젝트의 유저
+									for(int user : entry.getValue()) {
+										if(ws.getValue() != logOutUser && ws.getValue() == user) {
+											//웹소캣에 저장되어 있는 value(customer_no) 와 로그아웃 하는 유저와 같은 프로젝트의 유저가 같을 경우 = 같은 프로젝트 유저의 ws
+											ws.getKey().sendMessage(new TextMessage("logoutInfo:"+logOutUser));
+										}
+									}
+						}
+						
 						//해당 프로젝트의 마지막 접속자가 나갈경우
 						if(entry.getValue().size() == 1) {
-							System.out.println("마지막 접속자임");
-							Thread.sleep(3000);
 							// DB Insert + message list 초기화
 							messageList.forEach(map -> {
 								//해당 프로젝트의 메세지 리스트가 존재 할 경우 즉 메세지가 있을경우 DB INSERT
@@ -241,10 +273,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 							//찾은 index 로 접속해제 클라이언트 정보 삭제
 							entry.getValue().remove(index);
 							
-							System.out.println("맴버 정보 배열 삭제 후 사이즈 : "+entry.getValue().size());
 							//접속자 구분을 둔 logUser 에서 접속해제 하려는 클라이언트 정보 삭제
 							logUser.remove(session);
-							System.out.println("session 삭제");
 							break;
 						}//else
 					}//if
