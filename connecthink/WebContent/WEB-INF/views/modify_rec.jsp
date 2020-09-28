@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="detail" value="${requestScope.detail}" />
 <c:set var="manager" value="${requestScope.manager}" />
-<c:set var="member" value="${requestScope.member}" />
 <c:set var="recNo" value="${requestScope.recNo}" />
-<c:set var="bmCount" value="${requestScope.bmCount}" />
-<c:set var="imgName" value="${requestScope.imgName}" />
 
 <head>
 <meta charset="utf-8">
@@ -109,7 +106,7 @@ h4 .requir {
 						<div class="col-lg-10 offset-lg-1">
 							<div class="apply_job_form white-bg mt-0">
 								<h4>
-									모집 등록하기 <span class="requir">*은 필수 입력 값입니다</span>
+									모집 수정하기 <span class="requir">*은 필수 입력 값입니다</span>
 								</h4>
 								<form id="form">
 									<div class="row">
@@ -117,7 +114,8 @@ h4 .requir {
 											<div class="input_field">
 												<input type="hidden" name="${_csrf.parameterName}"
 													value="${_csrf.token}"> <input type="hidden"
-													name="projectNo" value="${detail.projectNo}">
+													name="projectNo" value="${detail.projectNo}"> <input
+													type="hidden" name="recruitNo" value="${recNo}">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -127,8 +125,9 @@ h4 .requir {
 										</div>
 										<div class="col-md-5 ">
 											<div class="input_field text-center position0">
-											<span class="getPosition">${rec.position.positionNo}</span>
-												<select class="position" onchange="position(this);" id="pos">
+												<input id="getPosition" style="display: none;" type="text"
+													value="${rec.position.positionNo}"> <select
+													class="position" onchange="position(this);" id="pos">
 													<option value="0">직군선택</option>
 													<option value="1">기획자</option>
 													<option value="2">디자이너</option>
@@ -202,8 +201,8 @@ h4 .requir {
 										</div>
 										<div class="col-md-10">
 											<div class="input_field">
-												<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
-												<input type="text" class="pr-2" name="deadline" value="${dl}" required>
+											<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy/MM/dd"/>
+												<input type="text" class="pr-2" name="deadline" id = "datepicker" value="${dl}" required>
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -222,15 +221,16 @@ h4 .requir {
 												상세설명 <span class="requir"> *</span>
 											</h5>
 										</div>
-										<div class="col-md-10">
-
-											<div class="input_field">
-												<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
-												<textarea name="recExplain" id="" cols="30" rows="10"
-													placeholder="자유롭게 기재 해주세요" required>${fList}</textarea>
-											</c:forEach>
+										
+											<div class="col-md-10">
+												<div class="input_field">
+													<textarea name="recExplain" id="" cols="30" rows="10" required>
+													<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
+													${fList}
+													</c:forEach>
+													</textarea>
+												</div>
 											</div>
-										</div>
 										<div class="col-md-2">
 											<h5 class="mt-3" style="font-weight: bold;">모집썸네일</h5>
 										</div>
@@ -252,12 +252,12 @@ h4 .requir {
 												</div>
 											</div>
 											<span style="color: #7A838B;">※미 등록 시 기본 이미지 사용 / 권장
-												사이즈 : 350*140px </span>
+												이미지 사이즈 : 가로최대 1920px </span>
 										</div>
 										<div class="col-md-12">
 											<div class="submit_btn text-center">
 												<button class="boxed-btn3 mr-1 clear">취소하기</button>
-												<button class="boxed-btn3 submit">등록하기</button>
+												<button class="boxed-btn3 submit">수정하기</button>
 											</div>
 										</div>
 									</div>
@@ -312,21 +312,35 @@ h4 .requir {
 	<script>
 		$(function() {
 			
-			let positionNo = $("span.getPositionNo");
-			if(positionNo < 9){
-				$("select.position option:eq(1)").prop("selected", true);
-			} else if (positionNo < 17){
-				$("select.position option:eq(2)").prop("selected", true);
-				
+			
+			//직무 받아오기
+			let positionNo = $("#getPosition").val();
+			//인덱스
+			let idx = positionNo % 8 == 0 ? 8 : positionNo % 8;
+
+			if (positionNo <= 8) {
+				$("div.nice-select.position").trigger("click");
+				$("div.nice-select.position ul li:eq(1)").trigger("click");
+				$("div.nice-select.position11").trigger("click");
+				$("div.nice-select.position11 ul li:eq(" + idx + ")").trigger(
+						"click");
+			} else if (positionNo <= 16) {
+				$("div.nice-select.position").trigger("click");
+				$("div.nice-select.position ul li:eq(2)").trigger("click");
+				$("div.nice-select.position21").trigger("click");
+				$("div.nice-select.position21 ul li:eq(" + idx + ")").trigger(
+						"click");
+
 			} else {
-				$("select.position option:eq(3)").prop("selected", true);
-				
+				$("div.nice-select.position").trigger("click");
+				$("div.nice-select.position ul li:eq(3)").trigger("click");
+				$("div.nice-select.position31").trigger("click");
+				$("div.nice-select.position31 ul li:eq(" + idx + ")").trigger("click");
 			}
 			
 			//데이트 피커		
 			let date = new Date();
 			date.setDate(date.getDate() - 1);
-			
 			$("input[name=deadline]").datepicker({
 				minDate : date,
 				calendarWeeks : false,
@@ -336,15 +350,9 @@ h4 .requir {
 				language : "ko"
 			});
 			
-			//모집 이미지 있을 시 보여주기
-			let file = "${imgName}";
-			let display = $("label.fileName");
-			if(file != ""){
-				display.css("display", "inline").html("모집 썸네일이 존재합니다");
-			}
-			
 		});
-
+		
+		
 		function position(obj) {
 			if (obj.value == 1) {
 				$("div.position1").css("display", "block");
@@ -392,11 +400,12 @@ h4 .requir {
 		$(".submit")
 				.click(
 						function() {
-							let pNo = location.search.split('=').pop();
+							let pNo = "${detail.projectNo}";
+							console.log(new FormData($(form)[0]));
 							if (check() != false) {
 								$
 										.ajax({
-											url : "${contextPath}/addRec",
+											url : "${contextPath}/modifyRec",
 											method : "POST",
 											enctype : "multipart/form-data",
 											processData : false,
@@ -404,7 +413,7 @@ h4 .requir {
 											data : new FormData($(form)[0]),
 											success : function(response) {
 												if (response == "success") {
-													let answer = confirm("등록이 완료 되었습니다. 추가 모집을 등록하시겠습니까?");
+													let answer = confirm("수정이 완료 되었습니다. 추가 모집을 등록하시겠습니까?");
 													if (answer == true) {
 														location.href = "${contextPath}/add_rec?ProjectNo="
 																+ pNo;
@@ -469,6 +478,7 @@ h4 .requir {
 				return false;
 			}
 		}
+		
 	</script>
 </body>
 

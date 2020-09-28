@@ -52,7 +52,8 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop> <!-- dialect : Hibernate가 db마다 다른 SQL문법을 처리하기 위한 클래스입니다 -->
 				<prop key="hibernate.id.new_generator_mappings">true</prop>         <!-- JPA 표준에 맞게 새로운 키 생성 전략을 사용 -->
-				<prop key="hibernate.ddl.auto">update</prop>                    <!-- DDL 자동 생성 -->
+				<prop key="hibernate.ddl.auto">update</prop>
+				<prop key="hibernate.event.merge.entity_copy_observer">allow</prop>                <!-- DDL 자동 생성 -->
 			</props>
 		</property>
 	</bean>

@@ -1,8 +1,6 @@
 package com.connecthink.controller;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -18,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +31,7 @@ import com.connecthink.service.CustomerService;
 import com.connecthink.service.MemberService;
 import com.connecthink.service.ProjectService;
 import com.connecthink.service.RecruitService;
+
 
 @Controller
 public class RecruitController {
@@ -157,11 +157,15 @@ public class RecruitController {
 
 	/**
 	 * @author 홍지수
-	 * 모집 등록하기
+	 * 모집 등록, 수정
 	 */
-	@PostMapping(value="/addRec")
+	@PostMapping(value= {"/addRec", "/modifyRec"})
 	@ResponseBody
-	public String addRec(RecruitCommand recruitCommand) {
+	public String addRec(RecruitCommand recruitCommand, HttpServletRequest request) {
+		//요청 받은 url 담아주기
+		recruitCommand.setUrl(request.getServletPath());
+		System.out.println(recruitCommand.getRecPic());
+		//반환 할 status
 		String status ="";
 		try {
 			recruitService.addRec(recruitCommand);
