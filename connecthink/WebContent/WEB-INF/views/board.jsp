@@ -661,7 +661,7 @@ scale
 						<p><strong>{{ member.name }}</strong></p>
 						<p><span>{{ member.position }}</span></p>
 					</div>
-					<div :id=" member.customer_no+'no'" class="status offline"></div>
+					<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
 				</div>
 			</li>
 			<li>
@@ -866,27 +866,22 @@ scale
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
 	
+	var no = 0;
+	
 	//side bar
 	var sideBar = new Vue({
 		el: '#sideBar'
 		,data : {
 			memberList : [],
 			toggle: false,
-			show:true
+			show:true,
+			isManager : ${isManager}
+			
 		},created(){
-			console.log("sidebar 생김");	
+			
 		}//created
 		,methods : {
 			showMemberList(){
-				var led = document.getElementById('sidebar-ul').childNodes[2].childNodes[0].childNodes[4];
-				
-				var ddd = document.querySelector('.sidebarTeamName');
-				
-				
-				console.log(led);
-				
-				console.log(ddd);
-				
 				axios
 			  	.get('/connecthink/lookUpMember', {
 			  	    params: {
@@ -898,9 +893,9 @@ scale
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
 						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
-						  var log = chat.isLogin(memberInfo[0]);
+						  
+						  //var log = chat.isLogin(memberInfo[0]);
 						 
-						  console.log(memberInfo[2] == 'teamLeader');
 					  })//forEach for memberList				  
 			  })//axios
 			},//showMemberList
@@ -941,17 +936,14 @@ scale
 		   message : "",
 		   msgs : [],
 		   wrts : [],		   
-		   project_no : 0,
+		   project_no : ${project_no},
 		   writer : 0,
 		   loginLog : []
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
-			  console.log('created');
 			  sideBar.showMemberList();
 			  this.connect();
-			  this.project_no = ${project_no};
-			  
     		}//created
 		  
 		   //변화가 있을경우
@@ -960,7 +952,6 @@ scale
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
-				console.log("if들어옴");
 			}
 			  
 		  }
@@ -1008,40 +999,31 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.18:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
 					  this.status = "ready";
 					  this.send("ready:"+this.project_no);
 					  
-					  console.log('connected');
 					  this.status = "Connected";
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
-						  console.log("message도착!");
 						var datas = data.split(":");
-						console.log(datas);
 						if(datas[0] == "userid"){
 							this.writer = datas[1];						
 						}
 						else if(datas[0] == "loginInfo"){
 							var loguserArray = datas[1].substring(1,datas[1].length-1).split(",");
 							var className = "status online";
-							console.log("login user Info@@");
-							console.log(typeof loguserArray);
 							loguserArray.forEach(customer_no => {
-								console.log(customer_no);
 								var dc = document.getElementById(customer_no.trim()+"no");
-								console.log(dc);
  								dc.setAttribute("class",className);
-// 								console.log(document.getElementById(customer_no.trim()));
 							});
 						}else if(datas[0] == "logoutInfo"){
 							var logoutUser_no = datas[1];
 							var className = "status offline";
 							var dc = document.getElementById(logoutUser_no.trim()+"no");
-							console.log(dc);
 							dc.setAttribute("class",className);
 						}else{
 							var user = datas[0];
@@ -1066,19 +1048,6 @@ scale
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
-			  },
-				
-			  //맴버 접속 여부 가져오기
-			  isLogin(customer_no){
-				 // alert(customer_no + "로긴중");
-				  var log = this.loginLog.findIndex(log=> log.customer_no === customer_no);
-				  if(log == 1){
-					  console.log("true 들어옴");
-					  return true;
-				  }else{
-					  console.log("false 들어옴");
-					  return false;
-				  }
 			  }
 		  }//method
 		});

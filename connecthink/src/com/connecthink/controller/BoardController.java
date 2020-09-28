@@ -20,6 +20,7 @@ import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
 import com.connecthink.entity.Task;
 import com.connecthink.service.BoardService;
+import com.connecthink.service.ProjectService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,12 +30,14 @@ public class BoardController {
    @Autowired
    private BoardService service;
    
+   @Autowired
+   private ProjectService pjService;
    @RequestMapping("/board")
    ModelAndView board(HttpSession session,HttpServletRequest req,@RequestParam("project_no") int project_no) {
       ModelAndView mv = new ModelAndView();
       
       int customer_no = (Integer)session.getAttribute("loginInfo");
-      
+      int Manager_no = pjService.lookUpMyManager(project_no);
       List<Task> taskList = tList(project_no);
       
       //Http session 에 저장할 userid 대체용
@@ -51,6 +54,7 @@ public class BoardController {
       	
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
+        mv.addObject("isManager",Manager_no);
         mv.addObject("list", taskList);
 		return mv;
 	}
