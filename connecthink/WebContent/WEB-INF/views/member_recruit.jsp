@@ -128,16 +128,10 @@
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 										<button class="smallbtn" onclick="openModal()" data-toggle="modal" data-target="#myModal" id="inviteButton">초대하기</button>
-										<button class="cancelbtn" id ="uninviteButton" onclick="uninviteMember()" >초대취소</button>
+										
 									</div>
 								</div>
-
-							</div>
-							<!--                             <div class="jobs_right"> -->
-							<!--                                 <div class="apply_now"> -->
-							<!--                                     <a class="heart_mark" href="#"> <i class="ti-heart"></i> </a> -->
-							<!--                                 </div> -->
-							<!--                             </div> -->
+							</div>							
 						</div>
 					</div>
 					<div class="descript_wrap white-bg">
@@ -308,8 +302,8 @@
 					txt += "<option value='"+data[i].recruitNo+"'>"+data[i].requirement+"</option>";
 					
 					console.log(txt);
+						
 					}
-					
 					txt += "</select>";
 					$selectSection.html(txt);
 				} 
@@ -328,33 +322,13 @@
 					},
 				success: function(data){
 					if (data == "success") {
-						$('.close').click();
-// 						$('.smallbtn').hide();
-// 						$('.cancelbtn').show();						
+						$('.close').click();					
 					}
 				}
 			});
 			
 		}
-// 		function uninviteMember(){
-// 			var recruitNo = document.getElementById('project_no').value;
-// 			$.ajax({
-// 				url:"${contextPath}/manageTeam/deny",
-// 				data:{ 
-// 					memberNo: ${customer.customerNo}, 
-// 					recruitNo: recruitNo,
-// 					${_csrf.parameterName} : '${_csrf.token}'
-// 				},
-// 				success: function(data){
-// 					if (data == "success") {
-// 						$('.close').click();
-// 						$('.smallbtn').show();
-// 						$('.cancelbtn').hide();
-						
-// 					}
-// 				}
-// 			});
-// 		}
+
 		function addBookmark() {
 			
 			$.ajax({

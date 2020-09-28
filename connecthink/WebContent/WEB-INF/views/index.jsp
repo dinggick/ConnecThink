@@ -77,10 +77,10 @@
 			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="img/banner/main2.jpg" alt="First slide">
+      <img class="d-block w-100" src="img/banner/banner2.jpg" alt="First slide">
        <div class="carousel-caption d-none d-md-block">
-    <h5>caption</h5>
-    <p>...</p>
+   	 <h5>caption</h5>
+   
   </div>
     </div>
     <div class="carousel-item">
@@ -307,7 +307,7 @@
 				var txt = "";
 				for (x in responseObj) {
 					var deadline = new Date(responseObj[x].deadline).toISOString().substring(0, 10);;
-					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='recDetail(this);'>" +
+					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='projectDetail(this);'>" +
 							"<div class='thumbnail'><div class='test'><img src='img/default.png' alt='모집 사진'></div></div>" +
 							"<h4 class='mt-4 mr-4 ml-4 rec_title'>" + responseObj[x].requirement + "</h4>" +
 					"<ul style='list-style: none;'><li class='wanna'>" + responseObj[x].position.name + "</li>" +
@@ -323,6 +323,12 @@
 	}
 	function memberDetail(customerNo) {
 		let url = "${contextPath}/member_detail?customerNo=" + customerNo ;
+		location.href = url;
+	}
+	function projectDetail(e) {
+		let $recNo = $(e).find("#recruitNo").val();
+		alert($recNo);
+		let url = "${contextPath}/rec_detail?recNo=" + $recNo ;
 		location.href = url;
 	}
 	</script>
