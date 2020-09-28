@@ -157,6 +157,7 @@ public class BoardService {
 	 * 포스트잇 삭제
 	 * @author 변재
 	 */
+	@Transactional
 	public void removeByTask(Integer customer_no,Integer taskNo) {
 		Task t = taskRepository.findById(taskNo).get();
 		Customer c = t.getCustomer();
