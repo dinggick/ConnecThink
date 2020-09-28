@@ -294,6 +294,7 @@
 	<script src="${contextPath}/js/jquery.validate.min.js"></script>
 	<script src="${contextPath}/js/mail-script.js"></script>
 	<script src="${contextPath}/js/main.js"></script>
+	<script src="${contextPath}/js/sidenav.js"></script>
 
     <!-- header-end -->
 <script>
