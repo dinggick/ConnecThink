@@ -1,4 +1,4 @@
-package upload;
+package com.connecthink.command;
 
 import java.util.Date;
 

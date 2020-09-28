@@ -14,12 +14,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.connecthink.command.ProjectCommand;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.ProjectRepository;
-
-import upload.ProjectCommand;
 
 @Service
 @Transactional
@@ -210,25 +209,7 @@ public class ProjectService {
 	public void addProject(ProjectCommand projectCommand) {
 		Project project = new Project();
 		
-		//파일 저장 경로
-		//기본경로 바꿔주기
-		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
-		//프로젝트 - 파일경로
-		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "project" + File.separator;
-				
-		//파일 - 프로젝트 상세 설명 형식
-		String ext1 = ".txt";
 		Integer projectNo = projectCommand.getProjectNo();
-		File txt = new File(saveTxtPath, projectNo+ext1);
-		
-		OutputStream output;
-		try {
-			output = new FileOutputStream(txt);
-			byte[] data = projectCommand.getPurpose().getBytes();
-			output.write(data);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 		//project에 담아주기
 		project.setProjectNo(projectNo);
@@ -237,7 +218,7 @@ public class ProjectService {
 		project.setTheme(projectCommand.getTheme());
 		project.setProjectStatus(1);
 		project.setManagerNo(projectCommand.getManagerNo());
-		project.setPurpose(saveTxtPath+projectNo+ext1);
+		project.setPurpose(projectCommand.getPurpose());
 		
 		projectRepository.save(project);		
 	}

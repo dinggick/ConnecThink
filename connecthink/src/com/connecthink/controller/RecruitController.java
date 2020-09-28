@@ -4,12 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.connecthink.command.RecruitCommand;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
@@ -26,8 +32,6 @@ import com.connecthink.service.CustomerService;
 import com.connecthink.service.MemberService;
 import com.connecthink.service.ProjectService;
 import com.connecthink.service.RecruitService;
-
-import upload.RecruitCommand;
 
 @Controller
 public class RecruitController {
@@ -89,12 +93,13 @@ public class RecruitController {
 
 	/**
 	 * @author 홍지수
-	 * 모집 상세 보기
+	 * 모집 상세 보기 / 모집 수정하기 뷰
 	 */
-	@RequestMapping("/rec_detail")
-	public ModelAndView findByRecruitNo(String recNo) {
+	@RequestMapping(value= {"/rec_detail", "/modify_rec"})
+	public ModelAndView findByRecruitNo(String recNo, HttpServletRequest request) {
 		ModelAndView mnv = new ModelAndView();
-
+		String whatYouCallValue = request.getServletPath(); //매핑 한 url 값 가져오기
+		
 		//모집번호
 		String no = recNo;
 		mnv.addObject("recNo", no);
@@ -118,51 +123,34 @@ public class RecruitController {
 		//파일 읽어오기
 		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
 		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt" + File.separator;
-		String saveProjectTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "project" + File.separator;
+		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img" + File.separator;
 		
-		//프로젝트 번호 얻기
-		int idx = recNo.indexOf("R");
-		String name = recNo.substring(0, idx); 
-		int projectNo = Integer.parseInt(name);
+		//이미지 존재 여부 확인
+		File f = new File(saveImgPath+recNo+".jpg");
+		if(f.exists()) {
+			String name = f.getName();
+			mnv.addObject("imgName", name);
+		}
 		
 		//recruit/txt 디렉토리 내부에 파일 있는 지 확인
-		File f = new File(saveTxtPath+recNo+".txt");
-		File f1 = new File(saveProjectTxtPath+projectNo+".txt");
+		Path path = Paths.get(saveTxtPath+recNo+".txt");
+		//캐릭터 셋
+		Charset cs = StandardCharsets.UTF_8;
 		//담아 줄 리스트
 		List<String> fList = new ArrayList<String>();
-		List<String> fList1 = new ArrayList<String>();
 		
 		try {
-			//모집상세
-			FileReader filereader = new FileReader(f);
-			if(f.exists()) {
-				BufferedReader reader = new BufferedReader(filereader);
-				String line = "";
-				while((line = reader.readLine()) != null) {
-					fList.add(line);
-				}
-				reader.close();
-				mnv.addObject("fList", fList);
-			}
-			
-			//목적
-			FileReader freader = new FileReader(f1);
-			if(f1.exists()) {
-				BufferedReader reader = new BufferedReader(freader);
-				String line = "";
-				while((line = reader.readLine()) != null) {
-					fList1.add(line);
-				}
-				reader.close();
-				mnv.addObject("fList1", fList1);
-			}
+			fList = Files.readAllLines(path, cs);
+			mnv.addObject("fList", fList);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		mnv.setViewName("/rec_detail");
-
-		System.out.println(no + p + c + list + bmCount);
+		if(whatYouCallValue.equals("/rec_detail")) {
+			mnv.setViewName("/rec_detail");			
+		} else {
+			mnv.setViewName("/modify_rec");
+		}
 
 		return mnv;
 	}

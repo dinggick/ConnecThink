@@ -156,7 +156,7 @@
 		fetch("${contextPath}/rec").then(function(data){
 		});
 		
-
+		//썸네일 처리
 		<c:forEach items="${rec}" var="rec" varStatus = "status">
 		<c:forEach items="${img}" var="img" varStatus = "st">
 		<c:if test="${rec.recruitNo eq img}">
