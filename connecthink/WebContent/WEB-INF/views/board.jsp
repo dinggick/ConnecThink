@@ -879,10 +879,13 @@ scale
 		,methods : {
 			showMemberList(){
 				var led = document.getElementById('sidebar-ul').childNodes[2].childNodes[0].childNodes[4];
-				var leader = document.getElementById('sidebar-ul').childNodes[2].childNodes;
+				
+				var ddd = document.querySelector('.sidebarTeamName');
+				
 				
 				console.log(led);
-				console.log(leader);
+				
+				console.log(ddd);
 				
 				axios
 			  	.get('/connecthink/lookUpMember', {
