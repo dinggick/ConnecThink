@@ -1209,10 +1209,8 @@ var ddd;
 	                	}
 	                })
 	                .then(response => {
-	                	this.lists.push({content:this.addName});
 	                	this.addName='';
-	                });	
-	                
+	                });
 				}else if(evPath == 'doing'){
 					status = 2;
 					axios.get('/connecthink/addTask',{
