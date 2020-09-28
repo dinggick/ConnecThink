@@ -666,7 +666,7 @@ scale
 				</div>
 			</li>
 			<li>
-				<p v-if="show"><a v-on:click="endProject">프로젝트 종료</a></p>
+				<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
 				<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
 			</li>
 		</ul>
@@ -904,28 +904,27 @@ var ddd;
 			},//showMemberList
 			//프로젝트 종료
 			endProject(){
-				
-// 				axios.get('/connecthink/endProject',{
-//                 	params:{
-//                 		project_no: ${project_no}
-//                 	}
-//                 })
-//                 .then(response => {	
-//                 	alert('종료완료!')
-//                 	window.close();
-//                 });
+				axios.get('/connecthink/endProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
 			},
 			//프로젝트탈퇴
 			endMyProject(){
-// 				axios.get('/connecthink/endMyProject',{
-//                 	params:{
-//                 		project_no: ${project_no}
-//                 	}
-//                 })
-//                 .then(response => {	
-//                 	alert('종료완료!')
-//                 	window.close();
-//                 });
+				axios.get('/connecthink/endMyProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
 			}
 		}
 	});
@@ -1071,15 +1070,15 @@ var ddd;
 			updateText:'',
 			options:{
 				 onDragend(event){
-					 console.log(event);
+					 //console.log(event);
 					 
 					 if(event.droptarget == null){
 						 
 					 }
 					 
-					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
+					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-					 console.log('태스크너버' + getTaskNo);
+					 //console.log('태스크너버' + getTaskNo);
 					 axios.get('/connecthink/updateStatus',{
 		                	params:{
 		                		taskNo:getTaskNo,
