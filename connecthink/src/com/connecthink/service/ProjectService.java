@@ -39,7 +39,12 @@ public class ProjectService {
 			Iterator<Recruit> ir = r.iterator();
 			while (ir.hasNext()) {
 				Recruit t = ir.next();
-				System.out.println("##############" +t.getRecruitNo());
+				Set<Member> m = t.getMembers();
+				Iterator<Member> it = m.iterator();
+				while(it.hasNext()) {
+					Member n = it.next();
+					n.getCustomer();
+				}
 			}
 		});
 		return p;

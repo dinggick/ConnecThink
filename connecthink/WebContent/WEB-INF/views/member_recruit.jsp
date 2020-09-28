@@ -6,6 +6,7 @@
 <c:set var = "customer" value="${requestScope.customer}"/>
 <c:set var = "project" value="${requestScope.project}"/>
 <c:set var="isManager" value="${requestScope.isManager }"/>
+<c:set var="invited" value="${requestScope.invited }"/>
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -52,6 +53,15 @@
 	font-size: 13px !important;
 	margin-left: 15px;
 }
+.bmspan:hover{
+	cursor: pointer;
+}
+.unbm{
+	display: none;
+}
+.msg:hover{
+	cursor: pointer;
+}
 		
 </style>
 </head>
@@ -91,10 +101,17 @@
 										<div class="location">
 <%-- 											<p>${customer.postion.name }</p> --%>
 											<div class="bookmark">
-												<span onclick="addBookmark()"> <img src="img/bookmark2.png" alt="" class="bm"
-													style="width: 18px; height: 18px;">북마크
-												</span> &nbsp; <span><img src="img/mail2.png" alt=""
-													style="width: 18px; height: 18px;"> 메시지 </span>
+												<a class="bmspan"><span onclick="addBookmark()" class ="bm"> <img src="img/bookmark.png"   alt="" 
+													style="width: 18px; height: 18px;">
+													북마크
+												</span><span onclick="deleteBookmark()"  class ="unbm"> <img src="img/bookmark2.png" alt="" 
+													style="width: 18px; height: 18px;">
+													북마크
+												</span></a> 
+												
+												&nbsp; 
+												<a class="msg" onclick="sendMsg()" data-toggle="modal" data-target="#msgModal"><span ><img src="img/mail2.png" alt=""
+													style="width: 18px; height: 18px;"> 메시지 </span></a>
 											</div>
 										</div>
 
@@ -149,14 +166,14 @@
 							<h4>ConnecThink 히스토리</h4>
 							<c:forEach items="${project}" var = "p" varStatus="status" >
 							<div>
-								<p>프로젝트 날짜 : 								
+								<p> 날짜 : 								
 									<fmt:formatDate var="enterdate" value="${p.startDate}" pattern="yyyy-MM-dd"/>
 									<fmt:formatDate var="quitdate" value="${p.endDate}" pattern="yyyy-MM-dd"/>
-										${enterdate} ~ ${quitdate}  |  프로젝트 이름: ${p.title }
+										${enterdate} ~ ${quitdate}  |  이름: ${p.title }
 
 							</p>
 								
-								<p>프로젝트 소개 : ${p.theme}</p>
+								<p>소개 : ${p.theme}</p>
 							</div>	
 							<br>
 							</c:forEach>
@@ -196,6 +213,32 @@
 
 		</div>
 	</div>
+	<div class="modal fade" id="msgModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				 <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLongTitle">메세지</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		            </button>					
+				</div>
+				<div class="modal-body">
+			
+					<div class="col-md-9">					
+							<textarea rows="10" cols="50" style="border: none; resize:none"></textarea>			
+									
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id ="inviteButton" onclick="inviteMember()">보내기</button>
+				
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 
 	<!-- footer start -->
 	<footer class="footer">
@@ -239,6 +282,11 @@
 		if ('${isManager}' == 'n') {			
 			$(".smallbtn").hide();
 		}
+// 		else if ('${isManager}' =='y' && '${invited}' == 'true') {
+// 			$(".smallbtn").hide();
+// 			$(".cancelbtn").show();
+// 		}
+		bookClick();
 	   
 	});
 		function openModal(){
@@ -247,7 +295,7 @@
 			$.ajax({
 				url: "${contextPath}/memberModal",
 				data:  { 
-// 					managerNo: ${sessionScope.loginInfo},
+ 					customerNo: ${customer.customerNo}, 
 					${_csrf.parameterName} : '${_csrf.token}'
 					},   
 				method: "GET",
@@ -256,12 +304,12 @@
 					var txt = "<select class='position11' form='inviteForm' id='project_no'><option value=''  selected>프로젝트</option>";
 					
 					for (i in data) {	
-						for(x in data[i].recruits) {
-					txt += "<option value='"+data[i].recruits[x].recruitNo+"'>"+data[i].recruits[x].requirement+"</option>";
+						
+					txt += "<option value='"+data[i].recruitNo+"'>"+data[i].requirement+"</option>";
 					
 					console.log(txt);
-						}
 					}
+					
 					txt += "</select>";
 					$selectSection.html(txt);
 				} 
@@ -281,48 +329,88 @@
 				success: function(data){
 					if (data == "success") {
 						$('.close').click();
-						$('.smallbtn').hide();
-						$('.cancelbtn').show();						
+// 						$('.smallbtn').hide();
+// 						$('.cancelbtn').show();						
 					}
 				}
 			});
 			
 		}
-		function uninviteMember(){
-			var recruitNo = document.getElementById('project_no').value;
-			$.ajax({
-				url:"${contextPath}/manageTeam/deny",
-				data:{ 
-					memberNo: ${customer.customerNo}, 
-					recruitNo: recruitNo,
-					${_csrf.parameterName} : '${_csrf.token}'
-				},
-				success: function(data){
-					if (data == "success") {
-						$('.close').click();
-						$('.smallbtn').show();
-						$('.cancelbtn').hide();
+// 		function uninviteMember(){
+// 			var recruitNo = document.getElementById('project_no').value;
+// 			$.ajax({
+// 				url:"${contextPath}/manageTeam/deny",
+// 				data:{ 
+// 					memberNo: ${customer.customerNo}, 
+// 					recruitNo: recruitNo,
+// 					${_csrf.parameterName} : '${_csrf.token}'
+// 				},
+// 				success: function(data){
+// 					if (data == "success") {
+// 						$('.close').click();
+// 						$('.smallbtn').show();
+// 						$('.cancelbtn').hide();
 						
-					}
-				}
-			});
-		}
+// 					}
+// 				}
+// 			});
+// 		}
 		function addBookmark() {
-			var no = document.getElementById('project_no').value;
+			
 			$.ajax({
-				url : "${contextPath}/bmUser",
+				url : "${contextPath}/bmMember",
 				method : "POST",
 				data : {
-					recruitNo : no,					
+					customerNo : '${customer.customerNo}',					
 					${_csrf.parameterName} : '${_csrf.token}'
 				},
 				success : function(data) {
 					console.log(data);					
-					if (data == "success") {						
-						$("img.bm").css("display", "none");
-						$("img.on").css("display", "inline-block");
+					if (data == "success") {
+						
+						$("span.bm").css("display", "none");
+						$("span.unbm").css("display", "inline-block");
 					}
 				}
+			});
+		}
+		function deleteBookmark(){
+			$.ajax({
+				url : "${contextPath}/delBmMember",
+				method : "POST",
+				data : {
+					customerNo : '${customer.customerNo}',	
+					user : '${sessionScope.loginInfo}',
+					${_csrf.parameterName} : '${_csrf.token}'
+				},
+				success: function(data){
+					if(data == "success") {
+						$("span.unbm").css("display", "none");
+						$("span.bm").css("display", "inline-block");
+					}
+				}
+			});
+		}
+		function sendMsg(){
+			
+		}
+		function bookClick (){
+			
+			$.ajax({
+				url : "${contextPath}/mateBm",
+				method : "POST",
+				data : {
+					customerNo : ${sessionScope.loginInfo},
+					${_csrf.parameterName} : '${_csrf.token}'},
+				success :  function(list) {
+					list.forEach(function(bm, index){
+						console.log(bm);
+						if(bm.receive.customerNo == '${customer.customerNo}'){
+							$("span.bm").css("display", "none");
+							$("span.unbm").css("display", "inline-block");
+						}
+					});
+				}	
 			});
 		}
 	</script>

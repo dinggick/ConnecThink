@@ -264,6 +264,6 @@ public class webSocketHandler extends TextWebSocketHandler{
 	}//getUserId
 	
 	private String getName(int customer_no) {
-		return customerController.findByNo(customer_no).getName();
+		return customerController.findCustomerByNo(customer_no).getName();
 	}
 }

@@ -2,7 +2,6 @@ package com.connecthink.controller;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Project;
+import com.connecthink.entity.Recruit;
 import com.connecthink.service.ProjectService;
 
 import upload.ProjectCommand;
@@ -93,12 +93,28 @@ public class ProjectController {
 		return service.findApplied(managerNo);
 
 	}
+	/** @author 이혜림
+	 * 멤버를 초대할 프로젝트 불러오기*/
 	@GetMapping(value="/memberModal")
 	@ResponseBody
-	public List<Project> memberModal(HttpSession session) {		
+	public List<Recruit> memberModal(HttpSession session, Integer customerNo) {		
 		int managerNo = (int) session.getAttribute("loginInfo");		
-		List<Project> p = service.findByManagerNo(managerNo);			
-		return p;
+		List<Project> p = service.findByManagerNo(managerNo);	
+		List<Recruit> n = new ArrayList<>();
+		p.forEach(c->{
+			c.getRecruits().forEach(r -> {				
+				r.getMembers().forEach(m -> {
+					
+					if (m.getCustomer().getCustomerNo() != customerNo && m.getInvited() != 1) {
+						n.add(r);
+					}
+				});
+			});
+		});
+		for(Recruit s : n) {
+			System.out.println(s.getRecruitNo());
+		}
+		return n;
 	}
 
 	/**
