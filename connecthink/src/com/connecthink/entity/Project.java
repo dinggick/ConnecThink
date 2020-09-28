@@ -64,7 +64,7 @@ public class Project {
 	@JoinColumn(name = "project_no")
 	private List<Task> tasks;
 	
-	@OneToMany(cascade = CascadeType.MERGE)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
 	private Set<Recruit> recruits;
 	

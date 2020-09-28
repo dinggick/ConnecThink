@@ -184,8 +184,12 @@ public class BoardController {
 	@RequestMapping("endMyProject")
 	public ModelAndView endMyProject(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
 		
-		service.exitProject(103);
+		Integer id = (Integer) session.getAttribute("loginInfo");
+		Integer pNo = Integer.parseInt(request.getParameter("project_no"));
+		
+		service.exitProject(id, pNo);
 		return mav;
 		
 	}

@@ -1,9 +1,8 @@
 	package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +18,7 @@ import com.connecthink.controller.BoardController;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
+import com.connecthink.entity.Recruit;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
@@ -121,10 +121,22 @@ class TaskTest {
 	}
 	
 	@Test
+	@Transactional
 	public void ttt() {
-		Member m = memberRepository.findByIdMemberNo(103);
-		
-		
+		Project p = projectRepository.findById(1).get();
+		Iterator rIter = p.getRecruits().iterator();
+		while(rIter.hasNext()) {
+			Set<Member> memberSet = ((Recruit)rIter.next()).getMembers();
+			Iterator mIter = memberSet.iterator();
+			while(mIter.hasNext()) {
+				Member m = (Member) mIter.next();
+				if(m.getCustomer().getCustomerNo() == 101) {
+					memberSet.remove(m);
+					projectRepository.save(p);
+					return;
+				}
+			}
+		}
 	}
 	
 }

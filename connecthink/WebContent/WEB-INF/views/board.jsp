@@ -844,6 +844,7 @@ scale
 
 </body>
 <script>
+var ddd;
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -868,6 +869,7 @@ scale
 	
 	//side bar
 	var sideBar = new Vue({
+		
 		el: '#sideBar'
 		,data : {
 			memberList : [],
@@ -878,15 +880,6 @@ scale
 		}//created
 		,methods : {
 			showMemberList(){
-				var led = document.getElementById('sidebar-ul').childNodes[2].childNodes[0].childNodes[4];
-				
-				var ddd = document.querySelector('.sidebarTeamName');
-				
-				
-				console.log(led);
-				
-				console.log(ddd);
-				
 				axios
 			  	.get('/connecthink/lookUpMember', {
 			  	    params: {
@@ -898,10 +891,8 @@ scale
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
 						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
-						  var log = chat.isLogin(memberInfo[0]);
-						 
-						  console.log(memberInfo[2] == 'teamLeader');
-					  })//forEach for memberList				  
+						  var log = chat.isLogin(memberInfo[0]);	  
+					  })//forEach for memberList
 			  })//axios
 			},//showMemberList
 			//프로젝트 종료
@@ -1238,7 +1229,7 @@ scale
 	                	}
 	                })
 	                .then(response => {
-	                	this.lists.push({content:this.addName});
+	                	this.lists.push({content:this.addName,taskNo:this.taskNo});
 	                	this.addName='';	
 	                });
 				}else if(evPath == 'doing'){
@@ -1252,7 +1243,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list2.push({content:this.addName1});
-	             
+	                	this.addName1='';	
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1265,7 +1256,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list3.push({content:this.addName2});
-	                	
+	                	this.addName2='';
 	                });
 				}
                 
