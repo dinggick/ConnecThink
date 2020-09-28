@@ -115,9 +115,7 @@ span.customerNo {
 							</ul>
 							<h4 class="mb-2 mt-2">목적</h4>
 							<ul>
-							<c:forEach items="${requestScope.list}" var="list" varStatus="status">
-								<li>${list}</li>
-							</c:forEach>
+								<li>${detail.purpose}</li>
 							</ul>
 						</div>
 					</div>
@@ -141,8 +139,9 @@ span.customerNo {
 					</div>
 					<div class="col-md-12 mt-3">
 						<div class="submit_btn text-center">
-							<button class="boxed-btn3 mr-1" onclick="rec_add();">모집추가</button>
-							<button class="boxed-btn3" onclick="modify();">수정하기</button>
+							<button class="boxed-btn3 mr-4" onclick="rec_add();">모집추가</button>
+							<button class="boxed-btn3 mr-4" onclick="modify();">수정하기</button>
+							<button class="boxed-btn3" onclick="del();">삭제하기</button>
 						</div>
 					</div>
 				</div>
@@ -191,10 +190,18 @@ span.customerNo {
 
 	<!-- script -->
 	<script>
-		//모집 등록
-		
 		let projectNo = "${detail.projectNo}";
+		let managerNo = "${detail.managerNo}";
+		let customerNo = "${sessionScope.loginInfo}";
 		
+		//로드 시 customerNo와 projectNo 비교
+		$(function(){
+			if(managerNo != customerNo){
+				location.href = "${contextPath}/index";
+			}
+		});
+
+		//모집 등록
 		function rec_add() {
 			let answer = confirm("${detail.title}" + " 에 모집을 추가로 등록하시겠습니까?");
 			if (answer == true) {
@@ -218,6 +225,17 @@ span.customerNo {
 			}
 			return false;
 		}
+		
+		//프로젝트 삭제 - 모집 있는지 확인하고 있으면 삭제 못하게
+		function del(){
+			let answer = confirm("${detail.title}" + " 프로젝트를 삭제하시겠습니까?");	
+			if(anwer == true){
+				//ajax 요청
+				//요청 시 모집 존재 여부 확인
+			}
+			return false;
+		}
+		
 	</script>
 </body>
 

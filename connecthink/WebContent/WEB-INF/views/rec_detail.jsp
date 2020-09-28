@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="detail" value="${requestScope.detail}" />
@@ -142,10 +143,7 @@ span.customerNo {
 							</ul>
 							<h4 class="mb-2 mt-2">목적</h4>
 							<ul>
-								<c:forEach items="${requestScope.fList1}" var="list1"
-									varStatus="status">
-									<li>${list1}</li>
-								</c:forEach>
+								<li>${detail.purpose}</li>
 							</ul>
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
@@ -172,6 +170,8 @@ span.customerNo {
 										<li>모집직무 : ${rec.position.name}</li>
 										<li>모집인원 : ${rec.headCount}</li>
 										<li>요구사항 : ${rec.requirement}</li>
+										<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
+										<li>모집기한 : ${dl}</li>
 										<li>모집상세</li>
 											<ul>
 										<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
@@ -245,8 +245,23 @@ span.customerNo {
 
 	<!-- script -->
 	<script>
+
+	let managerNo = "${manager.customerNo}";
+	let customerNo = "${sessionScope.loginInfo}";
+	<c:forEach items="${detail.recruits}" var="rec" varStatus="status">
+		<c:if test="${recNo eq rec.recruitNo}">
+			var recName = "${rec.requirement}";
+		</c:if>
+	</c:forEach>
 	$(function(){
 		bookClick();
+		if(managerNo == customerNo){
+			let $section = $("div.rec_foot_right");
+			let data = "";
+			data += '<button class="boxed-btn mt-4" onclick="modify();">수정하기</button>';
+			data += '<button class="boxed-btn mt-4 ml-2" onclick="del();">삭제하기</button>';
+			$section.html(data);
+		}
 	});
 	
 		//북마크 추가
@@ -302,33 +317,37 @@ span.customerNo {
 			alert($cNo);
 		}
 
-		//메세지 보내기
-		function message(e) {
-			let $cNo = $(e).parents("div.rec_foot_right").siblings("div.rec_foot_left").find("span.customerNo").html();
-			alert($cNo);
+		//수정하기
+		function modify() {
+			let recNo = "${recNo}";
+			let answer = confirm('"'+recName+'"' + "을(를) 수정하시겠습니까?");
+			if(answer == true){
+				location.href = "${contextPath}/modify_rec?recNo="+recNo;
+			}
+			
 		}
 
-		//지원하기
-		function apply() {
+		//삭제하기
+		function del() {
 			console.log("버튼 클릭");
 			let recNo = "${recNo}";
-			let answer = confirm("${detail.title}" + "에 지원하시겠습니까?");
-			if(answer == true){
-			$.ajax({
-				url : "${contextPath}/recruit",
-				method : "POST",
-				data : {recruitNo : recNo,
-						customerNo : ${sessionScope.loginInfo},
-						${_csrf.parameterName} : '${_csrf.token}'},
-				success : function(data){
-					if(data == "success"){
-						alert("지원 완료");						
-					}
-				}
-			});
-			} else {
+			let answer = confirm('"'+recName+'"' + "을(를) 삭제하시겠습니까?");
+// 			if(answer == true){
+// 			$.ajax({
+// 				url : "${contextPath}/recruit",
+// 				method : "POST",
+// 				data : {recruitNo : recNo,
+// 						customerNo : ${sessionScope.loginInfo},
+// 						${_csrf.parameterName} : '${_csrf.token}'},
+// 				success : function(data){
+// 					if(data == "success"){
+// 						alert("지원 완료");						
+// 					}
+// 				}
+// 			});
+// 			} else {
 				
-			}
+// 			}
 			return false;
 		}
 		

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.connecthink.command.RecruitCommand;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
@@ -29,8 +30,6 @@ import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.PositionRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.RecruitRepository;
-
-import upload.RecruitCommand;
 
 @Service
 @Transactional

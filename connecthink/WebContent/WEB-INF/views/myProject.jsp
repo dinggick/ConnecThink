@@ -139,7 +139,7 @@
 						</div>
 						<div class="tr-section">
 							<div class="table-row bg-white">
-								<div style='width:100%; height:100px; line-height:100px; text-align:center;'>응답중입니다.</div>
+<!-- 								<div style='width:100%; height:100px; line-height:100px; text-align:center;'>응답중입니다.</div> -->
 							</div>
 						</div>
                     </div>
@@ -227,6 +227,7 @@
 							if (size > 0) {
 								teams.forEach(function(team, index) {
 									data += '<div class="table-row bg-white">';
+									data += '<div class="managerNo" style="display:none;">'+ team.managerNo +'</div>';
 									data += '<div class="projectNo" style="display:none;">'+ team.projectNo +'</div>';
 									data += '<div class="title" onclick="projectDetail(this);">' + team.title + '</div>';
 									data += '<div class="theme">'+ team.theme +'</div>';

@@ -1,15 +1,12 @@
 package com.connecthink.controller;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.connecthink.command.ProjectCommand;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.service.ProjectService;
-
-import upload.ProjectCommand;
 
 @Controller
 public class ProjectController {
@@ -121,17 +117,23 @@ public class ProjectController {
 	 * @author 홍지수
 	 * 프로젝트 등록하기
 	 */
-	@PostMapping(value="/addProject")
+	@PostMapping(value= {"/addProject", "/modifyProject"})
 	@ResponseBody
-	public Map addProject(ProjectCommand projectCommand) {
+	public Map addProject(ProjectCommand projectCommand, HttpServletRequest request, HttpSession session) {
 		Map<String, Object> result = new HashMap<String, Object>();
+		String whatYouCallValue = request.getServletPath(); //매핑 한 url 값 가져오기
 		Integer pNo = 0;
+		int managerNo = (int) session.getAttribute("loginInfo");
+		projectCommand.setManagerNo(managerNo);
+		
+		if(whatYouCallValue.equals("/addProject")) {
+			pNo = service.seq_lastval();	
+		} else {
+			pNo = projectCommand.getProjectNo();
+		}
 
 		try {
-			pNo = service.seq_lastval();
-			projectCommand.setProjectNo(pNo);
 			service.addProject(projectCommand);
-
 			result.put("status", "success");
 			result.put("projectNo", pNo);
 
@@ -181,40 +183,24 @@ public class ProjectController {
 
 	/**
 	 * @author 홍지수
-	 * 팀 상세 보기
+	 * 팀 상세 보기 / 팀 수정하기 뷰 불러오기
 	 */
-	@RequestMapping(value = "/project_detail")
-	public ModelAndView projectDetail(Integer projectNo) {
+	@RequestMapping(value = {"/project_detail", "/modify_project"})
+	public ModelAndView projectDetail(Integer projectNo, HttpServletRequest request) {
 		ModelAndView mnv = new ModelAndView();
+		String whatYouCallValue = request.getServletPath(); //매핑 한 url 값 가져오기
 		
 		Project p = service.findByProjectNo(projectNo);
 		mnv.addObject("detail", p);
-
-		//파일에서 읽어 온 내용 담아 줄 list
-		List<String> list = new ArrayList<String>();
-		//저장 되어 있는 텍스트 이름 얻기 위한 디렉토리 주소 찾기
-		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
-		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "project" + File.separator;
-		//project 디렉토리 내부에 파일 있는 지 확인
-		File f = new File(saveTxtPath+projectNo+".txt");
-		//파일 읽어오기 위한 메소드
-		try {
-			FileReader filereader = new FileReader(f);
-			//파일 존재 확인
-			if(f.exists()) {
-				BufferedReader reader = new BufferedReader(filereader);
-				String line = "";
-				while((line = reader.readLine()) != null) {
-					list.add(line);
-				}
-				reader.close();
-				mnv.addObject("list", list);
-			}	
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(whatYouCallValue.equals("/project_detail")) {
+			mnv.setViewName("/project_detail");
+			System.out.println("상세보기");
+		} else {
+			mnv.setViewName("/modify_project");
+			System.out.println("수정하기");
 		}
-		mnv.setViewName("/project_detail");
 		return mnv;
 	}
+	
 
 }
