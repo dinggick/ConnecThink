@@ -1,7 +1,6 @@
 package com.connecthink.service;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -9,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.repository.ProjectRepository;
 
-import oracle.net.aso.p;
 import upload.ProjectCommand;
 
 @Service
@@ -28,6 +27,10 @@ public class ProjectService {
 	
 	@Autowired
 	private ProjectRepository projectRepository;
+	
+	@Autowired
+	private ServletContext context;
+	
 	//매니저 번호로 프로젝트 찾기
 	public List<Project> findByManagerNo(Integer managerNo) {
 		List<Project> p = projectRepository.findByManagerNo(managerNo);
@@ -208,12 +211,15 @@ public class ProjectService {
 		Project project = new Project();
 		
 		//파일 저장 경로
-		String saveDirectory = "C:\\storage\\";
-		
-		//파일 - 모집 상세 설명 형식
+		//기본경로 바꿔주기
+		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
+		//프로젝트 - 파일경로
+		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "project" + File.separator;
+				
+		//파일 - 프로젝트 상세 설명 형식
 		String ext1 = ".txt";
 		Integer projectNo = projectCommand.getProjectNo();
-		File txt = new File(saveDirectory+projectNo+ext1);
+		File txt = new File(saveTxtPath, projectNo+ext1);
 		
 		OutputStream output;
 		try {
@@ -231,8 +237,36 @@ public class ProjectService {
 		project.setTheme(projectCommand.getTheme());
 		project.setProjectStatus(1);
 		project.setManagerNo(projectCommand.getManagerNo());
+		project.setPurpose(saveTxtPath+projectNo+ext1);
 		
 		projectRepository.save(project);		
+	}
+	
+	/**
+	 * @author 홍지수
+	 * project_seq.nextval 호출
+	 */
+	public Integer seq_lastval() {
+		return projectRepository.seq_lastval();
+	}
+	
+	/**
+	 * @author 홍지수
+	 * projectNo에 해당하는 프로젝트 상세보기
+	 */
+	public Project findByProjectNo(Integer projectNo) {
+		Project p = projectRepository.findByProjectNo(projectNo);
+		p.getTasks().forEach(t->{
+			t.getContent();
+		});
+
+		p.getRecruits().forEach(r->{
+			r.getPosition().getName();
+			r.getMembers().forEach(m ->{
+				m.getCustomer().getName();
+			});
+		});
+		return p;
 	}
 
 }

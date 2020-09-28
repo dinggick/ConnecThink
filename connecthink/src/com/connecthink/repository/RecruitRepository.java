@@ -16,6 +16,9 @@ public interface RecruitRepository extends JpaRepository<Recruit, String> {
 			"where\r\n" + 
 			"    m.member_no = ?1")
 	public List<Recruit> findByCustomerNo(Integer customerNo);
+	
 	public List<Recruit> findTop9By();
 	
+	@Query(nativeQuery = true, value="select * from recruit order By LPAD(RECRUIT_NO,20,0) desc")
+	public List<Recruit> findAllDesc();
 }
