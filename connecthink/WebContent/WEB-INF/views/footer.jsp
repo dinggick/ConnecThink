@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"></c:set>
 
   
 		<div class="footer_top">
@@ -8,7 +10,7 @@
 						<div class="footer_widget wow fadeInUp" data-wow-duration="1s"
 							data-wow-delay=".3s">
 							<div class="footer_logo">
-								<a href="#"> <img src="img/logo.png" alt="">
+								<a href="#"> <img src="${contextPath}/img/logo.png" alt="">
 								</a>
 							</div>
 							<p>

@@ -18,20 +18,6 @@ $(window).on('scroll', function () {
 
 $(document).ready(function(){
 	
-	//side bar lookUp project
-	$.ajax({
-		url:"/connecthink/lookUpMyProject"
-		,success:function(projectInfo){
-			let space = $('.sidenav');
-			
-			$(projectInfo).each(function (index, project) {
-				let url = "board?project_no="+project.projectNo+"";
-				space.append("<a href="+url+">"+project.title+"</a>");
-			});	
-			
-		}
-	});
-	
 	
 // mobile_menu
 var menu = $('ul#navigation');
@@ -353,8 +339,7 @@ mailChimp();
 				method : "POST",
 				data : $(this).serialize(),
 				success : (data, textStatus, jqXHR) => {
-					alert("로그인 성공");
-					location.reload();
+					location.href = "/connecthink/";
 				},
 				error : () => {
 					alert("로그인 실패");
@@ -370,7 +355,7 @@ mailChimp();
 				method : "POST",
 				data : {_csrf : csrfToken},
 				success : (data, textStatus, jqXHR) => {
-					location.reload();
+					location.href = "/connecthink/";
 				}
 			});
 		});
@@ -401,7 +386,6 @@ mailChimp();
 				data : {'code' : verifyCode,
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
-					alert("인증 성공");
 					$("#verifyModal").modal("hide");
 					$("#isVerified").val("y");
 				},
@@ -421,7 +405,6 @@ mailChimp();
 					method : "POST",
 					data : $(this).serialize(),
 					success : (data, textStatus, jqXHR) => {
-						alert("회원가입 성공");
 						location.reload();
 					},
 					error : () => {
@@ -508,7 +491,6 @@ mailChimp();
 					method : "POST",
 					data : $(this).serialize(),
 					success : (data, textStatus, jqXHR) => {
-						alert("비밀번호 재설정 성공");
 						location.reload();
 					}
 				});

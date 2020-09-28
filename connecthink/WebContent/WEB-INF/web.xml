@@ -4,9 +4,6 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	id="WebApp_ID" version="4.0">
 	<display-name>connecthink</display-name>
-	<welcome-file-list>
-		<welcome-file>/WEB-INF/views/index.jsp</welcome-file>
-	</welcome-file-list>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml

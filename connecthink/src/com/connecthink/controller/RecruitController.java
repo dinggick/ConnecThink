@@ -200,4 +200,5 @@ public class RecruitController {
 		recruitService.saveInvite(recruitNo, customerNo);
 		return "success";
 	}
+		
 }

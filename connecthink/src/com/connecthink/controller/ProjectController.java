@@ -1,5 +1,6 @@
 package com.connecthink.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.command.ProjectCommand;
 import com.connecthink.entity.Project;
+import com.connecthink.entity.Recruit;
 import com.connecthink.service.ProjectService;
 
 @Controller
@@ -87,12 +89,28 @@ public class ProjectController {
 		return service.findApplied(managerNo);
 
 	}
+	/** @author 이혜림
+	 * 멤버를 초대할 프로젝트 불러오기*/
 	@GetMapping(value="/memberModal")
 	@ResponseBody
-	public List<Project> memberModal(HttpSession session) {		
+	public List<Recruit> memberModal(HttpSession session, Integer customerNo) {		
 		int managerNo = (int) session.getAttribute("loginInfo");		
-		List<Project> p = service.findByManagerNo(managerNo);			
-		return p;
+		List<Project> p = service.findByManagerNo(managerNo);	
+		List<Recruit> n = new ArrayList<>();
+		for (Project m : p) {
+			m.getRecruits().forEach(c -> {
+				n.add(c);
+				c.getMembers().forEach(g -> {
+					if (g.getCustomer().getCustomerNo() == customerNo && g.getInvited() ==1 ) {
+						n.remove(c);
+					}
+				});
+			});
+		}
+		for(Recruit s : n) {
+			System.out.println(s.getRecruitNo());
+		}
+		return n;
 	}
 
 	/**
@@ -186,3 +204,4 @@ public class ProjectController {
 	
 
 }
+ 

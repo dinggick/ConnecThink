@@ -1,26 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="list" value="${requestScope.list}"/>	
+<c:set var="list" value="${requestScope.list}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/gijgo.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/slicknav.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
+    <link rel="stylesheet" href="${contextPath}/css/style.css">
 
 
 <style>
@@ -634,7 +635,7 @@ scale
 	right:17px;
 }
 
-.friend .status.offline{background:#ffce54;}
+.friend .status.offline{background:#f74710;}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -646,84 +647,32 @@ scale
 </head>
 <body>
 	<!-- Sidebar -->
-	<a href="#menu-toggle" class="menutoggle" id="menu-toggle">☰</a>
+	<div id="sideBar"> 
+	<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
 
-	<div id="sidebar-wrapper" style="display: none">
-		<ul class="sidebar-nav" id="haha">
+	<div id="sidebar-wrapper" v-show='toggle'>
+		<ul class="sidebar-nav" id="sidebar-ul">
 			<li class="sidebarTeamName">
-				<a href="#" id="down">This is Team Name</a>
-			</li>
+				<a href="#" id="down" @click="toggle = !toggle">This is Team Name</a>
+			</li>	
 			<li v-for="member in memberList">
 				<div class="friend">
 					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
 					<div class="profile">
-						<p><strong>{{member.name}}</strong></p>
-						<p><span>{{member.position}}</span></p>
+						<p><strong>{{ member.name }}</strong></p>
+						<p><span>{{ member.position }}</span></p>
 					</div>
-					<div v-if=msg.isOnline class="status online"></div>
-					<div v-else class="status offline"></div>
+					<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
 				</div>
 			</li>
-			
 			<li>
-				<div class="friend">
-					<img src="https://t1.daumcdn.net/cfile/blog/2559E33B51368FEF02" />
-					<div class="profile">
-						<p><strong>Modify</strong></p>
-						<p><span>Web God</span></p>
-					</div>
-					<div class="status offline"></div>
-				</div>
+				<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
+				<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
 			</li>
-
-			<li>
-				<div class="friend">
-					<img src="https://pbs.twimg.com/media/EB5Pq3rVUAAYjxI.jpg" />
-					<div class="profile">
-						<p><strong>Ggugi</strong></p>
-						<p><span>Web Developer</span></p>
-					</div>
-					<div class="status online"></div>
-				</div>
-			</li>
-
-			<li>
-				<div class="friend">
-					<img src="https://t1.daumcdn.net/liveboard/realty/b0516b5193334bd089651b49b52d7655.png" />
-					<div class="profile">
-						<p><strong>Seo Kang-Joon</strong></p>
-						<p><span>git God</span></p>
-					</div>
-					<div class="status online"></div>
-				</div>
-			</li>
-
-			<li>
-				<div class="friend">
-					<img src="https://cphoto.asiae.co.kr/listimglink/6/2020062421493324321_1593002973.png" />
-					<div class="profile">
-						<p><strong>Dlwlrma</strong></p>
-						<p><span>God</span></p>
-					</div>
-					<div class="status offline"></div>
-				</div>
-			</li>
-
-			<li>
-				<div class="friend">
-					<img src="https://pbs.twimg.com/profile_images/1274215735070343168/e0rgTWHp_400x400.jpg" />
-					<div class="profile">
-						<p><strong>Ji Chu</strong></p>
-						<p><span>Buddha</span></p>
-					</div>
-					<div class="status"></div>
-				</div>
-			</li>
-			<li><a v-on:click="endProject">프로젝트 종료</a></li>
 		</ul>
 	</div>
-
-
+	
+	</div>
 
 	<div id="dashBoard" v-drag-and-drop:options="options">
 		<!-- 상세 내용 모달 -->
@@ -842,7 +791,6 @@ scale
 								<div class="content">
 									
 									<!-- 메세지 받을때 -->
-									
 									<div id="msgs" v-for="msg in msgs">
 										<div class="chat-message-group reception" v-if="msg.reception">
 											<div class="chat-thumb">
@@ -897,6 +845,7 @@ scale
 
 </body>
 <script>
+var ddd;
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -919,6 +868,67 @@ scale
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
 	
+	var no = 0;
+	
+	//side bar
+	var sideBar = new Vue({
+		
+		el: '#sideBar'
+		,data : {
+			memberList : [],
+			toggle: false,
+			show:true,
+			isManager : ${isManager}
+			
+		},created(){
+			
+		}//created
+		,methods : {
+			showMemberList(){
+				axios
+			  	.get('/connecthink/lookUpMember', {
+			  	    params: {
+			  	      project_no: ${project_no}
+			  	    }
+			  	 })
+			  	.then(result => {
+					  var memberInfo = result.data;	   			
+					  memberInfo.forEach(member => {
+						  var memberInfo = member.split(":");
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
+						  
+						  //var log = chat.isLogin(memberInfo[0]);
+						 
+					  })//forEach for memberList				  
+			  })//axios
+			},//showMemberList
+			//프로젝트 종료
+			endProject(){
+				axios.get('/connecthink/endProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
+			},
+			//프로젝트탈퇴
+			endMyProject(){
+				axios.get('/connecthink/endMyProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
+			}
+		}
+	});
+	
 	//채팅 헤더 토글
 	var chat = new Vue({
 		 el: '#chatApp'
@@ -927,16 +937,15 @@ scale
 		   headUser: '팀 명이 들어갈 곳 입니다.',
 		   message : "",
 		   msgs : [],
-		   wrts : [],
-		   memberList : [],
-		   project_no : 0,
-		   writer : 0
+		   wrts : [],		   
+		   project_no : ${project_no},
+		   writer : 0,
+		   loginLog : []
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
-			  console.log('created');
+			  sideBar.showMemberList();
 			  this.connect();
-			  this.project_no = ${project_no};
     		}//created
 		  
 		   //변화가 있을경우
@@ -945,7 +954,6 @@ scale
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
-				console.log("if들어옴");
 			}
 			  
 		  }
@@ -953,6 +961,9 @@ scale
 			  
 			  //연결해제
 			  disconnect(){
+				  alert("끊김");
+				  const idx = a.findIndex(function(item) {return item.customer_no === 1});
+				  if (idx > -1) loginLog.splice(idx, 1);
 				  alert('연결해제');
 				  this.socket.close();
 				  this.status = "disconnected";
@@ -990,39 +1001,46 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.7:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.18:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
 					  this.status = "ready";
 					  this.send("ready:"+this.project_no);
 					  
-					  console.log('connected');
 					  this.status = "Connected";
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
-						  console.log("message도착!");
 						var datas = data.split(":");
-						console.log(datas);
 						if(datas[0] == "userid"){
-							this.writer = datas[1];
+							this.writer = datas[1];						
+						}
+						else if(datas[0] == "loginInfo"){
+							var loguserArray = datas[1].substring(1,datas[1].length-1).split(",");
+							var className = "status online";
+							loguserArray.forEach(customer_no => {
+								var dc = document.getElementById(customer_no.trim()+"no");
+ 								dc.setAttribute("class",className);
+							});
+						}else if(datas[0] == "logoutInfo"){
+							var logoutUser_no = datas[1];
+							var className = "status offline";
+							var dc = document.getElementById(logoutUser_no.trim()+"no");
+							dc.setAttribute("class",className);
 						}else{
 							var user = datas[0];
 							var msg = datas[1];
 							var receptionTime = datas[2]+":"+datas[3];
+							var name = datas[4];
 							//읽어온 데이터가 내가보낸 메세지 일 경우
 							if(this.writer == user){
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//전송한 사람이 내가 아닐경우
-								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : user});
+								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name});
 							}
-							
 						}
-												
-						
 					 };//onmessage	
-
 				  };//onopen
 			  },
 			 
@@ -1032,40 +1050,11 @@ scale
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
-			  },
-				
-			  //맴버 정보 가져오기
-			  showMember(){
-				  axios
-				  	.get('board/lookUpMemeber', {
-				  	    params: {
-				  	      project_no: this.project_no
-				  	    }
-				  	 })
-				  	.then(result => {
-						  var memberList = result.data;	   
-						  memberList.forEach(msg => 
-						  	this.memberList.push({name : msg.name,position : msg.position}) 
-						  );
-				  })//axios
 			  }
 		  }//method
 		});
 	
-	////////////////////////////////변재 vue.js////////////////////////////////////////////////////////
-	var cc = document.getElementById('menu-toggle');
-	var cc1 = document.getElementById('sidebar-wrapper');
-	var cc2 = document.getElementById('down');
-	
-	
-	cc.onclick = function() { 
-		cc1.style.display='block';
-	};
-	cc2.onclick = function() { 
-		cc1.style.display='none';
-	};
-	
-
+	////////////////////////////////변재 vue.${contextPath}/js////////////////////////////////////////////////////////
 	Vue.use(VueDraggable.default);
 	
 	var todo = new Vue({
@@ -1081,15 +1070,15 @@ scale
 			updateText:'',
 			options:{
 				 onDragend(event){
-					 console.log(event);
+					 //console.log(event);
 					 
 					 if(event.droptarget == null){
 						 
 					 }
 					 
-					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
+					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-					 console.log('태스크너버' + getTaskNo);
+					 //console.log('태스크너버' + getTaskNo);
 					 axios.get('/connecthink/updateStatus',{
 		                	params:{
 		                		taskNo:getTaskNo,
@@ -1097,9 +1086,8 @@ scale
 		                	}
 		             })
 		             .then(response => {	
-		                
+		            	
 		             });
-					 
 				 }
 			}
 		},
@@ -1144,59 +1132,68 @@ scale
 			},
 			//태스크 내용 수정하기
 			updateContent(){
-				var writeCusNo = document.getElementById('cusNo');
+				var writeCusNo = document.getElementById('cusNo').value;
 				
-				axios.get('/connecthink/updateContent',{
-                	params:{
-       					content:this.updateText,
-       					taskNo:document.getElementById('taskNo').value
-                	}
-                })
-                .then(response => {	
-                	var taskNoForUpdate = document.getElementById('taskNo').value;
-                	this.lists.forEach(t => {
-                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-                	});
-                	this.list2.forEach(t => {
-                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-                	});
-                	this.list3.forEach(t => {
-                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-                	});
-                	this.$forceUpdate();
-                });
-				
+				if(${sessionScope.loginInfo} == writeCusNo){
+					axios.get('/connecthink/updateContent',{
+	                	params:{
+	       					content:this.updateText,
+	       					taskNo:document.getElementById('taskNo').value
+	                	}
+	                })
+	                .then(response => {	
+	                	var taskNoForUpdate = document.getElementById('taskNo').value;
+	                	this.lists.forEach(t => {
+	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+	                	});
+	                	this.list2.forEach(t => {
+	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+	                	});
+	                	this.list3.forEach(t => {
+	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+	                	});
+	                	this.$forceUpdate();
+	                });
+				}else{
+					alert('작성자가 아닙니다!');
+				}
 			},
 			//태스크 내용 삭제하기
 			deleteTask(){
-				axios.get('/connecthink/deleteTask',{
-                	params:{
-       					taskNo:document.getElementById('taskNo').value
-                	}
-                })
-                .then(response => {
-                	var taskNoForDelete = document.getElementById('taskNo').value;
-                	this.lists.forEach((t, index) => {
-                		if(t.taskNo == taskNoForDelete) {
-                			this.lists.splice(index, 1);
-                			return true;
-                		}
-                	});
-                	this.list2.forEach((t, index) => {
-                		if(t.taskNo == taskNoForDelete) {
-                			this.list2.splice(index, 1);
-                			return true;
-                		}
-                	});
-                	this.list3.forEach((t, index) => {
-                		if(t.taskNo == taskNoForDelete) {
-                			this.list3.splice(index, 1);
-                			return true;
-                		}
-                	});
-                	
-                	this.$forceUpdate();
-                });
+				var writeCusNo = document.getElementById('cusNo').value;
+				
+				if(${sessionScope.loginInfo} == writeCusNo){
+					axios.get('/connecthink/deleteTask',{
+	                	params:{
+	       					taskNo:document.getElementById('taskNo').value
+	                	}
+	                })
+	                .then(response => {
+	                	var taskNoForDelete = document.getElementById('taskNo').value;
+	                	this.lists.forEach((t, index) => {
+	                		if(t.taskNo == taskNoForDelete) {
+	                			this.lists.splice(index, 1);
+	                			return true;
+	                		}
+	                	});
+	                	this.list2.forEach((t, index) => {
+	                		if(t.taskNo == taskNoForDelete) {
+	                			this.list2.splice(index, 1);
+	                			return true;
+	                		}
+	                	});
+	                	this.list3.forEach((t, index) => {
+	                		if(t.taskNo == taskNoForDelete) {
+	                			this.list3.splice(index, 1);
+	                			return true;
+	                		}
+	                	});
+	                	
+	                	this.$forceUpdate();
+	                });
+				}else{
+					alert('작성자가 아닙니다!');
+				}
 			},
 			//태스크 추가하기
 			goTask(ev) {
@@ -1211,10 +1208,11 @@ scale
 	                		project_no: ${project_no}
 	                	}
 	                })
-	                .then(response => {	
+	                .then(response => {
 	                	this.lists.push({content:this.addName});
-	                	this.$forceUpdate();
-	                });
+	                	this.addName='';
+	                });	
+	                
 				}else if(evPath == 'doing'){
 					status = 2;
 					axios.get('/connecthink/addTask',{
@@ -1226,7 +1224,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list2.push({content:this.addName1});
-	                	this.$forceUpdate();
+	                	this.addName1='';	
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1239,50 +1237,33 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list3.push({content:this.addName2});
-	                	this.$forceUpdate();
+	                	this.addName2='';
 	                });
 				}
                 
+				this.$forceUpdate();
               }
 		}
 	});
+
 	
-	var endP = new Vue({
-		el:'#haha',
-		data:{
-			memberList:[]
-		},
-		methods:{
-			endProject(){
-				axios.get('/connecthink/endProject',{
-                	params:{
-                		project_no: ${project_no}
-                	}
-                })
-                .then(response => {	
-                	alert('종료완료!')
-                	window.close();
-                });
-			}
-		}
-	})
 </script>
-<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-<script src="js/vendor/jquery-1.12.4.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/isotope.pkgd.min.js"></script>
-<script src="js/ajax-form.js"></script>
-<script src="js/waypoints.min.js"></script>
-<script src="js/jquery.counterup.min.js"></script>
-<script src="js/imagesloaded.pkgd.min.js"></script>
-<script src="js/scrollIt.js"></script>
-<script src="js/jquery.scrollUp.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/nice-select.min.js"></script>
-<script src="js/jquery.slicknav.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/gijgo.min.js"></script>
+<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="${contextPath}/js/popper.min.js"></script>
+<script src="${contextPath}/js/bootstrap.min.js"></script>
+<script src="${contextPath}/js/owl.carousel.min.js"></script>
+<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+<script src="${contextPath}/js/ajax-form.js"></script>
+<script src="${contextPath}/js/waypoints.min.js"></script>
+<script src="${contextPath}/js/jquery.counterup.min.js"></script>
+<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+<script src="${contextPath}/js/scrollIt.js"></script>
+<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+<script src="${contextPath}/js/wow.min.js"></script>
+<script src="${contextPath}/js/nice-select.min.js"></script>
+<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+<script src="${contextPath}/js/plugins.js"></script>
+<script src="${contextPath}/js/gijgo.min.js"></script>
 </html>

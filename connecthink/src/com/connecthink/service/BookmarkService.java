@@ -79,21 +79,7 @@ public class BookmarkService {
 		br.setRecruit(r);
 		
 		bmRecRepository.save(br);
-	}
-	public void bmMember(Integer customerNo, Integer user) {
-		BookmarkUser bu = new BookmarkUser();
-		BookmarkUserId ids = new BookmarkUserId();		
-		Customer c = customerRepository.findById(customerNo).get();
-		Customer p = customerRepository.findById(user).get();
-		ids.setReceive(customerNo);
-		ids.setSend(user);
-		
-		bu.setId(ids);
-		bu.setReceive(c);
-		bu.setSend(p);
-		
-		bmUserRepository.save(bu);
-	}
+	}	
 	
 
 	public void delBmRecruit(String recruitNo, Integer customerNo) {
@@ -111,5 +97,34 @@ public class BookmarkService {
 		br.setRecruit(r);
 		
 		bmRecRepository.delete(br);
+	}
+	public void bmMember(Integer customerNo, Integer user) {
+		BookmarkUser bu = new BookmarkUser();
+		BookmarkUserId ids = new BookmarkUserId();		
+		Customer c = customerRepository.findById(customerNo).get();
+		Customer p = customerRepository.findById(user).get();
+		ids.setReceive(customerNo);
+		ids.setSend(user);
+		
+		bu.setId(ids);
+		bu.setReceive(c);
+		bu.setSend(p);
+		
+		bmUserRepository.save(bu);
+	}
+	public void delBmMember(Integer customerNo, Integer user) {
+		BookmarkUser bu = new BookmarkUser();
+		BookmarkUserId ids = new BookmarkUserId();		
+		Customer c = customerRepository.findById(customerNo).get();
+		Customer p = customerRepository.findById(user).get();
+		ids.setReceive(customerNo);
+		ids.setSend(user);
+		
+		bu.setId(ids);
+		bu.setReceive(c);
+		bu.setSend(p);
+		System.out.println("삭제");
+		System.out.println("@@@@@@@@@"+p.getName());
+		bmUserRepository.delete(bu);
 	}
 }

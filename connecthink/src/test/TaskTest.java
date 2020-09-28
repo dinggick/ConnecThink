@@ -1,9 +1,8 @@
 	package test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -17,9 +16,12 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.controller.BoardController;
 import com.connecthink.entity.Customer;
+import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
+import com.connecthink.entity.Recruit;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
+import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.service.BoardService;
@@ -42,6 +44,8 @@ class TaskTest {
 	@Autowired
 	private CustomerRepository crpo;
 	
+	@Autowired
+	private MemberRepository memberRepository;
 	
 	@Autowired
 	private BoardController con;
@@ -107,16 +111,32 @@ class TaskTest {
 		repository.save(t);
 	}
 	
-	@Test
+//	@Test
 	public void tt() {
 		Project p =projectRepository.findById(24).get();
 		
 		p.setProjectStatus(0);
 		
-		
-		
 		projectRepository.save(p);
 	}
 	
+	@Test
+	@Transactional
+	public void ttt() {
+		Project p = projectRepository.findById(1).get();
+		Iterator rIter = p.getRecruits().iterator();
+		while(rIter.hasNext()) {
+			Set<Member> memberSet = ((Recruit)rIter.next()).getMembers();
+			Iterator mIter = memberSet.iterator();
+			while(mIter.hasNext()) {
+				Member m = (Member) mIter.next();
+				if(m.getCustomer().getCustomerNo() == 101) {
+					memberSet.remove(m);
+					projectRepository.save(p);
+					return;
+				}
+			}
+		}
+	}
 	
 }

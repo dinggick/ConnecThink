@@ -13,23 +13,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/gijgo.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/slicknav.css">
+    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    <link rel="stylesheet" href="${contextPath}/css/style.css">
+    <!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 </head>
 
 <body>
@@ -66,7 +66,7 @@
                             <div class="jobs_left d-flex align-items-center">
                                 <!-- profile img -->
                                 <div class="thumb">
-                                    <img src="img/svg_icon/1.svg" onerror="this.src='img/svg_icon/1.svg'" alt="">
+                                    <img src="${contextPath}/img/svg_icon/1.svg" onerror="this.src='${contextPath}/img/svg_icon/1.svg'" alt="">
                                 </div>
                                 <div class="jobs_conetent">
                                     <!-- user name -->
@@ -135,36 +135,36 @@
 
     <!-- link that opens popup -->
     <!-- JS here -->
-    <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/isotope.pkgd.min.js"></script>
-    <script src="js/ajax-form.js"></script>
-    <script src="js/waypoints.min.js"></script>
-    <script src="js/jquery.counterup.min.js"></script>
-    <script src="js/imagesloaded.pkgd.min.js"></script>
-    <script src="js/scrollIt.js"></script>
-    <script src="js/jquery.scrollUp.min.js"></script>
-    <script src="js/wow.min.js"></script>
-    <script src="js/nice-select.min.js"></script>
-    <script src="js/jquery.slicknav.min.js"></script>
-    <script src="js/jquery.magnific-popup.min.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/gijgo.min.js"></script>
+    <script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="${contextPath}/js/popper.min.js"></script>
+    <script src="${contextPath}/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/js/owl.carousel.min.js"></script>
+    <script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+    <script src="${contextPath}/js/ajax-form.js"></script>
+    <script src="${contextPath}/js/waypoints.min.js"></script>
+    <script src="${contextPath}/js/jquery.counterup.min.js"></script>
+    <script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+    <script src="${contextPath}/js/scrollIt.js"></script>
+    <script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+    <script src="${contextPath}/js/wow.min.js"></script>
+    <script src="${contextPath}/js/nice-select.min.js"></script>
+    <script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+    <script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+    <script src="${contextPath}/js/plugins.js"></script>
+    <script src="${contextPath}/js/gijgo.min.js"></script>
 
 
 
     <!--contact js-->
-    <script src="js/contact.js"></script>
-    <script src="js/jquery.ajaxchimp.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/mail-script.js"></script>
+    <script src="${contextPath}/js/contact.js"></script>
+    <script src="${contextPath}/js/jquery.ajaxchimp.min.js"></script>
+    <script src="${contextPath}/js/jquery.form.js"></script>
+    <script src="${contextPath}/js/jquery.validate.min.js"></script>
+    <script src="${contextPath}/js/mail-script.js"></script>
 
 
-    <script src="js/main.js"></script>
+    <script src="${contextPath}/js/main.js"></script>
     <script>
     	$(() => {
     		$.ajax({
@@ -229,27 +229,28 @@
     		});
     		
     		$("#dropBtn").click(() => {
-    			$.ajax({
-        			url : "/connecthink/dropCustomer",
-        			method : "POST",
-        			data : {customerNo : ${sessionScope.loginInfo},
-    					${_csrf.parameterName} : '${_csrf.token}'},
-    				success : (data, textStatus, jqXHR) => {
-    					alert("탈퇴 성공");
-    					//탈퇴 성공시 로그아웃
-    					$.ajax({
-    						url : "/connecthink/logout",
-    						method : "POST",
-    						data : {${_csrf.parameterName} : '${_csrf.token}'},
-    						success : (data, textStatus, jqXHR) => {
-    							location.href = "http://localhost/connecthink/index";
-    						}
-    					});
-    				},
-    				error : () => {
-    					alert("탈퇴 실패");
-    				}
-        		});
+    			if(confirm("정말 탈퇴하시겠습니까?")) {
+    				$.ajax({
+            			url : "/connecthink/dropCustomer",
+            			method : "POST",
+            			data : {customerNo : ${sessionScope.loginInfo},
+        					${_csrf.parameterName} : '${_csrf.token}'},
+        				success : (data, textStatus, jqXHR) => {
+        					//탈퇴 성공시 로그아웃
+        					$.ajax({
+        						url : "/connecthink/logout",
+        						method : "POST",
+        						data : {${_csrf.parameterName} : '${_csrf.token}'},
+        						success : (data, textStatus, jqXHR) => {
+        							location.href = "http://localhost/connecthink/index";
+        						}
+        					});
+        				},
+        				error : () => {
+        					alert("탈퇴 실패");
+        				}
+            		});
+    			}
     		});
     	});
     </script>

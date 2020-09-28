@@ -5,13 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +20,9 @@ import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
 import com.connecthink.entity.Task;
 import com.connecthink.service.BoardService;
+import com.connecthink.service.ProjectService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class BoardController {
@@ -29,37 +30,40 @@ public class BoardController {
    @Autowired
    private BoardService service;
    
+   @Autowired
+   private ProjectService pjService;
    @RequestMapping("/board")
-   ModelAndView board(HttpServletRequest req,@RequestParam("project_no") int project_no) {
+   ModelAndView board(HttpSession session,HttpServletRequest req,@RequestParam("project_no") int project_no) {
       ModelAndView mv = new ModelAndView();
       
-      int customer_no = 0;
-      
+      int customer_no = (Integer)session.getAttribute("loginInfo");
+      int Manager_no = pjService.lookUpMyManager(project_no);
       List<Task> taskList = tList(project_no);
+      
       //Http session 에 저장할 userid 대체용
-      for(int i = 0; i < 100; i++) {
-
-         double dValue = Math.random();
-
-         customer_no = (int)(dValue * 10);
-         
-      }
-      	customer_no = (customer_no == 0) ? 1 : customer_no;
-        HttpSession session = req.getSession();        
-        session.setAttribute("LoginInfo",customer_no);
+//      for(int i = 0; i < 100; i++) {
+//
+//         double dValue = Math.random();
+//
+//         customer_no = (int)(dValue * 10);
+//         
+//      }
+//      	customer_no = (customer_no == 0) ? 1 : customer_no;
+//        HttpSession session = req.getSession();        
+//        session.setAttribute("LoginInfo",customer_no);
+      	
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
+        mv.addObject("isManager",Manager_no);
         mv.addObject("list", taskList);
 		return mv;
 	}
 	
-	@RequestMapping("/board/lookUpMember")
-	ModelAndView lookUpMember(int product_no) {
-		ModelAndView mv = new ModelAndView();
-		List<Member> members = service.lookUpMember(product_no);
-		
-		mv.addObject("members",members);
-		return mv;
+   	@RequestMapping("/lookUpMember")
+	@ResponseBody
+	public List<String> lookUpMember(int project_no) {
+		List<String> members = service.lookUpMember(project_no);
+		return members;
 	}
 	
 	public List<Message> lookUpMsg(int project_no){
@@ -74,7 +78,7 @@ public class BoardController {
 	public ModelAndView insert(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("LoginInfo");
+		Integer id = (Integer) session.getAttribute("loginInfo");
 		Customer c = new Customer();
 		c.setCustomerNo(id);
 		Integer status = Integer.parseInt(request.getParameter("status"));
@@ -108,7 +112,7 @@ public class BoardController {
 	public ResponseEntity<String> updateContent(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("LoginInfo");
+		Integer id = (Integer) session.getAttribute("loginInfo");
 		
 		String content = request.getParameter("content");
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
@@ -152,7 +156,7 @@ public class BoardController {
 	public ResponseEntity<String> deleteTask(HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
-		Integer id = (Integer) session.getAttribute("LoginInfo");
+		Integer id = (Integer) session.getAttribute("loginInfo");
 		Integer taskNo = Integer.parseInt(request.getParameter("taskNo"));
 	
 		System.out.println("asdasdasdasdasd" + id);
@@ -176,6 +180,22 @@ public class BoardController {
 		service.updateProject(pNo);
 		mav.setViewName("index");
 		return mav;
+	}
+	
+	/*
+	 * 프로젝트 탈퇴하기
+	 */
+	@RequestMapping("endMyProject")
+	public ModelAndView endMyProject(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		
+		Integer id = (Integer) session.getAttribute("loginInfo");
+		Integer pNo = Integer.parseInt(request.getParameter("project_no"));
+		
+		service.exitProject(id, pNo);
+		return mav;
+		
 	}
 	
 	
