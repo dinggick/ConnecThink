@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 프로젝트에 합류 또는 합류 예정인 사용자와 해당 모집의 정보를 갖고 있다.
@@ -25,6 +26,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@ToString
 @Table(name = "member")
 public class Member{
 	@EmbeddedId
@@ -54,5 +56,5 @@ public class Member{
 	private Integer invited;
 	
 	@Transient
-	private Customer manager;
+	private String position;
 }
