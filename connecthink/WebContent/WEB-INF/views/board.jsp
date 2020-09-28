@@ -878,9 +878,11 @@ scale
 		}//created
 		,methods : {
 			showMemberList(){
-				var led = document.getElementById('sidebar-ul').firstChild.nextSlibing;
+				var led = document.getElementById('sidebar-ul').childNodes[2].childNodes[0].childNodes[4];
+				var leader = document.getElementById('sidebar-ul').childNodes[2].childNodes;
 				
 				console.log(led);
+				console.log(leader);
 				
 				axios
 			  	.get('/connecthink/lookUpMember', {

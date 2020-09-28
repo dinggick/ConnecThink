@@ -267,7 +267,6 @@
 		                                            	<li><a data-toggle="modal" href="#registerModal">회원가입</a></li>
                                          			</c:when>
                                          			<c:otherwise>
-                                         				<li><a href="${contextPath}/logined/customerInfo">내 정보 보기</a></li>
                                          				<li><a href="${contextPath}/customerInfo">내 정보 보기</a></li>
                                          				<li><a href="${contextPath}/myProject">내가 등록한 팀</a></li>
                                          				<li><a href="${contextPath}/bookmark">북마크</a></li>                                         				
