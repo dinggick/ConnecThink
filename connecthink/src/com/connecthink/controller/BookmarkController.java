@@ -77,11 +77,19 @@ public class BookmarkController {
 		String count = Integer.toString(bmCount);
 		return count;
 	}
-	@PostMapping(value="/bmUser")
+	//멤버에 북마크 추가
+	@PostMapping(value="/bmMember")
 	@ResponseBody
 	public String bmUser(Integer customerNo, HttpSession session) {
 		Integer user = (Integer) session.getAttribute("loginInfo");
 		service.bmMember(customerNo, user);
+		return "success";
+	}
+	//멤버 북마크 삭제
+	@PostMapping(value="delBmMember")
+	@ResponseBody
+	public String delBmMember(Integer customerNo, Integer user) {
+		service.delBmMember(customerNo, user);
 		return "success";
 	}
 	

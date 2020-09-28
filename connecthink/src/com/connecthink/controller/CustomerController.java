@@ -1,6 +1,8 @@
 package com.connecthink.controller;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.dto.ProjectHistoryDTO;
 import com.connecthink.entity.Customer;
+import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
+import com.connecthink.entity.Recruit;
 import com.connecthink.mail.VerificationMail;
 import com.connecthink.service.CustomerService;
 import com.connecthink.service.ProjectHistoryService;
@@ -135,24 +139,40 @@ public class CustomerController {
 	}
 	//멤버상세 
 	@RequestMapping("/member_detail")	
-	public ModelAndView findByNo(Integer customerNo) {
+	public ModelAndView findByNo(Integer customerNo, HttpSession session) {
 		ModelAndView mnv = new ModelAndView();
 		//멤버상세
 		Customer c = service.findByCustomerNo(customerNo);		
 		mnv.addObject("customer", c);
 		
 		//컨넥띵크 히스토리
-		List<ProjectHistoryDTO> m = pservice.findByNo(customerNo);	
-		m.forEach(v -> {
-			System.out.println("@@@@@" +v.getTitle());
-		});
-		System.out.println("SIZE"+ m.size());
+		List<ProjectHistoryDTO> m = pservice.findByNo(customerNo);		
 		mnv.addObject("project",m);		
-		//매니저 유무확인 (초대하기 버튼 보여줄지 유무 결정)
-		List<Project> p = projectService.findByManagerNo(customerNo);
-		String isManager = p.size() == 0 ? "n" : "y";
 		
-		mnv.addObject("isManager", isManager);			
+		//매니저 유무확인 (초대하기 버튼 보여줄지 유무 결정)
+		Integer managerNo = (Integer) session.getAttribute("loginInfo");
+		List<Project> p = projectService.findByManagerNo(managerNo);		
+		String isManager = p.size() == 0 ? "n" : "y";		
+		mnv.addObject("isManager", isManager);	
+		Boolean yn = false;
+		for(Project j : p) {
+			Set<Recruit> r = j.getRecruits();
+			Iterator<Recruit> r2 = r.iterator();
+			while (r2.hasNext()) {
+				Recruit ms = r2.next();
+				Set<Member> sm = ms.getMembers();
+				Iterator<Member> im = sm.iterator();
+				while(im.hasNext()) {
+					Member im2 = im.next();
+					if (im2.getCustomer().getCustomerNo() == customerNo && im2.getInvited() == 1) {
+						yn = true;
+						break;
+					}
+				}
+			}			
+		}
+		mnv.addObject("invited", yn);
+		
 		mnv.setViewName("member_recruit");
 		
 		return mnv;

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
-import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.service.BookmarkService;
@@ -136,4 +135,5 @@ public class RecruitController {
 		recruitService.saveInvite(recruitNo, customerNo);
 		return "success";
 	}
+		
 }
