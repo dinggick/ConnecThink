@@ -77,10 +77,10 @@
 			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="img/banner/main2.jpg" alt="First slide">
+      <img class="d-block w-100" src="img/banner/banner2.jpg" alt="First slide">
        <div class="carousel-caption d-none d-md-block">
-    <h5>caption</h5>
-    <p>...</p>
+   	 <h5>caption</h5>
+   
   </div>
     </div>
     <div class="carousel-item">
