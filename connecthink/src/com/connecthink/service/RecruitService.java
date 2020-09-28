@@ -36,10 +36,10 @@ import com.connecthink.repository.RecruitRepository;
 public class RecruitService {	
 	@Autowired
 	private RecruitRepository recruitRepository;
-	
+
 	@Autowired
 	private ProjectRepository projectRepository;
-	
+
 	@Autowired
 	private PositionRepository positionRepository;
 
@@ -47,10 +47,10 @@ public class RecruitService {
 	private CustomerRepository customerRepository;
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	@Autowired
 	private ServletContext context;
-	
+
 	/**
 	 * @author 홍지수
 	 * 모집 전체보기
@@ -58,7 +58,7 @@ public class RecruitService {
 	public List<Recruit> findAllDesc(){
 		return recruitRepository.findAllDesc();
 	}
-	
+
 	//메인에 뿌려줄 9개 프로젝트 찾기
 	public List<Recruit> findTopRecruit(){
 		List<Recruit> rec = recruitRepository.findTop9By();
@@ -73,48 +73,58 @@ public class RecruitService {
 		});
 		return rec;
 	}
-	
+
 	/**
 	 * @author 홍지수
-	 * 모집 등록
+	 * 모집 등록, 수정
 	 */
-	public void addRec(RecruitCommand recruitCommand) throws ParseException {
+	public void addRec(RecruitCommand recruitCommand) {
 		Recruit recruit = new Recruit();
-		
+
 		//projectNo
 		Project project = projectRepository.findById(recruitCommand.getProjectNo()).get();
-		
+
 		//positionNo -배열로 받아 정렬 후 가장 큰 값 받아 오기 
 		Integer[] psArr = recruitCommand.getPositionNo();
 		Arrays.sort(psArr);
 		Integer positionNo = psArr[psArr.length-1];
 		Position ps = positionRepository.findById(positionNo).get();
-		
+
 		//모집번호 지정 위해  size 받기
 		int num = project.getRecruits().size();
-		String rNo = project.getProjectNo()+"R"+ (num+1);
-		
+		String rNo = "";
+
+		System.out.println("서비스 : " + recruitCommand.getUrl());
+
+		if(recruitCommand.getUrl().equals("/addRec")) {
+			rNo = project.getProjectNo()+"R"+ (num+1);
+		} else {
+			rNo = recruitCommand.getRecruitNo();
+			System.out.println(rNo);
+		}
+
 		//파일 저장 경로
 		//기본경로 바꿔주기
 		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
-		System.out.println(context.getRealPath("/"));
-		System.out.println(rootUploadPath);
+
 		//모집 - 이미지 경로
 		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img"  + File.separator;
 		//모집 - 파일경로
 		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt"  + File.separator;
-		
+
 		//이미지 형식
 		String ext = ".jpg";
 		File pic = new File(saveImgPath, rNo+ext);
-		
+
 		//파일 - 모집 상세 설명 형식
 		String ext1 = ".txt";
 		File txt = new File(saveTxtPath, rNo+ext1);
-		
-		
+
+		System.out.println("서비스 : " +  recruitCommand.getRecPic().getOriginalFilename());
+		String picName = recruitCommand.getRecPic().getOriginalFilename();
 		try {
-			if(recruitCommand.getRecPic() != null) {
+
+			if(!(picName.equals("")) && picName != null) {
 				//이미지 저장
 				recruitCommand.getRecPic().transferTo(pic);
 			}
@@ -123,11 +133,11 @@ public class RecruitService {
 			OutputStream output = new FileOutputStream(txt);
 			byte[] data = recruitCommand.getRecExplain().getBytes();
 			output.write(data);
-			
+
 		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		//recruit에 담아주기
 		recruit.setRecruitNo(rNo);
 		recruit.setPosition(ps);
@@ -135,14 +145,14 @@ public class RecruitService {
 		recruit.setDeadline(recruitCommand.getDeadline());
 		recruit.setRequirement(recruitCommand.getRequirement());
 		recruit.setRecruitStatus(1); //기본 값 1
-		
+
 		//project에 recruit 담기(더하기)
 		project.getRecruits().add(recruit);
-		
+
 		//save 메서드 호출
 		projectRepository.save(project);
 	}
-	
+
 	//메이트 초대 인서트문
 	@Transactional
 	public void saveInvite(String recruitNo, Integer customerNo) {

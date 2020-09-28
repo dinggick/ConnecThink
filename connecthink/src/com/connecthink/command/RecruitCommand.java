@@ -10,6 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RecruitCommand {
+	private String url;
+	private String recruitNo;
 	private Integer projectNo;
 	private Integer[] positionNo;
 	private Date deadline;
