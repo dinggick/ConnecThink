@@ -653,15 +653,16 @@ scale
 			<li class="sidebarTeamName">
 				<a href="#" id="down">This is Team Name</a>
 			</li>
+			
 			<li v-for="member in memberList">
 				<div class="friend">
 					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
 					<div class="profile">
-						<p><strong>{{member.name}}</strong></p>
-						<p><span>{{member.position}}</span></p>
+						<p><strong>{{ member.name }}</strong></p>
+						<p v-if ="member.position === teamLeader"><span>팀장</span></p>
+						<p v-else><span>{{ member.position }}</span></p>
 					</div>
-					<div v-if=msg.isOnline class="status online"></div>
-					<div v-else class="status offline"></div>
+					<div :id=" member.customer_no " ></div>
 				</div>
 			</li>
 			
@@ -846,7 +847,6 @@ scale
 								<div class="content">
 									
 									<!-- 메세지 받을때 -->
-									
 									<div id="msgs" v-for="msg in msgs">
 										<div class="chat-message-group reception" v-if="msg.reception">
 											<div class="chat-thumb">
@@ -923,6 +923,39 @@ scale
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
 	
+	//side bar
+	var sideBar = new Vue({
+		el: '#sidebar-wrapper'
+		,data : {
+			memberList : []
+		},created(){
+			console.log("sidebar 생김");
+			
+		}//created
+		,methods : {
+			
+			showMemberList(){
+				axios
+			  	.get('/connecthink/lookUpMember', {
+			  	    params: {
+			  	      project_no: ${project_no}
+			  	    }
+			  	 })
+			  	.then(result => {
+					  var memberInfo = result.data;	   			
+					  console.log(memberInfo);
+					  memberInfo.forEach(member => {
+						  var memberInfo = member.split(":");
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
+						  var log = chat.isLogin(memberInfo[0]);
+						  
+					  })//forEach for memberList				  
+			  })//axios
+			}//showMemberList
+			
+		}
+	});
+	
 	//채팅 헤더 토글
 	var chat = new Vue({
 		 el: '#chatApp'
@@ -931,16 +964,18 @@ scale
 		   headUser: '팀 명이 들어갈 곳 입니다.',
 		   message : "",
 		   msgs : [],
-		   wrts : [],
-		   memberList : [],
+		   wrts : [],		   
 		   project_no : 0,
-		   writer : 0
+		   writer : 0,
+		   loginLog : []
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
 			  console.log('created');
 			  this.connect();
+			  sideBar.showMemberList();
 			  this.project_no = ${project_no};
+			  
     		}//created
 		  
 		   //변화가 있을경우
@@ -957,6 +992,9 @@ scale
 			  
 			  //연결해제
 			  disconnect(){
+				  alert("끊김");
+				  const idx = a.findIndex(function(item) {return item.customer_no === 1});
+				  if (idx > -1) loginLog.splice(idx, 1);
 				  alert('연결해제');
 				  this.socket.close();
 				  this.status = "disconnected";
@@ -994,7 +1032,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.7:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1010,23 +1048,23 @@ scale
 						console.log(datas);
 						if(datas[0] == "userid"){
 							this.writer = datas[1];
+							
+							//접속중인 유저를 알기위해 접속할때 유저 정보 담아줌
+							this.loginLog.push({customer_no : datas[1]});
 						}else{
 							var user = datas[0];
 							var msg = datas[1];
 							var receptionTime = datas[2]+":"+datas[3];
+							var name = datas[4];
 							//읽어온 데이터가 내가보낸 메세지 일 경우
 							if(this.writer == user){
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//전송한 사람이 내가 아닐경우
-								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : user});
+								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name});
 							}
-							
 						}
-												
-						
 					 };//onmessage	
-
 				  };//onopen
 			  },
 			 
@@ -1038,20 +1076,17 @@ scale
 				  return getTime;
 			  },
 				
-			  //맴버 정보 가져오기
-			  showMember(){
-				  axios
-				  	.get('board/lookUpMemeber', {
-				  	    params: {
-				  	      project_no: this.project_no
-				  	    }
-				  	 })
-				  	.then(result => {
-						  var memberList = result.data;	   
-						  memberList.forEach(msg => 
-						  	this.memberList.push({name : msg.name,position : msg.position}) 
-						  );
-				  })//axios
+			  //맴버 접속 여부 가져오기
+			  isLogin(customer_no){
+				 // alert(customer_no + "로긴중");
+				  var log = this.loginLog.findIndex(log=> log.customer_no === customer_no);
+				  if(log == 1){
+					  console.log("true 들어옴");
+					  return true;
+				  }else{
+					  console.log("false 들어옴");
+					  return false;
+				  }
 			  }
 		  }//method
 		});

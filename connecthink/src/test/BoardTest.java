@@ -21,6 +21,7 @@ import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
 import com.connecthink.entity.Project;
 import com.connecthink.repository.CustomerRepository;
+import com.connecthink.repository.PositionRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.service.BoardService;
 
@@ -36,6 +37,9 @@ class BoardTest {
 	
 	@Autowired
 	private ProjectController controller;
+	
+	@Autowired
+	private PositionRepository positionRepository;
 	
 	//@Test
 	void findAllTest() {
@@ -55,18 +59,17 @@ class BoardTest {
 
 	//@Test
 	void lookUpMember() {
-		List<Member> members = service.lookUpMember(2);
+		//List<Member> members = service.lookUpMember(2);
 		
-		String managerName = members.get(0).getManager().getName();
+		//String managerName = members.get(0).getManager().getName();
 		
 		System.out.println("--------TeamInfo------------");
 		
-		System.out.println("Team Leader Name : "+managerName);
-		for(int i = 1; i < members.size(); i++) {
-			System.out.println(members.get(i).getCustomer().getName());
-			System.out.println(members.get(i).getRecruit().getPosition().getPositionNo());
-			System.out.println(members.get(i).getRecruit().getRecruitNo());
-		}
+		//System.out.println("Team Leader Name : "+managerName);
+//		for(int i = 1; i < members.size(); i++) {
+//			System.out.println("name : "+members.get(i).getCustomer().getName());
+//			System.out.println("position"+members.get(i).getPosition());
+//		}
 		
 	}
 	

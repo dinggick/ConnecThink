@@ -14,6 +14,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.connecthink.controller.BoardController;
+import com.connecthink.controller.CustomerController;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Message;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +23,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 	
 	@Autowired
 	private BoardController boardController;
+	
+	@Autowired
+	private CustomerController customerController;
 
 	//key -> websocketID | value -> customer_no (HttpSession)
 	Map<WebSocketSession, Integer> logUser = new HashMap<WebSocketSession, Integer>();
@@ -43,11 +47,11 @@ public class webSocketHandler extends TextWebSocketHandler{
 	//클라이언트 에서 접속을 성공할때 발생
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 			//handShakeInterceptor 에서 추가한 Httpsesion 값 가져오기
-			int customer_no = (Integer)session.getAttributes().get("LoginInfo");
+			int customer_no = (Integer)session.getAttributes().get("loginInfo");
 			
 			//접속한 유저의 웹소캣 id & 해당 유저의 HttpSession 에 저장되어 있는 userId
 			logUser.put(session,customer_no);
-			System.out.println(customer_no);
+			System.out.println("접속함 : "+customer_no);
 			
 			//제대로 가져왔는지 확인
 			System.out.println("HttpSession ID : "+customer_no+" webSocketID : "+session.getId()+" 접속");
@@ -78,7 +82,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 							//해당 메세지 리스트 의 작성자 와 글 내용 보내주기
 							for(Message msg : msgList.get(project_no)) {
 								if(!msg.getContent().equals(DIVISION)) {
-									session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()));
+									String writerName = getName(msg.getWriter().getCustomerNo());
+									session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()+":"+writerName));
+									System.out.println(msg.getWriter().getName());
 								}
 							}
 						}
@@ -97,7 +103,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 					msgBox = boardController.lookUpMsg(project_no);
 					if(msgBox.size() != 0) {
 						for(Message msg : msgBox) {
-							session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()));
+							session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()+":"+msg.getWriter().getName()));
 						}
 						//구분자 메세지 넣어주기
 						diviMsg.setContent(DIVISION);
@@ -145,6 +151,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 				Customer ct = new Customer();
 				int project_no = Integer.parseInt(msgParsing.getProject_no());
 				ct.setCustomerNo(sender);
+				ct.setName(getName(sender));
 				
 				//파싱한 메세지 객체에 작성자 세팅
 				msgParsing.setWriter(ct);
@@ -163,8 +170,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
 							System.out.println("message send Info----");
 							System.out.println(msgParsing.getCreateDate()+"시 분 ");
+							System.out.println(msgParsing.getWriter().getName());
 							System.out.println(member_no+"에게 "+msgParsing.getContent()+"내용 을"+msgParsing.getWriter().getCustomerNo()+"전송");
-							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()+":"+msgParsing.getCreateDate()));
+							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()+":"+msgParsing.getCreateDate()+":"+msgParsing.getWriter().getName()));
 							
 						}//if
 					}//for
@@ -190,8 +198,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 	@Override
 	//클라이언트 에서 연결을 종료 할 경우
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
-		
 			int logOutUser = getUserId(session);
+			System.out.println(logOutUser+"접속 해제");
 			for(Map.Entry<Integer,List<Integer>> entry : logMember.entrySet()){
 				for(int ctno : entry.getValue()) {
 					System.out.println("outInfo");
@@ -255,4 +263,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 		return customer_no;
 	}//getUserId
 	
+	private String getName(int customer_no) {
+		return customerController.findByNo(customer_no).getName();
+	}
 }

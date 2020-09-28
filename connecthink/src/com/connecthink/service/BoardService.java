@@ -3,7 +3,6 @@ package com.connecthink.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Transient;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,7 @@ import com.connecthink.entity.Message;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
+import com.connecthink.repository.PositionRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.repository.ProjectRepository;
 
@@ -31,6 +31,8 @@ public class BoardService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
+	@Autowired
+	private PositionRepository positionRepository;
 	/**
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
@@ -71,20 +73,23 @@ public class BoardService {
 	 * 해당 프로젝트의 맴버 정보 가져오기
 	 * @author DongJun
 	 */
-	public List<Member> lookUpMember(Integer project_no){
-		Project pjInfo = projectRepository.findById(2).get();
+	public List<String> lookUpMember(Integer project_no){
+		Project pjInfo = projectRepository.findById(project_no).get();
 		
 		List<Member> members = new ArrayList<>();
+		List<String> memberInfo = new ArrayList<>();
 		Member leaderInfo = new Member();
-		leaderInfo.setManager(customerRepository.findById(pjInfo.getManagerNo()).get());
-		
+		leaderInfo.setCustomer(customerRepository.findById(pjInfo.getManagerNo()).get());
 		members.add(leaderInfo);
+		memberInfo.add(pjInfo.getManagerNo()+":"+customerRepository.findById(pjInfo.getManagerNo()).get().getName()+":"+"teamLeader");
 		projectRepository.findById(project_no).get().getRecruits().forEach(r -> {
 			r.getMembers().forEach(m ->{
+				m.setPosition(positionRepository.findById(m.getRecruit().getPosition().getPositionNo()).get().getName());
 				members.add(m);
+				memberInfo.add(m.getCustomer().getCustomerNo()+":"+m.getCustomer().getName()+":"+positionRepository.findById(m.getRecruit().getPosition().getPositionNo()).get().getName());
 			});
 		});
-		return members;
+		return memberInfo;
 	}
 	
 	////////////////////변재 영역 
