@@ -56,7 +56,7 @@ public class CustomerController {
 		ModelAndView mnv = new ModelAndView();
 		List<Customer> list = service.findAll();
 		mnv.addObject("customer", list);
-		mnv.setViewName("mate");
+		mnv.setViewName("/mate");
 		
 		return mnv; 
 	}

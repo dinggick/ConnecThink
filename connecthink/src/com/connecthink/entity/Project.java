@@ -74,6 +74,6 @@ public class Project {
 	private ChatRoom chatRoom;
 	
 	@CreationTimestamp
-	@Column(name = "create_date")
+	@Column(name = "create_date", updatable = false)
 	private Date createDate;
 }

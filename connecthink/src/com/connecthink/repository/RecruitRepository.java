@@ -19,6 +19,6 @@ public interface RecruitRepository extends JpaRepository<Recruit, String> {
 	
 	public List<Recruit> findTop9By();
 	
-	@Query(nativeQuery = true, value="select * from recruit order By LPAD(RECRUIT_NO,20,0) desc")
-	public List<Recruit> findAllDesc();
+//	@Query(nativeQuery = true, value="select * from recruit order By LPAD(RECRUIT_NO,20,0) desc")
+//	public List<Recruit> findAllDesc();
 }

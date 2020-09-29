@@ -207,11 +207,11 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="all/mateList">모집중인 멤버</a></li>
+                                            <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
                                            
-                                            <li><a href="rec">모집중인팀</a></li>
+                                            <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
-                                            <li><a href="add_project">팀 등록</a></li>
+                                            <li><a href="add_project">프로젝트 등록</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
@@ -235,7 +235,7 @@
                                          			</c:when>
                                          			<c:otherwise>
                                          				<li><a href="${contextPath}/customerInfo">내 정보 보기</a></li>
-                                         				<li><a href="${contextPath}/myProject">내가 등록한 팀</a></li>
+                                         				<li><a href="${contextPath}/myProject">나의 프로젝트</a></li>
                                          				<li><a href="${contextPath}/bookmark">북마크</a></li>                                         				
                                          				<li><a id="logoutBtn" href="">로그아웃</a></li>
                                          			</c:otherwise>

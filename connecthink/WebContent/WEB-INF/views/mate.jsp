@@ -77,7 +77,7 @@ span.customerNo{
 				<div class="col-md-6 col-lg-4">
 					<div class="single_candidates" onclick="mateDetail(this);">
 						<div class="thumb" style="display: inline-block;">
-							<img src="${contextPath}/${contextPath}/img/candiateds/1.png" alt="">
+							<img src="${contextPath}/img/candiateds/1.png" alt="">
 						</div>
 						<h4 style="display: inline-block;" class="ml-3 mt-2">${customer.name}</h4>
 						<span class="customerNo">${customer.customerNo}</span>
@@ -90,27 +90,8 @@ span.customerNo{
 					</div>
 				</div>
 				</c:forEach>
-				<!-- 박스 끝 -->
-				
-				
-
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="pagination_wrap">
-						<ul>
-							<li><a href="#"> <i class="ti-angle-left"></i>
-							</a></li>
-							<li><a href="#"><span>01</span></a></li>
-							<li><a href="#"><span>02</span></a></li>
-							<li><a href="#"> <i class="ti-angle-right"></i>
-							</a></li>
-						</ul>
-					</div>
-				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<!-- featured_candidates_area_end  -->
