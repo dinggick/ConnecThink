@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!doctype html>
 <html class="no-js" lang="zxx">
 
 <head>
+<<<<<<< HEAD
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>메세지함</title>
@@ -31,24 +32,55 @@
     <!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 
 	<style>
+=======
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>메세지함</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- <link rel="manifest" href="site.webmanifest"> -->
+<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<!-- Place favicon.ico in the root directory -->
+
+<!-- CSS here -->
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/owl.carousel.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+<link rel="stylesheet" href="css/font-awesome.min.css">
+<link rel="stylesheet" href="css/themify-icons.css">
+<link rel="stylesheet" href="css/nice-select.css">
+<link rel="stylesheet" href="css/flaticon.css">
+<link rel="stylesheet" href="css/gijgo.css">
+<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="css/slicknav.css">
+<link rel="stylesheet" href="css/style.css">
+<!-- <link rel="stylesheet" href="css/responsive.css"> -->
+
+<style>
+>>>>>>> origin/soojeong
 .inbox_area {
 	background: #F5F7FA;
 }
+
 .inbox_container {
 	width: 80%;
 	margin-left: auto;
 	margin-right: auto;
 }
+
 .fromWho {
 	background-color: #fff;
 	height: 700px;
 	overflow: hidden;
 }
+
 .searchWho {
 	padding-top: 10px;
 	padding-bottom: 20px;
 	background-color: #38a4ff;
 }
+
 .manageMsgBtn {
 	color: #fff;
 	width: 50%;
@@ -56,27 +88,32 @@
 	background: none;
 	border: none;
 }
+
 .searchWhoBar .icon {
-    position: absolute;
-    right: 20px;
-    top: 60px;
-    line-height: 40px;
-    z-index: 3;
+	position: absolute;
+	right: 20px;
+	top: 60px;
+	line-height: 40px;
+	z-index: 3;
 }
+
 .searchWhoBar .single-input {
-    padding-right: 45px;
+	padding-right: 45px;
 }
+
 .list_wrap {
 	max-height: 504px;
 	overflow: auto;
 }
+
 ul.list>li {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-    border-bottom: 1px solid #f0e9ff;
-/*     text-align: center; */
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	border-bottom: 1px solid #f0e9ff;
+	/*     text-align: center; */
 }
+
 .system {
 	width: 100%;
 	background-color: #E0F2F7;
@@ -87,23 +124,28 @@ ul.list>li {
 	cursor: pointer;
 	transition: all 0.3s ease 0s;
 }
+
 .person {
 	padding: 20px 0px 20px 0px;
 	cursor: pointer;
 	transition: all 0.3s ease 0s;
 	text-overflow: ellipsis;
 }
+
 .person:hover, .system:hover {
 	color: #0056b3;
 	font-weight: 1000;
 }
+
 .msgPreview {
 	padding-left: 10px;
 	font-size: 0.9em;
 }
+
 .otherNo {
 	display: none;
 }
+
 .new {
 	color: #fff;
 	background: #ff5e13;
@@ -113,46 +155,54 @@ ul.list>li {
 	padding: 5px;
 	transition: all 0s ease 0s;
 }
+
 .message {
 	height: 700px;
 	background-color: #fff;
 	box-shadow: 0px 10px 20px 0px rgba(221, 221, 221, 0.3);
 }
+
 .msg_header {
 	position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 5;
-    padding: 28px 0 28px 14px;
-    border-bottom: 1px solid #dfe1e2;
-    background-color: rgba(256,256,256,0.95);
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 5;
+	padding: 28px 0 28px 14px;
+	border-bottom: 1px solid #dfe1e2;
+	background-color: rgba(256, 256, 256, 0.95);
 }
+
 .msg_sender>img {
 	padding-left: 20px;
 	height: 50px;
 }
+
 .personName {
 	padding-left: 20px;
 	font-size: 1.2em;
 	font-weight: 800;
 }
+
 .message .content {
 	height: 560px;
 }
+
 .msg_body {
 	height: 100%;
 	padding-top: 130px;
 	overflow: auto;
 }
+
 .receive_msg, .send_msg {
-	display:inline-block;
+	display: inline-block;
 	border-radius: 50px;
 	padding: 15px;
 	font-size: 1em;
 	margin-bottom: 15px;
 	max-width: 80%;
 }
+
 .receive_msg {
 	float: left;
 	border: 1px solid #F2F2F2;
@@ -160,6 +210,7 @@ ul.list>li {
 	margin-left: 30px;
 	margin-right: 10px;
 }
+
 .send_msg {
 	float: right;
 	border: 1px solid #00D363;
@@ -168,31 +219,38 @@ ul.list>li {
 	margin-right: 30px;
 	margin-left: 10px;
 }
+
 .msg_date {
 	text-align: center;
 	text-decoration: underline;
 	margin-bottom: 10px;
 }
+
 .receive_time, .send_time {
-	margin-top:25px;
-	font-size:0.8em;
-	color:#A4A4A4;
+	margin-top: 25px;
+	font-size: 0.8em;
+	color: #A4A4A4;
 }
+
 .send_time {
-	float:right;
+	float: right;
 }
+
 .message .send {
 	height: 120px;
 	padding-bottom: 20px;
 }
-.writeMsg{
+
+.writeMsg {
 	width: 85%;
 	padding: 20px;
 }
+
 .sendMsg {
 	width: 15%;
 	padding: 20px 20px 20px 0px;
 }
+
 .send-btn {
 	width: 100%;
 	height: 100%;
@@ -207,101 +265,112 @@ ul.list>li {
 	transition: all 0.3s ease 0s;
 	padding: 8px 20px 8px 20px;
 }
+
 .send-btn:hover {
 	color: #fff;
 	background: #ff5e13;
 	border: 1px solid transparent;
 }
-	</style>
+</style>
 </head>
 
 <body>
-    <!--[if lte IE 9]>
+	<!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-    <!-- header-start -->
-    <header>
-        <jsp:include page="/header"></jsp:include>
-    </header>
-    <!-- header-end -->
+	<!-- header-start -->
+	<header>
+		<jsp:include page="/header"></jsp:include>
+	</header>
+	<!-- header-end -->
 
-    <!-- bradcam_area  -->
-    <div class="bradcam_area bradcam_bg_1">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="bradcam_text">
-                        <h3>메세지함</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--/ bradcam_area  -->
-
-
-    <!--================inbox Area =================-->
-    <section class="inbox_area section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-3 fromWho">
-                	<div class="row">
-                	<div class="col-12 searchWho">
-                		<button class="manageMsgBtn">모두 읽음</button><button class="manageMsgBtn">삭제하기</button>
-                		<div class="searchWhoBar">
-                			<div class="icon"><i class="fa fa-search" aria-hidden="true"></i></div>
-							<input type="text" name="who" placeholder="대화 상대 검색" onfocus="this.placeholder = ''"
-								onblur="this.placeholder = '대화 상대 검색'" required class="single-input">
-						</div>
-                	</div>
-                	</div>
-                    <div class="row">
-                    	<div class="system">커넥띵크 알림<span class="new">1</span></div>
-                    	<div class="col-12 list_wrap">
-                    		<ul class="list cat-list personList">
-                    			<li class="person"><span class="otherNo" id="otherNoInList"></span>테스트<span class="new">7</span></li>
-                    		</ul>
-                    	</div>
-                    </div>
-                </div>
-                <div class="col-9 mb-5 mb-lg-0">
-                    <div class="row">
-                    	<div class="col-12 message">
-                    		<div class="row">
-                    			<div class="col-12 content">
-                    			    <div class="msg_header">
-                    					<div class="msg_sender">
-                    						<img src="${contextPath}/img/person.png"><span class="otherNo" id="otherNoInBox"></span><span class="personName">고디바</span>
-                    					</div>
-                    				</div>
-                    				<div class="msg_body">
-                    					<div class="receive_msg">테스트.</div>
-                    					<div style="clear:both;"></div>
-                    				</div>
-                    			</div>
-                    			<div class="col-12 send">
-                    				<div class="row">
-                    				<div class="writeMsg">
-                    					<textarea class="single-textarea" id="msg_content" placeholder="Message" onfocus="this.placeholder = ''"
-													onblur="this.placeholder = 'Message'" required></textarea>
-                    				</div>
-                    				<div class="sendMsg">
-                    					<button class="send-btn" id="send-btn">전송</button>
-                    				</div>
-                    				</div>
-                    			</div>
-                    		</div>
-                    	</div>
-                    </div>
+	<!-- bradcam_area  -->
+	<div class="bradcam_area bradcam_bg_1">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					<div class="bradcam_text">
+						<h3>메세지함</h3>
+					</div>
 				</div>
-            </div>
-        </div>
-    </section>
-    <!--================Blog Area =================-->
+			</div>
+		</div>
+	</div>
+	<!--/ bradcam_area  -->
 
-    <!-- footer start -->
-    <footer class="footer">
+
+	   <!--================inbox Area =================-->
+   <section class="inbox_area section-padding">
+      <div class="container">
+         <div class="row">
+            <div class="col-3 fromWho">
+               <div class="row">
+                  <div class="col-12 searchWho">
+                     <button class="manageMsgBtn">모두 읽음</button>
+                     <button class="manageMsgBtn">삭제하기</button>
+                     <div class="searchWhoBar">
+                        <div class="icon">
+                           <i class="fa fa-search" aria-hidden="true"></i>
+                        </div>
+                        <input type="text" name="who" placeholder="대화 상대 검색"
+                           onfocus="this.placeholder = ''"
+                           onblur="this.placeholder = '대화 상대 검색'" required
+                           class="single-input">
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="system">
+  						커넥띵크 알림<span class="new">1</span>
+                  </div>
+                  <div class="col-12 list_wrap">
+                     <ul class="list cat-list personList">
+                        <li class="person"><span class="otherNo" id="otherNoInList"></span>테스트<span
+                           class="new">7</span></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+            <div class="col-9 mb-5 mb-lg-0">
+               <div class="row">
+                  <div class="col-12 message">
+                     <div class="row">
+                        <div class="col-12 content">
+                           <div class="msg_header">
+                              <div class="msg_sender">
+                                 <img src="${contextPath}/img/person.png"><span class="otherNo"
+                                    id="otherNoInBox">1</span><span class="personName">고디바</span>
+                              </div>
+                           </div>
+                           <div class="msg_body">
+                              <div class="receive_msg">테스트.</div>
+                              <div style="clear: both;"></div>
+                           </div>
+                        </div>
+                        <div class="col-12 send">
+                           <div class="row">
+                              <div class="writeMsg">
+                                 <textarea class="single-textarea" id="msg_content"
+                                    placeholder="Message" onfocus="this.placeholder = ''"
+                                    onblur="this.placeholder = 'Message'" required></textarea>
+                              </div>
+                              <div class="sendMsg">
+                                 <button class="send-btn" id="send-btn">전송</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+	<!--================Blog Area =================-->
+
+	<!-- footer start -->
+	<footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
     </footer>
     <!--/ footer end  -->
@@ -345,11 +414,10 @@ var testCustomer = 101;
 var $sendBtn = $("#send-btn");
 var $msgContent = $("#msg_content");
 var loginedCustomer = ${sessionScope.loginInfo};
-var $otherNo = $("#otherNoInBox");
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -359,7 +427,7 @@ var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
     alert("Welcome, " + loginedCustomer + "! WebSocket opened!");
-	//wSocket.send("connecthinksystem:loadList");
+	wSocket.send("connecthinksystem:loadList");
    }
    //연결이 끊어졌을때
    function onClose(e) {
@@ -368,20 +436,51 @@ var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
    //메세지 수신시
    function onMessage(e) {
 	console.log(e.data);
-	//수신한 메세지가 목록 불러오기인 경우
+	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
-		let listStr = e.data.replace("connecthinksystem:loadList:","");
-		console.log("replace 후 : " + listStr);
-		listObj = JSON.parse(listStr);
-		console.log("JSON parse 후 : " + listObj);
-		let sectionData = "";
-		listObj.forEach(function(person, index){
-			sectionData += '<li class="person"><span class="otherNo" id="otherNoInList">' + person.send.customerNo + '</span>';
-			sectionData += '<span class="personName">' + person.send.name + '</span>';
-			sectionData += '<span class="new">ㅎ</span>';
-			sectionData += '<br><span class="msgPreview">' + person.content + '</span></li>';
-		});
+		let otherStr = "";
+		//처음 항목이 올 때는 리스트를 비운다.
+		if(e.data.includes("connecthinksystem:loadList:refresh:")){
+			$listSection.html("");
+			otherStr = e.data.replace("connecthinksystem:loadList:refresh:","");
+		} else {
+			otherStr = e.data.replace("connecthinksystem:loadList:","");
+		}
+		otherObj = JSON.parse(otherStr);
+		console.log(otherObj);
+		
+		let sectionData = $listSection.html();
+		sectionData += '<li class="person"><span class="otherNo" id="otherNoInList">' + otherObj.otherNo + '</span>';
+		sectionData += '<span class="personName">' + otherObj.otherName + '</span>';
+		if(otherObj.newCnt != 0){
+			sectionData += '<span class="new">' + otherObj.newCnt + '</span>';
+		}
+		sectionData += '<br><span class="msgPreview">' + otherObj.content + '</span></li>';
 		$listSection.html(sectionData);
+	}
+	//수신한 메세지가 특정 회원과 주고받은 메세지 전체를 불러오기인 경우
+	else if (e.data.includes("connecthinksystem:loadPms:")){
+		let pmsStr = e.data.replace("connecthinksystem:loadPms:","");
+		MSGs = JSON.parse(pmsStr);
+		let sectionData = "";
+		let newDate = new Date(0);
+		MSGs.forEach(function(msg, index){
+			let sendDate = new Date(msg.createDate);
+			if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+				sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+				newDate = sendDate;
+			}
+			if(msg.receive.customerNo == loginedCustomer) {
+				sectionData += '<div class="receive_msg">' + msg.content + '</div>';
+				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				sectionData += '<div style="clear:both;"></div>';
+			} else {
+				sectionData += '<div class="send_msg">' + msg.content + '</div>';
+				sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				sectionData += '<div style="clear:both;"></div>';
+			}
+		});
+		$msgSection.html(sectionData);
 	}
 	//수신한 메세지가 Personal Message인 경우
 	else if (e.data.includes("connecthinksystem:pm:")){
@@ -407,14 +506,19 @@ var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
    }
 
 //------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
-fxLoadInbox(loginedCustomer);
 fxLoadNotiCnt(loginedCustomer);
 fxLoadNoti(loginedCustomer);
 
 //------------------------ 클릭 이벤트 -------------------------
 $listSection.on("click","li.person",function(e){
+	//클릭한 회원의 번호와 이름 가져오기
 	let otherNoInList = $(this).find("#otherNoInList").html();
- 	fxLoadMSGs(loginedCustomer, otherNoInList);
+	let otherName = $(this).find(".personName").html();
+	//해당 회원 번호와 이름을 msg header에 넣어주기
+	$("#otherNoInBox").html(otherNoInList);
+	$(".msg_sender>.personName").html(otherName);
+	//웹소켓으로 해당 회원과 주고받은 메세지를 전부 가져오도록 요청
+	wSocket.send("connecthinksystem:loadPms:"+otherNoInList);
 	return false;
 });
 
@@ -425,12 +529,19 @@ $(".system").click(function(e){
 
 $sendBtn.click(function(e){
 	let pmContent = $msgContent.val();
+	//회원이 전송하려고하는 메세지에 포함되면 안되는 문자가 포함되었을 때 막기
 	if(pmContent.includes("connecthinksystem")){
 		alert("회원 간 메세지에 connecthinksystem 을 포함할 수 없습니다.");
 		$msgContent.val(pmContent.replace("connecthinksystem", ""));
+	} else if (pmContent == "") {
+		alert("공백을 전송할 수 없습니다.");
 	} else {
+		//웹소켓으로 메세지 전송
 		wSocket.send("connecthinksystem:to:" + $("#otherNoInBox").html() + ":" + pmContent);
+		//메세지 입력 칸 비워주기
 		$msgContent.val("");
+		//목록에서 최신메세지 바꿔주기
+		
 	}
 });
 
@@ -499,6 +610,7 @@ function fxLoadMSGs(customerNo, otherNo){
 	});
 }
 	
+
 //읽지않은 notification의 갯수를 불러오는 함수
 function fxLoadNotiCnt(customerNo){
 	$.ajax({
@@ -522,7 +634,9 @@ function fxLoadNoti(customerNo){
 		,data: {customerNo : customerNo,
 			${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(noties){
+
 			let otherData = '<img src="${contextPath}/img/person.png"><span class="personName">컨넥띵크</span>';
+
 			let sectionData = "";
 			let newDate = new Date(0);
 			noties.forEach(function(noti, index){

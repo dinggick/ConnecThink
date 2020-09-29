@@ -1,6 +1,7 @@
 package com.connecthink.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,22 +23,27 @@ public class PersonalMessageController {
 		
 	}
 	
-	@RequestMapping(value="/inbox/loadPerson")
-	@ResponseBody
-	public List<PersonalMessage> loadInbox(Integer customerNo) {
-		return service.findReceiver(customerNo);
-	}
+//	@RequestMapping(value="/inbox/loadPerson")
+//	@ResponseBody
+//	public List<PersonalMessage> loadInbox(Integer customerNo) {
+//		return service.findReceiver(customerNo);
+//	}
 	
-	@RequestMapping(value="/inbox/loadMSGs")
-	@ResponseBody
-	public List<PersonalMessage> loadMSGs(Integer customerNo, Integer otherNo) {
-		return service.findByReceiveAndSend(customerNo, otherNo);
-	}
+//	@RequestMapping(value="/inbox/loadMSGs")
+//	@ResponseBody
+//	public List<PersonalMessage> loadMSGs(Integer customerNo, Integer otherNo) {
+//		return service.findByReceiveAndSend(customerNo, otherNo);
+//	}
 	
-	@RequestMapping(value="/inbox/allPm")
+//	@RequestMapping(value="/inbox/allPm")
+//	@ResponseBody
+//	public List<PersonalMessage> allPm(Integer customerNo) {
+//		return service.findByCustomerNo(customerNo);
+//	}
+	
 	@ResponseBody
-	public List<PersonalMessage> allPm(Integer customerNo) {
-		return service.findByCustomerNo(customerNo);
+	public Map<Integer, List<PersonalMessage>> findByCustomerNoAndSort(Integer customerNo) {
+		return service.findByCustomerNoAndSort(customerNo);
 	}
 	
 	public void insert(PersonalMessage pm) {
