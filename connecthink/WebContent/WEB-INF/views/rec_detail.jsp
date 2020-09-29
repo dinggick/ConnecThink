@@ -195,7 +195,7 @@ span.customerNo {
 							</div>
 						</div>
 						<div class="rec_foot_right">
-							<button class="boxed-btn mt-4 message" onclick="message(this);">메세지</button>
+							<button class="boxed-btn mt-4 message" onclick="message(this);" data-toggle="modal" data-target="#msgModal">메세지</button>
 							<button class="boxed-btn mt-4 rec" onclick="apply();">지원하기</button>
 						</div>
 					</div>
@@ -203,6 +203,32 @@ span.customerNo {
 			</div>
 		</div>
 	</div>
+		<div class="modal fade" id="msgModal" role="dialog">
+		<div class="modal-dialog">
+			<!-- Modal content-->
+			<div class="modal-content">
+				 <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLongTitle">메세지</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                <span aria-hidden="true">&times;</span>
+		            </button>					
+				</div>
+				<div class="modal-body">
+			
+					<div class="col-md-9">					
+							<textarea rows="10" cols="50" style="border: none; resize:none"></textarea>			
+									
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" id ="inviteButton" onclick="inviteMember()">보내기</button>
+				
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
 	<!-- 본문 끝 -->
 	<!-- footer start -->
 	<footer class="footer">

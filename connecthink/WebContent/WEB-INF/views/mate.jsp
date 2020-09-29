@@ -167,9 +167,10 @@ span.customerNo{
 	//클릭 시 상세 페이지로 이동(미완)
 	function mateDetail(e){
 		let $customerNo = $(e).find("span.customerNo").html();
-		alert($customerNo);
-// 		let url = "${contextPath}/rec_detail?recNo=" + $customerNo ;
-// 		location.href = url;
+		alert($customerNo);	
+		let url = "${contextPath}/member_detail?customerNo=" + $customerNo ;
+		location.href = url;
+		
 	}
 	
 	
