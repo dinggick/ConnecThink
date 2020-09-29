@@ -14,7 +14,7 @@ import lombok.Setter;
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonalMessageDTO {
+public class LatestPersonalMessageDTO {
 	private Integer otherNo;
 	
 	private String otherName;

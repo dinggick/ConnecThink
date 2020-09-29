@@ -22,64 +22,9 @@ public class PersonalMessageService {
 	PersonalMessageRepository repository;
 
 	/**
-	 * @author 임수정
-	 * 나에게 메세지를 보낸 사람들 목록
-	 */
-//	public List<PersonalMessage> findReceiver(Integer customerNo) {
-//		List<PersonalMessage> PMList = repository.findByReceive(customerNo);
-//		PMList.forEach(pm -> {
-//			System.out.println(pm.getSend().getName());
-//		});
-//		return PMList;
-//	}
-
-	/**
-	 * @author 임수정
-	 * 한 사람과 주고받은 메세지 목록
-	 */
-//	public List<PersonalMessage> findByReceiveAndSend(Integer customerNo, Integer otherNo) {
-//		List<PersonalMessage> PMList = repository.findByReceiveAndSend(customerNo, otherNo);
-//		PMList.forEach(pm -> {
-//			pm.getSend().getName();
-//		});
-//		return PMList;
-//	}
-
-	/**
 	 * @author IM CRYSTAL
-	 * 내가 주고 받은 모든 메세지 목록
-	 */
-//	public List<PersonalMessage> findByCustomerNo(Integer customerNo) {
-//		List<PersonalMessage> PMList = repository.findByCustomerNo(customerNo);
-//		PMList.forEach(pm -> {
-//			System.out.println("ㅡㅡㅡㅡfor문ㅡㅡㅡㅡ" + pm.getContent());
-//			Customer send = pm.getSend();
-//			send.getExperiences().forEach(experience -> {
-//				experience.getExplain();
-//			});
-//			send.getNotifications().forEach(noti -> {
-//				noti.getContent();
-//			});
-//			send.getCustomerPositions().forEach(posi -> {
-//				posi.getPosition();
-//			});
-//			Customer receive = pm.getReceive();
-//			receive.getExperiences().forEach(experience -> {
-//				experience.getExplain();
-//			});
-//			receive.getNotifications().forEach(noti -> {
-//				noti.getContent();
-//			});
-//			receive.getCustomerPositions().forEach(posi -> {
-//				posi.getPosition();
-//			});
-//		});
-//		return PMList;
-//	}
-
-	/**
-	 * @author IM CRYSTAL
-	 * 내가 주고받은 모든 메세지를 상대방 별로 나눠서 반환
+	 * 한 회원의 번호로 그 회원의 모든 personal message를 가져와서, 상대방별로 분류해 map에 담는다.
+	 * map의 key는 상대방 회원번호, value는 그 상대방과 나눈 personal message를 모두 담은 List. 
 	 */
 	public Map<Integer, List<PersonalMessage>> findByCustomerNoAndSort(Integer customerNo){
 		//상대방 번호 별로 sort해서 메세지를 저장할 Map
@@ -126,12 +71,20 @@ public class PersonalMessageService {
 		}
 		return pmSortMap;
 	}
+	
+	/**
+	 * @author IM CRYSTAL
+	 * 인박스에서 상대회원과의 메세지함에 들어갔을 때, 상대방이 보낸 메세지를 읽음 처리한다. (=status를 1로 update)
+	 */
+	public void updateStatus(Integer customerNo, Integer otherNo) {
+		repository.updateStatus(customerNo, otherNo);
+	}
 
 	/**
 	 * @author IM CRYSTAL
-	 * 퍼스널 메세지 저장하기
+	 * personal message를 DB에 insert 혹은 update 한다.
 	 */
-	public void insert(PersonalMessage pm) {
+	public void save(PersonalMessage pm) {
 		repository.save(pm);
 	}
 

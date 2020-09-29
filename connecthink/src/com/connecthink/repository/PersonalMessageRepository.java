@@ -9,16 +9,19 @@ import com.connecthink.entity.PersonalMessage;
 
 public interface PersonalMessageRepository extends JpaRepository<PersonalMessage, Integer> {
 	
-	@Query(nativeQuery = true, value = "SELECT * FROM personal_msg\r\n" + 
-			"WHERE receive = ?1 AND rowid in(select max(rowid) from personal_msg group by send)\r\n" + 
-			"ORDER BY create_date DESC")
-	public List<PersonalMessage> findByReceive(Integer customerNo);
+	/**
+	 * @author IM CRYSTAL
+	 * 인박스에서 상대회원과의 메세지함에 들어갔을 때, 상대방이 보낸 메세지를 읽음 처리한다. (=status를 1로 update)
+	 */
+	@Query(nativeQuery = true, value = "UPDATE personal_msg\r\n" + 
+			"SET status = 1\r\n" + 
+			"WHERE receive = ?1 AND send = ?2")
+	public void updateStatus(Integer customerNo, Integer otherNo);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM personal_msg\r\n" + 
-			"WHERE receive IN (?1,?2) AND send IN (?1,?2)\r\n" + 
-			"ORDER BY create_date")
-	public List<PersonalMessage> findByReceiveAndSend(Integer customerNo, Integer otherNo);
-
+	/**
+	 * @author IM CRYSTAL
+	 * 한 회원이 주고받은 모든 메세지를 반환.
+	 */
 	@Query(nativeQuery = true, value = "SELECT * FROM personal_msg\r\n" + 
 			"WHERE receive = ?1 OR send = ?1\r\n" + 
 			"ORDER BY create_date")
