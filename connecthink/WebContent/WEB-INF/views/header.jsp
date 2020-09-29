@@ -237,6 +237,5 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    function onError(e) {
     alert( "오류발생 : " + e.data );
    }
->>>>>>> origin/soojeong
 </script>
 </html>
