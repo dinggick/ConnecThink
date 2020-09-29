@@ -90,6 +90,22 @@ div {
   color: gray;
 }
 
+.buttAdd{
+	appearance: none;
+		outline: 0;
+		background-color: white;
+		border: 0;
+		padding: 10px 15px;
+		color: @prim;
+		border-radius: 3px;
+		
+		cursor: pointer;
+		
+		transition-duration: 0.25s;
+}
+.buttAdd:hover{
+	background-color: rgb(245, 247, 249);
+}
 
 
 /* chat css */
@@ -136,7 +152,7 @@ div {
 }
 
 .chatBox {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
 	right: 0;
 	width: 400px;
@@ -707,19 +723,19 @@ scale
 				<div class="content">
 					<ul class="usty section1" id="sectionOneStatus" value="1">
 						<li v-for="(item,index) in lists">
-							<div class='card editable'>
-								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+								<div class='card editable'>
 									<input type="hidden" :value="item.taskNo"> 
 									<input type="hidden" :value="item.cusNo">
 									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
-								</a>
-							</div>
+								</div>
+							</a>
 						</li>
 					</ul>
 				</div>
 				<div class="add-task">
 					<input v-model="addName" required class="single-input">
-					<button v-on:click="goTask">작업 추가하기</button>
+					<button v-on:click="goTask" class="btn btn-primary">추가</button>
 				</div>
 			</div>
 		</div>
@@ -730,18 +746,18 @@ scale
 				<div class="content">
 					<ul class="usty section2" id="sectionTwoStatus" value="2">
 						<li v-for="(item,index) in list2">
-							<div class='card editable'>
-								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+								<div class='card editable'>
 									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
 									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
-								</a>
-							</div>
+								</div>
+							</a>
 						</li>
 					</ul>
 				</div>
 				<div class="add-task">
-					<input v-model="addName1">
-					<button v-on:click="goTask">작업 추가하기</button>
+					<input v-model="addName1" required class="single-input">
+					<button v-on:click="goTask" class="btn btn-primary">추가</button>
 				</div>
 			</div>
 		</div>
@@ -752,18 +768,18 @@ scale
 				<div class="content">
 					<ul class="usty section3" id="sectionThreeStatus" value="3">
 						<li v-for="(item,index) in list3">
-							<div class='card editable'>
-								<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
+								<div class='card editable'>
 									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
 									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
-								</a>
-							</div>
+								</div>
+							</a>
 						</li>
 					</ul>
 				</div>
 				<div class="add-task">
-					<input v-model="addName2">
-					<button v-on:click="goTask">작업 추가하기</button>
+					<input v-model="addName2" required class="single-input">
+					<button v-on:click="goTask" class="buttAdd">추가</button>
 				</div>
 			</div>
 		</div>
@@ -1209,9 +1225,23 @@ var ddd;
 	                	}
 	                })
 	                .then(response => {
-	                	this.lists.push({content:this.addName});
- 	                	
-	                	this.addName='';
+	                	axios.get('/connecthink/taskList',{
+	        				params: {
+	        			  	      project_no: ${project_no}
+	        			  	}
+	                    })
+	                    .then(response => {
+	                    	var taskList = response.data;
+	                    	
+	                    	this.lists.splice(0);
+	                    	
+	                    	taskList.forEach(task =>{
+	                    		if(task.taskStatus==1){
+	                    			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+	                    		}
+	                    	});
+	                    	this.addName='';
+	                    });  
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;
@@ -1223,8 +1253,23 @@ var ddd;
 	                	}
 	                })
 	                .then(response => {	
-	                	this.list2.push({content:this.addName1});
-	                	this.addName1='';	
+	                	axios.get('/connecthink/taskList',{
+	        				params: {
+	        			  	      project_no: ${project_no}
+	        			  	}
+	                    })
+	                    .then(response => {
+	                    	var taskList = response.data;
+	                    	
+	                    	this.list2.splice(0);
+	                    	
+	                    	taskList.forEach(task =>{
+	                    		if(task.taskStatus==2){
+	                    			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+	                    		}
+	                    	});
+	                    	this.addName1='';
+	                    });  	
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1236,8 +1281,23 @@ var ddd;
 	                	}
 	                })
 	                .then(response => {	
-	                	this.list3.push({content:this.addName2});
-	                	this.addName2='';
+	                	axios.get('/connecthink/taskList',{
+	        				params: {
+	        			  	      project_no: ${project_no}
+	        			  	}
+	                    })
+	                    .then(response => {
+	                    	var taskList = response.data;
+	                    	
+	                    	this.list3.splice(0);
+	                    	
+	                    	taskList.forEach(task =>{
+	                    		if(task.taskStatus==3){
+	                    			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+	                    		}
+	                    	});
+	                    	this.addName2='';
+	                    });  	
 	                });
 				}
                 

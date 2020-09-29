@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -62,6 +63,7 @@ public class Project {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "project_no")
+	@OrderBy("create_date asc")
 	private List<Task> tasks;
 	
 	@OneToMany(cascade = CascadeType.ALL)
