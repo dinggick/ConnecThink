@@ -255,12 +255,38 @@ div {
 }
 
 .chat-message-group .message {
-	float: left;
-	padding: 10px;
-	background: #ecf1f8;
-	font-size: 13px;
-	border-radius: 5px;
-	margin-bottom: 3px;
+/* 	float: left; */
+/* 	padding: 10px; */
+/* 	background: #ecf1f8; */
+/* 	font-size: 13px; */
+/* 	border-radius: 5px; */
+/* 	margin-bottom: 3px; */
+	  border-radius: 1.15rem;
+	  line-height: 1.25;
+	  max-width: 75%;
+	  padding: 0.5rem .875rem;
+	  position: relative;
+	  word-wrap: break-word;
+}
+p.from-me {
+  align-self: flex-end;
+  background-color: #248bf5;
+  color: #fff; 
+}
+
+p.from-me::before {
+  border-bottom-left-radius: 0.8rem 0.7rem;
+  border-right: 1rem solid #248bf5;
+  right: -0.35rem;
+  transform: translate(0, -0.1rem);
+}
+
+p.from-me::after {
+  background-color: #fff;
+  border-bottom-left-radius: 0.5rem;
+  right: -40px;
+  transform:translate(-30px, -2px);
+  width: 10px;
 }
 
 .chat-messages .from {
@@ -282,7 +308,7 @@ div {
 
 .writer-user .chat-messages .message {
 	float: right;
-	background: #683db8;
+	background: #2196f3;
 	color: #FFF;
 	margin : 10px;
 }
@@ -653,6 +679,164 @@ scale
 
 .friend .status.offline{background:#f74710;}
 
+
+.position-top {
+  position: fixed;
+  top: 40px;
+  /* width: 100% */
+/*   left: 0; */
+  right: 20px;
+}
+.close-icon {
+    float: right;
+    margin: 5px;
+    color: #84817a;
+}
+.success-icon {
+    font-size: 20px;
+    color: #218c74;
+}
+.info-icon {
+    font-size: 20px;
+    color: #ffb142;
+}
+.warning-icon {
+    font-size: 20px;
+    color: #ff5252;
+}
+.notify-card-success {
+    background: #ffffff;
+    margin-bottom: 40px;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+    border-left: 5px solid #218c74;
+    transition: 1s all ease;
+}
+.notify-card-success:hover {
+    cursor: pointer;
+    transition: 1s all ease;
+    box-shadow: 0px 5px 20px 0px #6767676b;
+}
+.notify-card-information {
+    background: #ffffff;
+    margin-bottom: 40px;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+    border-left: 5px solid #ffb142;
+    transition: 1s all ease;
+}
+.notify-card-information:hover {
+    cursor: pointer;
+    transition: 1s all ease;
+    box-shadow: 0px 5px 20px 0px #6767676b;
+}
+.notify-card-warning {
+    background: #ffffff;
+    margin-bottom: 40px;
+    width: 400px;
+    height: 100px;
+    border-radius: 4px;
+    border-left: 5px solid #ff5252;
+    transition: 1s all ease;
+}
+.notify-card-warning:hover {
+    cursor: pointer;
+    transition: 1s all ease;
+    box-shadow: 0px 5px 20px 0px #6767676b;
+}
+.notify-message {
+    display: flex;
+    padding-top: 20px;
+}
+.notify-logo {
+    margin: 20px;
+}
+
+/* vue js animation */
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* switch */
+
+  	#toggle{
+			width:136px;
+			height:41px;
+			border-radius:40px;
+			position:fixed;
+ 			-webkit-appearance: none; 
+/* 			position:absolute; */
+			right:0;
+			top:6%;
+			z-index:10000;
+			/*top:6%;*/
+			margin:-39px 0 0 -89px;
+			box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.4);
+			background: -webkit-linear-gradient(#c6c6c6,#e3e3e3);
+		}
+		#toggle:checked{
+			background: -webkit-linear-gradient(#bfe09c,#c8eca0);
+			box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+		}
+		#toggle:before {
+			content:"";
+			letter-spacing:1px;
+			color: rgba(0,0,0,.15);
+			font-size:22px;
+			font-weight:100;
+			text-shadow:1px 1px 1px rgba(255,255,255,1);
+			width:26px;
+			height:26px;
+			padding:13px;
+			top:7px;
+			left:9px;
+			position:absolute;
+			border-radius:40px;
+			background: -webkit-linear-gradient(#ebebeb,#f1f1f1);
+			box-shadow: -2px 2px 8px rgba(0, 0, 0, 0.2), 
+						-1px 1px 2px rgba(0, 0, 0, 0.3), 
+						inset 1px 1px 1px #ffffff;
+			-webkit-transition: all 1s;
+			
+		}
+		#toggle:checked:before {
+			left:106px;
+			background:#f1f1f1;
+		}
+		#toggle:after {
+			content:"";
+			width:14px;
+			height:14px;
+			top:32px;
+			right:-30px;
+			position:absolute;
+			border-radius:40px;
+			background: -webkit-linear-gradient(#fcc4c5,#e12c2d);
+			box-shadow: inset -1px -1px 4px #8d0808, 
+						inset 1px 1px 2px #bb1313;			
+		}
+		#toggle:checked:after {
+			background: -webkit-linear-gradient(#d8eec4,#5fa718);
+			box-shadow: inset -1px -1px 4px #417f0b, 
+						inset 1px 1px 2px #5b9f1a;			
+		}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js"></script>
@@ -664,33 +848,35 @@ scale
 <body>
 	<!-- Sidebar -->
 	<div id="sideBar"> 
-	<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
+		<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
 
-	<div id="sidebar-wrapper" v-show='toggle'>
-		<ul class="sidebar-nav" id="sidebar-ul">
-			<li class="sidebarTeamName">
-				<a href="#" id="down" @click="toggle = !toggle">This is Team Name</a>
-			</li>	
-			<li v-for="member in memberList">
-				<div class="friend">
-					<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
-					<div class="profile">
-						<p><strong>{{ member.name }}</strong></p>
-						<p><span>{{ member.position }}</span></p>
+		<div id="sidebar-wrapper" v-show='toggle'>
+			<ul class="sidebar-nav" id="sidebar-ul">
+				<li class="sidebarTeamName">
+					<a href="#" id="down" @click="toggle = !toggle">{{teamTitle}}</a>
+				</li>	
+				<li v-for="member in memberList">
+					<div class="friend">
+						<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
+						<div class="profile">
+							<p><strong>{{ member.name }}</strong></p>
+							<p><span>{{ member.position }}</span></p>
+						</div>
+						<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
 					</div>
-					<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
-				</div>
-			</li>
-			<li>
-				<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
-				<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
-			</li>
-		</ul>
-	</div>
+				</li>
+				<li>
+					<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
+					<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
+				</li>
+			</ul>
+		</div>
+	</div> <!-- SideBar end -->
 	
-	</div>
-
+	
+	<!-- dash board -->
 	<div id="dashBoard" v-drag-and-drop:options="options">
+	
 		<!-- 상세 내용 모달 -->
 		<div class="modal fade" id="contentModal" tabindex="-1" role="dialog"
 			aria-labelledby="loginModalCenterTitle" aria-hidden="true">
@@ -716,7 +902,7 @@ scale
 			</div>
 		</div>
 
-		<!-- 대쉬보드 영역 -->
+		<!-- todo 영역 -->
 		<div class="todo" id="do">
 			<div class="title">
 				TO DO
@@ -739,7 +925,8 @@ scale
 				</div>
 			</div>
 		</div>
-
+		
+		<!-- doing 영역 -->
 		<div class="doing" id="doing">
 			<div class="title">
 				Doing
@@ -761,7 +948,8 @@ scale
 				</div>
 			</div>
 		</div>
-
+		
+		<!-- done 영역 -->
 		<div class="done" id="done">
 			<div class="title">
 				Done
@@ -783,11 +971,10 @@ scale
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> <!-- dash board end -->
 
 	<!-- chat -->
 		<div id="chatApp">
-
 			<div class="chatBox" id="chatBox">
 				<div class="ChatCard">
 
@@ -796,7 +983,7 @@ scale
 						<p class="card-header-title">
 							<i class="fa fa-circle is-online"></i><img
 								src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcT2s9HDKipReXD4JCwZtvwq21UdaVbif2z2QQ&usqp=CAU"
-								style="width: 30px;">&nbsp;{{headUser}}
+								style="width: 30px;">&nbsp;{{teamTitle}}
 						</p>
 					</header>
 
@@ -822,14 +1009,17 @@ scale
 												<div class="message">{{msg.content}}</div>
 												<div class="from">{{msg.createDate}}</div>
 											</div>
+												
 										</div>
 									
 										<!-- 메세지 보낼때 -->
 										<div class="chat-message-group writer-user" v-else>
+										
 											<div class="chat-messages">
 												<div class="message">{{msg.content}}</div>
-												<div class="from">{{msg.createDate}}</div>
+												 <div class="from">{{msg.createDate}}</div> 
 											</div>
+											
 										</div>
 
 									</div>
@@ -857,48 +1047,67 @@ scale
 					</div>
 				</div>
 			</div>
-		</div>
+			
+			<!-- switch -->
+			<input id="toggle" type="checkbox" checked v-on:click="onOff"/>
 
+			
+			<!-- notify -->
+		 <transition name="bounce" v-model="notifyMsg">	
+			<div class="position-top" v-show='showNotify'>
+			    <div class="notify-card-success">
+			        <i class="fa fa-times close-icon" aria-hidden="true" v-on:click="close"></i>
+			        <div class="notify-message">
+			            <div class="notify-logo">
+			                <i class="fa fa-check-circle success-icon" aria-hidden="true"></i>              
+			            </div>
+			            <div class="notify-data">
+								{{ notifyMsg }}			
+			            </div>
+			        </div>
+			    </div>
+			</div>
+	    </transition>	
+	    
+	</div> <!-- chat end -->
+		
+		
 </body>
 <script>
-var ddd;
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
 	
+	//scroll event 
 	var chat_on_scroll = function(){
-			var chatDiv = document.getElementById("chatContent");
-	        if((chatDiv.scrollTop + chatDiv.clientHeight) == chatDiv.scrollHeight){
-	                // 채팅창 전체높이 + 스크롤높이가 스크롤 전체높이와 같다면
-	                // 이는 스크롤이 바닥을 향해있다는것이므로
-	                // 스크롤 바닥을 유지하도록 플래그 설정
-	                bottom_flag = true;
-	        }
+		
+		var chatDiv = document.getElementById("chatContent");
+		if((chatDiv.scrollTop + chatDiv.clientHeight) == chatDiv.scrollHeight){
+	       // 채팅창 전체높이 + 스크롤높이가 스크롤 전체높이와 같다면
+	       // 이는 스크롤이 바닥을 향해있다는것이므로
+	       // 스크롤 바닥을 유지하도록 플래그 설정
+	       bottom_flag = true;
+	    }
 
-	 if(pre_diffHeight > chatDiv.scrollTop + chatDiv.clientHeight){
-	                // 스크롤이 한번이라도 바닥이 아닌 위로 상승하는 액션이 발생할 경우
-	                // 스크롤 바닥유지 플래그 해제
-	                bottom_flag = false;  
-	 }
-	        //
-	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
+	   if(pre_diffHeight > chatDiv.scrollTop + chatDiv.clientHeight){
+	       // 스크롤이 한번이라도 바닥이 아닌 위로 상승하는 액션이 발생할 경우
+	       // 스크롤 바닥유지 플래그 해제
+	       bottom_flag = false;  
+	   }
+	   
+	   pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
-	
-	var no = 0;
 	
 	//side bar
 	var sideBar = new Vue({
-		
 		el: '#sideBar'
 		,data : {
 			memberList : [],
 			toggle: false,
 			show:true,
-			isManager : ${isManager}
-			
-		},created(){
-			
-		}//created
+			isManager : ${isManager},
+			teamTitle :  "${title}"
+		}
 		,methods : {
 			showMemberList(){
 				axios
@@ -912,8 +1121,6 @@ var ddd;
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
 						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
-						  
-						  //var log = chat.isLogin(memberInfo[0]);
 						 
 					  })//forEach for memberList				  
 			  })//axios
@@ -950,13 +1157,16 @@ var ddd;
 		 el: '#chatApp'
 		 ,data : {
 		   toggle: true,
-		   headUser: '팀 명이 들어갈 곳 입니다.',
+		   teamTitle: "${title}",
 		   message : "",
 		   msgs : [],
 		   wrts : [],		   
 		   project_no : ${project_no},
 		   writer : 0,
-		   loginLog : []
+		   loginLog : [],
+		   notifyMsg : null,
+		   onoff : true,
+		   showNotify : false
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
@@ -967,6 +1177,7 @@ var ddd;
 		   //변화가 있을경우
 		  ,updated(){
 			var chatDiv = document.getElementById("chatContent");
+		 	
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
@@ -1017,7 +1228,7 @@ var ddd;
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.18:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1054,6 +1265,19 @@ var ddd;
 							}else{
 								//전송한 사람이 내가 아닐경우
 								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name});
+								
+								//토글이 닫혀있을때 notify show
+								if(!this.toggle && this.onoff){
+									this.close();
+									if(this.notifyMsg != null){
+										this.open();
+										this.notifyMsg = name+" 님이 "+msg+" 내용의 메세지를 전송 했습니다.";
+									}else{
+										this.open();
+										this.notifyMsg = name+" 님이 "+msg+" 내용의 메세지를 전송 했습니다.";
+										setTimeout(this.close, 2000);
+									}
+								}
 							}
 						}
 					 };//onmessage	
@@ -1066,6 +1290,12 @@ var ddd;
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
+			  },close(){ 
+				 this.showNotify = false;
+			  },open(){
+				this.showNotify = true;  
+			  },onOff(ev){
+			  	this.onoff = ev.target.checked;
 			  }
 		  }//method
 		});
