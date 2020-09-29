@@ -44,12 +44,12 @@ public class PersonalMessage {
 	private Integer personalMsgNo;
 
 	//@ManyToOne(cascade = CascadeType.PERSIST)
-	@ManyToOne(cascade = CascadeType.DETACH)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "send")
 	private Customer send;
 
 	//@ManyToOne(cascade = CascadeType.PERSIST)
-	@ManyToOne(cascade = CascadeType.DETACH)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "receive")
 	private Customer receive;
 	
@@ -59,4 +59,7 @@ public class PersonalMessage {
 	@CreationTimestamp
 	@Column(name = "create_date")
 	private Timestamp createDate;
+	
+	@Column(name = "status")
+	private Integer status;
 }
