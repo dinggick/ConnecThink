@@ -181,6 +181,7 @@
 			</div>
 		</div>	
 	</div>
+<!-- 	초대하기 모달 -->
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
@@ -208,6 +209,7 @@
 
 		</div>
 	</div>
+<!-- 	메세지 모달 -->
 	<div class="modal fade" id="msgModal" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->

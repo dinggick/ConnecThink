@@ -335,10 +335,10 @@
 		
 		//클릭 시 회원 상세 페이지로 이동(미완)
 		function mateDetail(e){
-			let $customerNo = $(e).find("li.customerNo").html();
-			alert($customerNo);
-//	 		let url = "${contextPath}/rec_detail?recNo=" + $customerNo ;
-//	 		location.href = url;
+			let $customerNo = $(e).find("li.customerNo").html();			
+			let url = "${contextPath}/member_detail?customerNo=" + $customerNo ;
+			location.href = url;
+			
 		}
 		
 		
