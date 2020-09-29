@@ -239,10 +239,6 @@
     <script src="${contextPath}/js/main.js"></script>
     
 <script>
-//테스트용 변수
-var testMember = 101;
-var testManager = 2;
-
 //섹션 설정
 var $section = $(".tr-section");
 
@@ -261,19 +257,19 @@ $menuBtnArray.each(function(i){
 		//ajax로 데이터 불러와서 table row 다시 쓰기
 		//내가 지원한 팀
 		if ($(this).attr("id") == "myApplication"){
-			fxMyApplication(testMember);
+			fxMyApplication(loginedCustomer);
 		}
 		//초대 받은 팀
 		else if ($(this).attr("id") == "myInvitaion") {
-			fxMyInvitation(testMember);
+			fxMyInvitation(loginedCustomer);
 		}
 		//내가 초대한 멤버
 		else if ($(this).attr("id") == "invitedMember") {
-			fxInvited(testManager);
+			fxInvited(loginedCustomer);
 		}
 		//우리 팀에 지원한 멤버
 		else if ($(this).attr("id") == "appliedMember") {
-			fxApplied(testManager);
+			fxApplied(loginedCustomer);
 		}
 		//기본 이벤트, 이벤트 전파 막기
 		return false;
@@ -291,6 +287,7 @@ $section.on("click", "a.manage-bnt", function(e){
 		let denyConfirm = confirm("정말 " + this.innerHTML + "하시겠습니까?");
 		if(denyConfirm==1){
 			deny(recruitNo, memberNo, this.innerHTML);
+ 			$(this.parentNode.parentNode).remove();
 		}
 	}
 	//지원자 수락하기 / 초대 수락하기
@@ -298,6 +295,7 @@ $section.on("click", "a.manage-bnt", function(e){
 		let allowConfirm = confirm("정말 수락하시겠습니까?");
 		if(allowConfirm==1){
 			allow(recruitNo, memberNo);
+			$(this.parentNode.parentNode).remove();
 		}
 	}
 	//기본 이벤트, 이벤트 전파 막기
@@ -327,7 +325,7 @@ function fxMyApplication(){
 		url:"${contextPath}/manageTeam/myApplication"
 		,method:"POST"
 			//{memberNo : ${sessionScope.loginInfo},
-		,data: {memberNo : testMember,
+		,data: {memberNo : loginedCustomer,
             ${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(projects){
 			let $tableHead = $(".table-head");
@@ -367,12 +365,12 @@ function fxMyApplication(){
 }
 
 //나에게 초대를 보낸 팀 보여주기
-function fxMyInvitation(testMember) {
+function fxMyInvitation(loginedCustomer) {
 	$.ajax({
 		url:"${contextPath}/manageTeam/myInvitation"
 		,method:"POST"
 			//{memberNo : ${sessionScope.loginInfo},
-		,data : {memberNo : testMember,
+		,data : {memberNo : loginedCustomer,
             ${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(projects){
 			let $tableHead = $(".table-head");
@@ -413,12 +411,12 @@ function fxMyInvitation(testMember) {
 }
 
 //내가 초대한 멤버 보여주기
-function fxInvited(testManager){
+function fxInvited(loginedCustomer){
 	$.ajax({
 		url:"${contextPath}/manageTeam/invited"
 		,method:"POST"
 			//{managerNo : ${sessionScope.loginInfo},
-		,data: {managerNo : testManager,
+		,data: {managerNo : loginedCustomer,
 			${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(projects){
 			let $tableHead = $(".table-head");
@@ -463,12 +461,12 @@ function fxInvited(testManager){
 }
 
 //내 팀에 지원한 멤버 보여주기
-function fxApplied(testManager) {
+function fxApplied(loginedCustomer) {
 	$.ajax({
 		url:"${contextPath}/manageTeam/applied"
 		,method:"POST"
 			//{managerNo : ${sessionScope.loginInfo},
-		,data: {managerNo : testManager,
+		,data: {managerNo : loginedCustomer,
 			${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(projects){
 			let $tableHead = $(".table-head");
@@ -551,7 +549,7 @@ function fxRecruitDetail(recruitNo){
 	let form = document.recruitForm;
 	form.action = "${contextPath}/rec_detail";
 	form.target = "winName";
-//	$(form).find("input[name=recNo]").val(recruitNo);
+	$(form).find("input[name=recNo]").val(recruitNo);
 	form.submit();
 }
 
@@ -561,7 +559,7 @@ function fxMemberDetail(memberNo){
 	let form = document.memberForm;
 	form.action = "${contextPath}/member_recruit";
 	form.target = "winName";
-//	$(form).find("input[name=customerNo]").val(memberNo);
+	$(form).find("input[name=customerNo]").val(memberNo);
 	form.submit();
 }
 </script>
