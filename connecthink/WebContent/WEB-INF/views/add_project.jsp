@@ -99,7 +99,7 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name = "theme" placeholder="팀 주제를 적어주세요 (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)">
+										<input type="text" name = "theme" placeholder="팀 주제를 적어주세요 (ex. 데이팅 앱/ 레시피 판매 사이트) ">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -107,13 +107,13 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<textarea name="purpose" id="" cols="30" rows="10" placeholder="팀의 목적에 대해 자유롭게 기재 해주세요"></textarea>
+										<input name="purpose" placeholder="팀 목적을 적어주세요(100자 이내) (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)">
 									</div>
 								</div>
 								<div class="col-md-12">
-									<div class="submit_btn text-center">
-										<button class="boxed-btn3 mr-1" >취소하기</button>
-										<button class="boxed-btn3 submit">등록하기</button>
+									<div class="text-center">
+										<button class="boxed-btn3 mr-1 clear" type="button">취소하기</button>
+										<button class="boxed-btn3 submit" type="button">등록하기</button>
 									</div>
 								</div>
 							</div>
@@ -208,12 +208,20 @@ h4 .requir{
 			$("input[name=theme]").focus();
 			return false;
 		}
-		if($("textarea[name=purpose]").val().length==0){
-			$("textarea[name=purpose]").attr("placeholder","필수 입력란입니다").css("border-color","red");
-			$("textarea[name=purpose]").focus();
+		if($("input[name=purpose]").val().length==0){
+			$("input[name=purpose]").attr("placeholder","필수 입력란입니다").css("border-color","red");
+			$("input[name=purpose]").focus();
 			return false;
 		}
 	}
+	
+	$(".clear").click(function (){
+		let answer = confirm("등록을 취소하시겠습니까?");
+		if(answer == true){
+			location.href = "${contextPath}/";
+		}
+		return false;
+	});
 	</script>
 	
 </body>

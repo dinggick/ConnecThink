@@ -1,12 +1,9 @@
 package com.connecthink.controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -57,7 +53,7 @@ public class RecruitController {
 	 * @author 홍지수 
 	 * 모집 전체 목록 조회
 	 */
-	@RequestMapping("/rec")
+	@RequestMapping("/all/rec")
 	public ModelAndView findAll(){
 		ModelAndView mnv = new ModelAndView();
 		List<Recruit> list = new ArrayList<Recruit>();
@@ -123,24 +119,22 @@ public class RecruitController {
 		//파일 읽어오기
 		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
 		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt" + File.separator;
-		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img" + File.separator;
-		
-		//이미지 존재 여부 확인
-		File f = new File(saveImgPath+recNo+".jpg");
-		if(f.exists()) {
-			String name = f.getName();
-			mnv.addObject("imgName", name);
-		}
 		
 		//recruit/txt 디렉토리 내부에 파일 있는 지 확인
-		Path path = Paths.get(saveTxtPath+recNo+".txt");
-		//캐릭터 셋
-		Charset cs = StandardCharsets.UTF_8;
+		File f = new File(saveTxtPath+recNo+".txt");
 		//담아 줄 리스트
 		List<String> fList = new ArrayList<String>();
 		
 		try {
-			fList = Files.readAllLines(path, cs);
+			//입력 스트림
+			FileReader fileReader = new FileReader(f);
+			//입력 버퍼
+			BufferedReader bufReader = new BufferedReader(fileReader);
+			String line = "";
+			while((line = bufReader.readLine()) != null) {
+				fList.add(line);
+			}
+			bufReader.close();
 			mnv.addObject("fList", fList);
 		} catch (IOException e) {
 			e.printStackTrace();

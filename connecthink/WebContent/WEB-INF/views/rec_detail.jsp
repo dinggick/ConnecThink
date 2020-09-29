@@ -119,8 +119,8 @@ span.customerNo {
 					<div class="job_details_header ">
 						<div class="single_jobs white-bg d-flex justify-content-between">
 							<div class="jobs_left">
-								<div class="jobs_conetent mt-1 text-center">
-									<h2>${detail.title}</h2>
+								<div class="jobs_conetent mt-1">
+									<h3>${detail.title}</h3>
 								</div>
 							</div>
 							<div class="jobs_right text-right pt-2">
@@ -136,18 +136,43 @@ span.customerNo {
 					<!-- 제목 밑 -->
 					<div class="descript_wrap white-bg"
 						style="border-bottom: 1px solid #EAEAEA;">
-						<div class="single_wrap team_info">
-							<h4 class="mb-2">소개</h4>
-							<ul>
+						<div class="single_wrap project_info">
+							<h4>우리 프로젝트가 찾고 있는 사람</h4>
+							<ul class="rec_wanna">
+								<c:forEach items="${detail.recruits}" var="rec"
+									varStatus="status">
+									<c:if test="${recNo eq rec.recruitNo}">
+										<li>모집직무 : ${rec.position.name}</li>
+										<li>모집인원 : ${rec.headCount}</li>
+										<li>요구사항 : ${rec.requirement}</li>
+										<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
+										<li>모집기한 : ${dl}</li>
+										<li>모집상세</li>
+										<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
+											<span style="padding-left: 50px;">${fList}</span><br>
+										</c:forEach>
+									</c:if>
+								</c:forEach>
+							</ul>
+						</div>
+						<hr>
+						<div class="single_wrap team_info mt-2">
+							<h4 class="mb-2">우리 프로젝트는요?</h4>
+							<ul class="mb-4">
 								<li>${detail.about}</li>
 							</ul>
-							<h4 class="mb-2 mt-2">목적</h4>
-							<ul>
+							<h4 class="mb-2 mt-2">우리 프로젝트의 주제</h4>
+							<ul class="mb-4">
+								<li>${detail.theme}</li>
+							</ul>
+							<h4 class="mb-2 mt-2">우리 프로젝트의 목적</h4>
+							<ul class="mb-4">
 								<li>${detail.purpose}</li>
 							</ul>
+							
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
-								<h4 class="mt-3">팀원</h4>
+								<h4 class="mt-3">프로젝트를 함께 할 팀원</h4>
 								<c:forEach items="${member}" var="member" varStatus="status">
 									<div class="single_candidates mb-4 mr-3"
 										style="display: inline-block;">
@@ -160,27 +185,6 @@ span.customerNo {
 								</c:forEach>
 								<!-- 프로필 끝 -->
 							</div>
-						</div>
-						<div class="single_wrap project_info">
-							<h4>모집 소개</h4>
-							<ul class="rec_wanna">
-								<c:forEach items="${detail.recruits}" var="rec"
-									varStatus="status">
-									<c:if test="${recNo eq rec.recruitNo}">
-										<li>모집직무 : ${rec.position.name}</li>
-										<li>모집인원 : ${rec.headCount}</li>
-										<li>요구사항 : ${rec.requirement}</li>
-										<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
-										<li>모집기한 : ${dl}</li>
-										<li>모집상세</li>
-											<ul>
-										<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
-											<li style="padding-left: 50px;">${fList}</li>
-										</c:forEach>
-											</ul>
-									</c:if>
-								</c:forEach>
-							</ul>
 						</div>
 					</div>
 					<!-- 컨텐츠 끝 -->

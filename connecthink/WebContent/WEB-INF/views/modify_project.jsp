@@ -112,7 +112,7 @@ h4 .requir{
 								</div>
 								<div class="col-md-12">
 									<div class="submit_btn text-center">
-										<button class="boxed-btn3 mr-1" >취소하기</button>
+										<button class="boxed-btn3 mr-1 clear" type="button" >취소하기</button>
 										<button class="boxed-btn3 submit">수정하기</button>
 									</div>
 								</div>
@@ -212,6 +212,15 @@ h4 .requir{
 			return false;
 		}
 	}
+	
+	//취소
+	$(".clear").click(function (){
+		let answer = confirm("수정을 취소하시겠습니까?");
+		if(answer == true){
+			location.href = "${contextPath}/";
+		}
+		return false;
+	});
 	</script>
 	
 </body>

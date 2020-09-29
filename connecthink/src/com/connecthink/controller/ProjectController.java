@@ -146,9 +146,12 @@ public class ProjectController {
 		return result;
 	}
 
+	/**
+	 * @author 홍지수
+	 * 프로젝트 추가 뷰 호출
+	 */
 	@RequestMapping(value="/add_project")
 	public void add_project() {
-		System.out.println("프로젝트 추가하기");
 	}
 
 	/* @author kimdongjun
@@ -163,10 +166,10 @@ public class ProjectController {
 
 	/**
 	 * @author 홍지수
+	 * 나의 프로젝트 관리 뷰 호출
 	 */
 	@RequestMapping(value = "/myProject")
 	public void myProject() {
-		System.out.println("내가 등록한 프로젝트 호출");
 	}
 
 	/**
@@ -194,10 +197,8 @@ public class ProjectController {
 		mnv.addObject("detail", p);
 		if(whatYouCallValue.equals("/project_detail")) {
 			mnv.setViewName("/project_detail");
-			System.out.println("상세보기");
 		} else {
 			mnv.setViewName("/modify_project");
-			System.out.println("수정하기");
 		}
 		return mnv;
 	}

@@ -10,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -50,5 +53,7 @@ public class Recruit {
 	@JoinColumn(name = "position_no")
 	private Position position;
 	
-	
+	@CreationTimestamp
+	@Column(name = "create_date", updatable = false)
+	private Date createDate;
 }
