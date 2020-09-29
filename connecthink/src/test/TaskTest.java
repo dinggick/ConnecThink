@@ -17,12 +17,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import com.connecthink.controller.BoardController;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
+import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.ProjectRepository;
+import com.connecthink.repository.RecruitRepository;
 import com.connecthink.repository.TaskRepository;
 import com.connecthink.service.BoardService;
 
@@ -34,6 +36,10 @@ import com.connecthink.service.BoardService;
 class TaskTest {
 	@Autowired
 	private TaskRepository repository;
+	@Autowired
+	private CustomerRepository customerRepository;
+	@Autowired
+	private RecruitRepository recruitRepository;
 	
 	@Autowired
 	private BoardService service;
@@ -93,7 +99,7 @@ class TaskTest {
 	}
 	
 	//상태변경
-	@Test
+//	@Test
 	public void update() {
 		Task t = repository.findById(11).get();
 		
@@ -121,22 +127,41 @@ class TaskTest {
 	}
 	
 	@Test
-	@Transactional
+//	@Transactional
 	public void ttt() {
+//		Project p = projectRepository.findById(1).get();
+//		Iterator rIter = p.getRecruits().iterator();
+//		while(rIter.hasNext()) {
+//			Set<Member> memberSet = ((Recruit)rIter.next()).getMembers();
+//			Iterator mIter = memberSet.iterator();
+//			while(mIter.hasNext()) {
+//				Member m = (Member) mIter.next();
+//				if(m.getCustomer().getCustomerNo() == 101) {
+//					memberSet.remove(m);
+//					projectRepository.saveAndFlush(p);
+//					return;
+//				}
+//			}
+//		}
 		Project p = projectRepository.findById(1).get();
-		Iterator rIter = p.getRecruits().iterator();
-		while(rIter.hasNext()) {
-			Set<Member> memberSet = ((Recruit)rIter.next()).getMembers();
-			Iterator mIter = memberSet.iterator();
-			while(mIter.hasNext()) {
-				Member m = (Member) mIter.next();
-				if(m.getCustomer().getCustomerNo() == 101) {
-					memberSet.remove(m);
-					projectRepository.save(p);
+		p.getRecruits().forEach(r -> {
+			r.getMembers().forEach(m -> {
+				if(m.getId().getMemberNo() == 101) {
+					Member memberToRemove = new Member();
+					MemberId ids = new MemberId();
+					
+					ids.setMemberNo(101);
+					ids.setRecruitNo(r.getRecruitNo());
+					
+					memberToRemove.setId(ids);
+					memberToRemove.setCustomer(customerRepository.findById(101).get());
+					memberToRemove.setRecruit(recruitRepository.findById("1R1").get());
+					
+					memberRepository.delete(memberToRemove);
 					return;
 				}
-			}
-		}
+			});
+		});
 	}
 	
 }
