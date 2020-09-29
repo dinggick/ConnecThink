@@ -206,7 +206,15 @@ public class ProjectService {
 	public List<Project> lookUpMyProject(int customer_no) {
 		return projectRepository.findByCustomerNo(customer_no);
 	}
-
+	
+	/**
+	 * @author kimdongjun
+	 * 프로젝트에 해당하는 팀장 번호 보여주기
+	 */
+	public int lookUpMyManager(int project_no) {
+		return projectRepository.findById(project_no).get().getManagerNo();
+	}
+	
 	/**
 	 * @author 홍지수
 	 * 프로젝트(팀) 등록

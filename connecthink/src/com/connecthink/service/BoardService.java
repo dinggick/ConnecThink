@@ -157,6 +157,7 @@ public class BoardService {
 	 * 포스트잇 삭제
 	 * @author 변재
 	 */
+	@Transactional
 	public void removeByTask(Integer customer_no,Integer taskNo) {
 		Task t = taskRepository.findById(taskNo).get();
 		Customer c = t.getCustomer();
@@ -182,7 +183,8 @@ public class BoardService {
 	 * 프로젝트 탈퇴
 	 * @author 변재
 	 */
-	public void exitProject(Integer customerNo) {
+	public void exitProject(Integer customerNo, Integer projectNo) {
+		
 		
 	}
 	

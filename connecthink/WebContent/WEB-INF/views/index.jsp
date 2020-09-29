@@ -10,24 +10,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/gijgo.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/slicknav.css">
-    <link rel="stylesheet" href="css/w3school.css">
+    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
+    <link rel="stylesheet" href="${contextPath}/css/w3school.css">
 
-    <link rel="stylesheet" href="css/style.css">
-    <!-- <link rel="stylesheet" href="css/responsive.css"> -->
+    <link rel="stylesheet" href="${contextPath}/css/style.css">
+    <!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 </head>
 <style>
 
@@ -77,17 +77,17 @@
 			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="img/banner/banner2.jpg" alt="First slide">
+      <img class="d-block w-100" src="${contextPath}/img/banner/main2.jpg" alt="First slide">
        <div class="carousel-caption d-none d-md-block">
    	 <h5>caption</h5>
    
   </div>
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="img/banner/main1.jpg" alt="Second slide">
+      <img class="d-block w-100" src="${contextPath}/img/banner/main1.jpg" alt="Second slide">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="img/banner/main1.png" alt="Third slide">
+      <img class="d-block w-100" src="${contextPath}/img/banner/main1.png" alt="Third slide">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -107,7 +107,7 @@
 		<div
 			class="ilstration_img wow fadeInRight d-none d-lg-block text-right"
 			data-wow-duration="1s" data-wow-delay=".2s">
-			<!-- 			<img src="img/banner/illustration.png" alt=""> -->
+			<!-- 			<img src="${contextPath}/img/banner/illustration.png" alt=""> -->
 		</div>
 	</div>
 	</div>
@@ -166,7 +166,7 @@
 								<div class="col-lg-11">
 									<div class="single_testmonial d-flex align-items-center">
 										<div class="thumb">
-											<img src="img/testmonial/author.png" alt="">
+											<img src="${contextPath}/img/testmonial/author.png" alt="">
 											<div class="quote_icon">
 												<i class="Flaticon flaticon-quote"></i>
 											</div>
@@ -184,7 +184,7 @@
 								<div class="col-lg-11">
 									<div class="single_testmonial d-flex align-items-center">
 										<div class="thumb">
-											<img src="img/kkugi.jpg" alt="">
+											<img src="${contextPath}/img/kkugi.jpg" alt="">
 											<div class="quote_icon">
 												<i class=" Flaticon flaticon-quote"></i>
 											</div>
@@ -202,7 +202,7 @@
 								<div class="col-lg-11">
 									<div class="single_testmonial d-flex align-items-center">
 										<div class="thumb">
-											<img src="img/testmonial/author.png" alt="">
+											<img src="${contextPath}/img/testmonial/author.png" alt="">
 											<div class="quote_icon">
 												<i class="Flaticon flaticon-quote"></i>
 											</div>
@@ -231,34 +231,34 @@
 
 	<!-- link that opens popup -->
 	<!-- JS here -->
-	<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-	<script src="js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/isotope.pkgd.min.js"></script>
-	<script src="js/ajax-form.js"></script>
-	<script src="js/waypoints.min.js"></script>
-	<script src="js/jquery.counterup.min.js"></script>
-	<script src="js/imagesloaded.pkgd.min.js"></script>
-	<script src="js/scrollIt.js"></script>
-	<script src="js/jquery.scrollUp.min.js"></script>
-	<script src="js/wow.min.js"></script>
-	<script src="js/nice-select.min.js"></script>
-	<script src="js/jquery.slicknav.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/gijgo.min.js"></script>
+	<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="${contextPath}/js/popper.min.js"></script>
+	<script src="${contextPath}/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/js/owl.carousel.min.js"></script>
+	<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+	<script src="${contextPath}/js/ajax-form.js"></script>
+	<script src="${contextPath}/js/waypoints.min.js"></script>
+	<script src="${contextPath}/js/jquery.counterup.min.js"></script>
+	<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+	<script src="${contextPath}/js/scrollIt.js"></script>
+	<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+	<script src="${contextPath}/js/wow.min.js"></script>
+	<script src="${contextPath}/js/nice-select.min.js"></script>
+	<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+	<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+	<script src="${contextPath}/js/plugins.js"></script>
+	<script src="${contextPath}/js/gijgo.min.js"></script>
 
 
 
 	<!--contact js-->
-	<script src="js/contact.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/jquery.form.js"></script>
-	<script src="js/jquery.validate.min.js"></script>
-	<script src="js/mail-script.js"></script>
-	<script src="js/main.js"></script>
+	<script src="${contextPath}/js/contact.js"></script>
+	<script src="${contextPath}/js/jquery.ajaxchimp.min.js"></script>
+	<script src="${contextPath}/js/jquery.form.js"></script>
+	<script src="${contextPath}/js/jquery.validate.min.js"></script>
+	<script src="${contextPath}/js/mail-script.js"></script>
+	<script src="${contextPath}/js/main.js"></script>
 	
 	<script>
 
@@ -281,7 +281,7 @@
 				for (x in responseObj) {
 					txt += "<div class='col-md-6 col-lg-3'><div class='single_catagory'>" +
 							"<div class='thumb' style='float: right;'> " +
-							"<img src='img/candiateds/1.png' alt=''></div>"+
+							"<img src='${contextPath}/img/candiateds/1.png' alt=''></div>"+
 							"<a href='#' onclick='memberDetail("+responseObj[x].customerNo+")'><h4>"+responseObj[x].name+"</h4></a>" +
 							" <input type='text' id='customerNo' value='"+responseObj[x].customerNo + "' hidden='hidden'>";							 
 					
@@ -307,8 +307,9 @@
 				var txt = "";
 				for (x in responseObj) {
 					var deadline = new Date(responseObj[x].deadline).toISOString().substring(0, 10);;
+
 					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='projectDetail(this);'>" +
-							"<div class='thumbnail'><div class='test'><img src='img/default.png' alt='모집 사진'></div></div>" +
+							"<div class='thumbnail'><div class='test'><img src='${contextPath}/img/default.png' alt='모집 사진'></div></div>" +
 							"<h4 class='mt-4 mr-4 ml-4 rec_title'>" + responseObj[x].requirement + "</h4>" +
 					"<ul style='list-style: none;'><li class='wanna'>" + responseObj[x].position.name + "</li>" +
 						

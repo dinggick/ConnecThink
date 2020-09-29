@@ -1,26 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="list" value="${requestScope.list}"/>	
+<c:set var="list" value="${requestScope.list}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css">
-    <link rel="stylesheet" href="css/magnific-popup.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/themify-icons.css">
-    <link rel="stylesheet" href="css/nice-select.css">
-    <link rel="stylesheet" href="css/flaticon.css">
-    <link rel="stylesheet" href="css/gijgo.css">
-    <link rel="stylesheet" href="css/animate.min.css">
-    <link rel="stylesheet" href="css/slicknav.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
+    <link rel="stylesheet" href="${contextPath}/css/style.css">
 
 
 <style>
@@ -634,7 +635,7 @@ scale
 	right:17px;
 }
 
-.friend .status.offline{background:#ffce54;}
+.friend .status.offline{background:#f74710;}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -661,11 +662,11 @@ scale
 						<p><strong>{{ member.name }}</strong></p>
 						<p><span>{{ member.position }}</span></p>
 					</div>
-					<div :id="member.customer_no"></div>
+					<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
 				</div>
 			</li>
 			<li>
-				<p v-if="show"><a v-on:click="endProject">프로젝트 종료</a></p>
+				<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
 				<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
 			</li>
 		</ul>
@@ -844,6 +845,7 @@ scale
 
 </body>
 <script>
+var ddd;
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -866,24 +868,23 @@ scale
 	        pre_diffHeight = chatDiv.scrollTop + chatDiv.clientHeight
 	};
 	
+	var no = 0;
+	
 	//side bar
 	var sideBar = new Vue({
+		
 		el: '#sideBar'
 		,data : {
 			memberList : [],
 			toggle: false,
-			show:true
+			show:true,
+			isManager : ${isManager}
+			
 		},created(){
-			console.log("sidebar 생김");	
+			
 		}//created
 		,methods : {
 			showMemberList(){
-				var led = document.getElementById('sidebar-ul').childNodes[2].childNodes[0].childNodes[4];
-				var leader = document.getElementById('sidebar-ul').childNodes[2].childNodes;
-				
-				console.log(led);
-				console.log(leader);
-				
 				axios
 			  	.get('/connecthink/lookUpMember', {
 			  	    params: {
@@ -892,40 +893,38 @@ scale
 			  	 })
 			  	.then(result => {
 					  var memberInfo = result.data;	   			
-					  console.log(memberInfo);
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
 						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
-						  var log = chat.isLogin(memberInfo[0]);
+						  
+						  //var log = chat.isLogin(memberInfo[0]);
 						 
-						  console.log(memberInfo[2] == 'teamLeader');
 					  })//forEach for memberList				  
 			  })//axios
 			},//showMemberList
 			//프로젝트 종료
 			endProject(){
-				
-// 				axios.get('/connecthink/endProject',{
-//                 	params:{
-//                 		project_no: ${project_no}
-//                 	}
-//                 })
-//                 .then(response => {	
-//                 	alert('종료완료!')
-//                 	window.close();
-//                 });
+				axios.get('/connecthink/endProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
 			},
 			//프로젝트탈퇴
 			endMyProject(){
-// 				axios.get('/connecthink/endMyProject',{
-//                 	params:{
-//                 		project_no: ${project_no}
-//                 	}
-//                 })
-//                 .then(response => {	
-//                 	alert('종료완료!')
-//                 	window.close();
-//                 });
+				axios.get('/connecthink/endMyProject',{
+                	params:{
+                		project_no: ${project_no}
+                	}
+                })
+                .then(response => {	
+                	alert('종료완료!')
+                	window.close();
+                });
 			}
 		}
 	});
@@ -939,17 +938,14 @@ scale
 		   message : "",
 		   msgs : [],
 		   wrts : [],		   
-		   project_no : 0,
+		   project_no : ${project_no},
 		   writer : 0,
 		   loginLog : []
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
-			  console.log('created');
-			  this.connect();
 			  sideBar.showMemberList();
-			  this.project_no = ${project_no};
-			  
+			  this.connect();
     		}//created
 		  
 		   //변화가 있을경우
@@ -958,7 +954,6 @@ scale
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
-				console.log("if들어옴");
 			}
 			  
 		  }
@@ -1006,25 +1001,32 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.18:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
 					  this.status = "ready";
 					  this.send("ready:"+this.project_no);
 					  
-					  console.log('connected');
 					  this.status = "Connected";
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
-						  console.log("message도착!");
 						var datas = data.split(":");
-						console.log(datas);
 						if(datas[0] == "userid"){
-							this.writer = datas[1];
-							
-							//접속중인 유저를 알기위해 접속할때 유저 정보 담아줌
-							this.loginLog.push({customer_no : datas[1]});
+							this.writer = datas[1];						
+						}
+						else if(datas[0] == "loginInfo"){
+							var loguserArray = datas[1].substring(1,datas[1].length-1).split(",");
+							var className = "status online";
+							loguserArray.forEach(customer_no => {
+								var dc = document.getElementById(customer_no.trim()+"no");
+ 								dc.setAttribute("class",className);
+							});
+						}else if(datas[0] == "logoutInfo"){
+							var logoutUser_no = datas[1];
+							var className = "status offline";
+							var dc = document.getElementById(logoutUser_no.trim()+"no");
+							dc.setAttribute("class",className);
 						}else{
 							var user = datas[0];
 							var msg = datas[1];
@@ -1048,24 +1050,11 @@ scale
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
-			  },
-				
-			  //맴버 접속 여부 가져오기
-			  isLogin(customer_no){
-				 // alert(customer_no + "로긴중");
-				  var log = this.loginLog.findIndex(log=> log.customer_no === customer_no);
-				  if(log == 1){
-					  console.log("true 들어옴");
-					  return true;
-				  }else{
-					  console.log("false 들어옴");
-					  return false;
-				  }
 			  }
 		  }//method
 		});
 	
-	////////////////////////////////변재 vue.js////////////////////////////////////////////////////////
+	////////////////////////////////변재 vue.${contextPath}/js////////////////////////////////////////////////////////
 	Vue.use(VueDraggable.default);
 	
 	var todo = new Vue({
@@ -1081,15 +1070,15 @@ scale
 			updateText:'',
 			options:{
 				 onDragend(event){
-					 console.log(event);
+					 //console.log(event);
 					 
 					 if(event.droptarget == null){
 						 
 					 }
 					 
-					 console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
+					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-					 console.log('태스크너버' + getTaskNo);
+					 //console.log('태스크너버' + getTaskNo);
 					 axios.get('/connecthink/updateStatus',{
 		                	params:{
 		                		taskNo:getTaskNo,
@@ -1220,8 +1209,7 @@ scale
 	                	}
 	                })
 	                .then(response => {
-	                	this.lists.push({content:this.addName});
-	                	this.addName='';	
+	                	this.addName='';
 	                });
 				}else if(evPath == 'doing'){
 					status = 2;
@@ -1234,7 +1222,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list2.push({content:this.addName1});
-	             
+	                	this.addName1='';	
 	                });
 				}else if(evPath == 'done'){
 					status = 3;
@@ -1247,7 +1235,7 @@ scale
 	                })
 	                .then(response => {	
 	                	this.list3.push({content:this.addName2});
-	                	
+	                	this.addName2='';
 	                });
 				}
                 
@@ -1258,22 +1246,22 @@ scale
 
 	
 </script>
-<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-<script src="js/vendor/jquery-1.12.4.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/isotope.pkgd.min.js"></script>
-<script src="js/ajax-form.js"></script>
-<script src="js/waypoints.min.js"></script>
-<script src="js/jquery.counterup.min.js"></script>
-<script src="js/imagesloaded.pkgd.min.js"></script>
-<script src="js/scrollIt.js"></script>
-<script src="js/jquery.scrollUp.min.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/nice-select.min.js"></script>
-<script src="js/jquery.slicknav.min.js"></script>
-<script src="js/jquery.magnific-popup.min.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/gijgo.min.js"></script>
+<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+<script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+<script src="${contextPath}/js/popper.min.js"></script>
+<script src="${contextPath}/js/bootstrap.min.js"></script>
+<script src="${contextPath}/js/owl.carousel.min.js"></script>
+<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+<script src="${contextPath}/js/ajax-form.js"></script>
+<script src="${contextPath}/js/waypoints.min.js"></script>
+<script src="${contextPath}/js/jquery.counterup.min.js"></script>
+<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+<script src="${contextPath}/js/scrollIt.js"></script>
+<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+<script src="${contextPath}/js/wow.min.js"></script>
+<script src="${contextPath}/js/nice-select.min.js"></script>
+<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+<script src="${contextPath}/js/plugins.js"></script>
+<script src="${contextPath}/js/gijgo.min.js"></script>
 </html>

@@ -39,7 +39,7 @@ public class Member{
 	private Recruit recruit;
 	
 	@MapsId(value = "memberNo")
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "member_no")
 	private Customer customer;
 	
