@@ -16,13 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.connecthink.entity.Customer;
-import com.connecthink.entity.Member;
 import com.connecthink.entity.Message;
+import com.connecthink.entity.Project;
 import com.connecthink.entity.Task;
 import com.connecthink.service.BoardService;
 import com.connecthink.service.ProjectService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class BoardController {
@@ -35,26 +33,16 @@ public class BoardController {
    @RequestMapping("/board")
    ModelAndView board(HttpSession session,HttpServletRequest req,@RequestParam("project_no") int project_no) {
       ModelAndView mv = new ModelAndView();
-      
-      int customer_no = (Integer)session.getAttribute("loginInfo");
-      int Manager_no = pjService.lookUpMyManager(project_no);
+      Project pjInfo =  pjService.lookUpMyManager(project_no);
+      int Manager_no = pjInfo.getManagerNo();
+      String teamName = pjInfo.getTitle();
       List<Task> taskList = tList(project_no);
       
-      //Http session 에 저장할 userid 대체용
-//      for(int i = 0; i < 100; i++) {
-//
-//         double dValue = Math.random();
-//
-//         customer_no = (int)(dValue * 10);
-//         
-//      }
-//      	customer_no = (customer_no == 0) ? 1 : customer_no;
-//        HttpSession session = req.getSession();        
-//        session.setAttribute("LoginInfo",customer_no);
       	
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
         mv.addObject("isManager",Manager_no);
+        mv.addObject("title",teamName);
         mv.addObject("list", taskList);
 		return mv;
 	}
