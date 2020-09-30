@@ -42,6 +42,28 @@ div {
   align-items: start;
 }
 
+.writeArea{
+   background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px; 
+    width: 259px;
+    height: 110px;
+    border: 1px solid rgba(255,255,255,.6);
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box; 
+    display:block;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size:18px;
+    color:#fff;
+    padding-left:45px;
+    padding-right:20px;
+    padding-top:12px;
+    margin-bottom:20px;
+    overflow:hidden;
+}
+
 .title {
   text-align:center;
   font-weight: 1000;
@@ -70,15 +92,38 @@ div {
   background: #dfe1e6;
 }
 
+.editable2 {
+  user-select: none;
+  outline: none;
+  margin: 7px;
+  padding: 5px;
+  cursor: pointer !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tarea{
+	width:100%;
+	border: none;
+	resize:none;
+	overflow:hidden;
+	overflow-wrap: break-word; 
+}
+
+.gob{
+	width:30px;
+	height:30px;
+	
+}
 
 .add-task {
-  width: calc(100% - 35px);
-  display: inline-block;
-  padding: 10px;
+  width: calc(100% - 10px);
+  /* display: inline-block; */
+  padding: 5px;
   margin-top: 0px;
   color: gray;
   text-decoration: none;
-/*   border-bottom: 1px solid #dfe1e6; */
+  border-bottom: 1px solid #dfe1e6;
 }
 
 .add-task:hover {
@@ -92,16 +137,14 @@ div {
 
 .buttAdd{
 	appearance: none;
-		outline: 0;
-		background-color: white;
-		border: 0;
-		padding: 10px 15px;
-		color: @prim;
-		border-radius: 3px;
-		
-		cursor: pointer;
-		
-		transition-duration: 0.25s;
+	outline: 0;
+	background-color: white;
+	border: 0;
+	padding: 10px 15px;
+	color: @prim;
+	border-radius: 3px;
+	cursor: pointer;
+	transition-duration: 0.25s;
 }
 .buttAdd:hover{
 	background-color: rgb(245, 247, 249);
@@ -919,8 +962,8 @@ scale
 						</li>
 					</ul>
 				</div>
-				<div class="add-task">
-					<input v-model="addName" required class="single-input">
+				<div class="add-task card editable2">
+					<textarea v-model="addName" class="tarea"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">추가</button>
 				</div>
 			</div>
@@ -1444,7 +1487,7 @@ scale
 			//태스크 추가하기
 			goTask(ev) {
 				var status = 0;
-				var evPath = ev.path[3].id;	   
+				var evPath = ev.path[3].id;
 				if(evPath == 'do'){
 					status = 1;
 					axios.get('/connecthink/addTask',{
