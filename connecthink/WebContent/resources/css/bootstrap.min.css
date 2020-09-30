@@ -225,7 +225,7 @@ pre {
     -ms-overflow-style: scrollbar
 }
 
-figure {
+figure:not(.is-32x32) {
     margin: 0 0 1rem
 }
 
