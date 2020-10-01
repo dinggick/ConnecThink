@@ -12,17 +12,7 @@
 
     <!-- CSS here -->
     <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
-    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
-    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
-    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
-    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
-    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
     <link rel="stylesheet" href="${contextPath}/css/style.css">
-
 
 <style>
 body {
@@ -42,33 +32,26 @@ div {
   align-items: start;
 }
 
-.writeArea{
-   background: rgba(255, 255, 255, 0.4) url(http://luismruiz.com/img/gemicon_message.png) no-repeat scroll 16px 16px; 
-    width: 259px;
-    height: 110px;
-    border: 1px solid rgba(255,255,255,.6);
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
-    -moz-background-clip: padding;
-    -webkit-background-clip: padding-box;
-    background-clip: padding-box; 
-    display:block;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size:18px;
-    color:#fff;
-    padding-left:45px;
-    padding-right:20px;
-    padding-top:12px;
-    margin-bottom:20px;
-    overflow:hidden;
+.singleInput {
+  display: block;
+  width: 100%;
+  line-height: 30px;
+  border: none;
+  outline: none;
+  background: #f9f9ff;
+  padding: 0 20px;
 }
+
 
 .title {
   text-align:center;
-  font-weight: 1000;
   margin: 2px;
-  padding: 5px;
+  font-weight:1000;
+  font-size:24px; 
+}
+
+.title > .content {
+	font-weight:0;
 }
 
 .editable {
@@ -79,10 +62,13 @@ div {
   cursor: pointer !important;
   display: flex;
   justify-content: space-between;
+  font-weight:0;
 }
 .card {
   background: white;
   border-bottom: 1px solid #aaa;
+  font-weight:100;
+  font-size:18px;
 }
 
 .todo,.doing,.done {
@@ -93,6 +79,8 @@ div {
 }
 
 .editable2 {
+  padding-top:20px;
+  font-weight:0;
   user-select: none;
   outline: none;
   margin: 7px;
@@ -107,14 +95,14 @@ div {
 	border: none;
 	resize:none;
 	overflow:hidden;
-	overflow-wrap: break-word; 
+	overflow-wrap: break-word;
 }
 
-.gob{
-	width:30px;
-	height:30px;
-	
-}
+#inputInModal{
+	resize:none;
+	overflow:hidden;
+	overflow-wrap: break-word;
+}	
 
 .add-task {
   width: calc(100% - 10px);
@@ -532,51 +520,28 @@ scale
 	margin-right: 20%;
 }
 	
-#wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#wrapper.toggled {
-    padding-left: 250px;
-}
-
-#sidebar-wrapper {
+.nnnn {
     z-index: 1000;
     position: fixed;
     top:0;
-    left: 250px;
     width: 0;
     height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
     background: #CEE3F6;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    transition: 0.5s;
+    overflow-x: hidden
+}
+.close{
+  	top: 0;
+  	right: 25px;
+  	font-size: 36px;
+  	margin-left: 50px;
+  	margin-top: 13px;
+  	color:#2E2EFE;
+  	transition:0.5s; 
 }
 
-#wrapper.toggled #sidebar-wrapper {
-    width: 250px;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -250px;
-}
 
 /* Sidebar Styles */
-
 .sidebar-nav {
     position: absolute;
     top: 0;
@@ -611,17 +576,18 @@ scale
 
 .sidebar-nav > .sidebarTeamName {
     height: 65px;
-    font-size: 20px;
-    line-height: 60px;
+    font-size: 24px;
+    line-height: 64px;
+    font-weight:1000;
+	color:black; 
 }
 
-.sidebar-nav > .sidebarTeamName a {
-    color: #999999;
-}
 
-.sidebar-nav > .sidebarTeamName a:hover {
-    color: #fff;
-    background: none;
+
+
+.sidebar-nav > .outProject a{
+	font-size: 20px;
+	
 }
 
 @media(min-width:900px) {
@@ -640,25 +606,12 @@ scale
     #wrapper.toggled #sidebar-wrapper {
         width: 0;
     }
-
-    #page-content-wrapper {
-        padding: 20px;
-        position: relative;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-    }
 }
 
 .menutoggle{
 	text-decoration: none;
 	font-size: 3em;
 	color: rgba(0, 0, 0, 0.61);
-	-webkit-transition: all 0.15s ease-out 0;
-	-moz-transition: all 0.15s ease-out 0;
-	transition: all 0.45s ease-out 0;
 	position: fixed;
 	top: 10px;
 	left: 20px;
@@ -1062,10 +1015,11 @@ scale
 	<div id="sideBar"> 
 		<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
 
-		<div id="sidebar-wrapper" v-show='toggle'>
+		<div id="sidebar-wrapper" class="nnnn" v-show='toggle'>
 			<ul class="sidebar-nav" id="sidebar-ul">
+				<a href="#" @click="toggle = !toggle" class="close">X</a>
 				<li class="sidebarTeamName">
-					<a href="#" id="down" @click="toggle = !toggle">{{teamTitle}}</a>
+					<a href="#" id="tTitle">{{teamTitle}}</a>	
 				</li>	
 				<li v-for="member in memberList">
 					<div class="friend">
@@ -1077,7 +1031,7 @@ scale
 						<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
 					</div>
 				</li>
-				<li>
+				<li class="outProject">
 					<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
 					<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
 				</li>
@@ -1094,14 +1048,14 @@ scale
 			aria-labelledby="loginModalCenterTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header"><input type="text" id="cusName" readonly="readonly" value="" style="border:none; outline:none;">  
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						<div class="mt-10">
-							<input id="inputInModal" v-model="updateText" name="text" required class="single-input"> 
+							<textarea id="inputInModal" v-model="updateText" name="text" required class="singleInput" onkeyup = "modalkeyup(this)" style="height:120px "></textarea>
 							<input type="hidden" id="taskNo" value="">
 							<input type="hidden" id="cusNo" value="">
 						</div>
@@ -1122,18 +1076,19 @@ scale
 					<ul class="usty section1" id="sectionOneStatus" value="1">
 						<li v-for="(item,index) in lists">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-								<div class='card editable'>
+								<div class='card editable'> 
 									<input type="hidden" :value="item.taskNo"> 
 									<input type="hidden" :value="item.cusNo">
-									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+									<input type="hidden" :value="item.cName">
+									{{item.content}}
 								</div>
 							</a>
 						</li>
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName" class="tarea"></textarea>
-					<button v-on:click="goTask" class="btn btn-primary">추가</button>
+					<textarea v-model="addName" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
 		</div>
@@ -1147,16 +1102,18 @@ scale
 						<li v-for="(item,index) in list2">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 								<div class='card editable'>
-									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
-									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+									<input type="hidden" :value="item.taskNo">
+									<input type="hidden" :value="item.cusNo">
+									<input type="hidden" :value="item.cName">
+									{{item.content}}
 								</div>
 							</a>
 						</li>
 					</ul>
 				</div>
-				<div class="add-task">
-					<input v-model="addName1" required class="single-input">
-					<button v-on:click="goTask" class="btn btn-primary">추가</button>
+				<div class="add-task card editable2">
+					<textarea v-model="addName1" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
 		</div>
@@ -1170,16 +1127,18 @@ scale
 						<li v-for="(item,index) in list3">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 								<div class='card editable'>
-									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
-									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+									<input type="hidden" :value="item.taskNo">
+									<input type="hidden" :value="item.cusNo">
+									<input type="hidden" :value="item.cName">
+									{{item.content}}
 								</div>
 							</a>
 						</li>
 					</ul>
 				</div>
-				<div class="add-task">
-					<input v-model="addName2" required class="single-input">
-					<button v-on:click="goTask" class="buttAdd">추가</button>
+				<div class="add-task card editable2">
+					<textarea v-model="addName2" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
 		</div>
@@ -1301,6 +1260,18 @@ scale
 		
 </body>
 <script>
+	//textArea 스크립트 부분(author 변재)
+	function keyup(obj) {
+    	obj.style.height = '50px';
+    	obj.style.height = (obj.scrollHeight) + 'px';
+	}
+	
+	function modalkeyup(obj) {
+    	obj.style.height = '120px';
+    	obj.style.height = (obj.scrollHeight) + 'px';
+	}
+	//////////////////////////////////////////////////
+	
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -1605,6 +1576,9 @@ scale
 				cusNoModal.value = cusNo;
 				//console.log(taskNo);
 				
+				var cusName = ev.target.childNodes[4].attributes[1].nodeValue;
+				var nn = document.getElementById('cusName');
+				nn.value = cusName;
 				//console.log(cusNoModal);
 			},
 			//태스크 내용 수정하기
@@ -1676,90 +1650,104 @@ scale
 			goTask(ev) {
 				var status = 0;
 				var evPath = ev.path[3].id;
+				
 				if(evPath == 'do'){
-					status = 1;
-					axios.get('/connecthink/addTask',{
-	                	params:{
-	                		content:this.addName,
-	                		status:status,
-	                		project_no: ${project_no}
-	                	}
-	                })
-	                .then(response => {
-	                	axios.get('/connecthink/taskList',{
-	        				params: {
-	        			  	      project_no: ${project_no}
-	        			  	}
-	                    })
-	                    .then(response => {
-	                    	var taskList = response.data;
-	                    	
-	                    	this.lists.splice(0);
-	                    	
-	                    	taskList.forEach(task =>{
-	                    		if(task.taskStatus==1){
-	                    			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
-	                    		}
-	                    	});
-	                    	this.addName='';
-	                    });  
-	                });
+					if(this.addName == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						status = 1;
+						axios.get('/connecthink/addTask',{
+		                	params:{
+		                		content:this.addName,
+		                		status:status,
+		                		project_no: ${project_no}
+		                	}
+		                })
+		                .then(response => {
+		                	axios.get('/connecthink/taskList',{
+		        				params: {
+		        			  	      project_no: ${project_no}
+		        			  	}
+		                    })
+		                    .then(response => {
+		                    	var taskList = response.data;
+		                    	
+		                    	this.lists.splice(0);
+		                    	
+		                    	taskList.forEach(task =>{
+		                    		if(task.taskStatus==1){
+		                    			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    		}
+		                    	});
+		                    	this.addName='';
+		                    });  
+		                });
+					}
+					
 				}else if(evPath == 'doing'){
-					status = 2;
-					axios.get('/connecthink/addTask',{
-	                	params:{
-	                		content:this.addName1,
-	                		status:status,
-	                		project_no: ${project_no}
-	                	}
-	                })
-	                .then(response => {	
-	                	axios.get('/connecthink/taskList',{
-	        				params: {
-	        			  	      project_no: ${project_no}
-	        			  	}
-	                    })
-	                    .then(response => {
-	                    	var taskList = response.data;
-	                    	
-	                    	this.list2.splice(0);
-	                    	
-	                    	taskList.forEach(task =>{
-	                    		if(task.taskStatus==2){
-	                    			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
-	                    		}
-	                    	});
-	                    	this.addName1='';
-	                    });  	
-	                });
+					if(this.addName1 == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						status = 2;
+						axios.get('/connecthink/addTask',{
+		                	params:{
+		                		content:this.addName1,
+		                		status:status,
+		                		project_no: ${project_no}
+		                	}
+		                })
+		                .then(response => {	
+		                	axios.get('/connecthink/taskList',{
+		        				params: {
+		        			  	      project_no: ${project_no}
+		        			  	}
+		                    })
+		                    .then(response => {
+		                    	var taskList = response.data;
+		                    	
+		                    	this.list2.splice(0);
+		                    	
+		                    	taskList.forEach(task =>{
+		                    		if(task.taskStatus==2){
+		                    			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    		}
+		                    	});
+		                    	this.addName1='';
+		                    });  	
+		                });
+					}
 				}else if(evPath == 'done'){
-					status = 3;
-					axios.get('/connecthink/addTask',{
-	                	params:{
-	                		content:this.addName2,
-	                		status:status,
-	                		project_no: ${project_no}
-	                	}
-	                })
-	                .then(response => {	
-	                	axios.get('/connecthink/taskList',{
-	        				params: {
-	        			  	      project_no: ${project_no}
-	        			  	}
-	                    })
-	                    .then(response => {
-	                    	var taskList = response.data;
-	                    	
-	                    	this.list3.splice(0);
-	                    	
-	                    	taskList.forEach(task =>{
-	                    		if(task.taskStatus==3){
-	                    			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
-	                    		}
-	                    	});
-	                    	this.addName2='';
-	                    });  	
-	                });
+					if(this.addName2 == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						status = 3;
+						axios.get('/connecthink/addTask',{
+		                	params:{
+		                		content:this.addName2,
+		                		status:status,
+		                		project_no: ${project_no}
+		                	}
+		                })
+		                .then(response => {	
+		                	axios.get('/connecthink/taskList',{
+		        				params: {
+		        			  	      project_no: ${project_no}
+		        			  	}
+		                    })
+		                    .then(response => {
+		                    	var taskList = response.data;
+		                    	
+		                    	this.list3.splice(0);
+		                    	
+		                    	taskList.forEach(task =>{
+		                    		if(task.taskStatus==3){
+		                    			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    		}
+		                    	});
+		                    	this.addName2='';
+		                    });  	
+		                });	
+					}
 				}
                 
 				this.$forceUpdate();
@@ -1769,22 +1757,6 @@ scale
 
 	
 </script>
-<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="${contextPath}/js/popper.min.js"></script>
 <script src="${contextPath}/js/bootstrap.min.js"></script>
-<script src="${contextPath}/js/owl.carousel.min.js"></script>
-<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
-<script src="${contextPath}/js/ajax-form.js"></script>
-<script src="${contextPath}/js/waypoints.min.js"></script>
-<script src="${contextPath}/js/jquery.counterup.min.js"></script>
-<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
-<script src="${contextPath}/js/scrollIt.js"></script>
-<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
-<script src="${contextPath}/js/wow.min.js"></script>
-<script src="${contextPath}/js/nice-select.min.js"></script>
-<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
-<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
-<script src="${contextPath}/js/plugins.js"></script>
-<script src="${contextPath}/js/gijgo.min.js"></script>
 </html>
