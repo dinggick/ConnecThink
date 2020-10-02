@@ -44,6 +44,11 @@
 	padding-bottom: 100px;
 }
 
+.myTeam_team_area{
+	background: #F5F7FA;
+	padding-bottom: 100px;
+}
+
 .manage_team_table_warp {
 	margin-bottom: 30px;
 	padding-top: 10px;
@@ -109,7 +114,7 @@
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>내가 등록한 팀</h3>
+						<h3>나의 프로젝트</h3>
 					</div>
 				</div>
 			</div>
@@ -148,7 +153,36 @@
             </div>
             </div>
     </div>
-
+	
+	<div class="myTeam_team_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 manageMenu mb-1">
+                    <button class="genric-btn default radius myProject">내가 속해있는 팀</button>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="manage_team_table_warp bg-white">
+					<div class="progress-table bg-white">
+						<div class="table-head bg-white">
+							<div class="title">프로젝트 명</div>
+							<div class="theme">주제</div>
+							<div class="date">등록날짜</div>
+							<div class="status">상태</div>
+						</div>
+						<div class= "lookUpMyTeam">
+							<div class="table-row bg-white">
+							</div>
+						</div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </div>
+	
+	
 	<!-- featured_candidates_area_end  -->
 
 
@@ -195,9 +229,11 @@
 
 	<script>
 		$(function() {
-			myTeam()
+			myTeam();
+			lookUpMyTeam();
 		});
-
+		
+		//내가 등록한 팀 불러오기
 		function myTeam() {
 			let $section = $('.tr-section');
 
@@ -232,6 +268,44 @@
 					});
 			$(".myProject").css("background", "#fff");
 		}
+		
+		//내가 속해있는 팀 불러오기
+		function lookUpMyTeam(){
+			let $myTeamList = $(".lookUpMyTeam");
+			
+			$.ajax({
+				url : "${contextPath}/lookUpmyTeam",
+				method : "POST",
+				data : {${_csrf.parameterName} : '${_csrf.token}'},
+				success : function(teams) {
+					let data = "";
+					//forEach
+					let size = teams.length;
+					if (size > 0) {
+						teams.forEach(function(team, index) {
+							data += '<div class="table-row bg-white">';
+							data += '<div class="managerNo" style="display:none;">'+ team.managerNo +'</div>';
+							data += '<div class="projectNo" style="display:none;">'+ team.projectNo +'</div>';
+							data += '<div class="title" onclick="projectDetail(this);">' + team.title + '</div>';
+							data += '<div class="theme">'+ team.theme +'</div>';
+							let date = new Date(team.createDate);
+							data += '<div class="date">'+ date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() +'</div>';
+							if(team.projectStatus == 1){
+								data += '<div class="status"> 진행중 </div></div>';
+							} else {
+								data += '<div class="status"> 종료 </div></div>';
+							}
+						});
+					} else {
+						data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>내가 속한 팀이 없습니다.</div>";
+					}
+					$myTeamList.html(data);
+				}
+			}); // ajax
+			
+			$(".myProject").css("background", "#fff");
+		}
+		
 		
 		//클릭 시 팀 상세 페이지로 이동
 		function projectDetail(e){
