@@ -216,6 +216,14 @@ public class ProjectService {
 	}
 	
 	/**
+	 * @author kimdongjun
+	 * 내가 속해있는 팀 조회
+	 */
+	public List<Project> lookUpMyTeam(int customer_no) {
+		return projectRepository.lookUpMyTeam(customer_no);
+	}
+	
+	/**
 	 * @author 홍지수
 	 * 프로젝트(팀) 등록
 	 */
