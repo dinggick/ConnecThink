@@ -7,7 +7,7 @@
 <html>
 <head>
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
+   <%--  <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png"> --%>
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
@@ -527,8 +527,8 @@ scale
     width: 0;
     height: 100%;
     background: #CEE3F6;
-    transition: 0.5s;
-    overflow-x: hidden
+    overflow-x: hidden;
+    transiton:0.5s;
 }
 .close{
   	top: 0;
@@ -537,7 +537,7 @@ scale
   	margin-left: 50px;
   	margin-top: 13px;
   	color:#2E2EFE;
-  	transition:0.5s; 
+  	transiton:0.5s;
 }
 
 
@@ -549,6 +549,7 @@ scale
     margin: 0;
     padding: 0;
     list-style: none;
+    transiton:0.5s;
 }
 
 .sidebar-nav>li{
@@ -591,20 +592,9 @@ scale
 }
 
 @media(min-width:900px) {
-    #wrapper {
-        padding-left: 250px;
-    }
-
-    #wrapper.toggled {
-        padding-left: 0;
-    }
-
-    #sidebar-wrapper {
+    .nnnn {
         width: 270px;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
+        transiton:0.5s
     }
 }
 
@@ -617,6 +607,7 @@ scale
 	left: 20px;
 	z-index: 1;
 	cursor: pointer;
+	transiton:0.5s;
 }
 
 .usty{
@@ -1002,6 +993,24 @@ scale
   animation: shadow-r-n .425s ease-in-out infinite alternate;
 }
 
+/* .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+} */
+
+.slide-fade-enter-active {
+  transition: all .5s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-draggable@1.0.9/lib/vue-draggable.js"></script>
@@ -1014,7 +1023,7 @@ scale
 	<!-- Sidebar -->
 	<div id="sideBar"> 
 		<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
-
+		 <transition name="slide-fade">
 		<div id="sidebar-wrapper" class="nnnn" v-show='toggle'>
 			<ul class="sidebar-nav" id="sidebar-ul">
 				<a href="#" @click="toggle = !toggle" class="close">X</a>
@@ -1037,6 +1046,7 @@ scale
 				</li>
 			</ul>
 		</div>
+		</transition>
 	</div> <!-- SideBar end -->
 	
 	
@@ -1302,7 +1312,6 @@ scale
 		,data : {
 			memberList : [],
 			toggle: false,
-			show:true,
 			isManager : ${isManager},
 			teamTitle :  "${title}"
 			
@@ -1348,7 +1357,7 @@ scale
                 	window.close();
                 });
 			}
-		}
+		},
 	});
 	
 	//채팅 헤더 토글
