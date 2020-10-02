@@ -105,7 +105,7 @@ div {
 }	
 
 .add-task {
-  width: calc(100% - 10px);
+  /* width: calc(100% - 10px); */
   /* display: inline-block; */
   padding: 5px;
   margin-top: 0px;
@@ -524,7 +524,9 @@ scale
     z-index: 1000;
     position: fixed;
     top:0;
-    width: 0;
+    left:250px;
+    width: 0px;
+    margin-left: -250px;
     height: 100%;
     background: #CEE3F6;
     overflow-x: hidden;
