@@ -324,6 +324,7 @@
 					${_csrf.parameterName} : '${_csrf.token}'
 					},
 				success: function(data){
+					console.log(data);
 					if (data == "success") {
 						$('.close').click();					
 					}
