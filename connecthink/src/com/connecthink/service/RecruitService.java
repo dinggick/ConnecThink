@@ -56,7 +56,7 @@ public class RecruitService {
 	 * 모집 전체보기
 	 */
 	public List<Recruit> findAllDesc(){
-		return recruitRepository.findAllDesc();
+		return recruitRepository.findAll();
 	}
 
 	//메인에 뿌려줄 9개 프로젝트 찾기

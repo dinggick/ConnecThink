@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -49,6 +49,9 @@ public class CustomerController {
 	private ProjectHistoryService pservice;
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private PasswordEncoder pwdEncoder;
 
 	@RequestMapping("/all/mateList")
 	public ModelAndView findAll() {
@@ -56,7 +59,7 @@ public class CustomerController {
 		ModelAndView mnv = new ModelAndView();
 		List<Customer> list = service.findAll();
 		mnv.addObject("customer", list);
-		mnv.setViewName("mate");
+		mnv.setViewName("/mate");
 		
 		return mnv; 
 	}
@@ -136,7 +139,6 @@ public class CustomerController {
 		//이메일
 		customerForRegister.setEmail(email);
 		//비밀번호
-		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 		customerForRegister.setPassword(pwdEncoder.encode(password));
 		//이름
 		customerForRegister.setName(name);
@@ -160,8 +162,8 @@ public class CustomerController {
 		String email = (String)session.getAttribute("emailForFindPwd");
 		Customer customerForModify = service.findByEmail(email);
 		
-		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
-		customerForModify.setPassword(pwdEncoder.encode(password));
+		String pwToUpdate = pwdEncoder.encode(password);
+		customerForModify.setPassword(pwToUpdate);
 		
 		service.modify(customerForModify);
 		
@@ -201,7 +203,6 @@ public class CustomerController {
 		//수정 시작
 		Customer customerForModify = service.findByNo(customerNo);
 		//비밀번호
-		BCryptPasswordEncoder pwdEncoder = new BCryptPasswordEncoder();
 		customerForModify.setPassword(pwdEncoder.encode(data.getPassword()));
 		//한 줄 소개
 		customerForModify.setAbout(data.getAbout());

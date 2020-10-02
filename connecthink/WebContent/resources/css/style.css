@@ -85,13 +85,13 @@ body {
 }
 
 /* line 17, ../../Arafath/CL/December/235. Job board/HTML/scss/theme-default.scss */
-a,
+/* a,
 .button {
   -webkit-transition: 0.3s;
   -moz-transition: 0.3s;
   -o-transition: 0.3s;
   transition: 0.3s;
-}
+} */
 
 .sidenav {
   height: 100% fixed;

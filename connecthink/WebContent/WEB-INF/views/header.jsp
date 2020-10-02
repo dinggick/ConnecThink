@@ -28,168 +28,10 @@
 
     <link rel="stylesheet" href="${contextPath}/css/style.css">
     </head>
-    	<!-- 이메일 찾기 Modal -->
-    <div class="modal" id="findEmailModal" tabindex="-1" role="dialog" aria-labelledby="findEmailModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="findEmailModalLongTitle">이메일 찾기</h5>
-<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--                 <span aria-hidden="true">&times;</span> -->
-<!--             </button> -->
-                </div>
-                <form>
-	                <div class="modal-body">
-	                    <div class="mt-10">
-	                        <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
-	                    </div>
-	                    <div class="mt-10">
-	                        <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19921211" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19921211'" required class="single-input">
-	                    </div>
-	                    <input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	                </div>
-	                <div class="modal-footer">
-	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-	                    <button type="submit" class="btn btn-primary">찾기</button>
-	                </div>
-                 </form>
-            </div>
-        </div>
-    </div>
-    <!-- 비밀번호 찾기 Modal -->
-    <div class="modal" id="findPwdModal" tabindex="-1" role="dialog" aria-labelledby="findPwdModalCenterTitle" aria-hidden="true" style="z-index: 1051;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="findPwdModalLongTitle">비밀번호 찾기</h5>
-<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!--                 <span aria-hidden="true">&times;</span> -->
-<!--             </button> -->
-                </div>
-				<form>
-					<div class="modal-body">
-						<br>
-						<div class="row">
-							<div class="col-md-5 offset-1">
-								<input type="email" name="email" placeholder="이메일"
-									onfocus="this.placeholder = ''"
-									onblur="this.placeholder = '이메일'" required class="single-input">
-							</div>
-							<div class="col-md-5">
-								<a href="#verifyModal" data-toggle="modal" data-backdrop="false"
-									class="genric-btn info-border">이메일 인증</a>
-							</div>
-						</div>
-						<br>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-						<button type="submit" class="btn btn-primary">찾기</button>
-					</div>
-				</form>
-			</div>
-        </div>
-    </div>
-     <!-- 비밀번호 재설정 Modal -->
-    <div class="modal" id="modifyPwdModal" tabindex="-1" role="dialog" aria-labelledby="modifyModalCenterTitle" aria-hidden="true" style="z-index : 1053;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modifyModalLongTitle">비밀번호 재설정</h5>
-<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 		                <span aria-hidden="true">&times;</span> -->
-<!-- 		            </button> -->
-                </div>
-                <form>
-				<div class="modal-body">
-					<div class="mt-10">
-						<input type="password" name="password" placeholder="비밀번호"
-							onfocus="this.placeholder = ''"
-							onblur="this.placeholder = '비밀번호'" required class="single-input">
-					</div>
-					<div class="mt-10">
-						<input type="password" name="passwordForCheck" placeholder="비밀번호 확인"
-							onfocus="this.placeholder = ''"
-							onblur="this.placeholder = '비밀번호 확인'" required class="single-input">
-					</div>
-					<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				</div>
-				<div class="modal-footer">
-	                    <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-	                    <button type="submit" class="btn btn-primary">재설정</button>
-	                </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    	
     <!-- 로그인 Modal -->
     <jsp:include page="/login"></jsp:include>
-    <!-- 회원가입 Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLongTitle">회원가입</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                <span aria-hidden="true">&times;</span>
-		            </button>
-                </div> 
-                <form>
-	                <div class="modal-body">
-	                        <div class="row">
-	                    		<div class="col-md-6">
-	                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
-		                        </div>
-		                        <div class="col-md-6">
-		                            <a id="requestVerifyCodeBtn" href="#verifyModal" class="genric-btn info-border" data-toggle="modal" data-backdrop="false">이메일 인증</a>
-		                        </div>
-		                    </div>
-	                        <div class="mt-10">
-	                            <input type="password" name="password" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'" required class="single-input">
-	                        </div>
-	                        <div class="mt-10">
-	                            <input type="text" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름'" required class="single-input">
-	                        </div>
-	                        <div class="mt-10">
-	                            <input type="text" name="birthDate" placeholder="생년월일 8자리 ex)19980404" onfocus="this.placeholder = ''" onblur="this.placeholder = '생년월일 8자리 ex)19980404'" required class="single-input">
-	                        </div>
-	                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	                </div>
-	                <div class="modal-footer">
-	<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
-	                    <button type="submit" class="btn btn-primary">회원가입</button>
-	                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <!-- 이메일 인증 Modal -->
-    <div class="modal" id="verifyModal" tabindex="-1" role="dialog" aria-labelledby="verifyModalCenterTitle" aria-hidden="true" style="z-index: 1052;">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="verifyModalLongTitle">이메일 인증</h5>
-<!--                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> -->
-<!-- 		                <span aria-hidden="true">&times;</span> -->
-<!-- 		            </button> -->
-                </div>
-				<div class="modal-body">
-					<br> <br> <br>
-					<div class="row">
-						<div class="col-md-12">
-							<input type="text" name="verifyCode" placeholder="코드 6자리 ex)123456" onfocus="this.placeholder = ''" onblur="this.placeholder = '코드 6자리 ex)123456'" required class="single-input">
-							<input type="hidden" id="isVerified" value="n">
-						</div>
-					</div>
-					<br> <br> <br>
-				</div>
-				<div class="modal-footer">
-	                <button type="button" class="btn btn-secondary" data-dismiss="modal">뒤로</button>
-	                <button id="verifyBtn" class="btn btn-primary">인증</button> 
-	            </div>
-	        </div>
-        </div>
-    </div>
+    
         <div class="header-area ">
             <div id="sticky-header" class="main-header-area">
                 <div class="container-fluid ">
@@ -207,11 +49,11 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="all/mateList">모집중인 멤버</a></li>
+                                            <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
                                            
-                                            <li><a href="rec">모집중인팀</a></li>
+                                            <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
-                                            <li><a href="add_project">팀 등록</a></li>
+                                            <li><a href="add_project">프로젝트 등록</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
@@ -235,7 +77,7 @@
                                          			</c:when>
                                          			<c:otherwise>
                                          				<li><a href="${contextPath}/customerInfo">내 정보 보기</a></li>
-                                         				<li><a href="${contextPath}/myProject">내가 등록한 팀</a></li>
+                                         				<li><a href="${contextPath}/myProject">나의 프로젝트</a></li>
                                          				<li><a href="${contextPath}/bookmark">북마크</a></li>                                         				
                                          				<li><a id="logoutBtn" href="">로그아웃</a></li>
                                          			</c:otherwise>
@@ -298,8 +140,10 @@
 
     <!-- header-end -->
 <script>
+var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
+<<<<<<< HEAD
        document.getElementById("mySidenav").style.width = "250px";
 }
 
@@ -309,6 +153,16 @@ function closeNav() {
 
 //------------------------ 웹소켓 --------------------------------
 
+=======
+	document.getElementById("mySidenav").style.width = "250px";
+}
+
+function closeNav() {
+	document.getElementById("mySidenav").style.width = "0";
+}
+
+//------------------------ 웹소켓 --------------------------------
+>>>>>>> 7c92ab11b44ef426ad444154d7100ecff005318a
 var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
@@ -326,6 +180,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    }
    //메세지 수신시
    function onMessage(e) {
+<<<<<<< HEAD
    console.log(e.data);
    //수신한 메세지가 상대방 목록 불러오기인 경우
    if (e.data.includes("connecthinksystem:loadList:")){
@@ -390,6 +245,70 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
       }
       $msgSection.html(sectionData);
    }
+=======
+	//수신한 메세지가 상대방 목록 불러오기인 경우
+	if (e.data.includes("connecthinksystem:loadList:")){
+		let otherStr = "";
+		//처음 항목이 올 때는 리스트를 비운다.
+		if(e.data.includes("connecthinksystem:loadList:refresh:")){
+			$listSection.html("");
+			otherStr = e.data.replace("connecthinksystem:loadList:refresh:","");
+		} else {
+			otherStr = e.data.replace("connecthinksystem:loadList:","");
+		}
+		otherObj = JSON.parse(otherStr);
+		
+		let sectionData = $listSection.html();
+		sectionData += '<li class="person"><span class="otherNo" id="otherNoInList">' + otherObj.otherNo + '</span>';
+		sectionData += '<span class="personName">' + otherObj.otherName + '</span>';
+		if(otherObj.newCnt != 0){
+			sectionData += '<span class="new">' + otherObj.newCnt + '</span>';
+		}
+		sectionData += '<br><span class="msgPreview">' + otherObj.content + '</span></li>';
+		$listSection.html(sectionData);
+	}
+	//수신한 메세지가 특정 회원과 주고받은 메세지 전체를 불러오기인 경우
+	else if (e.data.includes("connecthinksystem:loadPms:")){
+		let pmsStr = e.data.replace("connecthinksystem:loadPms:","");
+		MSGs = JSON.parse(pmsStr);
+		let sectionData = "";
+		let newDate = new Date(0);
+		MSGs.forEach(function(msg, index){
+			let sendDate = new Date(msg.createDate);
+			if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+				sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+				newDate = sendDate;
+			}
+			if(msg.receive.customerNo == loginedCustomer) {
+				sectionData += '<div class="receive_msg">' + msg.content + '</div>';
+				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				sectionData += '<div style="clear:both;"></div>';
+			} else {
+				sectionData += '<div class="send_msg">' + msg.content + '</div>';
+				sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				sectionData += '<div style="clear:both;"></div>';
+			}
+		});
+		$msgSection.html(sectionData);
+	}
+	//수신한 메세지가 Personal Message인 경우
+	else if (e.data.includes("connecthinksystem:pm:")){
+		let pmStr = e.data.replace("connecthinksystem:pm:","");
+		pmObj = JSON.parse(pmStr);
+		let sectionData = $msgSection.html();
+		let sendDate = new Date(pmObj.createDate);
+		if(pmObj.receive.customerNo == loginedCustomer) {
+			sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
+			sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+			sectionData += '<div style="clear:both;"></div>';
+		} else {
+			sectionData += '<div class="send_msg">' + pmObj.content + '</div>';
+			sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+			sectionData += '<div style="clear:both;"></div>';
+		}
+		$msgSection.html(sectionData);
+	}
+>>>>>>> 7c92ab11b44ef426ad444154d7100ecff005318a
    }
    //에러 발생시
    function onError(e) {

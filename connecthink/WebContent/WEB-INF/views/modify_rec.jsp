@@ -112,10 +112,9 @@ h4 .requir {
 									<div class="row">
 										<div class="col-md-5" style="display: none;">
 											<div class="input_field">
-												<input type="hidden" name="${_csrf.parameterName}"
-													value="${_csrf.token}"> <input type="hidden"
-													name="projectNo" value="${detail.projectNo}"> <input
-													type="hidden" name="recruitNo" value="${recNo}">
+												<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+												<input type="hidden" name="projectNo" value="${detail.projectNo}">
+												<input type="hidden" name="recruitNo" value="${recNo}">
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -125,9 +124,8 @@ h4 .requir {
 										</div>
 										<div class="col-md-5 ">
 											<div class="input_field text-center position0">
-												<input id="getPosition" style="display: none;" type="text"
-													value="${rec.position.positionNo}"> <select
-													class="position" onchange="position(this);" id="pos">
+												<input id="getPosition" style="display: none;" type="text" value="${rec.position.positionNo}">
+												<select class="position" onchange="position(this);" id="pos">
 													<option value="0">직군선택</option>
 													<option value="1">기획자</option>
 													<option value="2">디자이너</option>
@@ -137,8 +135,7 @@ h4 .requir {
 										</div>
 										<div class="col-md-5">
 											<div class="input_field position1" style="display: none;">
-												<select class="position11" name="positionNo"
-													id="positionNo1">
+												<select class="position11" name="positionNo" id="positionNo1">
 													<option value="0">직무선택</option>
 													<option value="1">사업기획자</option>
 													<option value="2">컨텐츠기획자</option>
@@ -152,8 +149,7 @@ h4 .requir {
 											</div>
 											<!-- 2 -->
 											<div class="input_field position2" style="display: none;">
-												<select class="position21" name="positionNo"
-													id="positionNo2">
+												<select class="position21" name="positionNo" id="positionNo2">
 													<option value="0">직무선택</option>
 													<option value="9">디자이너</option>
 													<option value="10">UI/UX디자이너</option>
@@ -167,8 +163,7 @@ h4 .requir {
 											</div>
 											<!-- 3 -->
 											<div class="input_field position3" style="display: none;">
-												<select class="position31" name="positionNo"
-													id="positionNo3">
+												<select class="position31" name="positionNo" id="positionNo3">
 													<option value="0">직무선택</option>
 													<option value="17">개발자</option>
 													<option value="18">백엔드 개발자</option>
@@ -189,9 +184,7 @@ h4 .requir {
 										</div>
 										<div class="col-md-10">
 											<div class="input_field">
-												<input type="number" min="1" max="10" name="headCount"
-													value="${rec.headCount}" required>
-
+												<input type="number" min="1" max="10" name="headCount" value="${rec.headCount}" required>
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -212,8 +205,7 @@ h4 .requir {
 										</div>
 										<div class="col-md-10">
 											<div class="input_field">
-												<input type="text" name="requirement"
-													value="${rec.requirement}" required>
+												<input type="text" name="requirement" value="${rec.requirement}" required>
 											</div>
 										</div>
 										<div class="col-md-2">
@@ -224,11 +216,8 @@ h4 .requir {
 										
 											<div class="col-md-10">
 												<div class="input_field">
-													<textarea name="recExplain" id="" cols="30" rows="10" required>
-													<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
-													${fList}
-													</c:forEach>
-													</textarea>
+													<textarea name="recExplain" cols="30" rows="10" required><c:forEach items="${requestScope.fList}" var="fList" varStatus="status">${fList}
+</c:forEach></textarea>
 												</div>
 											</div>
 										<div class="col-md-2">
@@ -242,21 +231,17 @@ h4 .requir {
 													</button>
 												</div>
 												<div class="custom-file">
-													<input type="file" class="custom-file-input" name="recPic"
-														id="inputGroupFile03"
-														aria-describedby="inputGroupFileAddon03" accept="image/*"
-														onchange="upload(this);"> <label
-														class="custom-file-label" for="inputGroupFile03">Upload</label>
-													<label class="fileName ml-2 mb-0"
-														style="position: absolute; left: 7%; display: none;">위치테스트</label>
+													<input type="file" class="custom-file-input" name="recPic" id="inputGroupFile03"
+													aria-describedby="inputGroupFileAddon03" accept="image/*" onchange="upload(this);">
+														<label class="custom-file-label" for="inputGroupFile03">Upload</label>
+													<label class="fileName ml-2 mb-0" style="position: absolute; left: 7%; display: none;">위치테스트</label>
 												</div>
 											</div>
-											<span style="color: #7A838B;">※미 등록 시 기본 이미지 사용 / 권장
-												이미지 사이즈 : 가로최대 1920px </span>
+											<span style="color: #7A838B;">※미 등록 시 기본 이미지 사용 / 권장 이미지 사이즈 : 가로최대 1920px </span>
 										</div>
 										<div class="col-md-12">
 											<div class="submit_btn text-center">
-												<button class="boxed-btn3 mr-1 clear">취소하기</button>
+												<button class="boxed-btn3 mr-1 clear" type="button">취소하기</button>
 												<button class="boxed-btn3 submit">수정하기</button>
 											</div>
 										</div>
@@ -352,7 +337,7 @@ h4 .requir {
 			
 		});
 		
-		
+		//직군 선택에 따라 view 변경
 		function position(obj) {
 			if (obj.value == 1) {
 				$("div.position1").css("display", "block");
@@ -396,39 +381,36 @@ h4 .requir {
 			let display = $("label.fileName");
 			display.css("display", "inline").html(file);
 		}
-
-		$(".submit")
-				.click(
-						function() {
-							let pNo = "${detail.projectNo}";
-							console.log(new FormData($(form)[0]));
-							if (check() != false) {
-								$
-										.ajax({
-											url : "${contextPath}/modifyRec",
-											method : "POST",
-											enctype : "multipart/form-data",
-											processData : false,
-											contentType : false,
-											data : new FormData($(form)[0]),
-											success : function(response) {
-												if (response == "success") {
-													let answer = confirm("수정이 완료 되었습니다. 추가 모집을 등록하시겠습니까?");
-													if (answer == true) {
-														location.href = "${contextPath}/add_rec?ProjectNo="
-																+ pNo;
-													} else {
-														location.href = "${contextPath}/index";
-													}
-												} else {
-													alert("등록 실패");
-												}
-											}
-										});
+		
+		//폼 보내기
+		$(".submit").click(function() {
+			let pNo = "${detail.projectNo}";
+			if (check() != false) {
+				$.ajax({
+					url : "${contextPath}/modifyRec",
+					method : "POST",
+					enctype : "multipart/form-data",
+					processData : false,
+					contentType : false,
+					data : new FormData($(form)[0]),
+					success : function(response) {
+					if (response == "success") {
+						let answer = confirm("수정이 완료 되었습니다. 추가 모집을 등록하시겠습니까?");
+						if (answer == true) {
+							location.href = "${contextPath}/add_rec?ProjectNo="	+ pNo;
+							} else {
+								location.href = "${contextPath}/index";
+								}
+						} else {
+							alert("등록 실패");
 							}
-							return false;
-						});
-
+					}
+					});
+				}
+			return false;
+			});
+		
+		//유효성 검사
 		function check() {
 			if ($("#pos option:selected").val() == 0) {
 				alert("직군은 필수 입력값입니다");
@@ -478,6 +460,15 @@ h4 .requir {
 				return false;
 			}
 		}
+		
+		//취소
+		$(".clear").click(function (){
+			let answer = confirm("수정을 취소하시겠습니까?");
+			if(answer == true){
+				location.href = "${contextPath}/";
+			}
+			return false;
+		});
 		
 	</script>
 </body>

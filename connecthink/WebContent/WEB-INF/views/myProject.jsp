@@ -149,21 +149,6 @@
             </div>
     </div>
 
-	<div class="row mb-3">
-		<div class="col-lg-12">
-			<div class="pagination_wrap">
-				<ul>
-					<li><a href="#"> <i class="ti-angle-left"></i>
-					</a></li>
-					<li><a href="#"><span>01</span></a></li>
-					<li><a href="#"><span>02</span></a></li>
-					<li><a href="#"> <i class="ti-angle-right"></i>
-					</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-
 	<!-- featured_candidates_area_end  -->
 
 
@@ -256,7 +241,7 @@
 			location.href = url;
 		}
 		
-		
+	
 		
 	</script>
 </body>

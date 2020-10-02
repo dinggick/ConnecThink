@@ -70,7 +70,6 @@ public class webSocketHandler extends TextWebSocketHandler{
 				
 				String [] logs = message.getPayload().split(":");
 				int project_no = Integer.parseInt(logs[1]);
-				
 				if(logMember.containsKey(project_no)) {//해당 프로젝트 넘버의 해당하는 배열이 있을경우
 					logMember.get(project_no).add(getUserId(session));
 					
@@ -109,9 +108,10 @@ public class webSocketHandler extends TextWebSocketHandler{
 								if(!msg.getContent().equals(DIVISION)) {
 									String writerName = getName(msg.getWriter().getCustomerNo());
 									session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()+":"+writerName));
-									System.out.println(msg.getWriter().getName());
 								}
 							}
+							//메세지를 클라이언트 에게 모두 보냈음을 구분하는 메세지
+							session.sendMessage(new TextMessage("loadingCompleate:"));
 						}
 						chatCnt++;
 					}
@@ -130,6 +130,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 						for(Message msg : msgBox) {
 							session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()+":"+msg.getWriter().getName()));
 						}
+						//메세지를 클라이언트 에게 모두 보냈음을 구분하는 메세지
+						session.sendMessage(new TextMessage("loadingCompleate:"));
 						//구분자 메세지 넣어주기
 						diviMsg.setContent(DIVISION);
 						msgBox.add(diviMsg);

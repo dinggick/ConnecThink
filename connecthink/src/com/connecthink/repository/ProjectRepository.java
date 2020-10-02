@@ -5,11 +5,13 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
+import com.connecthink.entity.Task;
 
 //@Transactional
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
@@ -184,4 +186,5 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	 */
 	@Query(nativeQuery = true, value = "SELECT * FROM PROJECT WHERE PROJECT_NO = ?1")
 	public Project findByProjectNo(Integer projectNo);
+	
 }

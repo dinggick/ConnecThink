@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.connecthink.entity.ChatRoom;
@@ -104,15 +105,20 @@ public class BoardService {
 	@Transactional
 	public List<Task> lookUpTask(Integer project_no){
 		List<Task> tasks = new ArrayList<>();
-
+		
+		Sort s = sortByvDate();
+		
 		Project p = projectRepository.findById(project_no).get();
+		//Project p = projectRepository.findByProjectNo(project_no, s).get();
 
 		tasks.addAll(p.getTasks());
 		
 		return tasks;
-		
-		
 	}
+	private Sort sortByvDate() {
+	    return Sort.by(Sort.Direction.DESC, "createDate");
+	}
+	
 	
 	/*
 	 * 포스트잇 한개 추가
