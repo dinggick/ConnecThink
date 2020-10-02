@@ -6,33 +6,6 @@
 <html class="no-js" lang="zxx">
 
 <head>
-<<<<<<< HEAD
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>메세지함</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
-    <!-- Place favicon.ico in the root directory -->
-
-    <!-- CSS here -->
-    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
-    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
-    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
-    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
-    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
-    <link rel="stylesheet" href="${contextPath}/css/animate.css">
-    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
-    <link rel="stylesheet" href="${contextPath}/css/style.css">
-    <!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
-
-	<style>
-=======
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>메세지함</title>
@@ -40,25 +13,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-<link rel="shortcut icon" type="image/x-icon" href="img/favicon.png">
+<link rel="shortcut icon" type="image/x-icon"
+	href="${contextPath}/img/favicon.png">
 <!-- Place favicon.ico in the root directory -->
 
 <!-- CSS here -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-<link rel="stylesheet" href="css/magnific-popup.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/themify-icons.css">
-<link rel="stylesheet" href="css/nice-select.css">
-<link rel="stylesheet" href="css/flaticon.css">
-<link rel="stylesheet" href="css/gijgo.css">
-<link rel="stylesheet" href="css/animate.css">
-<link rel="stylesheet" href="css/slicknav.css">
-<link rel="stylesheet" href="css/style.css">
-<!-- <link rel="stylesheet" href="css/responsive.css"> -->
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+<link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+<link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+<link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+<link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+<link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+<link rel="stylesheet" href="${contextPath}/css/animate.css">
+<link rel="stylesheet" href="${contextPath}/css/slicknav.css">
+<link rel="stylesheet" href="${contextPath}/css/style.css">
+<!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 
 <style>
->>>>>>> origin/soojeong
 .inbox_area {
 	background: #F5F7FA;
 }
@@ -300,110 +273,111 @@ ul.list>li {
 	<!--/ bradcam_area  -->
 
 
-	   <!--================inbox Area =================-->
-   <section class="inbox_area section-padding">
-      <div class="container">
-         <div class="row">
-            <div class="col-3 fromWho">
-               <div class="row">
-                  <div class="col-12 searchWho">
-                     <button class="manageMsgBtn">모두 읽음</button>
-                     <button class="manageMsgBtn">삭제하기</button>
-                     <div class="searchWhoBar">
-                        <div class="icon">
-                           <i class="fa fa-search" aria-hidden="true"></i>
-                        </div>
-                        <input type="text" name="who" placeholder="대화 상대 검색"
-                           onfocus="this.placeholder = ''"
-                           onblur="this.placeholder = '대화 상대 검색'" required
-                           class="single-input">
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="system">
-  						커넥띵크 알림<span class="new">1</span>
-                  </div>
-                  <div class="col-12 list_wrap">
-                     <ul class="list cat-list personList">
-                        <li class="person"><span class="otherNo" id="otherNoInList"></span>테스트<span
-                           class="new">7</span></li>
-                     </ul>
-                  </div>
-               </div>
-            </div>
-            <div class="col-9 mb-5 mb-lg-0">
-               <div class="row">
-                  <div class="col-12 message">
-                     <div class="row">
-                        <div class="col-12 content">
-                           <div class="msg_header">
-                              <div class="msg_sender">
-                                 <img src="${contextPath}/img/person.png"><span class="otherNo"
-                                    id="otherNoInBox">1</span><span class="personName">고디바</span>
-                              </div>
-                           </div>
-                           <div class="msg_body">
-                              <div class="receive_msg">테스트.</div>
-                              <div style="clear: both;"></div>
-                           </div>
-                        </div>
-                        <div class="col-12 send">
-                           <div class="row">
-                              <div class="writeMsg">
-                                 <textarea class="single-textarea" id="msg_content"
-                                    placeholder="Message" onfocus="this.placeholder = ''"
-                                    onblur="this.placeholder = 'Message'" required></textarea>
-                              </div>
-                              <div class="sendMsg">
-                                 <button class="send-btn" id="send-btn">전송</button>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </section>
+	<!--================inbox Area =================-->
+	<section class="inbox_area section-padding">
+		<div class="container">
+			<div class="row">
+				<div class="col-3 fromWho">
+					<div class="row">
+						<div class="col-12 searchWho">
+							<button class="manageMsgBtn">모두 읽음</button>
+							<button class="manageMsgBtn">삭제하기</button>
+							<div class="searchWhoBar">
+								<div class="icon">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</div>
+								<input type="text" name="who" placeholder="대화 상대 검색"
+									onfocus="this.placeholder = ''"
+									onblur="this.placeholder = '대화 상대 검색'" required
+									class="single-input">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="system">
+							커넥띵크 알림<span class="new">1</span>
+						</div>
+						<div class="col-12 list_wrap">
+							<ul class="list cat-list personList">
+								<li class="person"><span class="otherNo" id="otherNoInList"></span>테스트<span
+									class="new">7</span></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-9 mb-5 mb-lg-0">
+					<div class="row">
+						<div class="col-12 message">
+							<div class="row">
+								<div class="col-12 content">
+									<div class="msg_header">
+										<div class="msg_sender">
+											<img src="${contextPath}/img/person.png">
+											<span class="otherNo" id="otherNoInBox">1</span>
+											<span class="personName">고디바</span>
+										</div>
+									</div>
+									<div class="msg_body">
+										<div class="receive_msg">테스트.</div>
+										<div style="clear: both;"></div>
+									</div>
+								</div>
+								<div class="col-12 send">
+									<div class="row">
+										<div class="writeMsg">
+											<textarea class="single-textarea" id="msg_content"
+												placeholder="Message" onfocus="this.placeholder = ''"
+												onblur="this.placeholder = 'Message'" required></textarea>
+										</div>
+										<div class="sendMsg">
+											<button class="send-btn" id="send-btn">전송</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 	<!--================Blog Area =================-->
 
 	<!-- footer start -->
 	<footer class="footer">
 		<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
-    </footer>
-    <!--/ footer end  -->
+	</footer>
+	<!--/ footer end  -->
 
 
-    <!-- JS here -->
-    <script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
-    <script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
-    <script src="${contextPath}/js/popper.min.js"></script>
-    <script src="${contextPath}/js/bootstrap.min.js"></script>
-    <script src="${contextPath}/js/owl.carousel.min.js"></script>
-    <script src="${contextPath}/js/isotope.pkgd.min.js"></script>
-    <script src="${contextPath}/js/ajax-form.js"></script>
-    <script src="${contextPath}/js/waypoints.min.js"></script>
-    <script src="${contextPath}/js/jquery.counterup.min.js"></script>
-    <script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
-    <script src="${contextPath}/js/scrollIt.js"></script>
-    <script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
-    <script src="${contextPath}/js/wow.min.js"></script>
-    <script src="${contextPath}/js/nice-select.min.js"></script>
-    <script src="${contextPath}/js/jquery.slicknav.min.js"></script>
-    <script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
-    <script src="${contextPath}/js/plugins.js"></script>
-    <script src="${contextPath}/js/gijgo.min.js"></script>
+	<!-- JS here -->
+	<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="${contextPath}/js/popper.min.js"></script>
+	<script src="${contextPath}/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/js/owl.carousel.min.js"></script>
+	<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+	<script src="${contextPath}/js/ajax-form.js"></script>
+	<script src="${contextPath}/js/waypoints.min.js"></script>
+	<script src="${contextPath}/js/jquery.counterup.min.js"></script>
+	<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+	<script src="${contextPath}/js/scrollIt.js"></script>
+	<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+	<script src="${contextPath}/js/wow.min.js"></script>
+	<script src="${contextPath}/js/nice-select.min.js"></script>
+	<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+	<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+	<script src="${contextPath}/js/plugins.js"></script>
+	<script src="${contextPath}/js/gijgo.min.js"></script>
 
-    <!--contact js-->
-    <script src="${contextPath}/js/contact.js"></script>
-    <script src="${contextPath}/js/jquery.ajaxchimp.min.js"></script>
-    <script src="${contextPath}/js/jquery.form.js"></script>
-    <script src="${contextPath}/js/jquery.validate.min.js"></script>
-    <script src="${contextPath}/js/mail-script.js"></script>
+	<!--contact js-->
+	<script src="${contextPath}/js/contact.js"></script>
+	<script src="${contextPath}/js/jquery.ajaxchimp.min.js"></script>
+	<script src="${contextPath}/js/jquery.form.js"></script>
+	<script src="${contextPath}/js/jquery.validate.min.js"></script>
+	<script src="${contextPath}/js/mail-script.js"></script>
 
-    <script src="${contextPath}/js/main.js"></script>
+	<script src="${contextPath}/js/main.js"></script>
 
 	<script>
 var $listSection = $("ul.list");
@@ -468,71 +442,6 @@ $msgContent.keypress(function(event){
 });
 
 //-------------------------- 함수 ----------------------------
-//메세지함 목록을 불러오는 함수
-function fxLoadInbox(customerNo){
-	$.ajax({
-		url:"${contextPath}/inbox/loadPerson"
-		,method:"GET"
-			//{managerNo : ${sessionScope.loginInfo},
-		,data: {customerNo : customerNo,
-			${_csrf.parameterName} : '${_csrf.token}'}
-		,success:function(personList){
-			let sectionData = "";
-			personList.forEach(function(person, index){
-				sectionData += '<li class="person"><span class="otherNo" id="otherNoInList">' + person.send.customerNo + '</span>';
-				sectionData += '<span class="personName">' + person.send.name + '</span>';
-				sectionData += '<span class="new">ㅎ</span>';
-				sectionData += '<br><span class="msgPreview">' + person.content + '</span></li>';
-			});
-			$listSection.html(sectionData);
-		}
-	});
-}
-
-//특정 회원과 나눈 메세지를 불러오는 함수
-function fxLoadMSGs(customerNo, otherNo){
-	$.ajax({
-		url:"${contextPath}/inbox/loadMSGs"
-		,method:"GET"
-			//{customerNo : ${sessionScope.loginInfo},
-		,data: {customerNo : customerNo,
-			otherNo : otherNo,
-			${_csrf.parameterName} : '${_csrf.token}'}
-		,success:function(MSGs){
-			let otherData = "";
-
-			otherData += '<img src="${contextPath}/img/person.png"><span class="otherNo" id="otherNoInBox">' + otherNo + '</span>';
-			let first_msg = MSGs[Object.keys(MSGs)[0]];
-			if(first_msg.receive.customerNo == otherNo){
-				otherData += '<span class="personName">' + first_msg.receive.name + '</span>';
-			} else {
-				otherData += '<span class="personName">' + first_msg.send.name + '</span>';
-			}
-			let sectionData = "";
-			let newDate = new Date(0);
-			MSGs.forEach(function(msg, index){
-				let sendDate = new Date(msg.createDate);
-				if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
-					sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
-					newDate = sendDate;
-				}
-				if(msg.receive.customerNo == customerNo) {
-					sectionData += '<div class="receive_msg">' + msg.content + '</div>';
-					sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-					sectionData += '<div style="clear:both;"></div>';
-				} else {
-					sectionData += '<div class="send_msg">' + msg.content + '</div>';
-					sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-					sectionData += '<div style="clear:both;"></div>';
-				}
-			});
-			$otherInfoSection.html(otherData);
-			$msgSection.html(sectionData);
-		}
-	});
-}
-	
-
 //읽지않은 notification의 갯수를 불러오는 함수
 function fxLoadNotiCnt(customerNo){
 	$.ajax({
@@ -557,7 +466,7 @@ function fxLoadNoti(customerNo){
 			${_csrf.parameterName} : '${_csrf.token}'}
 		,success:function(noties){
 
-			let otherData = '<img src="${contextPath}/img/person.png"><span class="personName">컨넥띵크</span>';
+			let otherData = '<img src="${contextPath}/img/person.png"><span class="otherNo" id="otherNoInBox">0</span><span class="personName">컨넥띵크</span>';
 
 			let sectionData = "";
 			let newDate = new Date(0);
