@@ -537,7 +537,7 @@ scale
   	right: 25px;
   	font-size: 36px;
   	margin-left: 50px;
-  	margin-top: 13px;
+  	margin-top: 14px;
   	color:#2E2EFE;
   	transiton:0.5s;
 }
@@ -1083,13 +1083,13 @@ scale
 		<!-- todo 영역 -->
 		<div class="todo" id="do">
 			<div class="title">
-				TO DO
+				To Do
 				<div class="content">
 					<ul class="usty section1" id="sectionOneStatus" value="1">
 						<li v-for="(item,index) in lists">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-								<div class='card editable'> 
-									<input type="hidden" :value="item.taskNo"> 
+								<div class='card editable'><label style="top:0">{{item.cName}}</label>
+									<input type="hidden" :value="item.taskNo">
 									<input type="hidden" :value="item.cusNo">
 									<input type="hidden" :value="item.cName">
 									{{item.content}}
