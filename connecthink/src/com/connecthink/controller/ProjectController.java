@@ -183,7 +183,19 @@ public class ProjectController {
 		List<Project> list = service.findByManagerNo(managerNo);
 		return list;
 	}
-
+	
+	/**
+	 *  @author kimdongjun
+	 *  내가 속해있는 팀 목록 조회
+	 */
+	@PostMapping(value="/lookUpmyTeam")
+	@ResponseBody
+	public List<Project> LookUpmyTeam(HttpSession session){
+		int customer_no = (int) session.getAttribute("loginInfo");
+		List<Project> list = service.lookUpMyTeam(customer_no);
+		return list;
+	}
+	
 	/**
 	 * @author 홍지수
 	 * 팀 상세 보기 / 팀 수정하기 뷰 불러오기

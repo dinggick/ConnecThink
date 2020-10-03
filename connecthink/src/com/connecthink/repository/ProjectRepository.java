@@ -133,6 +133,19 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	public List<Project> findMyInvitation(Integer memberNo);
 	
 	/**
+	 * @author 김동준
+	 * 내가 속해있는 프로젝트 목록
+	 */
+	@Query(nativeQuery = true, value = "SELECT p.*\r\n" + 
+			"FROM\r\n" + 
+			"	member m\r\n" + 
+			"	JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
+			"	JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
+			"WHERE\r\n" + 
+			"	m.enter_status = 1 AND m.member_no = ?1 AND m.invited = 1")
+	public List<Project> lookUpMyTeam(Integer memberNo);
+	
+	/**
 	 * @author 홍지수
 	 * 모집상세보기
 	 */

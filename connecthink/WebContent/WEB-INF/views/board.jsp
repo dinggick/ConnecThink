@@ -7,22 +7,12 @@
 <html>
 <head>
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
+   <%--  <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png"> --%>
     <!-- Place favicon.ico in the root directory -->
 
     <!-- CSS here -->
     <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
-    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
-    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
-    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
-    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
-    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
     <link rel="stylesheet" href="${contextPath}/css/style.css">
-
 
 <style>
 body {
@@ -42,11 +32,26 @@ div {
   align-items: start;
 }
 
+.singleInput {
+  display: block;
+  width: 100%;
+  line-height: 30px;
+  border: none;
+  outline: none;
+  background: #f9f9ff;
+  padding: 0 20px;
+}
+
+
 .title {
   text-align:center;
-  font-weight: 1000;
   margin: 2px;
-  padding: 5px;
+  font-weight:1000;
+  font-size:24px; 
+}
+
+.title > .content {
+	font-weight:0;
 }
 
 .editable {
@@ -57,10 +62,13 @@ div {
   cursor: pointer !important;
   display: flex;
   justify-content: space-between;
+  font-weight:0;
 }
 .card {
   background: white;
   border-bottom: 1px solid #aaa;
+  font-weight:100;
+  font-size:18px;
 }
 
 .todo,.doing,.done {
@@ -70,15 +78,40 @@ div {
   background: #dfe1e6;
 }
 
+.editable2 {
+  padding-top:20px;
+  font-weight:0;
+  user-select: none;
+  outline: none;
+  margin: 7px;
+  padding: 5px;
+  cursor: pointer !important;
+  display: flex;
+  justify-content: space-between;
+}
+
+.tarea{
+	width:100%;
+	border: none;
+	resize:none;
+	overflow:hidden;
+	overflow-wrap: break-word;
+}
+
+#inputInModal{
+	resize:none;
+	overflow:hidden;
+	overflow-wrap: break-word;
+}	
 
 .add-task {
-  width: calc(100% - 35px);
-  display: inline-block;
-  padding: 10px;
+  /* width: calc(100% - 10px); */
+  /* display: inline-block; */
+  padding: 5px;
   margin-top: 0px;
   color: gray;
   text-decoration: none;
-/*   border-bottom: 1px solid #dfe1e6; */
+  border-bottom: 1px solid #dfe1e6;
 }
 
 .add-task:hover {
@@ -92,16 +125,14 @@ div {
 
 .buttAdd{
 	appearance: none;
-		outline: 0;
-		background-color: white;
-		border: 0;
-		padding: 10px 15px;
-		color: @prim;
-		border-radius: 3px;
-		
-		cursor: pointer;
-		
-		transition-duration: 0.25s;
+	outline: 0;
+	background-color: white;
+	border: 0;
+	padding: 10px 15px;
+	color: @prim;
+	border-radius: 3px;
+	cursor: pointer;
+	transition-duration: 0.25s;
 }
 .buttAdd:hover{
 	background-color: rgb(245, 247, 249);
@@ -489,51 +520,30 @@ scale
 	margin-right: 20%;
 }
 	
-#wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#wrapper.toggled {
-    padding-left: 250px;
-}
-
-#sidebar-wrapper {
+.nnnn {
     z-index: 1000;
     position: fixed;
     top:0;
-    left: 250px;
-    width: 0;
-    height: 100%;
+    left:250px;
+    width: 0px;
     margin-left: -250px;
-    overflow-y: auto;
+    height: 100%;
     background: #CEE3F6;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    overflow-x: hidden;
+    transiton:0.5s;
+}
+.close{
+  	top: 0;
+  	right: 25px;
+  	font-size: 36px;
+  	margin-left: 50px;
+  	margin-top: 14px;
+  	color:#2E2EFE;
+  	transiton:0.5s;
 }
 
-#wrapper.toggled #sidebar-wrapper {
-    width: 250px;
-}
-
-#page-content-wrapper {
-    width: 100%;
-    position: absolute;
-    padding: 15px;
-}
-
-#wrapper.toggled #page-content-wrapper {
-    position: absolute;
-    margin-right: -250px;
-}
 
 /* Sidebar Styles */
-
 .sidebar-nav {
     position: absolute;
     top: 0;
@@ -541,6 +551,7 @@ scale
     margin: 0;
     padding: 0;
     list-style: none;
+    transiton:0.5s;
 }
 
 .sidebar-nav>li{
@@ -568,44 +579,24 @@ scale
 
 .sidebar-nav > .sidebarTeamName {
     height: 65px;
-    font-size: 20px;
-    line-height: 60px;
+    font-size: 24px;
+    line-height: 64px;
+    font-weight:1000;
+	color:black; 
 }
 
-.sidebar-nav > .sidebarTeamName a {
-    color: #999999;
-}
 
-.sidebar-nav > .sidebarTeamName a:hover {
-    color: #fff;
-    background: none;
+
+
+.sidebar-nav > .outProject a{
+	font-size: 20px;
+	
 }
 
 @media(min-width:900px) {
-    #wrapper {
-        padding-left: 250px;
-    }
-
-    #wrapper.toggled {
-        padding-left: 0;
-    }
-
-    #sidebar-wrapper {
+    .nnnn {
         width: 270px;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        width: 0;
-    }
-
-    #page-content-wrapper {
-        padding: 20px;
-        position: relative;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
+        transiton:0.5s
     }
 }
 
@@ -613,14 +604,12 @@ scale
 	text-decoration: none;
 	font-size: 3em;
 	color: rgba(0, 0, 0, 0.61);
-	-webkit-transition: all 0.15s ease-out 0;
-	-moz-transition: all 0.15s ease-out 0;
-	transition: all 0.45s ease-out 0;
 	position: fixed;
 	top: 10px;
 	left: 20px;
 	z-index: 1;
 	cursor: pointer;
+	transiton:0.5s;
 }
 
 .usty{
@@ -836,6 +825,193 @@ scale
 			box-shadow: inset -1px -1px 4px #417f0b, 
 						inset 1px 1px 2px #5b9f1a;			
 		}
+/* loading */
+
+.container {
+  left: 50%;
+  margin: auto -50px;
+  position: absolute;
+  top: 50%;
+}
+.swing div {
+  border-radius: 50%;
+  float: left;
+  height: 1em;
+  width: 1em;
+}
+.swing div:nth-of-type(1) {
+  background: -webkit-linear-gradient(left, #385c78 0%, #325774 100%);
+  background: linear-gradient(to right, #385c78 0%, #325774 100%);
+}
+.swing div:nth-of-type(2) {
+  background: -webkit-linear-gradient(left, #325774 0%, #47536a 100%);
+  background: linear-gradient(to right, #325774 0%, #47536a 100%);
+}
+.swing div:nth-of-type(3) {
+  background: -webkit-linear-gradient(left, #4a5369 0%, #6b4d59 100%);
+  background: linear-gradient(to right, #4a5369 0%, #6b4d59 100%);
+}
+.swing div:nth-of-type(4) {
+  background: -webkit-linear-gradient(left, #744c55 0%, #954646 100%);
+  background: linear-gradient(to right, #744c55 0%, #954646 100%);
+}
+.swing div:nth-of-type(5) {
+  background: -webkit-linear-gradient(left, #9c4543 0%, #bb4034 100%);
+  background: linear-gradient(to right, #9c4543 0%, #bb4034 100%);
+}
+.swing div:nth-of-type(6) {
+  background: -webkit-linear-gradient(left, #c33f31 0%, #d83b27 100%);
+  background: linear-gradient(to right, #c33f31 0%, #d83b27 100%);
+}
+.swing div:nth-of-type(7) {
+  background: -webkit-linear-gradient(left, #da3b26 0%, #db412c 100%);
+  background: linear-gradient(to right, #da3b26 0%, #db412c 100%);
+}
+.shadow {
+  clear: left;
+  padding-top: 1.5em;
+}
+.shadow div {
+  -webkit-filter: blur(1px);
+  filter: blur(1px);
+  float: left;
+  width: 1em;
+  height: .25em;
+  border-radius: 50%;
+  background: #e3dbd2;
+}
+.shadow .shadow-l {
+  background: #d5d8d6;
+}
+.shadow .shadow-r {
+  background: #eed3ca;
+}
+@-webkit-keyframes ball-l {
+  0%, 50% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    -webkit-transform: rotate(50deg) translateX(-2.5em);
+    transform: rotate(50deg) translateX(-2.5em);
+  }
+}
+@keyframes ball-l {
+  0%, 50% {
+    -webkit-transform: rotate(0) translate(0);
+    transform: rotate(0) translateX(0);
+  }
+  100% {
+    -webkit-transform: rotate(50deg) translateX(-2.5em);
+    transform: rotate(50deg) translateX(-2.5em);
+  }
+}
+@-webkit-keyframes ball-r {
+  0% {
+    -webkit-transform: rotate(-50deg) translateX(2.5em);
+    transform: rotate(-50deg) translateX(2.5em);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0);
+  }
+}
+@keyframes ball-r {
+  0% {
+    -webkit-transform: rotate(-50deg) translateX(2.5em);
+    transform: rotate(-50deg) translateX(2.5em);
+  }
+  50%,
+  100% {
+    -webkit-transform: rotate(0) translateX(0);
+    transform: rotate(0) translateX(0)
+  }
+}
+@-webkit-keyframes shadow-l-n {
+  0%, 50% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: .125;
+    -webkit-transform: translateX(-1.57em);
+    transform: translateX(-1.75em);
+  }
+}
+@keyframes shadow-l-n {
+  0%, 50% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    opacity: .125;
+    -webkit-transform: translateX(-1.75);
+    transform: translateX(-1.75em);
+  }
+}
+@-webkit-keyframes shadow-r-n {
+  0% {
+    opacity: .125;
+    -webkit-transform: translateX(1.75em);
+    transform: translateX(1.75em);
+  }
+  50%,
+  100% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+@keyframes shadow-r-n {
+  0% {
+    opacity: .125;
+    -webkit-transform: translateX(1.75em);
+    transform: translateX(1.75em);
+  }
+  50%,
+  100% {
+    opacity: .5;
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+.swing-l {
+  -webkit-animation: ball-l .425s ease-in-out infinite alternate;
+  animation: ball-l .425s ease-in-out infinite alternate;
+}
+.swing-r {
+  -webkit-animation: ball-r .425s ease-in-out infinite alternate;
+  animation: ball-r .425s ease-in-out infinite alternate;
+}
+.shadow-l {
+  -webkit-animation: shadow-l-n .425s ease-in-out infinite alternate;
+  animation: shadow-l-n .425s ease-in-out infinite alternate;
+}
+.shadow-r {
+  -webkit-animation: shadow-r-n .425s ease-in-out infinite alternate;
+  animation: shadow-r-n .425s ease-in-out infinite alternate;
+}
+
+/* .fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+} */
+
+.slide-fade-enter-active {
+  transition: all .5s ease;
+}
+.slide-fade-leave-active {
+  transition: all .3s cubic-bezier(0.5, 0.5, 0.5, 0.5);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
 
 </style>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -849,11 +1025,12 @@ scale
 	<!-- Sidebar -->
 	<div id="sideBar"> 
 		<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>
-
-		<div id="sidebar-wrapper" v-show='toggle'>
+		 <transition name="slide-fade">
+		<div id="sidebar-wrapper" class="nnnn" v-show='toggle'>
 			<ul class="sidebar-nav" id="sidebar-ul">
+				<a href="#" @click="toggle = !toggle" class="close">X</a>
 				<li class="sidebarTeamName">
-					<a href="#" id="down" @click="toggle = !toggle">{{teamTitle}}</a>
+					<a href="#" id="tTitle">{{teamTitle}}</a>	
 				</li>	
 				<li v-for="member in memberList">
 					<div class="friend">
@@ -865,12 +1042,13 @@ scale
 						<div :id=" member.customer_no+'no'" class="status offline" :name=" member.position"></div>
 					</div>
 				</li>
-				<li>
+				<li class="outProject">
 					<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
 					<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
 				</li>
 			</ul>
 		</div>
+		</transition>
 	</div> <!-- SideBar end -->
 	
 	
@@ -882,14 +1060,14 @@ scale
 			aria-labelledby="loginModalCenterTitle" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header"><input type="text" id="cusName" readonly="readonly" value="" style="border:none; outline:none;">  
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
 						<div class="mt-10">
-							<input id="inputInModal" v-model="updateText" name="text" required class="single-input"> 
+							<textarea id="inputInModal" v-model="updateText" name="text" required class="singleInput" onkeyup = "modalkeyup(this)" style="height:120px "></textarea>
 							<input type="hidden" id="taskNo" value="">
 							<input type="hidden" id="cusNo" value="">
 						</div>
@@ -905,23 +1083,24 @@ scale
 		<!-- todo 영역 -->
 		<div class="todo" id="do">
 			<div class="title">
-				TO DO
+				To Do
 				<div class="content">
 					<ul class="usty section1" id="sectionOneStatus" value="1">
 						<li v-for="(item,index) in lists">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-								<div class='card editable'>
-									<input type="hidden" :value="item.taskNo"> 
+								<div class='card editable'><label style="top:0">{{item.cName}}</label>
+									<input type="hidden" :value="item.taskNo">
 									<input type="hidden" :value="item.cusNo">
-									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+									<input type="hidden" :value="item.cName">
+									{{item.content}}
 								</div>
 							</a>
 						</li>
 					</ul>
 				</div>
-				<div class="add-task">
-					<input v-model="addName" required class="single-input">
-					<button v-on:click="goTask" class="btn btn-primary">추가</button>
+				<div class="add-task card editable2">
+					<textarea v-model="addName" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
 		</div>
@@ -935,16 +1114,18 @@ scale
 						<li v-for="(item,index) in list2">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 								<div class='card editable'>
-									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
-									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+									<input type="hidden" :value="item.taskNo">
+									<input type="hidden" :value="item.cusNo">
+									<input type="hidden" :value="item.cName">
+									{{item.content}}
 								</div>
 							</a>
 						</li>
 					</ul>
 				</div>
-				<div class="add-task">
-					<input v-model="addName1" required class="single-input">
-					<button v-on:click="goTask" class="btn btn-primary">추가</button>
+				<div class="add-task card editable2">
+					<textarea v-model="addName1" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
 		</div>
@@ -958,16 +1139,18 @@ scale
 						<li v-for="(item,index) in list3">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
 								<div class='card editable'>
-									<input type="hidden" :value="item.taskNo"> <input type="hidden" :value="item.cusNo">
-									{{item.content}},{{item.taskNo}},{{item.cName}},{{item.cusNo}}
+									<input type="hidden" :value="item.taskNo">
+									<input type="hidden" :value="item.cusNo">
+									<input type="hidden" :value="item.cName">
+									{{item.content}}
 								</div>
 							</a>
 						</li>
 					</ul>
 				</div>
-				<div class="add-task">
-					<input v-model="addName2" required class="single-input">
-					<button v-on:click="goTask" class="buttAdd">추가</button>
+				<div class="add-task card editable2">
+					<textarea v-model="addName2" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
 		</div>
@@ -993,8 +1176,31 @@ scale
 							<div class="card-content chat-content" onscroll="chat_on_scroll()" id="chatContent">
 								<div class="content">
 									
+									<!-- loading -->
+									<div aria-busy="true" aria-label="Loading" role="progressbar" class="container" v-show ="isLoadingNow">
+									  <div class="swing">
+									    <div class="swing-l"></div>
+									    <div></div>
+									    <div></div>
+									    <div></div>
+									    <div></div>
+									    <div></div>
+									    <div class="swing-r"></div>
+									  </div>
+									  <div class="shadow">
+									    <div class="shadow-l"></div>
+									    <div></div>
+									    <div></div>
+									    <div></div>
+									    <div></div>
+									    <div></div>
+									    <div class="shadow-r"></div>
+									  </div>
+									 </div>
+									
+									
+									<div id="msgs" v-for="msg in msgs" v-show="!isLoadingNow">
 									<!-- 메세지 받을때 -->
-									<div id="msgs" v-for="msg in msgs">
 										<div class="chat-message-group reception" v-if="msg.reception">
 											<div class="chat-thumb">
 												<figure class="image is-32x32">
@@ -1034,14 +1240,6 @@ scale
 									v-model.trim="message" placeholder="메세지를 입력 하세요"
 									@keypress.enter="sendMsg">
 								</textarea>
-								
-							</div>
-							<div class="has-text-centered" style="width: 33%" id="msgBox">
-								<button class="button is-white" @click="sendMsg">
-									<img
-										src="https://image.flaticon.com/icons/svg/1388/1388910.svg"
-										style="width: 30px;"> Send
-									</button>
 							</div>
 						</footer>
 					</div>
@@ -1074,6 +1272,18 @@ scale
 		
 </body>
 <script>
+	//textArea 스크립트 부분(author 변재)
+	function keyup(obj) {
+    	obj.style.height = '50px';
+    	obj.style.height = (obj.scrollHeight) + 'px';
+	}
+	
+	function modalkeyup(obj) {
+    	obj.style.height = '120px';
+    	obj.style.height = (obj.scrollHeight) + 'px';
+	}
+	//////////////////////////////////////////////////
+	
 	
 	var pre_diffHeight = 0;
 	var bottom_flag = true;
@@ -1104,9 +1314,9 @@ scale
 		,data : {
 			memberList : [],
 			toggle: false,
-			show:true,
 			isManager : ${isManager},
 			teamTitle :  "${title}"
+			
 		}
 		,methods : {
 			showMemberList(){
@@ -1149,7 +1359,7 @@ scale
                 	window.close();
                 });
 			}
-		}
+		},
 	});
 	
 	//채팅 헤더 토글
@@ -1166,7 +1376,8 @@ scale
 		   loginLog : [],
 		   notifyMsg : null,
 		   onoff : true,
-		   showNotify : false
+		   showNotify : false,
+		   isLoadingNow : true
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
@@ -1228,7 +1439,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.50:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1254,6 +1465,8 @@ scale
 							var className = "status offline";
 							var dc = document.getElementById(logoutUser_no.trim()+"no");
 							dc.setAttribute("class",className);
+						}else if(datas[0] == "loadingCompleate"){
+							this.isLoadingNow = false;
 						}else{
 							var user = datas[0];
 							var msg = datas[1];
@@ -1374,6 +1587,9 @@ scale
 				cusNoModal.value = cusNo;
 				//console.log(taskNo);
 				
+				var cusName = ev.target.childNodes[4].attributes[1].nodeValue;
+				var nn = document.getElementById('cusName');
+				nn.value = cusName;
 				//console.log(cusNoModal);
 			},
 			//태스크 내용 수정하기
@@ -1444,91 +1660,105 @@ scale
 			//태스크 추가하기
 			goTask(ev) {
 				var status = 0;
-				var evPath = ev.path[3].id;	   
+				var evPath = ev.path[3].id;
+				
 				if(evPath == 'do'){
-					status = 1;
-					axios.get('/connecthink/addTask',{
-	                	params:{
-	                		content:this.addName,
-	                		status:status,
-	                		project_no: ${project_no}
-	                	}
-	                })
-	                .then(response => {
-	                	axios.get('/connecthink/taskList',{
-	        				params: {
-	        			  	      project_no: ${project_no}
-	        			  	}
-	                    })
-	                    .then(response => {
-	                    	var taskList = response.data;
-	                    	
-	                    	this.lists.splice(0);
-	                    	
-	                    	taskList.forEach(task =>{
-	                    		if(task.taskStatus==1){
-	                    			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
-	                    		}
-	                    	});
-	                    	this.addName='';
-	                    });  
-	                });
+					if(this.addName == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						status = 1;
+						axios.get('/connecthink/addTask',{
+		                	params:{
+		                		content:this.addName,
+		                		status:status,
+		                		project_no: ${project_no}
+		                	}
+		                })
+		                .then(response => {
+		                	axios.get('/connecthink/taskList',{
+		        				params: {
+		        			  	      project_no: ${project_no}
+		        			  	}
+		                    })
+		                    .then(response => {
+		                    	var taskList = response.data;
+		                    	
+		                    	this.lists.splice(0);
+		                    	
+		                    	taskList.forEach(task =>{
+		                    		if(task.taskStatus==1){
+		                    			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    		}
+		                    	});
+		                    	this.addName='';
+		                    });  
+		                });
+					}
+					
 				}else if(evPath == 'doing'){
-					status = 2;
-					axios.get('/connecthink/addTask',{
-	                	params:{
-	                		content:this.addName1,
-	                		status:status,
-	                		project_no: ${project_no}
-	                	}
-	                })
-	                .then(response => {	
-	                	axios.get('/connecthink/taskList',{
-	        				params: {
-	        			  	      project_no: ${project_no}
-	        			  	}
-	                    })
-	                    .then(response => {
-	                    	var taskList = response.data;
-	                    	
-	                    	this.list2.splice(0);
-	                    	
-	                    	taskList.forEach(task =>{
-	                    		if(task.taskStatus==2){
-	                    			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
-	                    		}
-	                    	});
-	                    	this.addName1='';
-	                    });  	
-	                });
+					if(this.addName1 == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						status = 2;
+						axios.get('/connecthink/addTask',{
+		                	params:{
+		                		content:this.addName1,
+		                		status:status,
+		                		project_no: ${project_no}
+		                	}
+		                })
+		                .then(response => {	
+		                	axios.get('/connecthink/taskList',{
+		        				params: {
+		        			  	      project_no: ${project_no}
+		        			  	}
+		                    })
+		                    .then(response => {
+		                    	var taskList = response.data;
+		                    	
+		                    	this.list2.splice(0);
+		                    	
+		                    	taskList.forEach(task =>{
+		                    		if(task.taskStatus==2){
+		                    			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    		}
+		                    	});
+		                    	this.addName1='';
+		                    });  	
+		                });
+					}
 				}else if(evPath == 'done'){
-					status = 3;
-					axios.get('/connecthink/addTask',{
-	                	params:{
-	                		content:this.addName2,
-	                		status:status,
-	                		project_no: ${project_no}
-	                	}
-	                })
-	                .then(response => {	
-	                	axios.get('/connecthink/taskList',{
-	        				params: {
-	        			  	      project_no: ${project_no}
-	        			  	}
-	                    })
-	                    .then(response => {
-	                    	var taskList = response.data;
-	                    	
-	                    	this.list3.splice(0);
-	                    	
-	                    	taskList.forEach(task =>{
-	                    		if(task.taskStatus==3){
-	                    			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
-	                    		}
-	                    	});
-	                    	this.addName2='';
-	                    });  	
-	                });
+					if(this.addName2 == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						status = 3;
+						axios.get('/connecthink/addTask',{
+		                	params:{
+		                		content:this.addName2,
+		                		status:status,
+		                		project_no: ${project_no}
+		                	}
+		                })
+		                .then(response => {	
+		                	axios.get('/connecthink/taskList',{
+		        				params: {
+		        			  	      project_no: ${project_no}
+		        			  	}
+		                    })
+		                    .then(response => {
+		                    	var taskList = response.data;
+		                    	
+		                    	this.list3.splice(0);
+		                    	
+		                    	taskList.forEach(task =>{
+		                    		if(task.taskStatus==3){
+		                    			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    		}
+		                    	});
+		                    	this.addName2='';
+		                    });  	
+		                });	
+					}
 				}
                 
 				this.$forceUpdate();
@@ -1538,22 +1768,6 @@ scale
 
 	
 </script>
-<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
 <script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
-<script src="${contextPath}/js/popper.min.js"></script>
 <script src="${contextPath}/js/bootstrap.min.js"></script>
-<script src="${contextPath}/js/owl.carousel.min.js"></script>
-<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
-<script src="${contextPath}/js/ajax-form.js"></script>
-<script src="${contextPath}/js/waypoints.min.js"></script>
-<script src="${contextPath}/js/jquery.counterup.min.js"></script>
-<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
-<script src="${contextPath}/js/scrollIt.js"></script>
-<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
-<script src="${contextPath}/js/wow.min.js"></script>
-<script src="${contextPath}/js/nice-select.min.js"></script>
-<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
-<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
-<script src="${contextPath}/js/plugins.js"></script>
-<script src="${contextPath}/js/gijgo.min.js"></script>
 </html>
