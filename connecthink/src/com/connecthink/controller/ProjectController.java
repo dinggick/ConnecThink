@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.connecthink.command.ProjectCommand;
+import com.connecthink.dto.ProjectDTO;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.service.ProjectService;
@@ -119,21 +119,21 @@ public class ProjectController {
 	 */
 	@PostMapping(value= {"/addProject", "/modifyProject"})
 	@ResponseBody
-	public Map addProject(ProjectCommand projectCommand, HttpServletRequest request, HttpSession session) {
+	public Map addProject(ProjectDTO projectDTO, HttpServletRequest request, HttpSession session) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		String whatYouCallValue = request.getServletPath(); //매핑 한 url 값 가져오기
 		Integer pNo = 0;
 		int managerNo = (int) session.getAttribute("loginInfo");
-		projectCommand.setManagerNo(managerNo);
+		projectDTO.setManagerNo(managerNo);
 		
 		if(whatYouCallValue.equals("/addProject")) {
 			pNo = service.seq_lastval();	
 		} else {
-			pNo = projectCommand.getProjectNo();
+			pNo = projectDTO.getProjectNo();
 		}
 
 		try {
-			service.addProject(projectCommand);
+			service.addProject(projectDTO);
 			result.put("status", "success");
 			result.put("projectNo", pNo);
 
@@ -203,6 +203,24 @@ public class ProjectController {
 		return mnv;
 	}
 	
+	/**
+	 * @author 홍지수
+	 * 프로젝트 삭제
+	 */
+	@PostMapping("/delProject")
+	@ResponseBody
+	public Map delProject(Integer projectNo) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		try {
+			result.put("status","success");
+			service.delProject(projectNo);
+		}catch (Exception e) {
+			e.printStackTrace();
+			result.put("status","fail");
+			result.put("msg", "멤버가 존재하므로 삭제가 불가합니다.");
+		}
+		return result;
+	}
 
 }
  

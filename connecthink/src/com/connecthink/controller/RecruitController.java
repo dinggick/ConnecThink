@@ -6,7 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.connecthink.command.RecruitCommand;
+import com.connecthink.dto.RecruitDTO;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
@@ -81,6 +84,13 @@ public class RecruitController {
 		
 		
 		list = recruitService.findAllDesc();
+		Iterator<Recruit> iter = list.iterator();
+		while(iter.hasNext()) {
+			if(iter.next().getRecruitStatus() == 2) {
+				iter.remove();
+			}
+		}
+		
 		mnv.addObject("rec", list);
 		mnv.setViewName("/rec");
 
@@ -155,14 +165,14 @@ public class RecruitController {
 	 */
 	@PostMapping(value= {"/addRec", "/modifyRec"})
 	@ResponseBody
-	public String addRec(RecruitCommand recruitCommand, HttpServletRequest request) {
+	public String addRec(RecruitDTO recruitDTO, HttpServletRequest request) {
 		//요청 받은 url 담아주기
-		recruitCommand.setUrl(request.getServletPath());
-		System.out.println(recruitCommand.getRecPic());
+		recruitDTO.setUrl(request.getServletPath());
+		System.out.println(recruitDTO.getRecPic());
 		//반환 할 status
 		String status ="";
 		try {
-			recruitService.addRec(recruitCommand);
+			recruitService.addRec(recruitDTO);
 			status = "success";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -194,5 +204,43 @@ public class RecruitController {
 		recruitService.saveInvite(recruitNo, customerNo);
 		return "success";
 	}
-		
+	
+	/**
+	 * @author 홍지수
+	 * 모집 삭제(단일)
+	 */
+	@PostMapping("/delRec")
+	@ResponseBody
+	public Map delRec(String recruitNo) {
+		Map<String, Object> result = new HashMap<>();
+		try {
+			result.put("status", "success");
+			recruitService.delRec(recruitNo);
+		} catch (Exception e) {
+			result.put("status", "fail");
+			result.put("msg", "멤버가 존재하므로 삭제가 불가합니다");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * @author 홍지수
+	 * 프로젝트 삭제 전 모집 삭제(전체)
+	 */
+	@PostMapping("/delRecAll")
+	@ResponseBody
+	public Map delRecAll(Integer projectNo, String recruitNo) {
+		Map<String, Object> result = new HashMap<>();
+		try {
+			result.put("status", "success");
+			recruitService.delRecAll(projectNo, recruitNo);
+		} catch (Exception e) {
+			result.put("status", "fail");
+			result.put("msg", "멤버가 존재하므로 삭제가 불가합니다");
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }

@@ -8,9 +8,14 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedNativeQueries;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -26,6 +31,14 @@ import lombok.Setter;
 @Getter
 @Setter
 
+@NamedStoredProcedureQuery(
+	    name="DELETE_RECRUIT", 
+	    procedureName="DELETE_RECRUIT", 
+	    resultClasses=Recruit.class,
+	    parameters={@StoredProcedureParameter
+	    		(mode = ParameterMode.IN, name="recruitNo", type = String.class)
+	    }
+	)
 @Entity
 @Table(name = "recruit")
 public class Recruit {

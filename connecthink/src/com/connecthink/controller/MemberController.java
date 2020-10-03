@@ -1,4 +1,4 @@
- package com.connecthink.controller;
+package com.connecthink.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,16 +11,22 @@ import com.connecthink.service.MemberService;
 public class MemberController {
 	@Autowired
 	private MemberService service;
-	
+
 	/**
 	 * @author 홍지수
 	 * 모집에 지원하기
 	 */
-	@PostMapping(value = "recruit")
+	@PostMapping(value = "/recruit")
 	@ResponseBody
 	public String recruit(Integer customerNo, String recruitNo) {
-		service.recruit(customerNo, recruitNo);
-		return "success";
+		String status = "";
+		try {
+			service.recruit(customerNo, recruitNo);
+			status = "success";
+		}catch (Exception e) {
+			status = "fail";
+		}
+		return status;
 	}
-	
+
 }

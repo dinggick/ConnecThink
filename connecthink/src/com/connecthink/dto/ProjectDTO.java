@@ -1,11 +1,11 @@
-package com.connecthink.command;
+package com.connecthink.dto;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ProjectCommand {
+public class ProjectDTO {
 	private Integer projectNo;
 	private String title;
 	private String about;

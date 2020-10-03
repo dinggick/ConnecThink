@@ -9,6 +9,10 @@ import com.connecthink.entity.BookmarkRecruit;
 import com.connecthink.entity.BookmarkRecruitId;
 
 public interface BookmarkRecruitRepository extends JpaRepository<BookmarkRecruit, BookmarkRecruitId>{
+	/**
+	 * @author 홍지수
+	 * 내가 북마크한 모집 목록
+	 */
 	public List<BookmarkRecruit> findByIdCustomerNo(Integer customerNo);
 	
 	/**
@@ -20,5 +24,9 @@ public interface BookmarkRecruitRepository extends JpaRepository<BookmarkRecruit
 			)
 	public Integer findByIdRecruitNo(String recruitNo);
 	
-	
+	/**
+	 * @author 홍지수
+	 * 모집에 북마크 한 회원 목록
+	 */
+	public List<BookmarkRecruit> findAllByIdRecruitNo(String recruitNo);
 }

@@ -57,7 +57,15 @@ public class CustomerController {
 	public ModelAndView findAll() {
 		System.out.println("matelist test");
 		ModelAndView mnv = new ModelAndView();
-		List<Customer> list = service.findAll();
+		List<Customer> list = service.findAllDesc();
+		
+		Iterator<Customer> iter = list.iterator();
+		while(iter.hasNext()) {
+			if(iter.next().getDropStatus() == 2) {
+				iter.remove();
+			}
+		}
+		
 		mnv.addObject("customer", list);
 		mnv.setViewName("/mate");
 		

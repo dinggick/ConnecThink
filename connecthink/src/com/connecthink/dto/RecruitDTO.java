@@ -1,4 +1,4 @@
-package com.connecthink.command;
+package com.connecthink.dto;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RecruitCommand {
+public class RecruitDTO {
 	private String url;
 	private String recruitNo;
 	private Integer projectNo;

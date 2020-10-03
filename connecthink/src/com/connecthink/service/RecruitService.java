@@ -18,13 +18,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.connecthink.command.RecruitCommand;
+import com.connecthink.dto.RecruitDTO;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Position;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
+import com.connecthink.exception.RemoveException;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
 import com.connecthink.repository.PositionRepository;
@@ -56,7 +57,7 @@ public class RecruitService {
 	 * 모집 전체보기
 	 */
 	public List<Recruit> findAllDesc(){
-		return recruitRepository.findAll();
+		return recruitRepository.findAllByOrderByCreateDateDesc();
 	}
 
 	//메인에 뿌려줄 9개 프로젝트 찾기
@@ -78,14 +79,14 @@ public class RecruitService {
 	 * @author 홍지수
 	 * 모집 등록, 수정
 	 */
-	public void addRec(RecruitCommand recruitCommand) {
+	public void addRec(RecruitDTO recruitDTO) {
 		Recruit recruit = new Recruit();
 
 		//projectNo
-		Project project = projectRepository.findById(recruitCommand.getProjectNo()).get();
+		Project project = projectRepository.findById(recruitDTO.getProjectNo()).get();
 
 		//positionNo -배열로 받아 정렬 후 가장 큰 값 받아 오기 
-		Integer[] psArr = recruitCommand.getPositionNo();
+		Integer[] psArr = recruitDTO.getPositionNo();
 		Arrays.sort(psArr);
 		Integer positionNo = psArr[psArr.length-1];
 		Position ps = positionRepository.findById(positionNo).get();
@@ -94,12 +95,12 @@ public class RecruitService {
 		int num = project.getRecruits().size();
 		String rNo = "";
 
-		System.out.println("서비스 : " + recruitCommand.getUrl());
+		System.out.println("서비스 : " + recruitDTO.getUrl());
 
-		if(recruitCommand.getUrl().equals("/addRec")) {
+		if(recruitDTO.getUrl().equals("/addRec")) {
 			rNo = project.getProjectNo()+"R"+ (num+1);
 		} else {
-			rNo = recruitCommand.getRecruitNo();
+			rNo = recruitDTO.getRecruitNo();
 			System.out.println(rNo);
 		}
 
@@ -120,18 +121,18 @@ public class RecruitService {
 		String ext1 = ".txt";
 		File txt = new File(saveTxtPath, rNo+ext1);
 
-		System.out.println("서비스 : " +  recruitCommand.getRecPic().getOriginalFilename());
-		String picName = recruitCommand.getRecPic().getOriginalFilename();
+		System.out.println("서비스 : " +  recruitDTO.getRecPic().getOriginalFilename());
+		String picName = recruitDTO.getRecPic().getOriginalFilename();
 		try {
 
 			if(!(picName.equals("")) && picName != null) {
 				//이미지 저장
-				recruitCommand.getRecPic().transferTo(pic);
+				recruitDTO.getRecPic().transferTo(pic);
 			}
-			
+
 			//파일로 저장
 			OutputStream output = new FileOutputStream(txt);
-			byte[] data = recruitCommand.getRecExplain().getBytes();
+			byte[] data = recruitDTO.getRecExplain().getBytes();
 			output.write(data);
 
 		} catch (IllegalStateException | IOException e) {
@@ -141,9 +142,9 @@ public class RecruitService {
 		//recruit에 담아주기
 		recruit.setRecruitNo(rNo);
 		recruit.setPosition(ps);
-		recruit.setHeadCount(recruitCommand.getHeadCount());
-		recruit.setDeadline(recruitCommand.getDeadline());
-		recruit.setRequirement(recruitCommand.getRequirement());
+		recruit.setHeadCount(recruitDTO.getHeadCount());
+		recruit.setDeadline(recruitDTO.getDeadline());
+		recruit.setRequirement(recruitDTO.getRequirement());
 		recruit.setRecruitStatus(1); //기본 값 1
 
 		//project에 recruit 담기(더하기)
@@ -170,5 +171,90 @@ public class RecruitService {
 		m.setId(mi);
 		m.setEnterStatus(0);
 		memberRepository.save(m);
+	}
+
+	/**
+	 * @author 홍지수
+	 * 모집 삭제
+	 * @throws RemoveException 
+	 */
+	public void delRec(String recruitNo) throws RemoveException {
+		boolean isDone = false;
+
+		try {
+			recruitRepository.deleteRec(recruitNo);	
+			isDone = true;
+		}catch (Exception e) {
+			isDone = false;
+			throw new RemoveException("멤버가 존재합니다");
+		}		
+
+		//삭제 시 모집 썸네일도 제거
+
+		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
+
+		//모집 - 이미지 경로
+		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img"  + File.separator;
+		//모집 - 파일경로
+		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt"  + File.separator;
+
+		//이미지 형식
+		File pic = new File(saveImgPath, recruitNo+".jpg");
+		File txt = new File(saveTxtPath, recruitNo+".txt");
+
+		if(isDone == true) {
+			if(pic.exists() && txt.exists()) {
+				pic.delete();
+				txt.delete();
+			} else if(!(pic.exists()) && txt.exists()) {
+				txt.delete();
+			}
+		}
+
+	}
+
+	/**
+	 * @author 홍지수
+	 * 모집 전체 삭제
+	 * @throws RemoveException 
+	 */
+	public void delRecAll(Integer projectNo, String recruitNo) throws RemoveException {
+
+		Project p = projectRepository.findByProjectNo(projectNo);
+		int count = p.getRecruits().size();
+		boolean isDone = false;
+
+		//삭제 시 모집 썸네일도 제거
+		String rootUploadPath = context.getRealPath("/").replace("wtpwebapps" + File.separator + "connecthink"+ File.separator, "webapps" + File.separator + "ROOT");
+
+		//모집 - 이미지 경로
+		String saveImgPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "img"  + File.separator;
+		//모집 - 파일경로
+		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt"  + File.separator;
+
+		File pic;
+		File txt;
+		
+		for(int i = 1; i <= count; i++) {
+			recruitNo = projectNo+"R"+ i;
+			try {
+				pic = new File(saveImgPath, recruitNo+".jpg");
+				txt = new File(saveTxtPath, recruitNo+".txt");
+				recruitRepository.deleteRec(recruitNo);
+				isDone = true;
+			}catch (Exception e) {
+				isDone = false;
+				throw new RemoveException("멤버가 존재합니다.");
+			}
+
+			if(isDone == true) {
+				if(pic.exists() && txt.exists()) {
+					pic.delete();
+					txt.delete();
+				} else if(!(pic.exists()) && txt.exists()) {
+					txt.delete();
+				}
+			} //파일 삭제 끝
+		}//for문 끝
 	}
 }
