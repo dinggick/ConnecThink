@@ -21,7 +21,7 @@ public class FileController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/uploadProfileImg")
+	@RequestMapping("/logined/uploadProfileImg")
 	public ResponseEntity<String> uploadProfileImg(MultipartFile profileImg, HttpSession session) {
 		//경로 구성
 		String savePath = session.getServletContext().getRealPath("/").replace(

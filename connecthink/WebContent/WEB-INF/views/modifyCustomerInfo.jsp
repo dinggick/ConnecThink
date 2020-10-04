@@ -339,7 +339,7 @@
 				var formData = new FormData();
 				formData.append("profileImg", $(this)[0].files[0]);
 				$.ajax({
-					url : "/connecthink/uploadProfileImg",
+					url : "/connecthink/logined/uploadProfileImg",
 					method : "POST",
 		 			enctype : "multipart/form-data",
 		 			processData : false,
@@ -359,7 +359,7 @@
 			});
 			
             $.ajax({
-    			url : "/connecthink/findCustomerByNo",
+    			url : "/connecthink/all/findCustomerByNo",
     			method : "POST",
     			data : {customerNo : ${sessionScope.loginInfo},
     					${_csrf.parameterName} : '${_csrf.token}'},
@@ -484,7 +484,7 @@
             
             $("form").submit(function() {
             	$.ajax({
-            		url : "/connecthink/modifyCustomerInfo",
+            		url : "/connecthink/logined/modifyCustomerInfo",
             		method : "POST",
             		data : $(this).serialize(),
             		success : (data, textStatus, jqXHR) => {

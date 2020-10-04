@@ -20,4 +20,6 @@ public class ProjectHistoryDTO {
 	private Date endDate;
 	
 	private String theme;
+	
+	private String recruitPosition;
 }
