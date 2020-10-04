@@ -1088,7 +1088,7 @@ scale
 					<ul class="usty section1" id="sectionOneStatus" value="1">
 						<li v-for="(item,index) in lists">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-								<div class='card editable'><label style="top:0">{{item.cName}}</label>
+								<div class='card editable'>
 									<input type="hidden" :value="item.taskNo">
 									<input type="hidden" :value="item.cusNo">
 									<input type="hidden" :value="item.cName">
