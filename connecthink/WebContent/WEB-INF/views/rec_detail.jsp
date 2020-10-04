@@ -199,7 +199,7 @@ span.customerNo {
 							</div>
 						</div>
 						<div class="rec_foot_right">
-							<button class="boxed-btn mt-4 message" onclick="message(this);" data-toggle="modal" data-target="#msgModal">메세지</button>
+							<button class="boxed-btn mt-4 message" data-toggle="modal" data-target="#msgModal">메세지</button>
 							<button class="boxed-btn mt-4 rec" onclick="apply();">지원하기</button>
 						</div>
 					</div>
@@ -283,6 +283,7 @@ span.customerNo {
 			var recName = "${rec.requirement}";
 		</c:if>
 	</c:forEach>
+	
 	$(function(){
 		bookClick();
 		if(managerNo == customerNo){
@@ -356,28 +357,54 @@ span.customerNo {
 			}
 			
 		}
-
+		
+		//지원하기
+		function apply(){
+			let recNo = "${recNo}";
+				let answer = confirm("지원하시겠습니까?");
+				if(answer == true){
+					$.ajax({
+						url : "${contextPath}/recruit",
+						method : "POST",
+						data :  {
+							recruitNo : recNo,
+							customerNo : ${sessionScope.loginInfo},
+							${_csrf.parameterName} : '${_csrf.token}'
+						},
+						success: function(response){
+							if(response == "success"){
+								alert("지원 성공");
+							} else {
+								alert("이미 지원한 프로젝트 입니다");
+							}
+						}
+					});
+				}	
+		}
+		
 		//삭제하기
 		function del() {
-			console.log("버튼 클릭");
 			let recNo = "${recNo}";
 			let answer = confirm('"'+recName+'"' + "을(를) 삭제하시겠습니까?");
-// 			if(answer == true){
-// 			$.ajax({
-// 				url : "${contextPath}/recruit",
-// 				method : "POST",
-// 				data : {recruitNo : recNo,
+			if(answer == true){
+			$.ajax({
+				url : "${contextPath}/delRec",
+				method : "POST",
+				data : {recruitNo : recNo,
 // 						customerNo : ${sessionScope.loginInfo},
-// 						${_csrf.parameterName} : '${_csrf.token}'},
-// 				success : function(data){
-// 					if(data == "success"){
-// 						alert("지원 완료");						
-// 					}
-// 				}
-// 			});
-// 			} else {
-				
-// 			}
+						${_csrf.parameterName} : '${_csrf.token}'},
+				success : function(response){
+					if(response.status == "success"){
+						alert("삭제 완료");
+						location.href="${contextPath}/myProject"
+					} else {
+						alert(response.msg);
+					}
+				}
+			});
+			} else {
+				alert("취소");
+			}
 			return false;
 		}
 		

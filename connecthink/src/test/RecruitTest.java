@@ -1,6 +1,5 @@
 package test;
 
-import java.io.File;
 import java.util.Date;
 
 import org.junit.jupiter.api.Test;
@@ -10,22 +9,24 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.connecthink.entity.Position;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
+import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.PositionRepository;
 import com.connecthink.repository.ProjectRepository;
 import com.connecthink.repository.RecruitRepository;
+
 
 @WebAppConfiguration
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
-		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml") })
+		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml")})
 class RecruitTest {
+	
 	@Autowired
 	private RecruitRepository repository;
 	
@@ -102,5 +103,4 @@ class RecruitTest {
 			e.printStackTrace();
 		}
 	}
-	
 }

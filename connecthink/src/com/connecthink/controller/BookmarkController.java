@@ -62,6 +62,10 @@ public class BookmarkController {
 		return "success";
 	}
 	
+	/**
+	 * @author 홍지수
+	 * 모집 북마크 삭제
+	 */
 	@PostMapping(value="delBmToRec")
 	@ResponseBody
 	public String delBmRecruit(String recruitNo, Integer customerNo) {
@@ -69,6 +73,10 @@ public class BookmarkController {
 		return "success";
 	}
 	
+	/**
+	 * @author 홍지수
+	 * 모집에 대한 북마크 개수
+	 */
 	@PostMapping(value="/count")
 	@ResponseBody
 	public String bmCount(String recruitNo) {

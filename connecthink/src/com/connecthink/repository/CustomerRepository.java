@@ -49,4 +49,10 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 	public Customer findByCustomerNo(Integer customerNo);
 	
 	public Customer findByNameAndBirthDate(String name, String birthDate);
+	
+	/**
+	 * @author 홍지수
+	 * customerNo 내림차순 정렬
+	 */
+	public List<Customer> findAllByOrderByCustomerNoDesc();
 }

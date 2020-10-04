@@ -138,7 +138,7 @@
 	
 	<script>
 	$(function(){
-		fetch("${contextPath}/rec").then(function(data){
+		fetch("${contextPath}/all/rec").then(function(data){
 		});
 		
 		//썸네일 처리
