@@ -31,7 +31,6 @@ public class ProjectHistoryService {
 			} else {
 					p.getRecruits().forEach(r -> {
 						r.getMembers().forEach(m -> {
-							
 							if (m.getCustomer().getCustomerNo() == customerNo && m.getEnterStatus() == 1) { // 팀원의 경우
 								result.add(new ProjectHistoryDTO(p.getTitle(), m.getEnterDate(),
 										p.getRecruits().iterator().next().getMembers().iterator().next().getQuitDate(),

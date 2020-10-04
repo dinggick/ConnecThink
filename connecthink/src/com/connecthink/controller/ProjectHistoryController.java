@@ -15,7 +15,7 @@ public class ProjectHistoryController {
 	@Autowired
 	private ProjectHistoryService service;
 
-	@RequestMapping("/All/findProjectHistoryByNo")
+	@RequestMapping("/all/findProjectHistoryByNo")
 	@ResponseBody
 	public List<ProjectHistoryDTO> findByNo(Integer customerNo) {
 		return service.findByNo(customerNo);

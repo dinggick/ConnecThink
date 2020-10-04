@@ -203,7 +203,7 @@
     		});
     		
     		$.ajax({
-    			url : "/connecthink/findProjectHistoryByNo",
+    			url : "/connecthink/all/findProjectHistoryByNo",
     			method : "POST",
     			data : {customerNo : ${sessionScope.loginInfo},
 					${_csrf.parameterName} : '${_csrf.token}'},
