@@ -221,9 +221,9 @@
 		    			    var em = (endDate.getMonth() + 1) >= 10 ? (endDate.getMonth() + 1) : '0' + (endDate.getMonth() + 1);
 		    			    var ed = endDate.getDate() >= 10 ? endDate.getDate() : '0' + endDate.getDate();
 		    			    
-		    			    $("#projectHistories").html($("#projectHistories").html() +  "<li>" + h.title + " " + sy + "/" + sm + "/" + sd + "~" + ey + "/" + em + "/" + ed + "</li>");
+		    			    $("#projectHistories").html($("#projectHistories").html() +  "<li>" + h.title + "(" + h.position + ") " + sy + "/" + sm + "/" + sd + "~" + ey + "/" + em + "/" + ed + "</li>");
 	    			    } else {
-	    			    	$("#projectHistories").html($("#projectHistories").html() + "<li>" + h.title + " " + sy + "/" + sm + "/" + sd + "~" + "</li>");
+	    			    	$("#projectHistories").html($("#projectHistories").html() + "<li>" + h.title + "(" + h.position + ") " + sy + "/" + sm + "/" + sd + "~" + "</li>");
 	    			    }
 					});
 					

@@ -21,5 +21,5 @@ public class ProjectHistoryDTO {
 	
 	private String theme;
 	
-	private String recruitPosition;
+	private String position;
 }
