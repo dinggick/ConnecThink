@@ -23,6 +23,19 @@ h4 .requir{
 	color: red;
 	font-size: 0.5em !important;
 }
+
+#counterOne, #counterTwo {
+	position: absolute;
+    bottom: 40px;
+    right: 25px;
+}
+
+#counter {
+	position: absolute;
+    bottom: 25px;
+    right: 25px;
+}
+
 </style>
 <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
 <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
@@ -83,7 +96,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name="title" placeholder="프로젝트 이름 (20자 내)">
+										<input type="text" name="title" placeholder="프로젝트 이름 (20자 내)" onkeyup="first(this, 20);">
+										<span id = "counterOne" style = "color: gray;">0/20</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -91,7 +105,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name="about" placeholder="프로젝트에 대해 한 줄로 적어주세요(50자 내)">
+										<input type="text" name="about" placeholder="프로젝트에 대해 한 줄로 적어주세요(50자 내)" onkeyup="second(this, 50);">
+										<span id = "counterTwo" style = "color: gray;">0/50</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -108,7 +123,7 @@ h4 .requir{
 								<div class="col-md-10">
 									<div class="input_field">
 										<textarea name="purpose" maxlength="150" placeholder="프로젝트 목적을 적어주세요(150자 이내) (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)" onkeyup="limit(this, 150);"></textarea>	
-										<span id = "counter"></span>
+										<span id = "counter" style = "color: gray;">0/150</span>
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -224,8 +239,74 @@ h4 .requir{
 		return false;
 	});
 	
+	//글자수 체크 - 제목
+	function first(str, maxByte) {
+		let strValue = str.value;
+		let strLen = strValue.length;
+		let totalByte = 0;
+		let len = 0;
+		let oneChar = "";
+		let str2 = "";
 
-		//글자수 체크
+		for (var i = 0; i < strLen; i++) {
+			oneChar = strValue.charAt(i);
+			if (escape(oneChar).length > 4) {
+				totalByte += 2;
+			} else {
+				totalByte++;
+			}
+
+			//입력한 문자 길이보다 넘치면 잘라낸다
+			if (totalByte <= maxByte) {
+				len = i + 1;
+			}
+		}
+		
+		$('#counterOne').html(totalByte + '/20');
+		
+		if (totalByte > maxByte) {
+			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			str2 = strValue.substr(0, len);
+			str.value = str2;
+			first(str, 4000);
+		}
+	}
+	
+	//글자수 체크 - 소개
+	function second(str, maxByte) {
+		let strValue = str.value;
+		let strLen = strValue.length;
+		let totalByte = 0;
+		let len = 0;
+		let oneChar = "";
+		let str2 = "";
+
+		for (var i = 0; i < strLen; i++) {
+			oneChar = strValue.charAt(i);
+			if (escape(oneChar).length > 4) {
+				totalByte += 2;
+			} else {
+				totalByte++;
+			}
+
+			//입력한 문자 길이보다 넘치면 잘라낸다
+			if (totalByte <= maxByte) {
+				len = i + 1;
+			}
+		}
+		
+		$('#counterTwo').html(totalByte + '/50');
+		
+		if (totalByte > maxByte) {
+			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			str2 = strValue.substr(0, len);
+			str.value = str2;
+			second(str, 4000);
+		}
+	}
+	
+
+		//글자수 체크 - 목적
 		function limit(str, maxByte) {
 			let strValue = str.value;
 			let strLen = strValue.length;
@@ -247,6 +328,9 @@ h4 .requir{
 					len = i + 1;
 				}
 			}
+			
+			$('#counter').html(totalByte + '/150');
+			
 			if (totalByte > maxByte) {
 				alert(maxByte + "자를 초과 입력 할 수 없습니다");
 				str2 = strValue.substr(0, len);
@@ -254,6 +338,9 @@ h4 .requir{
 				limit(str, 4000);
 			}
 		}
+		
+		
+		
 	</script>
 	
 </body>

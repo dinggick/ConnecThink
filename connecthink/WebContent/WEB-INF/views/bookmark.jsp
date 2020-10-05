@@ -181,7 +181,7 @@
 			let $section = $('div.list');
 
 			$.ajax({
-						url : "${contextPath}/mateBm",
+						url : "${contextPath}/logined/mateBm",
 						method : "POST",
 						data : {${_csrf.parameterName} : '${_csrf.token}'},
 						success : function(mates) {
@@ -233,7 +233,7 @@
 			let $section = $('div.list');
 
 			$.ajax({
-						url : "${contextPath}/recBm",
+						url : "${contextPath}/logined/recBm",
 						method : "POST",
 						data : {${_csrf.parameterName} : '${_csrf.token}'},
 						success : function(teams) {
@@ -285,7 +285,7 @@
 		//클릭 시 모집 상세 페이지로 이동
 		function recDetail(e){
 			let $recNo = $(e).find("li.recNo").html();
-			let url = "${contextPath}/rec_detail?recNo=" + $recNo ;
+			let url = "${contextPath}/all/rec_detail?recNo=" + $recNo ;
 			location.href = url;
 		}
 		

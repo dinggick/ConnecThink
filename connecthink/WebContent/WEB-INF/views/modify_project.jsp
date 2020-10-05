@@ -36,6 +36,19 @@ h4 .requir{
 	color: red;
 	font-size: 0.5em !important;
 }
+
+#counterOne, #counterTwo {
+	position: absolute;
+    bottom: 40px;
+    right: 25px;
+}
+
+#counter {
+	position: absolute;
+    bottom: 25px;
+    right: 25px;
+}
+
 </style>
 </head>
 
@@ -79,35 +92,38 @@ h4 .requir{
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 이름 <span class="requir"> *</span></h5>
+								<h5 class="mt-3" style="font-weight: bold;">프로젝트 이름 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name="title" value="${detail.title}">
+										<input type="text" name="title" value="${detail.title}" onkeyup="first(this, 20);">
+										<span id = "counterOne" style = "color: gray;">0/20</span>
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 소개 <span class="requir"> *</span></h5>
+								<h5 class="mt-3" style="font-weight: bold;">프로젝트 소개 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name="about" value="${detail.about}">
+										<input type="text" name="about" value="${detail.about}" onkeyup="second(this, 50);">
+										<span id = "counterTwo" style = "color: gray;">0/50</span>
 									</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 주제 <span class="requir"> *</span></h5>
+								<h5 class="mt-3" style="font-weight: bold;">프로젝트 주제 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
 										<input type="text" name = "theme" value="${detail.theme}">
-									</div>
+										</div>
 								</div>
 								<div class="col-md-2">
-								<h5 class="mt-3" style="font-weight: bold;">팀 목적 <span class="requir"> *</span></h5>
+								<h5 class="mt-3" style="font-weight: bold;">프로젝트 목적 <span class="requir"> *</span></h5>
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input name="purpose" type="text" value="${detail.purpose}">
+										<textarea name="purpose" type="text" onkeyup="limit(this, 150);">${detail.purpose}</textarea>
+										<span id = "counter" style = "color: gray;">0/150</span>
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -164,11 +180,17 @@ h4 .requir{
 	<script src="js/main.js"></script>
 	
 	<script>
+	$(function(){
+		bftitle();
+		bfabout();
+		bfpurpose();
+	});
+	
 	$(".submit").click(function(){
 		if(check() != false){
 			let data = new FormData($(form)[0]);
 			$.ajax({
-				url : "${contextPath}/modifyProject",
+				url : "${contextPath}/logined/modifyProject",
 				method : "POST",
 				processData: false,
 	            contentType: false,
@@ -177,9 +199,9 @@ h4 .requir{
 	 				if(response.status == "success"){
 	 					let answer = confirm("팀 수정이 완료 되었습니다. 모집을 등록하시겠습니까?");
 	 					if (answer == true){
-	 						location.href="${contextPath}/add_rec?projectNo="+response.projectNo;
+	 						location.href="${contextPath}/logined/add_rec?projectNo="+response.projectNo;
 	 					} else {
-	 						location.href = "${contextPath}/index";
+	 						location.href = "${contextPath}/logined/myProject";
 	 					}
 	 				} else {
 	 					alert("등록실패");
@@ -206,9 +228,9 @@ h4 .requir{
 			$("input[name=theme]").focus();
 			return false;
 		}
-		if($("input[name=purpose]").val().length==0){
-			$("input[name=purpose]").attr("placeholder","필수 입력란입니다").css("border-color","red");
-			$("input[name=purpose]").focus();
+		if($("textarea[name=purpose]").val().length==0){
+			$("textarea[name=purpose]").attr("placeholder","필수 입력란입니다").css("border-color","red");
+			$("textarea[name=purpose]").focus();
 			return false;
 		}
 	}
@@ -221,6 +243,171 @@ h4 .requir{
 		}
 		return false;
 	});
+	
+	
+	
+	//글자수 체크 - 제목
+	function first(str, maxByte) {
+		let strValue = str.value;
+		let strLen = strValue.length;
+		let totalByte = 0;
+		let len = 0;
+		let oneChar = "";
+		let str2 = "";
+
+		for (var i = 0; i < strLen; i++) {
+			oneChar = strValue.charAt(i);
+			if (escape(oneChar).length > 4) {
+				totalByte += 2;
+			} else {
+				totalByte++;
+			}
+
+			//입력한 문자 길이보다 넘치면 잘라낸다
+			if (totalByte <= maxByte) {
+				len = i + 1;
+			}
+		}
+		
+		$('#counterOne').html(totalByte + '/20');
+		
+		if (totalByte > maxByte) {
+			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			str2 = strValue.substr(0, len);
+			str.value = str2;
+			first(str, 4000);
+		}
+	}
+	
+	//글자수 체크 - 소개
+	function second(str, maxByte) {
+		let strValue = str.value;
+		let strLen = strValue.length;
+		let totalByte = 0;
+		let len = 0;
+		let oneChar = "";
+		let str2 = "";
+
+		for (var i = 0; i < strLen; i++) {
+			oneChar = strValue.charAt(i);
+			if (escape(oneChar).length > 4) {
+				totalByte += 2;
+			} else {
+				totalByte++;
+			}
+
+			//입력한 문자 길이보다 넘치면 잘라낸다
+			if (totalByte <= maxByte) {
+				len = i + 1;
+			}
+		}
+		
+		$('#counterTwo').html(totalByte + '/50');
+		
+		if (totalByte > maxByte) {
+			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			str2 = strValue.substr(0, len);
+			str.value = str2;
+			second(str, 4000);
+		}
+	}
+	
+
+		//글자수 체크 - 목적
+		function limit(str, maxByte) {
+			let strValue = str.value;
+			let strLen = strValue.length;
+			let totalByte = 0;
+			let len = 0;
+			let oneChar = "";
+			let str2 = "";
+
+			for (var i = 0; i < strLen; i++) {
+				oneChar = strValue.charAt(i);
+				if (escape(oneChar).length > 4) {
+					totalByte += 2;
+				} else {
+					totalByte++;
+				}
+
+				//입력한 문자 길이보다 넘치면 잘라낸다
+				if (totalByte <= maxByte) {
+					len = i + 1;
+				}
+			}
+			
+			$('#counter').html(totalByte + '/150');
+			
+			if (totalByte > maxByte) {
+				alert(maxByte + "자를 초과 입력 할 수 없습니다");
+				str2 = strValue.substr(0, len);
+				str.value = str2;
+				limit(str, 4000);
+			}
+		}
+		
+		
+		//받아 온 값의 글자 수 
+		function bftitle(){
+			let title = $("input[name = title]").val();
+			let strLen = title.length;
+			
+			let totalByte = 0;
+			let len = 0;
+			let oneChar = "";
+			let str2 = "";
+			
+			for (var i = 0; i < strLen; i++) {
+				oneChar = title.charAt(i);
+				if (escape(oneChar).length > 4) {
+					totalByte += 2;
+				} else {
+					totalByte++;
+				}
+			}
+			$('#counterOne').html(totalByte + '/20');
+		}
+		
+		function bfabout(){
+			let about = $("input[name = about]").val();
+			let strLen = about.length;
+			
+			let totalByte = 0;
+			let len = 0;
+			let oneChar = "";
+			let str2 = "";
+			
+			for (var i = 0; i < strLen; i++) {
+				oneChar = about.charAt(i);
+				if (escape(oneChar).length > 4) {
+					totalByte += 2;
+				} else {
+					totalByte++;
+				}
+			}
+			$('#counterTwo').html(totalByte + '/50');
+		}
+		
+		function bfpurpose(){
+			let purpose = $("textarea[name = purpose]").val();
+			let strLen = purpose.length;
+			
+			let totalByte = 0;
+			let len = 0;
+			let oneChar = "";
+			let str2 = "";
+			
+			for (var i = 0; i < strLen; i++) {
+				oneChar = purpose.charAt(i);
+				if (escape(oneChar).length > 4) {
+					totalByte += 2;
+				} else {
+					totalByte++;
+				}
+			}
+			$('#counter').html(totalByte + '/150');
+		}
+	
 	</script>
 	
 </body>
