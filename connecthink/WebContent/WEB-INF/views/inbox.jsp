@@ -290,7 +290,7 @@ ul.list>li {
 	<!--/ bradcam_area  -->
 
 
-	<!--================inbox Area =================-->
+	<!--...............inbox Area ..................-->
 	<section class="inbox_area section-padding">
 		<div class="container">
 			<div class="row">
@@ -359,7 +359,7 @@ ul.list>li {
 			</div>
 		</div>
 	</section>
-	<!--================Blog Area =================-->
+	<!--................ Inbox Area end ....................-->
 
 	<!-- footer start -->
 	<footer class="footer">
@@ -430,6 +430,8 @@ $listSection.on("click","li.person",function(e){
 });
 
 $(".system").click(function(e){
+// 	fxLoadNoti(loginedCustomer);
+	wSocket.send("connecthinksystem:loadNotis:");
 	return false;
 });
 

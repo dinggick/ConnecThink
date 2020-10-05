@@ -143,14 +143,16 @@
 var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
-	document.getElementById("mySidenav").style.width = "250px";
+
+       document.getElementById("mySidenav").style.width = "250px";
 }
 
 function closeNav() {
-	document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.width = "0";
 }
 
 //------------------------ 웹소켓 --------------------------------
+
 var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
@@ -160,7 +162,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
-    alert("Welcome, " + loginedCustomer + "! WebSocket opened!");
+//     alert("Welcome, " + loginedCustomer + "! WebSocket opened!");
    }
    //연결이 끊어졌을때
    function onClose(e) {
@@ -168,6 +170,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    }
    //메세지 수신시
    function onMessage(e) {
+	   
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
@@ -202,7 +205,6 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 		let newDate = new Date(0);
 		let isFirstUnreadMsg = true;
 		MSGs.forEach(function(msg, index){
-			console.log(msg);
 			let sendDate = new Date(msg.createDate);
 			//날짜가 바뀔 때마다 날짜 써주기.
 			if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
@@ -223,7 +225,6 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 				//내가 받은 사람일 경우
 				//아직 읽지 않은 메세지 중 첫번째 메세지의 위에 여기까지 읽었다고 표시해주기.
 				if(msg.status==0 && isFirstUnreadMsg==true) {
-				console.log(msg.status + ':' + msg.content);
 				sectionData += '<div id="firstUnreadMsg">여기까지 읽으셨습니다</div>';
 				isFirstUnreadMsg = false;
 				}
@@ -303,13 +304,11 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 				//다른 메세지함이나 알림을 보고있을 경우, 리스트에서 pm을 보낸 상대방을 찾아서 알림표시를 붙인다. 상대방이 없을 경우 상대방을 추가한다.
 				let $otherLi = $("ul.personList").find("#otherNo"+otherNo);
 				if($otherLi.length > 0){
-					console.log("해당 회원이 존재합니다.");
 					//리스트에 해당 회원이 존재하는 경우 : 새 메세지 카운트 딱지를 새로 붙이거나 카운트+1을 해준다.
 					$otherLi.find(".new").html( ($otherLi.find(".new").html()*1) +1 );
 					$otherLi.find(".new").css("display", "inline");
 					$otherLi.find(".msgPreview").html(pmObj.content);
 				} else{
-					console.log("해당 회원이 존재하지 않습니다.");
 					//리스트에 해당 회원이 존재하지 않은 경우 : 리스트에 해당 회원을 추가한다.
 					let sectionData = $listSection.html();
 					sectionData += '<li class="person" id="otherNo' + otherNo + '"><span class="otherNoInList">' + otherNo + '</span>';
@@ -321,6 +320,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 			}
 		}
 	}
+
    }
    //에러 발생시
    function onError(e) {

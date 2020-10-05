@@ -24,4 +24,9 @@ public class NotificationController {
 	public List<Notification> findByCustomerNo(Integer customerNo) {
 		return service.findByCustomerNo(customerNo);
 	}
+
+	public void save(Notification pm) {
+		service.save(pm);
+		
+	}
 }
