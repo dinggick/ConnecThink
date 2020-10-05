@@ -57,7 +57,15 @@ public class CustomerController {
 	public ModelAndView findAll() {
 		System.out.println("matelist test");
 		ModelAndView mnv = new ModelAndView();
-		List<Customer> list = service.findAll();
+		List<Customer> list = service.findAllDesc();
+		
+		Iterator<Customer> iter = list.iterator();
+		while(iter.hasNext()) {
+			if(iter.next().getDropStatus() == 2) {
+				iter.remove();
+			}
+		}
+		
 		mnv.addObject("customer", list);
 		mnv.setViewName("/mate");
 		
@@ -68,7 +76,7 @@ public class CustomerController {
 	 * 회원 번호로 회원 조회
 	 * @author CJK
 	 */
-	@RequestMapping("/findCustomerByNo")
+	@RequestMapping("/all/findCustomerByNo")
 	@ResponseBody
 	public Customer findCustomerByNo(int customerNo) {
 		return service.findByNo(customerNo);
@@ -175,7 +183,7 @@ public class CustomerController {
 	 * @author CJK
 	 * @return 회원정보 페이지
 	 */
-	@RequestMapping("/customerInfo")
+	@RequestMapping("/logined/customerInfo")
 	public String customerInfo() {
 		return "customerInfo";
 	}
@@ -185,7 +193,7 @@ public class CustomerController {
 	 * @author CJK
 	 * @return 회원 정보 수정 페이지
 	 */
-	@RequestMapping("/modifyUserInfo")
+	@RequestMapping("/logined/modifyUserInfo")
 	public String modifyUserInfo() {
 		return "modifyCustomerInfo";
 	}
@@ -197,7 +205,7 @@ public class CustomerController {
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/modifyCustomerInfo")
+	@RequestMapping("/logined/modifyCustomerInfo")
 	public ResponseEntity<String> modifyCustomerInfo(CustomerForModifyDTO data, HttpSession session) {
 		int customerNo = (Integer)session.getAttribute("loginInfo");
 		//수정 시작
@@ -247,7 +255,7 @@ public class CustomerController {
 	 * @param customerNo
 	 * @return
 	 */
-	@RequestMapping("/dropCustomer")
+	@RequestMapping("/logined/dropCustomer")
 	public ResponseEntity<String> dropCustomer(Integer customerNo) {
 		Customer customerForDrop = service.findByNo(customerNo);
 		service.drop(customerForDrop);

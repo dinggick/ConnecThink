@@ -43,7 +43,8 @@
 }
 
 .thumb img {
-	width: 100%;
+	width: 55px !important;
+	height: 55px !important;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
 	border-radius: 50%;
@@ -174,10 +175,10 @@ span.customerNo {
 								<!-- 팀원 프로필 -->
 								<h4 class="mt-3">프로젝트를 함께 할 팀원</h4>
 								<c:forEach items="${member}" var="member" varStatus="status">
-									<div class="single_candidates mb-4 mr-3"
-										style="display: inline-block;">
+									<div class="single_candidates mb-4 mr-3"style="display: inline-block;">
 										<div class="thumb text-center mr-2">
-											<img src="${contextPath}/img/candiateds/1.png" alt="" onclick="modal(this);">
+										<img src="http://localhost/storage/customer/${member.customerNo}.jpg"
+										onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진" onclick="memberDetail(this);">
 											<span class="customerNo">${member.customerNo}</span> <span
 												style="font-size: 0.9em;">${member.name}</span>
 										</div>
@@ -193,13 +194,17 @@ span.customerNo {
 						<div class="rec_foot_left">
 							<!-- 팀장 프로필 -->
 							<div class="thumb text-center mr-2">
-								<span>[팀장]</span> <img src="${contextPath}/img/candiateds/1.png" alt="프로필"
-									class="mt-1" onclick="modal(this);"> <span
-									class="customerNo">${manager.customerNo}</span> <span>${manager.name}</span>
+								<div style="width: 70px; height: 99px;">
+								<div>[팀장]</div> 
+								<img src="http://localhost/storage/customer/${manager.customerNo}.jpg"
+										onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진" onclick="memberDetail(this);" class="mt-1">
+							 	<span class="customerNo">${manager.customerNo}</span>
+							 	<div>${manager.name}</div>
+							 	</div>
 							</div>
 						</div>
 						<div class="rec_foot_right">
-							<button class="boxed-btn mt-4 message" onclick="message(this);" data-toggle="modal" data-target="#msgModal">메세지</button>
+							<button class="boxed-btn mt-4 message" data-toggle="modal" data-target="#msgModal">메세지</button>
 							<button class="boxed-btn mt-4 rec" onclick="apply();">지원하기</button>
 						</div>
 					</div>
@@ -283,6 +288,7 @@ span.customerNo {
 			var recName = "${rec.requirement}";
 		</c:if>
 	</c:forEach>
+	
 	$(function(){
 		bookClick();
 		if(managerNo == customerNo){
@@ -296,25 +302,28 @@ span.customerNo {
 	
 		//북마크 추가
 		function bookmark() {
-			let no = $("span.rec_no").text();
-			$.ajax({
-				url : "${contextPath}/bmToRec",
-				method : "POST",
-				data : {
-					recruitNo : no,
-					customerNo : ${sessionScope.loginInfo},
-					${_csrf.parameterName} : '${_csrf.token}'
-				},
-				success : function(data) {
-					console.log(data);
-					
-					if (data == "success") {
-						count();
-						$("img.bm").css("display", "none");
-						$("img.on").css("display", "inline-block");
+			if(customerNo == ""){
+				alert("로그인 후 사용 가능합니다");
+			}else{
+				let no = $("span.rec_no").text();
+				$.ajax({
+					url : "${contextPath}/bmToRec",
+					method : "POST",
+					data : {
+						recruitNo : no,
+						${_csrf.parameterName} : '${_csrf.token}'
+					},
+					success : function(data) {
+						console.log(data);
+						
+						if (data == "success") {
+							count();
+							$("img.bm").css("display", "none");
+							$("img.on").css("display", "inline-block");
+						}
 					}
-				}
-			});
+				});
+			}
 		}
 
 		//북마크 삭제
@@ -326,7 +335,6 @@ span.customerNo {
 				method : "POST",
 				data : {
 					recruitNo : no,
-					customerNo : ${sessionScope.loginInfo},
 					${_csrf.parameterName} : '${_csrf.token}'
 				},
 				success : function(data) {
@@ -341,10 +349,15 @@ span.customerNo {
 			
 		}
 
-		//팀원 모달
-		function modal(e) {
-			let $cNo = $(e).siblings("span.customerNo").html();
-			alert($cNo);
+		//팀원 상세
+		function memberDetail(e) {
+			if(customerNo == ""){
+				alert("로그인 후 사용 가능 합니다");
+			} else {
+				let $cNo = $(e).siblings("span.customerNo").html();
+				let url = "${contextPath}/member_detail?customerNo="+$cNo;
+				window.open(url,"_blank", "height=800, width=800");
+			}
 		}
 
 		//수정하기
@@ -352,32 +365,61 @@ span.customerNo {
 			let recNo = "${recNo}";
 			let answer = confirm('"'+recName+'"' + "을(를) 수정하시겠습니까?");
 			if(answer == true){
-				location.href = "${contextPath}/modify_rec?recNo="+recNo;
+				location.href = "${contextPath}/logined/modify_rec?recNo="+recNo;
 			}
 			
 		}
-
+		
+		//지원하기
+		function apply(){
+			let recNo = "${recNo}";
+			if(customerNo == ""){
+				alert("로그인 후 사용 가능합니다");
+			} else {
+				let answer = confirm("지원하시겠습니까?");
+				if(answer == true){
+					$.ajax({
+						url : "${contextPath}/recruit",
+						method : "POST",
+						data :  {
+							recruitNo : recNo,
+							${_csrf.parameterName} : '${_csrf.token}'
+						},
+						success: function(response){
+							if(response == "success"){
+								alert("지원 성공");
+							} else {
+								alert("이미 지원했거나 속해있는 프로젝트 입니다");
+							}
+						}
+					});
+				}//true / false 비교
+			} //customerNo 비교
+				
+		}
+		
 		//삭제하기
 		function del() {
-			console.log("버튼 클릭");
 			let recNo = "${recNo}";
 			let answer = confirm('"'+recName+'"' + "을(를) 삭제하시겠습니까?");
-// 			if(answer == true){
-// 			$.ajax({
-// 				url : "${contextPath}/recruit",
-// 				method : "POST",
-// 				data : {recruitNo : recNo,
-// 						customerNo : ${sessionScope.loginInfo},
-// 						${_csrf.parameterName} : '${_csrf.token}'},
-// 				success : function(data){
-// 					if(data == "success"){
-// 						alert("지원 완료");						
-// 					}
-// 				}
-// 			});
-// 			} else {
-				
-// 			}
+			if(answer == true){
+			$.ajax({
+				url : "${contextPath}/delRec",
+				method : "POST",
+				data : {recruitNo : recNo,
+						${_csrf.parameterName} : '${_csrf.token}'},
+				success : function(response){
+					if(response.status == "success"){
+						alert("삭제 완료");
+						location.href="${contextPath}/myProject"
+					} else {
+						alert(response.msg);
+					}
+				}
+			});
+			} else {
+				alert("취소");
+			}
 			return false;
 		}
 		
@@ -405,7 +447,6 @@ span.customerNo {
 				url : "${contextPath}/recBm",
 				method : "POST",
 				data : {recruitNo : recNo,
-					customerNo : ${sessionScope.loginInfo},
 					${_csrf.parameterName} : '${_csrf.token}'},
 				success :  function(list) {
 					list.forEach(function(bm, index){

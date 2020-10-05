@@ -15,20 +15,16 @@
 		<security:intercept-url access="hasRole('ROLE_CUSTOMER')" pattern="/logined/**" />
 
 		<security:logout logout-url="/logout" invalidate-session="true" />
+
+
+		<security:session-management invalid-session-url="/">
+			<security:concurrency-control max-sessions="1" expired-url="/" />
+		</security:session-management>
 	</security:http>
-	
-<!-- 	<security:http pattern="/img/**" security="none"/> -->
 	
 	<security:authentication-manager>
 		<security:authentication-provider user-service-ref="customUserDetailsService">
 			<security:password-encoder ref="bcryptPasswordEncoder"/>
-<!-- 			<security:jdbc-user-service -->
-<!-- 				data-source-ref="dataSource"  -->
-<!-- 				users-by-username-query="select email, password, drop_status from customer where email = ?" -->
-<!-- 				authorities-by-username-query="select email, auth from customer_auth where email = ?"/> -->
-<!-- 			<security:user-service> -->
-<!-- 				<security:user name="member@member.com" password="{noop}member" authorities="ROLE_CUSTOMER"/> -->
-<!-- 			</security:user-service> -->
 		</security:authentication-provider>
 	</security:authentication-manager>
 	

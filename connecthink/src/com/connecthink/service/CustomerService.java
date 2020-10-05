@@ -20,8 +20,12 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-	public List<Customer> findAll() {
-		List<Customer> clist = customerRepository.findAll();
+	/**
+	 * @author 홍지수
+	 * 전체 멤버 조회 (내림차순 정렬)
+	 */
+	public List<Customer> findAllDesc() {
+		List<Customer> clist = customerRepository.findAllByOrderByCustomerNoDesc();
 		clist.forEach(c->{
 			c.getCustomerPositions().forEach(cp -> {
 				cp.getPosition().getName();

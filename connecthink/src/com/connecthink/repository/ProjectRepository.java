@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
@@ -200,4 +201,10 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	@Query(nativeQuery = true, value = "SELECT * FROM PROJECT WHERE PROJECT_NO = ?1")
 	public Project findByProjectNo(Integer projectNo);
 	
+	/**
+	 * @author 변재원
+	 * 팀 탈퇴하기
+	 */
+	@Query(nativeQuery = true, value = "DELETE FROM MEMBER WHERE MEMBER_NO=?1 AND RECRUIT_NO=?2")
+	public void deleteByMemberByProjcet(Integer customerNo, String recruitNo);
 }

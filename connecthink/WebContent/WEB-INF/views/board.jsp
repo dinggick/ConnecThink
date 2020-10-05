@@ -47,7 +47,7 @@ div {
   text-align:center;
   margin: 2px;
   font-weight:1000;
-  font-size:24px; 
+  font-size:24px;
 }
 
 .title > .content {
@@ -537,7 +537,7 @@ scale
   	right: 25px;
   	font-size: 36px;
   	margin-left: 50px;
-  	margin-top: 13px;
+  	margin-top: 14px;
   	color:#2E2EFE;
   	transiton:0.5s;
 }
@@ -1067,7 +1067,7 @@ scale
 					</div>
 					<div class="modal-body">
 						<div class="mt-10">
-							<textarea id="inputInModal" v-model="updateText" name="text" required class="singleInput" onkeyup = "modalkeyup(this)" style="height:120px "></textarea>
+							<textarea id="inputInModal" maxlength="100" v-model="updateText" name="text" required class="singleInput" onkeyup = "modalkeyup(this)" style="height:120px "></textarea>
 							<input type="hidden" id="taskNo" value="">
 							<input type="hidden" id="cusNo" value="">
 						</div>
@@ -1083,13 +1083,13 @@ scale
 		<!-- todo 영역 -->
 		<div class="todo" id="do">
 			<div class="title">
-				TO DO
+				To Do
 				<div class="content">
 					<ul class="usty section1" id="sectionOneStatus" value="1">
 						<li v-for="(item,index) in lists">
 							<a data-toggle="modal" href="#contentModal" v-on:click="goModal">
-								<div class='card editable'> 
-									<input type="hidden" :value="item.taskNo"> 
+								<div class='card editable'>
+									<input type="hidden" :value="item.taskNo">
 									<input type="hidden" :value="item.cusNo">
 									<input type="hidden" :value="item.cName">
 									{{item.content}}
@@ -1099,7 +1099,7 @@ scale
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<textarea v-model="addName" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
@@ -1124,7 +1124,7 @@ scale
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName1" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<textarea v-model="addName1" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
@@ -1149,7 +1149,7 @@ scale
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName2" class="tarea" required="required" onkeyup = "keyup(this)"></textarea>
+					<textarea v-model="addName2" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
@@ -1274,11 +1274,19 @@ scale
 <script>
 	//textArea 스크립트 부분(author 변재)
 	function keyup(obj) {
+		if(obj.value.length > obj.maxLength){
+    		alert('100자이내로 작성해주세요!');
+    		obj.value = e.value.slice(0, e.maxLength);
+        }
     	obj.style.height = '50px';
     	obj.style.height = (obj.scrollHeight) + 'px';
 	}
 	
 	function modalkeyup(obj) {
+		if(obj.value.length > obj.maxLength){
+    		alert('100자이내로 작성해주세요!');
+    		obj.value = e.value.slice(0, e.maxLength);
+        }
     	obj.style.height = '120px';
     	obj.style.height = (obj.scrollHeight) + 'px';
 	}
@@ -1344,20 +1352,24 @@ scale
                 })
                 .then(response => {	
                 	alert('종료완료!')
+                	window.open('${contextPath}','_self').close();
                 	window.close();
                 });
 			},
 			//프로젝트탈퇴
 			endMyProject(){
-				axios.get('/connecthink/endMyProject',{
-                	params:{
-                		project_no: ${project_no}
-                	}
-                })
-                .then(response => {	
-                	alert('종료완료!')
-                	window.close();
-                });
+				var answer = confirm('정말 탈퇴하시겠습니까? 중도탈퇴시 참여기록이 남지않습니다!');
+				if(answer == true){
+					axios.get('/connecthink/endMyProject',{
+	                	params:{
+	                		project_no: ${project_no}
+	                	}
+	                })
+	                .then(response => {	
+	                	alert('탈퇴완료!')
+	                	self.close();
+	                });
+				}	
 			}
 		},
 	});
@@ -1530,14 +1542,13 @@ scale
 			options:{
 				 onDragend(event){
 					 //console.log(event);
+					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
 					 
 					 if(event.droptarget == null){
-						 
+						 event.droptarget = getTaskNo;
 					 }
 					 
 					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
-					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-					 //console.log('태스크너버' + getTaskNo);
 					 axios.get('/connecthink/updateStatus',{
 		                	params:{
 		                		taskNo:getTaskNo,

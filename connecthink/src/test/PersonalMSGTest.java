@@ -27,8 +27,8 @@ public class PersonalMSGTest {
 	@Test
 	@DisplayName("수신자 발신자로 검색")
 	void findByReceiveAndSendTest() {
-		repository.findByReceiveAndSend(101, 1).forEach(m -> {
-			System.out.println("발신자 : " + m.getSend().getName() + " / 메세지 내용 : " + m.getContent());
-		});
+//		repository.findByReceiveAndSend(101, 1).forEach(m -> {
+//			System.out.println("발신자 : " + m.getSend().getName() + " / 메세지 내용 : " + m.getContent());
+//		});
 	}
 }

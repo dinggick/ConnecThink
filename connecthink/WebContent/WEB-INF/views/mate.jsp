@@ -39,6 +39,11 @@ span.customerNo{
  display: none;
 }
 
+.thumb img {
+width: 70px !important;
+height: 70px !important;
+}
+
 </style>
 
 </head>
@@ -77,7 +82,7 @@ span.customerNo{
 				<div class="col-md-6 col-lg-4">
 					<div class="single_candidates" onclick="mateDetail(this);">
 						<div class="thumb" style="display: inline-block;">
-							<img src="${contextPath}/img/candiateds/1.png" alt="">
+                            <img src="http://localhost/storage/customer/${customer.customerNo}.jpg" onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진">
 						</div>
 						<h4 style="display: inline-block;" class="ml-3 mt-2">${customer.name}</h4>
 						<span class="customerNo">${customer.customerNo}</span>
@@ -145,10 +150,9 @@ span.customerNo{
 		});
 	});
 	
-	//클릭 시 상세 페이지로 이동(미완)
+	//클릭 시 상세 페이지로 이동
 	function mateDetail(e){
 		let $customerNo = $(e).find("span.customerNo").html();
-		alert($customerNo);	
 		let url = "${contextPath}/member_detail?customerNo=" + $customerNo ;
 		location.href = url;
 		

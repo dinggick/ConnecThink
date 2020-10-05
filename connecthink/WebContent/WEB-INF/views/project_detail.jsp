@@ -46,6 +46,11 @@ span.customerNo {
 .project_foot_left ul li {
 	padding-left: 25px;
 }
+.project_foot_right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .recTitle:hover{
 	color: #00D363 !important;
@@ -136,11 +141,13 @@ span.customerNo {
 								</c:forEach>
 							</ul>
 						</div>
+						<div class="project_foot_right">
+							<button class="boxed-btn3" onclick="rec_add();">모집추가</button>
+						</div>
 					</div>
 					<div class="col-md-12 mt-3">
 						<div class="submit_btn text-center">
-							<button class="boxed-btn3 mr-4" onclick="rec_add();">모집추가</button>
-							<button class="boxed-btn3 mr-4" onclick="modify();">수정하기</button>
+							<button class="boxed-btn3 mr-2" onclick="modify();">수정하기</button>
 							<button class="boxed-btn3" onclick="del();">삭제하기</button>
 						</div>
 					</div>
@@ -197,10 +204,50 @@ span.customerNo {
 		//로드 시 customerNo와 projectNo 비교
 		$(function(){
 			if(managerNo != customerNo){
-				location.href = "${contextPath}/index";
+				$(".boxed-btn3").attr("disabled", true);
+				$(".boxed-btn3").css("display", "none");
 			}
 		});
-
+		
+		//프로젝트 삭제 ajax
+		function delProject(){
+			$.ajax({
+				url: "${contextPath}/delProject",
+				method : "POST",
+				data : {
+					projectNo : projectNo,
+					${_csrf.parameterName} : '${_csrf.token}'
+				} ,
+				success: function(response){
+					if(response.status == "success"){
+						alert("삭제 성공");
+						location.href="${contextPath}/";
+					} else {
+						alert(response.msg);
+					}
+				}
+			});
+		}
+		
+		//모집 삭제 ajax
+		function delRec(){
+			$.ajax({
+				url : "${contextPath}/delRecAll",
+				method : "POST",
+				data : {
+					projectNo : projectNo,
+					${_csrf.parameterName} : '${_csrf.token}'
+				} ,
+				success: function(response){
+					if(response.status == "success"){
+						delProject();
+					} else {
+						alert(response.msg);
+					}
+				}
+			});
+		}
+		
 		//모집 등록
 		function rec_add() {
 			let answer = confirm("${detail.title}" + " 에 모집을 추가로 등록하시겠습니까?");
@@ -213,8 +260,7 @@ span.customerNo {
 		//모집 상세보기
 		function recDetail(e){
 			let $recNo = $(e).find("li.recNo").html();
-			alert($recNo);
-			location.href = "${contextPath}/rec_detail?recNo=" + $recNo
+			location.href = "${contextPath}/all/rec_detail?recNo=" + $recNo
 		}
 		
 		//프로젝트 수정
@@ -226,12 +272,16 @@ span.customerNo {
 			return false;
 		}
 		
-		//프로젝트 삭제 - 모집 있는지 확인하고 있으면 삭제 못하게
+		//프로젝트 삭제
 		function del(){
+			let recList = "${detail.recruits}";
 			let answer = confirm("${detail.title}" + " 프로젝트를 삭제하시겠습니까?");	
-			if(anwer == true){
-				//ajax 요청
-				//요청 시 모집 존재 여부 확인
+			if(answer == true){
+				if(recList.length > 0){
+					delRec();
+				} else {
+					delProject();
+				}
 			}
 			return false;
 		}

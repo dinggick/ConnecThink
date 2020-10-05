@@ -9,9 +9,8 @@ import com.connecthink.entity.BookmarkUserId;
 
 public interface BookmarkUserRepository extends JpaRepository<BookmarkUser, BookmarkUserId>{
 	/**
-	 * 사용자 번호에 해당하는 사용자가 관심 등록(send)한 사용자에 대한 bookmark 목록
-	 * @param send 사용자 번호
-	 * @return
+	 * @author 홍지수
+	 * 북마크한 멤버 목록
 	 */
 	public List<BookmarkUser> findByIdSend(Integer send);
 }

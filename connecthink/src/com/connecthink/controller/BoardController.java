@@ -173,7 +173,7 @@ public class BoardController {
 	/*
 	 * 프로젝트 탈퇴하기
 	 */
-	@RequestMapping("endMyProject")
+	@RequestMapping("/endMyProject")
 	public ModelAndView endMyProject(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
@@ -182,8 +182,8 @@ public class BoardController {
 		Integer pNo = Integer.parseInt(request.getParameter("project_no"));
 		
 		service.exitProject(id, pNo);
+		mav.setViewName("index");
 		return mav;
-		
 	}
 	
 	

@@ -37,6 +37,11 @@
  text-overflow: ellipsis;
  white-space: nowrap;
 }
+
+.test img {
+ width: 350px !important;
+}
+
 </style>
 
 </head>
@@ -77,7 +82,7 @@
 					<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">
 						<div class="thumbnail">
 							<div class="test">
-								<img src="${contextPath}/img/default.png" alt="모집 사진">
+								<img src="http://localhost/storage/recruit/img/${rec.recruitNo}.jpg" onerror="this.src='${contextPath}/img/default.png'" alt="모집 사진">
 							</div>
 						</div>
 						<h4 class="mt-4 mr-4 ml-4 rec_title">${rec.requirement}</h4>
@@ -138,35 +143,14 @@
 	
 	<script>
 	$(function(){
-		fetch("${contextPath}/rec").then(function(data){
+		fetch("${contextPath}/all/rec").then(function(data){
 		});
-		
-		//썸네일 처리
-		<c:forEach items="${rec}" var="rec" varStatus = "status">
-		<c:forEach items="${img}" var="img" varStatus = "st">
-		<c:if test="${rec.recruitNo eq img}">
-			//rec 배열에서 li.recNo 찾기
-			var lis = document.querySelectorAll("li.recNo");
-			var recNo = lis[${status.index}];
-			//li.recNo에 해당하는 이미지  들어가는 부분 찾기
-			var $section = $(recNo).parents('ul.short').siblings("div.thumbnail");
-			//이미지 넣기
-			var data = "";
-			data += '<div class="test">';
-			data += '<img src="http://localhost/storage/recruit/img/${img}.jpg" alt="모집사진">';
-			data += '</div>';
-			//요소 바꿔주기
-			$section.html(data);
-		</c:if>
-		</c:forEach>
-		</c:forEach>
-		
 		
 	});
 	
 	function recDetail(e){
 		let $recNo = $(e).find("li.recNo").html();
-		let url = "${contextPath}/rec_detail?recNo=" + $recNo ;
+		let url = "${contextPath}/all/rec_detail?recNo=" + $recNo ;
 		location.href = url;
 	}
 	

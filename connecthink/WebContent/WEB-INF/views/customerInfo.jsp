@@ -118,7 +118,7 @@
                             </ul>
                         </div>
                         <div class="single_wrap" style="text-align: right;">
-                            <a href="/connecthink/modifyUserInfo" class="genric-btn info-border">수정</a>
+                            <a href="/connecthink/logined/modifyUserInfo" class="genric-btn info-border">수정</a>
                             <button id="dropBtn" class="genric-btn danger-border">탈퇴</button>
                         </div>
                     </div>
@@ -167,8 +167,10 @@
     <script src="${contextPath}/js/main.js"></script>
     <script>
     	$(() => {
+    		$(".thumb").find("img").css("width", "48").css("height", "48");
+    		
     		$.ajax({
-    			url : "/connecthink/findCustomerByNo",
+    			url : "/connecthink/all/findCustomerByNo",
     			method : "POST",
     			data : {customerNo : ${sessionScope.loginInfo},
     					${_csrf.parameterName} : '${_csrf.token}'},
@@ -179,7 +181,7 @@
     				$("#customerName").html(data.name);
     				//역할군
     				data.customerPositions.forEach(cp => {
-    					$("#customerPositions").html($("#customerPositions").html() + cp.position.name);
+    					$("#customerPositions").html($("#customerPositions").html() + " " + cp.position.name);
     				});
     				//졸업여부
     				if(data.graduation == 1) $("#customerGraduationStatus").html($("#customerGraduationStatus").html() + '졸업');
@@ -201,7 +203,7 @@
     		});
     		
     		$.ajax({
-    			url : "/connecthink/findProjectHistoryByNo",
+    			url : "/connecthink/all/findProjectHistoryByNo",
     			method : "POST",
     			data : {customerNo : ${sessionScope.loginInfo},
 					${_csrf.parameterName} : '${_csrf.token}'},
@@ -219,9 +221,9 @@
 		    			    var em = (endDate.getMonth() + 1) >= 10 ? (endDate.getMonth() + 1) : '0' + (endDate.getMonth() + 1);
 		    			    var ed = endDate.getDate() >= 10 ? endDate.getDate() : '0' + endDate.getDate();
 		    			    
-		    			    $("#projectHistories").html($("#projectHistories").html() +  "<li>" + h.title + " " + sy + "/" + sm + "/" + sd + "~" + ey + "/" + em + "/" + ed + "</li>");
+		    			    $("#projectHistories").html($("#projectHistories").html() +  "<li>" + h.title + "(" + h.position + ") " + sy + "/" + sm + "/" + sd + "~" + ey + "/" + em + "/" + ed + "</li>");
 	    			    } else {
-	    			    	$("#projectHistories").html($("#projectHistories").html() + "<li>" + h.title + " " + sy + "/" + sm + "/" + sd + "~" + "</li>");
+	    			    	$("#projectHistories").html($("#projectHistories").html() + "<li>" + h.title + "(" + h.position + ") " + sy + "/" + sm + "/" + sd + "~" + "</li>");
 	    			    }
 					});
 					
@@ -231,7 +233,7 @@
     		$("#dropBtn").click(() => {
     			if(confirm("정말 탈퇴하시겠습니까?")) {
     				$.ajax({
-            			url : "/connecthink/dropCustomer",
+            			url : "/connecthink/logined/dropCustomer",
             			method : "POST",
             			data : {customerNo : ${sessionScope.loginInfo},
         					${_csrf.parameterName} : '${_csrf.token}'},
@@ -242,7 +244,7 @@
         						method : "POST",
         						data : {${_csrf.parameterName} : '${_csrf.token}'},
         						success : (data, textStatus, jqXHR) => {
-        							location.href = "http://localhost/connecthink/index";
+        							location.href = "http://localhost/connecthink/";
         						}
         					});
         				},
