@@ -629,7 +629,8 @@ scale
 	cursor:pointer;
 }
 .friend img{
-	width:40px;
+	width:50px;
+	height: 45px;
 	border-radius:50%;
 	margin:15px;
 	float:left;
@@ -1034,7 +1035,7 @@ scale
 				</li>	
 				<li v-for="member in memberList">
 					<div class="friend">
-						<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
+						<img :src="member.imageRoute" @error = "imageNotFound"/>
 						<div class="profile">
 							<p><strong>{{ member.name }}</strong></p>
 							<p><span>{{ member.position }}</span></p>
@@ -1198,15 +1199,15 @@ scale
 									  </div>
 									 </div>
 									
-									
 									<div id="msgs" v-for="msg in msgs" v-show="!isLoadingNow">
 									<!-- 메세지 받을때 -->
 										<div class="chat-message-group reception" v-if="msg.reception">
 											<div class="chat-thumb">
 												<figure class="image is-32x32">
 													<img
-														src="https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png"
-														style="width: 30px;">
+														@error = "imageNotFound"
+														:src="msg.imageRoute"
+														style="width: 30px">
 												</figure>
 											</div>
 											
@@ -1215,7 +1216,6 @@ scale
 												<div class="message">{{msg.content}}</div>
 												<div class="from">{{msg.createDate}}</div>
 											</div>
-												
 										</div>
 									
 										<!-- 메세지 보낼때 -->
@@ -1252,12 +1252,15 @@ scale
 			
 			<!-- notify -->
 		 <transition name="bounce" v-model="notifyMsg">	
-			<div class="position-top" v-show='showNotify'>
+			<div class="position-top" v-show='showNotify'  v-on:click="close">
 			    <div class="notify-card-success">
-			        <i class="fa fa-times close-icon" aria-hidden="true" v-on:click="close"></i>
+			        <i class="fa fa-times close-icon" aria-hidden="false"></i>
 			        <div class="notify-message">
 			            <div class="notify-logo">
 			                <i class="fa fa-check-circle success-icon" aria-hidden="true"></i>              
+			            </div>
+			            <div class="friend">
+			            		<img :src="userImg" @error = "imageNotFound">
 			            </div>
 			            <div class="notify-data">
 								{{ notifyMsg }}			
@@ -1315,8 +1318,8 @@ scale
 			memberList : [],
 			toggle: false,
 			isManager : ${isManager},
-			teamTitle :  "${title}"
-			
+			teamTitle :  "${title}",
+			defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png"
 		}
 		,methods : {
 			showMemberList(){
@@ -1330,7 +1333,7 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost:8080/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
@@ -1358,6 +1361,10 @@ scale
                 	alert('종료완료!')
                 	window.close();
                 });
+			},
+			//유저의 이미지 없을경우 default image 로 대체
+			imageNotFound(event){
+				event.target.src = this.defaultImg;
 			}
 		},
 	});
@@ -1377,7 +1384,9 @@ scale
 		   notifyMsg : null,
 		   onoff : true,
 		   showNotify : false,
-		   isLoadingNow : true
+		   isLoadingNow : true,
+		   defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png",
+		   userImg : ""
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
@@ -1439,7 +1448,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.50:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1476,19 +1485,24 @@ scale
 							if(this.writer == user){
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
+								//가져온 유저의 프로필 사진
+								let imageUrl = "http://localhost:8080/storage/customer/"+user+".jpg";
+								
 								//전송한 사람이 내가 아닐경우
-								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name});
+								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});
 								
 								//토글이 닫혀있을때 notify show
 								if(!this.toggle && this.onoff){
-									this.close();
-									if(this.notifyMsg != null){
-										this.open();
-										this.notifyMsg = name+" 님이 "+msg+" 내용의 메세지를 전송 했습니다.";
+									if(this.showNotify == true){
+										this.showNotify = false;	
+										this.showNotify = true;
+										this.userImg = imageUrl;
+										this.notifyMsg = name+" : "+msg;
 									}else{
 										this.open();
-										this.notifyMsg = name+" 님이 "+msg+" 내용의 메세지를 전송 했습니다.";
-										setTimeout(this.close, 2000);
+										this.userImg = imageUrl;
+										this.notifyMsg = name+" : "+msg;
+										setTimeout(this.close, 3000);
 									}
 								}
 							}
@@ -1503,12 +1517,24 @@ scale
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
-			  },close(){ 
+			  },
+			  close(){ 
 				 this.showNotify = false;
-			  },open(){
+			  },
+			  open(){
 				this.showNotify = true;  
-			  },onOff(ev){
+			  },
+			  ChatOn(){
+				console.log("notify click!");
+				this.showNotify = false;
+				this.toggle = true;
+			  },
+			  onOff(ev){
 			  	this.onoff = ev.target.checked;
+			  },
+			  //유저의 이미지 없을경우 default image 로 대체
+			  imageNotFound(event){
+				  event.target.src = this.defaultImg;
 			  }
 		  }//method
 		});
