@@ -31,6 +31,7 @@ import com.connecthink.service.BoardService;
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
+		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\security-context.xml"),
 		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml") })
 @WebAppConfiguration
 class TaskTest {
@@ -109,7 +110,7 @@ class TaskTest {
 	}
 	
 	//내용수정
-	@Test
+//	@Test
 	public void updateContent() {
 		Task t = repository.findById(1).get();
 		
@@ -126,9 +127,12 @@ class TaskTest {
 		projectRepository.save(p);
 	}
 	
-//	@Test
+	@Test
 //	@Transactional
 	public void ttt() {
+//		projectRepository.deleteByMemberByProjcetd(101, "1R1");
+//		projectRepository.test();
+		
 //		Project p = projectRepository.findById(1).get();
 //		Iterator rIter = p.getRecruits().iterator();
 //		while(rIter.hasNext()) {
@@ -143,25 +147,25 @@ class TaskTest {
 //				}
 //			}
 //		}
-		Project p = projectRepository.findById(1).get();
-		p.getRecruits().forEach(r -> {
-			r.getMembers().forEach(m -> {
-				if(m.getId().getMemberNo() == 101) {
-					Member memberToRemove = new Member();
-					MemberId ids = new MemberId();
-					
-					ids.setMemberNo(101);
-					ids.setRecruitNo(r.getRecruitNo());
-					
-					memberToRemove.setId(ids);
-					memberToRemove.setCustomer(customerRepository.findById(101).get());
-					memberToRemove.setRecruit(recruitRepository.findById("1R1").get());
-					
-					memberRepository.delete(memberToRemove);
-					return;
-				}
-			});
-		});
+//		Project p = projectRepository.findById(1).get();
+//		p.getRecruits().forEach(r -> {
+//			r.getMembers().forEach(m -> {
+//				if(m.getId().getMemberNo() == 101) {
+//					Member memberToRemove = new Member();
+//					MemberId ids = new MemberId();
+//					
+//					ids.setMemberNo(101);
+//					ids.setRecruitNo(r.getRecruitNo());
+//					
+//					memberToRemove.setId(ids);
+//					memberToRemove.setCustomer(customerRepository.findById(101).get());
+//					memberToRemove.setRecruit(recruitRepository.findById("1R1").get());
+//					
+//					memberRepository.delete(memberToRemove);
+//					return;
+//				}
+//			});
+//		});
 	}
 	
 }

@@ -205,6 +205,9 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	 * @author 변재원
 	 * 팀 탈퇴하기
 	 */
-	@Query(nativeQuery = true, value = "DELETE FROM MEMBER WHERE MEMBER_NO=?1 AND RECRUIT_NO=?2")
-	public void deleteByMemberByProjcet(Integer customerNo, String recruitNo);
+	@Query(nativeQuery = true, value = "DELETE FROM Member WHERE member_no= ?1 AND recruit_no =?2")
+	public void deleteByMemberByProjcetd(Integer customerNo, String recruitNo);
+	
+	@Query(nativeQuery = true, value = "DELETE FROM Member")
+	public void test();
 }
