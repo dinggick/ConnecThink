@@ -48,7 +48,7 @@
 	overflow: hidden;
 }
 
-.searchWho {
+.manageMsg {
 	padding-top: 10px;
 	padding-bottom: 20px;
 	background-color: #38a4ff;
@@ -58,15 +58,19 @@
 	color: #fff;
 	width: 50%;
 	height: 50px;
+	text-align: center;
+	line-height: 50px;
 	background: none;
 	border: none;
+	cursor: pointer;
+	margin-bottom: 10px;
 }
 
 .searchWhoBar .icon {
-	position: absolute;
-	right: 20px;
-	top: 60px;
-	line-height: 40px;
+ 	position: absolute;
+ 	right: 20px;
+ 	top: 70px;
+ 	line-height: 40px;
 	z-index: 3;
 }
 
@@ -98,6 +102,11 @@ ul.list>li {
 	transition: all 0.3s ease 0s;
 }
 
+#empty {
+	padding: 10px 0px 10px 0px;
+	text-align: center;
+}
+
 .person {
 	padding: 20px 0px 20px 0px;
 	cursor: pointer;
@@ -115,7 +124,7 @@ ul.list>li {
 	font-size: 0.9em;
 }
 
-.otherNo {
+.otherNo, .otherNoInList, .otherNoInBox {
 	display: none;
 }
 
@@ -196,7 +205,8 @@ ul.list>li {
 .msg_date {
 	text-align: center;
 	text-decoration: underline;
-	margin-bottom: 10px;
+	margin-top: 30px;
+	margin-bottom: 20px;
 }
 
 .receive_time, .send_time {
@@ -207,6 +217,13 @@ ul.list>li {
 
 .send_time {
 	float: right;
+}
+
+#firstUnreadMsg {
+	margin-top: 5px;
+	margin-bottom: 20px;
+	background-color: #E0F8F7;
+	text-align: center;
 }
 
 .message .send {
@@ -273,23 +290,25 @@ ul.list>li {
 	<!--/ bradcam_area  -->
 
 
-	<!--================inbox Area =================-->
+	<!--...............inbox Area ..................-->
 	<section class="inbox_area section-padding">
 		<div class="container">
 			<div class="row">
 				<div class="col-3 fromWho">
 					<div class="row">
-						<div class="col-12 searchWho">
-							<button class="manageMsgBtn">모두 읽음</button>
-							<button class="manageMsgBtn">삭제하기</button>
+						<div class="col-12 manageMsg">
+							<div class="row">
+								<div class="col-6 manageMsgBtn">모두 읽음</div>
+								<div class="col-6 manageMsgBtn">삭제하기</div>
+							</div>
 							<div class="searchWhoBar">
-								<div class="icon">
-									<i class="fa fa-search" aria-hidden="true"></i>
-								</div>
 								<input type="text" name="who" placeholder="대화 상대 검색"
 									onfocus="this.placeholder = ''"
 									onblur="this.placeholder = '대화 상대 검색'" required
 									class="single-input">
+								<div class="icon">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -299,8 +318,7 @@ ul.list>li {
 						</div>
 						<div class="col-12 list_wrap">
 							<ul class="list cat-list personList">
-								<li class="person"><span class="otherNo" id="otherNoInList"></span>테스트<span
-									class="new">7</span></li>
+								<div id="empty"> 메세지함이 비어있습니다. </div>
 							</ul>
 						</div>
 					</div>
@@ -313,7 +331,7 @@ ul.list>li {
 									<div class="msg_header">
 										<div class="msg_sender">
 											<img src="${contextPath}/img/person.png">
-											<span class="otherNo" id="otherNoInBox">1</span>
+											<span class="otherNoInBox">0</span>
 											<span class="personName">고디바</span>
 										</div>
 									</div>
@@ -341,7 +359,7 @@ ul.list>li {
 			</div>
 		</div>
 	</section>
-	<!--================Blog Area =================-->
+	<!--................ Inbox Area end ....................-->
 
 	<!-- footer start -->
 	<footer class="footer">
@@ -380,21 +398,20 @@ ul.list>li {
 	<script src="${contextPath}/js/main.js"></script>
 
 	<script>
-var $listSection = $("ul.list");
+var $listSection = $("ul.personList");
 var $otherInfoSection = $(".msg_sender");
 var $msgSection = $(".msg_body");
 var $notiCnt = $(".system>.new");
 var testCustomer = 101;
 var $sendBtn = $("#send-btn");
 var $msgContent = $("#msg_content");
-//인박스 들어오자마자 상대방 리스트 불러오기
-wSocket.onopen = function(e) {
-	wSocket.send("connecthinksystem:loadList");
-};
+
+//-------------- 인박스 들어오자마자 상대방 리스트 불러오기 --------------
+wSocket.send("connecthinksystem:loadList");
 
 //------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
-fxLoadNotiCnt(loginedCustomer);
-fxLoadNoti(loginedCustomer);
+// fxLoadNotiCnt(loginedCustomer);
+// fxLoadNoti(loginedCustomer);
 
 //------------------------ 클릭 이벤트 -------------------------
 $listSection.on("click","li.person",function(e){
@@ -402,10 +419,10 @@ $listSection.on("click","li.person",function(e){
 	let $newCnt = $(this).find(".new");
 	$newCnt.html(0); $newCnt.css("display","none");
 	//클릭한 회원의 번호와 이름 가져오기
-	let otherNoInList = $(this).find("#otherNoInList").html();
+	let otherNoInList = $(this).find(".otherNoInList").html();
 	let otherName = $(this).find(".personName").html();
 	//해당 회원 번호와 이름을 msg header에 넣어주기
-	$("#otherNoInBox").html(otherNoInList);
+	$(".otherNoInBox").html(otherNoInList);
 	$(".msg_sender>.personName").html(otherName);
 	//웹소켓으로 해당 회원과 주고받은 메세지를 전부 가져오도록 요청
 	wSocket.send("connecthinksystem:loadPms:"+otherNoInList);
@@ -413,7 +430,8 @@ $listSection.on("click","li.person",function(e){
 });
 
 $(".system").click(function(e){
-	fxLoadNoti(loginedCustomer);
+// 	fxLoadNoti(loginedCustomer);
+	wSocket.send("connecthinksystem:loadNotis:");
 	return false;
 });
 
@@ -427,7 +445,7 @@ $sendBtn.click(function(e){
 		alert("공백을 전송할 수 없습니다.");
 	} else {
 		//웹소켓으로 메세지 전송
-		wSocket.send("connecthinksystem:to:" + $("#otherNoInBox").html() + ":" + pmContent);
+		wSocket.send("connecthinksystem:to:" + $(".otherNoInBox").html() + ":" + pmContent);
 		//메세지 입력 칸 비워주기
 		$msgContent.val("");
 	}
@@ -443,48 +461,48 @@ $msgContent.keypress(function(event){
 
 //-------------------------- 함수 ----------------------------
 //읽지않은 notification의 갯수를 불러오는 함수
-function fxLoadNotiCnt(customerNo){
-	$.ajax({
-		url:"${contextPath}/inbox/unreadNoti"
-		,method:"GET"
-			//{customerNo : ${sessionScope.loginInfo},
-		,data: {customerNo : customerNo,
-			${_csrf.parameterName} : '${_csrf.token}'}
-		,success:function(count){
-			$notiCnt.html(count);
-		}
-	});
-}
+// function fxLoadNotiCnt(customerNo){
+// 	$.ajax({
+// 		url:"${contextPath}/inbox/unreadNoti"
+// 		,method:"GET"
+// 			//{customerNo : ${sessionScope.loginInfo},
+// 		,data: {customerNo : customerNo,
+// 			${_csrf.parameterName} : '${_csrf.token}'}
+// 		,success:function(count){
+// 			$notiCnt.html(count);
+// 		}
+// 	});
+// }
 	
 //내가 받은 notification 전체를 불러오는 함수
-function fxLoadNoti(customerNo){
-	$.ajax({
-		url:"${contextPath}/inbox/allNoti"
-		,method:"GET"
-			//{customerNo : ${sessionScope.loginInfo},
-		,data: {customerNo : customerNo,
-			${_csrf.parameterName} : '${_csrf.token}'}
-		,success:function(noties){
+// function fxLoadNoti(customerNo){
+// 	$.ajax({
+// 		url:"${contextPath}/inbox/allNoti"
+// 		,method:"GET"
+// 			//{customerNo : ${sessionScope.loginInfo},
+// 		,data: {customerNo : customerNo,
+// 			${_csrf.parameterName} : '${_csrf.token}'}
+// 		,success:function(noties){
 
-			let otherData = '<img src="${contextPath}/img/person.png"><span class="otherNo" id="otherNoInBox">0</span><span class="personName">컨넥띵크</span>';
+// 			let otherData = '<img src="${contextPath}/img/person.png"><span class="otherNo" id="otherNoInBox">0</span><span class="personName">컨넥띵크</span>';
 
-			let sectionData = "";
-			let newDate = new Date(0);
-			noties.forEach(function(noti, index){
-				let sendDate = new Date(noti.notifyDate);
-				if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
-					sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
-					newDate = sendDate;
-				}
-				sectionData += '<div class="receive_msg">' + noti.content + '</div>';
-				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-				sectionData += '<div style="clear:both;"></div>';
-			});
-			$otherInfoSection.html(otherData);
-			$msgSection.html(sectionData);
-		}
-	});
-}
+// 			let sectionData = "";
+// 			let newDate = new Date(0);
+// 			noties.forEach(function(noti, index){
+// 				let sendDate = new Date(noti.notifyDate);
+// 				if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+// 					sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+// 					newDate = sendDate;
+// 				}
+// 				sectionData += '<div class="receive_msg">' + noti.content + '</div>';
+// 				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+// 				sectionData += '<div style="clear:both;"></div>';
+// 			});
+// 			$otherInfoSection.html(otherData);
+// 			$msgSection.html(sectionData);
+// 		}
+// 	});
+// }
 </script>
 </body>
 </html>
