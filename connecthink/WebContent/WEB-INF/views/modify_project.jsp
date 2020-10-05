@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>팀 정보 수정하기</title>
+<title>프로젝트 정보 수정하기</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -56,7 +56,7 @@ h4 .requir{
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>팀 정보 수정</h3>
+						<h3>프로젝트 정보 수정</h3>
 					</div>
 				</div>
 			</div>
@@ -69,7 +69,7 @@ h4 .requir{
 			<div class="row">
 				<div class="col-lg-10 offset-lg-1">
 					<div class="apply_job_form white-bg mt-0">
-						<h4>팀 정보 수정하기 <span class="requir">*은 필수 입력 값입니다</span></h4>
+						<h4>프로젝트 정보 수정하기 <span class="requir">*은 필수 입력 값입니다</span></h4>
 						<form id="form">
 							<div class="row">
 							<div class="col-md-5" style="display:none;">

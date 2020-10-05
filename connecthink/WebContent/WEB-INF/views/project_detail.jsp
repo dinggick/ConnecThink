@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>팀상세</title>
+<title>프로젝트 상세</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@ span.customerNo {
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>팀상세</h3>
+						<h3>프로젝트 상세</h3>
 					</div>
 				</div>
 			</div>

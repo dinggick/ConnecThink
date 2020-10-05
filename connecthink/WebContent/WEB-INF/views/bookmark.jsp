@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>관심목록</title>
+<title>북마크</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -73,7 +73,7 @@
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>관심목록</h3>
+						<h3>북마크</h3>
 					</div>
 				</div>
 			</div>
@@ -88,10 +88,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 col-lg-12 bookMenu">
-					<button class="genric-btn default radius mate_tab"
-						style="background: #fff" onclick="mtab();">메이트</button>
-					<button class="genric-btn default radius team_tab"
-						onclick="ttab();">모집</button>
+					<button class="genric-btn default radius mate_tab" style="background: #fff" onclick="mtab();">멤버</button>
+					<button class="genric-btn default radius team_tab"onclick="ttab();">모집</button>
 				</div>
 				<!-- 메이트 -->
 				<div class="list col-md-12 col-lg-12">
