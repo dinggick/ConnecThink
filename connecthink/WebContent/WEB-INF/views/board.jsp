@@ -1440,7 +1440,7 @@ scale
 			  },
 			  
 			  //메세지 전송 클릭시 유효성 
-			  sendMsg(e) {				
+			  sendMsg(e) {	
 				  if(this.message == ''){
 					  alert('메세지를 작성 하세요');  
 				  }else{
