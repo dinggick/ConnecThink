@@ -398,7 +398,7 @@
 				success : (data, textStatus, jqXHR) => {
 					$("#findEmailModalLongTitle").html("당신의 이메일");
 					$("#findEmailModal").find("div.modal-body").html(
-						`<br><h3>${data}</h3><br>`
+						`<br><h3>`+ data +`</h3><br>`
 					);
 				}
 			});
