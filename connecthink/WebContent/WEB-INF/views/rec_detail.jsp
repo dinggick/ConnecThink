@@ -375,7 +375,7 @@ span.customerNo {
 							if(response == "success"){
 								alert("지원 성공");
 							} else {
-								alert("이미 지원한 프로젝트 입니다");
+								alert("이미 지원했거나 속해있는 프로젝트 입니다");
 							}
 						}
 					});

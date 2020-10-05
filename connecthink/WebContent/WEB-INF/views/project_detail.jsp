@@ -204,7 +204,8 @@ span.customerNo {
 		//로드 시 customerNo와 projectNo 비교
 		$(function(){
 			if(managerNo != customerNo){
-				location.href = "${contextPath}/";
+				$(".boxed-btn3").attr("disabled", true);
+				$(".boxed-btn3").css("display", "none");
 			}
 		});
 		
