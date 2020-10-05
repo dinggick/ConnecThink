@@ -110,7 +110,7 @@
 												</span></a> 
 												
 												&nbsp; 
-												<a class="msg" onclick="sendMsg()" data-toggle="modal" data-target="#msgModal"><span ><img src="img/mail2.png" alt=""
+												<a class="msg" data-toggle="modal" data-target="#msgModal"><span ><img src="img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
 
 											</div>
@@ -216,19 +216,19 @@
 			<div class="modal-content">
 				 <div class="modal-header">
                     <h5 class="modal-title" id="loginModalLongTitle">메세지</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button type="button" id="msgclose" class="close" data-dismiss="modal" aria-label="Close">
 		                <span aria-hidden="true">&times;</span>
 		            </button>					
 				</div>
 				<div class="modal-body">
 			
 					<div class="col-md-9">					
-							<textarea rows="10" cols="50" style="border: none; resize:none"></textarea>			
+							<textarea rows="10" cols="50" id="msgcontent" style="border: none; resize:none"></textarea>			
 									
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id ="inviteButton" onclick="inviteMember()">보내기</button>
+					<button type="button" class="btn btn-default" id ="msgButton" onclick="sendMsg()">보내기</button>
 				
 				</div>
 			</div>
@@ -279,10 +279,6 @@
 		if ('${isManager}' == 'n') {			
 			$(".smallbtn").hide();
 		}
-// 		else if ('${isManager}' =='y' && '${invited}' == 'true') {
-// 			$(".smallbtn").hide();
-// 			$(".cancelbtn").show();
-// 		}
 		bookClick();
 	   
 	});
@@ -369,8 +365,23 @@
 				}
 			});
 		}
+		var $msgContent = $("#msgcontent");
 		function sendMsg(){
-			
+			let pmContent = $msgContent.val();
+			console.log(pmContent);
+			//회원이 전송하려고하는 메세지에 포함되면 안되는 문자가 포함되었을 때 막기
+			if(pmContent.includes("connecthinksystem")){
+				alert("회원 간 메세지에 connecthinksystem 을 포함할 수 없습니다.");
+				$msgContent.val(pmContent.replace("connecthinksystem", ""));
+			} else if (pmContent == "") {
+				alert("공백을 전송할 수 없습니다.");
+			} else {
+				//웹소켓으로 메세지 전송
+				wSocket.send("connecthinksystem:to:" + ${customer.customerNo} + ":" + pmContent);
+				//메세지 입력 칸 비워주기
+				$msgContent.val("");
+				$('#msgModal').modal("hide"); 
+			}
 		}
 		function bookClick (){
 			

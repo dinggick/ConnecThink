@@ -143,7 +143,7 @@
 var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
-<<<<<<< HEAD
+
        document.getElementById("mySidenav").style.width = "250px";
 }
 
@@ -153,16 +153,6 @@ function closeNav() {
 
 //------------------------ 웹소켓 --------------------------------
 
-=======
-	document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-	document.getElementById("mySidenav").style.width = "0";
-}
-
-//------------------------ 웹소켓 --------------------------------
->>>>>>> 7c92ab11b44ef426ad444154d7100ecff005318a
 var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
@@ -172,7 +162,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
-    alert("Welcome, " + loginedCustomer + "! WebSocket opened!");
+//     alert("Welcome, " + loginedCustomer + "! WebSocket opened!");
    }
    //연결이 끊어졌을때
    function onClose(e) {
@@ -180,7 +170,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    }
    //메세지 수신시
    function onMessage(e) {
-<<<<<<< HEAD
+
    console.log(e.data);
    //수신한 메세지가 상대방 목록 불러오기인 경우
    if (e.data.includes("connecthinksystem:loadList:")){
@@ -245,7 +235,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
       }
       $msgSection.html(sectionData);
    }
-=======
+
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
@@ -308,7 +298,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 		}
 		$msgSection.html(sectionData);
 	}
->>>>>>> 7c92ab11b44ef426ad444154d7100ecff005318a
+
    }
    //에러 발생시
    function onError(e) {

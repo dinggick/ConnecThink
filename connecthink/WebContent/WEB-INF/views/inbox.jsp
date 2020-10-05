@@ -413,7 +413,8 @@ $listSection.on("click","li.person",function(e){
 });
 
 $(".system").click(function(e){
-	fxLoadNoti(loginedCustomer);
+// 	fxLoadNoti(loginedCustomer);
+	wSocket.send("connecthinksystem:loadNotis:");
 	return false;
 });
 

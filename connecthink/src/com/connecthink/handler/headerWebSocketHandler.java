@@ -81,9 +81,14 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			Map<Integer, List<PersonalMessage>> pmSortMap = pmController.findByCustomerNoAndSort(customer_no);
 			pmMap.put(customer_no, pmSortMap);
 		}
+		// notiMap에 해당 유저가 없는 경우
+		if (!notiMap.containsKey(customer_no)) {
+			List<Notification> pmList = notiController.findByCustomerNo(customer_no);
+			notiMap.put(customer_no, pmList);
+		}
 
-		//1. 나와 메세지를 주고받는 사람들의 리스트
-		if(gotMessage.contains("connecthinksystem:loadList")) {
+		// 1. 나와 메세지를 주고받는 사람들의 리스트
+		if (gotMessage.contains("connecthinksystem:loadList")) {
 			System.out.println("★ 유저와 메세지를 주고받는 사람들의 리스트를 전송하겠습니다.★");
 			Map<Integer, List<PersonalMessage>> pmSortMap = pmMap.get(customer_no);
 
@@ -148,6 +153,22 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 				}
 			});
 		}
+		//2.1 회원의 노티 화면에 보여주기
+		if(gotMessage.contains("connecthinksystem:loadNotis:")) {
+			
+			List<Notification> nts = notiMap.get(customer_no);
+			//클라이언트로 보내기
+			String loadPmsMsg = "connecthinksystem:loadNotis:";
+			loadPmsMsg += mapper.writeValueAsString(nts);
+			session.sendMessage(new TextMessage(loadPmsMsg));
+			//System.out.println("★" + contentArr[2] + "번 회원과 주고받은 메세지를 전송했습니다.★");
+			//읽음상태 읽음으로 바꾸기
+			nts.forEach(pm -> {				
+					System.out.println("읽음상태를 바꿉니다잉");
+					pm.setRead_status(1);
+					notiController.save(pm);				
+			});
+		}
 
 		//3. 내가 메세지를 보낼 경우
 		if(gotMessage.contains("connecthinksystem:to:")) {
@@ -178,11 +199,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			pmMap.get(customer_no).get(otherNo).add(newPm);
 		}
 
-		//notiMap에 해당 유저가 없는 경우
-		if(!notiMap.containsKey(customer_no)) {
-			List<Notification> pmList = notiController.findByCustomerNo(customer_no);
-			notiMap.put(customer_no, pmList);
-		}
+		
 
 	}
 
