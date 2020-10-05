@@ -25,7 +25,7 @@ public class FileController {
 	public ResponseEntity<String> uploadProfileImg(MultipartFile profileImg, HttpSession session) {
 		//경로 구성
 		String savePath = session.getServletContext().getRealPath("/").replace(
-				"wtpwebapps" + File.separator + "connecThink" + File.separator, "webapps" + File.separator + "ROOT")
+				"wtpwebapps" + File.separator + "connecthink" + File.separator, "webapps" + File.separator + "ROOT")
 				+ File.separator + "storage" + File.separator + "customer" + File.separator
 				+ Integer.toString((Integer) session.getAttribute("loginInfo")) + ".jpg";
 		
