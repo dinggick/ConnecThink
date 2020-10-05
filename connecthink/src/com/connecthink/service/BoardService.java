@@ -1,9 +1,7 @@
 package com.connecthink.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -14,9 +12,9 @@ import org.springframework.stereotype.Service;
 import com.connecthink.entity.ChatRoom;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
+import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Message;
 import com.connecthink.entity.Project;
-import com.connecthink.entity.Recruit;
 import com.connecthink.entity.Task;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
@@ -199,40 +197,24 @@ public class BoardService {
 	 */
 	public void exitProject(Integer customerNo, Integer projectNo) {
 		Project p = projectRepository.findById(projectNo).get();
-		Iterator rIter = p.getRecruits().iterator();
-		while(rIter.hasNext()) {
-			Set<Member> memberSet = ((Recruit)rIter.next()).getMembers();
-			Iterator mIter = memberSet.iterator();
-			while(mIter.hasNext()) {
-				Member m = (Member) mIter.next();
-				if(m.getCustomer().getCustomerNo() == customerNo) {
-					taskRepository.deleteByMemberByProjcet(customerNo, m.getRecruit().getRecruitNo());
-					projectRepository.saveAndFlush(p);
+		p.getRecruits().forEach(r -> {
+			r.getMembers().forEach(m -> {
+				if(m.getId().getMemberNo() == customerNo) {
+					Member memberToRemove = new Member();
+					MemberId ids = new MemberId();
+					
+					ids.setMemberNo(customerNo);
+					ids.setRecruitNo(r.getRecruitNo());
+					
+					memberToRemove.setId(ids);
+					memberToRemove.setCustomer(customerRepository.findById(customerNo).get());
+					memberToRemove.setRecruit(recruitRepository.findById("1R1").get());
+					
+					memberRepository.delete(memberToRemove);
 					return;
 				}
-			}
-		}
-		
-//		Project p = projectRepository.findById(projectNo).get();
-//		p.getRecruits().forEach(r -> {
-//			r.getMembers().forEach(m -> {
-//				if(m.getId().getMemberNo() == customerNo) {
-//					Member memberToRemove = new Member();
-//					MemberId ids = new MemberId();
-//					
-//					ids.setMemberNo(customerNo);
-//					ids.setRecruitNo(r.getRecruitNo());
-//					
-//					memberToRemove.setId(ids);
-//					memberToRemove.setCustomer(customerRepository.findById(customerNo).get());
-//					memberToRemove.setRecruit(recruitRepository.findById("1R1").get());
-//					
-//					memberRepository.delete(memberToRemove);
-//					return;
-//				}
-//			});
-//		});
-		
+			});
+		});
 	}
 	
 }

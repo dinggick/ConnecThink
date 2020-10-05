@@ -182,8 +182,8 @@ public class BoardController {
 		Integer pNo = Integer.parseInt(request.getParameter("project_no"));
 		
 		service.exitProject(id, pNo);
+		mav.setViewName("index");
 		return mav;
-		
 	}
 	
 	

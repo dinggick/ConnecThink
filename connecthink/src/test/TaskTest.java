@@ -60,7 +60,7 @@ class TaskTest {
 		repository.findAll();
 	}
 	
-	@Transactional
+	//@Transactional
 	//@Test
 	public void lists(){
 		List<Task> list = con.tList(2);
@@ -109,7 +109,7 @@ class TaskTest {
 	}
 	
 	//내용수정
-//	@Test
+	@Test
 	public void updateContent() {
 		Task t = repository.findById(1).get();
 		
@@ -126,7 +126,7 @@ class TaskTest {
 		projectRepository.save(p);
 	}
 	
-	@Test
+//	@Test
 //	@Transactional
 	public void ttt() {
 //		Project p = projectRepository.findById(1).get();
