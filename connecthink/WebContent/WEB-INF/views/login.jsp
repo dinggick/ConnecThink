@@ -162,7 +162,7 @@
 	                            	<input type="email" name="email" placeholder="이메일" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일'" required class="single-input">
 		                        </div>
 		                        <div class="col-md-6">
-		                            <a id="requestVerifyCodeBtn" href="#verifyModal" class="genric-btn info-border" data-toggle="modal" data-backdrop="false">이메일 인증</a>
+		                            <button id="requestVerifyCodeBtn" class="genric-btn info-border">이메일 인증</button>
 		                        </div>
 		                    </div>
 	                        <div class="mt-10">
@@ -318,8 +318,8 @@
 			}
 					
 			//이메일 인증 모달 표시
-			beforeVerifyModal = $("#findPwdModal");
-			$("#findPwdModal").modal("hide");
+			beforeVerifyModal = $("#registerModal");
+			$("#registerModal").modal("hide");
 			$("#verifyModal").modal({
 				keyboard: false,
 				backdrop: 'static'
