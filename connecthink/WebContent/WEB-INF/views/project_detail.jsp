@@ -260,8 +260,7 @@ span.customerNo {
 		//모집 상세보기
 		function recDetail(e){
 			let $recNo = $(e).find("li.recNo").html();
-			alert($recNo);
-			location.href = "${contextPath}/rec_detail?recNo=" + $recNo
+			location.href = "${contextPath}/all/rec_detail?recNo=" + $recNo
 		}
 		
 		//프로젝트 수정
