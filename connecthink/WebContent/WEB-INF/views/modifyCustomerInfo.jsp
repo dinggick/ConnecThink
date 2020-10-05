@@ -369,7 +369,7 @@
     				//이름
     				$("#customerName").html(data.name);
     				//한 줄 소개
-    				if(data.about != null) $("input[name=about]").val(name.about);
+    				if(data.about != null) $("input[name=about]").val(data.about);
     				//졸업여부
     				if(data.graduation == 1) $("select[name=graduation] op:eq(0)").attr("selected", "selected");
     				else $("select[name=graduation] op:eq(1)").attr("selected", "selected");
@@ -488,7 +488,7 @@
             		method : "POST",
             		data : $(this).serialize(),
             		success : (data, textStatus, jqXHR) => {
-            			window.history.back();
+            			location.href="/connecthink/logined/customerInfo";
             		},
             		error : () => {
             			alert("수정 실패");
