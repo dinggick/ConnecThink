@@ -129,7 +129,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 manageMenu mb-1">
-                    <button class="genric-btn default radius myProject">내가 등록한 팀</button>
+                    <button class="genric-btn default radius myProject" onclick="myTeam();">내가 등록한 팀</button>
+                    <button class="genric-btn default radius lookUpMyTeam" onclick="lookUpMyTeam();">내가 속해있는 팀</button>
                     </div>
             </div>
             <div class="row">
@@ -144,7 +145,7 @@
 						</div>
 						<div class="tr-section">
 							<div class="table-row bg-white">
-<!-- 								<div style='width:100%; height:100px; line-height:100px; text-align:center;'>응답중입니다.</div> -->
+								<div style='width:100%; height:100px; line-height:100px; text-align:center;'>응답중입니다.</div>
 							</div>
 						</div>
                     </div>
@@ -154,33 +155,6 @@
             </div>
     </div>
 	
-	<div class="myTeam_team_area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 manageMenu mb-1">
-                    <button class="genric-btn default radius myProject">내가 속해있는 팀</button>
-                    </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="manage_team_table_warp bg-white">
-					<div class="progress-table bg-white">
-						<div class="table-head bg-white">
-							<div class="title">프로젝트 명</div>
-							<div class="theme">주제</div>
-							<div class="date">등록날짜</div>
-							<div class="status">상태</div>
-						</div>
-						<div class= "lookUpMyTeam">
-							<div class="table-row bg-white">
-							</div>
-						</div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-    </div>
 	
 	
 	<!-- featured_candidates_area_end  -->
@@ -230,7 +204,6 @@
 	<script>
 		$(function() {
 			myTeam();
-			lookUpMyTeam();
 		});
 		
 		//내가 등록한 팀 불러오기
@@ -267,11 +240,12 @@
 						}
 					});
 			$(".myProject").css("background", "#fff");
+			$(".lookUpMyTeam").css("background", "#f9f9ff");
 		}
 		
 		//내가 속해있는 팀 불러오기
 		function lookUpMyTeam(){
-			let $myTeamList = $(".lookUpMyTeam");
+			let $myTeamList = $(".tr-section");
 			
 			$.ajax({
 				url : "${contextPath}/lookUpmyTeam",
@@ -303,7 +277,8 @@
 				}
 			}); // ajax
 			
-			$(".myProject").css("background", "#fff");
+			$(".myProject").css("background", "#f9f9ff");
+			$(".lookUpMyTeam").css("background", "#fff");
 		}
 		
 		

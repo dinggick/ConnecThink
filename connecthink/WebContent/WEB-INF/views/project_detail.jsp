@@ -204,7 +204,8 @@ span.customerNo {
 		//로드 시 customerNo와 projectNo 비교
 		$(function(){
 			if(managerNo != customerNo){
-				location.href = "${contextPath}/";
+				$(".boxed-btn3").attr("disabled", true);
+				$(".boxed-btn3").css("display", "none");
 			}
 		});
 		
@@ -259,8 +260,7 @@ span.customerNo {
 		//모집 상세보기
 		function recDetail(e){
 			let $recNo = $(e).find("li.recNo").html();
-			alert($recNo);
-			location.href = "${contextPath}/rec_detail?recNo=" + $recNo
+			location.href = "${contextPath}/all/rec_detail?recNo=" + $recNo
 		}
 		
 		//프로젝트 수정

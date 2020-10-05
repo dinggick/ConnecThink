@@ -34,7 +34,8 @@ public class BookmarkController {
 	 */
 	@PostMapping(value="/mateBm")
 	@ResponseBody
-	public List<BookmarkUser> findByIdSend(Integer customerNo){
+	public List<BookmarkUser> findByIdSend(Integer customerNo, HttpSession session){
+		customerNo = (Integer) session.getAttribute("loginInfo");
 		List<BookmarkUser> list = service.findByIdSend(customerNo);
 		return list;
 	}
@@ -45,7 +46,8 @@ public class BookmarkController {
 	 */
 	@PostMapping(value="/recBm")
 	@ResponseBody
-	public List<BookmarkRecruit> findByIdCustomerNo(Integer customerNo){
+	public List<BookmarkRecruit> findByIdCustomerNo(Integer customerNo, HttpSession session){
+		customerNo = (Integer) session.getAttribute("loginInfo");	
 		List<BookmarkRecruit> list = service.findByIdCustomerNo(customerNo);
 		return list;
 	}
@@ -56,8 +58,8 @@ public class BookmarkController {
 	 */
 	@PostMapping(value="/bmToRec")
 	@ResponseBody
-	public String bmRecruit(String recruitNo, Integer customerNo) {
-		System.out.println(customerNo);
+	public String bmRecruit(String recruitNo, Integer customerNo, HttpSession session) {
+		customerNo = (Integer) session.getAttribute("loginInfo");	
 		service.bmRecruit(recruitNo, customerNo);
 		return "success";
 	}
@@ -68,7 +70,8 @@ public class BookmarkController {
 	 */
 	@PostMapping(value="delBmToRec")
 	@ResponseBody
-	public String delBmRecruit(String recruitNo, Integer customerNo) {
+	public String delBmRecruit(String recruitNo, Integer customerNo, HttpSession session) {
+		customerNo = (Integer) session.getAttribute("loginInfo");	
 		service.delBmRecruit(recruitNo, customerNo);
 		return "success";
 	}
