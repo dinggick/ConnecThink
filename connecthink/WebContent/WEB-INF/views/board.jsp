@@ -615,6 +615,8 @@ scale
 .usty{
 	 list-style:none;
 	 padding-left:0px;
+	 min-height:20px;
+	 overflow-y:auto; 
 }
 
 /* profile */
@@ -1348,20 +1350,26 @@ scale
 			},//showMemberList
 			//프로젝트 종료
 			endProject(){
+				var Backlen=history.length;  
+				
 				var answer = confirm('프로젝트를 종료하시겠습니까?');
-				axios.get('/connecthink/endProject',{
-                	params:{
-                		project_no: ${project_no}
-                	}
-                })
-                .then(response => {	
-                	alert('종료완료!')
-                	window.open('${contextPath}','_self').close();
-                	window.close();
-                });
+				if(answer ==true){
+					axios.get('/connecthink/endProject',{
+	                	params:{
+	                		project_no: ${project_no}
+	                	}
+	                })
+	                .then(response => {	
+	                	alert('종료완료!');
+	                	history.go(-Backlen); // Return at the beginning
+	                	window.location.replace("${contextPath}");
+	                });
+				}
 			},
 			//프로젝트탈퇴
 			endMyProject(){
+				var Backlen=history.length;   
+
 				var answer = confirm('정말 탈퇴하시겠습니까? 중도탈퇴시 참여기록이 남지않습니다!');
 				if(answer == true){
 					axios.get('/connecthink/endMyProject',{
@@ -1371,7 +1379,8 @@ scale
 	                })
 	                .then(response => {	
 	                	alert('탈퇴완료!')
-	                	self.close();
+	                	history.go(-Backlen); // Return at the beginning
+	    				window.location.replace("${contextPath}");	
 	                });
 				}
 			},
@@ -1572,7 +1581,7 @@ scale
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
 					 
 					 if(event.droptarget == null){
-						 event.droptarget = getTaskNo;
+						 event.droptarget = dragover;
 					 }
 					 
 					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);

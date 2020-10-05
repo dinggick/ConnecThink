@@ -127,10 +127,10 @@ class TaskTest {
 		projectRepository.save(p);
 	}
 	
-	@Test
-//	@Transactional
+//	@Test
+	@Transactional
 	public void ttt() {
-		projectRepository.deleteByMemberByProjcet(101, "1R1");
+		projectRepository.deleteByMemberByProjcet(1, "1R1");
 		
 //		Project p = projectRepository.findById(1).get();
 //		Iterator rIter = p.getRecruits().iterator();
