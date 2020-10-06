@@ -468,7 +468,7 @@ span.customerNo {
 				success : function(response){
 					if(response.status == "success"){
 						alert("삭제 완료");
-						location.href="${contextPath}/myProject"
+						location.href="${contextPath}/logined/myProject"
 					} else {
 						alert(response.msg);
 					}
