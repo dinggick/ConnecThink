@@ -146,10 +146,10 @@ public class RecruitService {
 		recruit.setDeadline(recruitDTO.getDeadline());
 		recruit.setRequirement(recruitDTO.getRequirement());
 		recruit.setRecruitStatus(1); //기본 값 1
-
+		recruit.setProjectNo(recruitDTO.getProjectNo());
+		
 		//project에 recruit 담기(더하기)
 		project.getRecruits().add(recruit);
-
 		//save 메서드 호출
 		projectRepository.save(project);
 	}

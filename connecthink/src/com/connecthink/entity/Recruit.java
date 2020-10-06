@@ -46,6 +46,9 @@ public class Recruit {
 	@Column(name = "recruit_no", length = 20)
 	private String recruitNo;
 	
+	@Column(name = "project_no")
+	private Integer projectNo;
+	
 	@Column(name = "head_count")
 	private Integer headCount;
 	
