@@ -1484,7 +1484,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.14:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.125:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
