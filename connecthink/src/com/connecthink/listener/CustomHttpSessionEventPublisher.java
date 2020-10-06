@@ -57,6 +57,7 @@ public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 			hwsHandler.getNotiMap().remove(loginedCustomer);
 			System.out.println("★notiMap에서 회원 삭제 완료★");
 		}
+		super.sessionDestroyed(event);
 	}
-
+	
 }
