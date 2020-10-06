@@ -81,7 +81,7 @@ public class RecruitService {
 	 */
 	public void addRec(RecruitDTO recruitDTO) {
 		Recruit recruit = new Recruit();
-
+		
 		//projectNo
 		Project project = projectRepository.findById(recruitDTO.getProjectNo()).get();
 

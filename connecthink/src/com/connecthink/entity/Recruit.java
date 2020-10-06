@@ -62,7 +62,7 @@ public class Recruit {
 	private Integer recruitStatus;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "recruit_no")
+	@JoinColumn(name = "recruit_no", updatable = false)
 	private Set<Member> members;
 	
 	@OneToOne(cascade = CascadeType.ALL)

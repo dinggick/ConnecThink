@@ -30,21 +30,12 @@ public class ProjectController {
 
 	@Autowired
 	private ServletContext context;	
-	
-	/**
-	 * @author 임수정
-	 * manageTeam.jsp 보여주기
-	 */
-	@RequestMapping("/logined/manageTeam")
-	public String manageTeam() {
-		return "manageTeam";
-	}
 
 	/**
 	 * @author 임수정
 	 * 내 지원 목록 보기
 	 */
-	@PostMapping(value="/manageTeam/myApplication")
+	@PostMapping(value="/manageProject/myApplication")
 	@ResponseBody
 	public List<Project> MyApplication(Integer memberNo) {
 		return service.findMyApplication(memberNo);
@@ -54,7 +45,7 @@ public class ProjectController {
 	 * @author 임수정
 	 * 내가 받은 초대 목록 보기
 	 */
-	@PostMapping(value="/manageTeam/myInvitation")
+	@PostMapping(value="/manageProject/myInvitation")
 	@ResponseBody
 	public List<Project> MyInvitation(Integer memberNo) {
 		return service.findMyInvitation(memberNo);
@@ -64,26 +55,17 @@ public class ProjectController {
 	 * @author 임수정
 	 * 내 프로젝트에 초대했던 멤버 목록 보기
 	 */
-	@PostMapping(value="/manageTeam/invited")
+	@PostMapping(value="/manageProject/invited")
 	@ResponseBody
 	public List<Project> Invited(Integer managerNo) {
 		return service.findInvited(managerNo);
 	}
-
-	////
-	@PostMapping(value="/manageApplied")
-	public List<Project> manageApplied(Integer managerNo) {
-		System.out.println("지원자 찾기 콘트롤러 진입");
-		List<Project> pList = service.findApplied(managerNo);
-		System.out.println(pList);
-		System.out.println("지원자 찾기 서비스 끝");
-		return pList;
-	}
+	
 	/**
 	 * @author 임수정
 	 * 내 프로젝트에 지원한 멤버 목록 보기
 	 */
-	@PostMapping(value="/manageTeam/applied")
+	@PostMapping(value="/manageProject/applied")
 	@ResponseBody
 	public List<Project> Applied(Integer managerNo) {
 		return service.findApplied(managerNo);
@@ -159,11 +141,19 @@ public class ProjectController {
 	 * @author DongJun
 	 * 프로젝트 추가 뷰 호출
 	 */
-	@GetMapping(value="/lookUpMyProject")
+	@GetMapping(value="/logined/lookUpMyProject")
 	@ResponseBody
 	public List<Project> lookUpMyProject(HttpSession session){
-		int customer_no = (int) session.getAttribute("loginInfo");
-		return service.lookUpMyProject(customer_no);
+		//오문정
+		//int customer_no = (int) session.getAttribute("loginInfo");
+		Integer wCustomer_no = (Integer)session.getAttribute("loginInfo");
+		if(wCustomer_no != null) {
+			return service.lookUpMyProject(wCustomer_no.intValue());
+		}else {
+			return null; //??
+			//return new ArrayList<>();
+		}
+		
 	}
 
 	/**

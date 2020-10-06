@@ -42,10 +42,7 @@
 
 	<context:component-scan
 		base-package="com.connecthink.controller"></context:component-scan>
-	<context:component-scan
-		base-package="com.connecthink.service"></context:component-scan>
 
-	
 	<!-- webSocket handler -->
 	<bean id="webSocketHandler" class="com.connecthink.handler.webSocketHandler"/>
 	<bean id="headerWebSocketHandler" class="com.connecthink.handler.headerWebSocketHandler"/>

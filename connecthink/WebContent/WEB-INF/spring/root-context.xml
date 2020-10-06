@@ -86,4 +86,6 @@
 		<property name="maxInMemorySize" value="100000000" /> <!-- 10MB -->
 		<property name="defaultEncoding" value="UTF-8"></property>
 	</bean>
+	
+	
 </beans>

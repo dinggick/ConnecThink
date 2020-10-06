@@ -458,7 +458,7 @@
         				data.experiences.forEach(e => {
         					var expElement;
             				if($(".apply_job_form").find(".row>div:last-child").children().hasClass("mt-3")) expElement = `<div class="col-md-4">`;
-            				else expElement = `<div class="col-md-4">`;
+            				else expElement = `<div class="col-md-4 offset-2">`;
             				expElement += `<div class="input_field">
     					    					<input type="text" name="explain" placeholder="설명 ex)공모전 참여, 프로젝트 수행">
     						    			</div>
@@ -483,6 +483,21 @@
             });
             
             $("form").submit(function() {
+            	var isValid = true;
+            	$("input[name=explain]").each(function(index, explain) {
+            		if($(explain).val() == '') {
+            			alert("경험 내용을 입력해주세요");
+            			isValid = false;
+            		}
+            	});
+            	if(!isValid) return false;
+            	$("input[name=term]").each(function(index, term) {
+            		if($(term).val() == '') {
+            			alert("경험 기간 정보를 입력해주세요");
+            			isValid = false;
+            		}
+            	});
+            	if(!isValid) return false;
             	$.ajax({
             		url : "/connecthink/logined/modifyCustomerInfo",
             		method : "POST",
