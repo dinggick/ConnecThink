@@ -53,7 +53,7 @@
                                            
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
-                                            <li><a href="add_project">프로젝트 등록</a></li>
+                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>
 <!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
 <!--                                                 <ul class="submenu"> -->
 <!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
@@ -77,8 +77,8 @@
                                          			</c:when>
                                          			<c:otherwise>
                                          				<li><a href="${contextPath}/logined/customerInfo">내 정보 보기</a></li>
-                                         				<li><a href="${contextPath}/myProject">나의 프로젝트</a></li>
-                                         				<li><a href="${contextPath}/bookmark">북마크</a></li>                                         				
+                                         				<li><a href="${contextPath}/logined/myProject">나의 프로젝트</a></li>
+                                         				<li><a href="${contextPath}/logined/bookmark">북마크</a></li>                                         				
                                          				<li><a id="logoutBtn" href="">로그아웃</a></li>
                                          			</c:otherwise>
                                          		</c:choose>
@@ -237,23 +237,32 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
       $msgSection.html(sectionData);
    }
 
+
+   function onMessage(e) {
+	   
+
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
-		//처음 항목이 올 때는 리스트를 비운다.
 		if(e.data.includes("connecthinksystem:loadList:refresh:")){
+			//처음 항목이 올 때는 리스트를 비운다.
 			$listSection.html("");
 			otherStr = e.data.replace("connecthinksystem:loadList:refresh:","");
 		} else {
 			otherStr = e.data.replace("connecthinksystem:loadList:","");
 		}
+		//상대방 정보를 JSON 객체로 파싱한다.
 		otherObj = JSON.parse(otherStr);
-		
+
+		//list 영역의 html을 바꾼다.
 		let sectionData = $listSection.html();
-		sectionData += '<li class="person"><span class="otherNo" id="otherNoInList">' + otherObj.otherNo + '</span>';
+		sectionData += '<li class="person" id="otherNo' + otherObj.otherNo + '"><span class="otherNoInList">' + otherObj.otherNo + '</span>';
 		sectionData += '<span class="personName">' + otherObj.otherName + '</span>';
 		if(otherObj.newCnt != 0){
 			sectionData += '<span class="new">' + otherObj.newCnt + '</span>';
+		} else {
+			//새로운 메세지가 없을 경우 새 메세지 카운트 딱지 안 보이게 하기
+			sectionData += '<span class="new" style="display:none;">' + otherObj.newCnt + '</span>';
 		}
 		sectionData += '<br><span class="msgPreview">' + otherObj.content + '</span></li>';
 		$listSection.html(sectionData);
@@ -264,40 +273,122 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 		MSGs = JSON.parse(pmsStr);
 		let sectionData = "";
 		let newDate = new Date(0);
+		let isFirstUnreadMsg = true;
 		MSGs.forEach(function(msg, index){
 			let sendDate = new Date(msg.createDate);
+			//날짜가 바뀔 때마다 날짜 써주기.
 			if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
-				sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+				sectionData += '<div class="msg_date">' + sendDate.getFullYear()+'.';
+				if( (sendDate.getMonth()+1) < 10 ){
+					sectionData += '0' + (sendDate.getMonth()+1) + '.';
+				} else {
+					sectionData += (sendDate.getMonth()+1) + '.';
+				}
+				if( sendDate.getDate() < 10 ) {
+					sectionData += '0' + sendDate.getDate() + "</div>";
+				} else {
+					sectionData += sendDate.getDate() + "</div>";
+				}
 				newDate = sendDate;
 			}
 			if(msg.receive.customerNo == loginedCustomer) {
+				//내가 받은 사람일 경우
+				//아직 읽지 않은 메세지 중 첫번째 메세지의 위에 여기까지 읽었다고 표시해주기.
+				if(msg.status==0 && isFirstUnreadMsg==true) {
+				sectionData += '<div id="firstUnreadMsg">여기까지 읽으셨습니다</div>';
+				isFirstUnreadMsg = false;
+				}
 				sectionData += '<div class="receive_msg">' + msg.content + '</div>';
-				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				if( sendDate.getHours() < 10 ) {
+					sectionData += '<div class="receive_time">' + '0' + sendDate.getHours() +':';
+				} else {
+					sectionData += '<div class="receive_time">' + sendDate.getHours() +':';
+				}
+				if( sendDate.getMinutes() < 10 ) {
+					sectionData += '0' + sendDate.getMinutes() + '</div>';
+				} else {
+					sectionData += sendDate.getMinutes() + '</div>';
+				}
 				sectionData += '<div style="clear:both;"></div>';
 			} else {
+				//내가 보낸 사람일 경우
 				sectionData += '<div class="send_msg">' + msg.content + '</div>';
-				sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+				if( sendDate.getHours() < 10 ) {
+					sectionData += '<div class="send_time">' + '0' + sendDate.getHours() +':';
+				} else {
+					sectionData += '<div class="send_time">' + sendDate.getHours() +':';
+				}
+				if( sendDate.getMinutes() < 10 ) {
+					sectionData += '0' + sendDate.getMinutes() + '</div>';
+				} else {
+					sectionData += sendDate.getMinutes() + '</div>';
+				}
 				sectionData += '<div style="clear:both;"></div>';
 			}
 		});
 		$msgSection.html(sectionData);
+		//'여기까지 읽으셨습니다' 표시로 스크롤 이동시키기
+		if ($("#firstUnreadMsg").length > 0){
+			//표시가 있을 경우
+	 		let scrollLocation = document.querySelector("#firstUnreadMsg").offsetTop - 107;
+	 		$msgSection.scrollTop(scrollLocation);
+		}else{
+			//표시가 없을 경우 바닥으로 이동
+			let scrollLocation = $msgSection.prop('scrollHeight');
+			$msgSection.scrollTop(scrollLocation);
+		}
 	}
 	//수신한 메세지가 Personal Message인 경우
 	else if (e.data.includes("connecthinksystem:pm:")){
 		let pmStr = e.data.replace("connecthinksystem:pm:","");
 		pmObj = JSON.parse(pmStr);
-		let sectionData = $msgSection.html();
-		let sendDate = new Date(pmObj.createDate);
-		if(pmObj.receive.customerNo == loginedCustomer) {
-			sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
-			sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-			sectionData += '<div style="clear:both;"></div>';
-		} else {
-			sectionData += '<div class="send_msg">' + pmObj.content + '</div>';
-			sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-			sectionData += '<div style="clear:both;"></div>';
+		//inbox에 들어와있을 때 할 작업.
+		if(window.location.href.includes("inbox")) {
+			let otherNo = "";
+			let otherName = "";
+			if(pmObj.receive.customerNo == loginedCustomer) {
+				otherNo = pmObj.send.customerNo;
+				otherName = pmObj.send.name;
+			} else {
+				otherNo = pmObj.receive.customerNo;
+				otherName = pmObj.receive.name;
+			}
+			if( $(".otherNoInBox").html().trim()==otherNo ){
+				//pm을 보낸 상대방과의 메세지함에 들어와있을 경우, 메세지박스 안의 화면을 바꿔준다.
+				let sectionData = $msgSection.html();
+				let sendDate = new Date(pmObj.createDate);
+				if(pmObj.receive.customerNo == loginedCustomer) {
+					sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
+					sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+					sectionData += '<div style="clear:both;"></div>';
+				} else {
+					sectionData += '<div class="send_msg">' + pmObj.content + '</div>';
+					sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+					sectionData += '<div style="clear:both;"></div>';
+				}
+				$msgSection.html(sectionData);
+				//스크롤을 바닥으로 이동
+				let scrollLocation = $msgSection.prop('scrollHeight');
+				$msgSection.scrollTop(scrollLocation);
+			} else {
+				//다른 메세지함이나 알림을 보고있을 경우, 리스트에서 pm을 보낸 상대방을 찾아서 알림표시를 붙인다. 상대방이 없을 경우 상대방을 추가한다.
+				let $otherLi = $("ul.personList").find("#otherNo"+otherNo);
+				if($otherLi.length > 0){
+					//리스트에 해당 회원이 존재하는 경우 : 새 메세지 카운트 딱지를 새로 붙이거나 카운트+1을 해준다.
+					$otherLi.find(".new").html( ($otherLi.find(".new").html()*1) +1 );
+					$otherLi.find(".new").css("display", "inline");
+					$otherLi.find(".msgPreview").html(pmObj.content);
+				} else{
+					//리스트에 해당 회원이 존재하지 않은 경우 : 리스트에 해당 회원을 추가한다.
+					let sectionData = $listSection.html();
+					sectionData += '<li class="person" id="otherNo' + otherNo + '"><span class="otherNoInList">' + otherNo + '</span>';
+					sectionData += '<span class="personName">' + otherName + '</span>';
+					sectionData += '<span class="new">' + 1 + '</span>';
+					sectionData += '<br><span class="msgPreview">' + pmObj.content + '</span></li>';
+					$listSection.html(sectionData);
+				}
+			}
 		}
-		$msgSection.html(sectionData);
 	}
    }
    //에러 발생시

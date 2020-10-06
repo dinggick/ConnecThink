@@ -117,7 +117,7 @@ public class ProjectController {
 	 * @author 홍지수
 	 * 프로젝트 등록하기
 	 */
-	@PostMapping(value= {"/addProject", "/modifyProject"})
+	@PostMapping(value= {"/logined/addProject", "/logined/modifyProject"})
 	@ResponseBody
 	public Map addProject(ProjectDTO projectDTO, HttpServletRequest request, HttpSession session) {
 		Map<String, Object> result = new HashMap<String, Object>();
@@ -126,7 +126,7 @@ public class ProjectController {
 		int managerNo = (int) session.getAttribute("loginInfo");
 		projectDTO.setManagerNo(managerNo);
 		
-		if(whatYouCallValue.equals("/addProject")) {
+		if(whatYouCallValue.equals("/logined/addProject")) {
 			pNo = service.seq_lastval();	
 		} else {
 			pNo = projectDTO.getProjectNo();
@@ -150,8 +150,9 @@ public class ProjectController {
 	 * @author 홍지수
 	 * 프로젝트 추가 뷰 호출
 	 */
-	@RequestMapping(value="/add_project")
-	public void add_project() {
+	@RequestMapping(value="/logined/add_project")
+	public String add_project() {
+		return "add_project";
 	}
 
 	/* @author kimdongjun
@@ -168,15 +169,16 @@ public class ProjectController {
 	 * @author 홍지수
 	 * 나의 프로젝트 관리 뷰 호출
 	 */
-	@RequestMapping(value = "/myProject")
-	public void myProject() {
+	@RequestMapping(value = "/logined/myProject")
+	public String myProject() {
+		return "myProject";
 	}
 
 	/**
 	 * @author 홍지수
 	 * 내가 등록한 팀 목록 보기
 	 */
-	@PostMapping(value="/myTeam")
+	@PostMapping(value="/logined/myTeam")
 	@ResponseBody
 	public List<Project> myTeam(HttpSession session){
 		int managerNo = (int) session.getAttribute("loginInfo");
@@ -188,7 +190,7 @@ public class ProjectController {
 	 *  @author kimdongjun
 	 *  내가 속해있는 팀 목록 조회
 	 */
-	@PostMapping(value="/lookUpmyTeam")
+	@PostMapping(value="/logined/lookUpmyTeam")
 	@ResponseBody
 	public List<Project> LookUpmyTeam(HttpSession session){
 		int customer_no = (int) session.getAttribute("loginInfo");
@@ -200,17 +202,17 @@ public class ProjectController {
 	 * @author 홍지수
 	 * 팀 상세 보기 / 팀 수정하기 뷰 불러오기
 	 */
-	@RequestMapping(value = {"/project_detail", "/modify_project"})
+	@RequestMapping(value = {"/logined/project_detail", "/logined/modify_project"})
 	public ModelAndView projectDetail(Integer projectNo, HttpServletRequest request) {
 		ModelAndView mnv = new ModelAndView();
 		String whatYouCallValue = request.getServletPath(); //매핑 한 url 값 가져오기
 		
 		Project p = service.findByProjectNo(projectNo);
 		mnv.addObject("detail", p);
-		if(whatYouCallValue.equals("/project_detail")) {
-			mnv.setViewName("/project_detail");
+		if(whatYouCallValue.equals("/logined/project_detail")) {
+			mnv.setViewName("project_detail");
 		} else {
-			mnv.setViewName("/modify_project");
+			mnv.setViewName("modify_project");
 		}
 		return mnv;
 	}
@@ -219,7 +221,7 @@ public class ProjectController {
 	 * @author 홍지수
 	 * 프로젝트 삭제
 	 */
-	@PostMapping("/delProject")
+	@PostMapping("/logined/delProject")
 	@ResponseBody
 	public Map delProject(Integer projectNo) {
 		Map<String, Object> result = new HashMap<String, Object>();

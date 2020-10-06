@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>메이트 찾기</title>
+<title>멤버 찾기</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -65,7 +65,7 @@ height: 70px !important;
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>메이트 찾기</h3>
+						<h3>멤버 찾기</h3>
 					</div>
 				</div>
 			</div>

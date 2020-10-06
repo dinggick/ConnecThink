@@ -70,7 +70,7 @@ public class Project {
 	private List<Task> tasks;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "project_no")
+	@JoinColumn(name = "project_no", updatable = false)
 	private Set<Recruit> recruits;
 	
 

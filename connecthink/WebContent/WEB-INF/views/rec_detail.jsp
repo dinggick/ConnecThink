@@ -204,7 +204,7 @@ span.customerNo {
 							</div>
 						</div>
 						<div class="rec_foot_right">
-							<button class="boxed-btn mt-4 message" data-toggle="modal" data-target="#msgModal">메세지</button>
+							<button class="boxed-btn mt-4 message" onclick="openModal();">메세지</button>
 							<button class="boxed-btn mt-4 rec" onclick="apply();">지원하기</button>
 						</div>
 					</div>
@@ -225,12 +225,12 @@ span.customerNo {
 				<div class="modal-body">
 			
 					<div class="col-md-9">					
-							<textarea rows="10" cols="50" style="border: none; resize:none"></textarea>			
+							<textarea id="msg_content" rows="10" cols="50" style="border: none; resize:none"></textarea>			
 									
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id ="inviteButton" onclick="inviteMember()">보내기</button>
+					<button type="button" class="btn btn-default" id ="sendButton" onclick="sendPersonalMsg()">보내기</button>
 				
 				</div>
 			</div>
@@ -460,6 +460,31 @@ span.customerNo {
 					});
 				}	
 			});
+		}
+		
+		//메세지 모달 열기
+		function openModal(){
+			$("#msgModal").modal("show");
+		}
+		
+		//메세지 보내기
+		function sendPersonalMsg(){
+			let $msgContent = $("#msg_content");
+			let pmContent = $msgContent.val();
+			//회원이 전송하려고하는 메세지에 포함되면 안되는 문자가 포함되었을 때 막기
+			if(pmContent.includes("connecthinksystem")){
+				alert("회원 간 메세지에 connecthinksystem 을 포함할 수 없습니다.");
+				$msgContent.val(pmContent.replace("connecthinksystem", ""));
+			} else if (pmContent == "") {
+				alert("공백을 전송할 수 없습니다.");
+			} else {
+				//웹소켓으로 메세지 전송
+				wSocket.send("connecthinksystem:to:" + managerNo + ":" + pmContent);
+				alert("메세지를 전송하였습니다.");
+				//입력창 비우고 모달 창 닫기
+				$msgContent.val("");
+				$("#msgModal").modal("hide");
+			}
 		}
 	</script>
 </body>
