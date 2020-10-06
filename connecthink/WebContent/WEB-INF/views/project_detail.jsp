@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>팀상세</title>
+<title>프로젝트 상세</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -78,7 +78,7 @@ span.customerNo {
 			<div class="row">
 				<div class="col-xl-12">
 					<div class="bradcam_text">
-						<h3>팀상세</h3>
+						<h3>프로젝트 상세</h3>
 					</div>
 				</div>
 			</div>
@@ -212,7 +212,7 @@ span.customerNo {
 		//프로젝트 삭제 ajax
 		function delProject(){
 			$.ajax({
-				url: "${contextPath}/delProject",
+				url: "${contextPath}/logined/delProject",
 				method : "POST",
 				data : {
 					projectNo : projectNo,
@@ -232,7 +232,7 @@ span.customerNo {
 		//모집 삭제 ajax
 		function delRec(){
 			$.ajax({
-				url : "${contextPath}/delRecAll",
+				url : "${contextPath}/logined/delRecAll",
 				method : "POST",
 				data : {
 					projectNo : projectNo,
@@ -252,7 +252,7 @@ span.customerNo {
 		function rec_add() {
 			let answer = confirm("${detail.title}" + " 에 모집을 추가로 등록하시겠습니까?");
 			if (answer == true) {
-				location.href = "${contextPath}/add_rec?projectNo=" + projectNo;
+				location.href = "${contextPath}/logined/add_rec?projectNo=" + projectNo;
 			}
 			return false;
 		}
@@ -267,7 +267,7 @@ span.customerNo {
 		function modify(){
 			let answer = confirm("${detail.title}" + " 정보를 수정하시겠습니까?");
 			if (answer == true) {
-				location.href = "${contextPath}/modify_project?projectNo=" + projectNo;
+				location.href = "${contextPath}/logined/modify_project?projectNo=" + projectNo;
 			}
 			return false;
 		}

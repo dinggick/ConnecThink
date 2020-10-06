@@ -23,16 +23,16 @@ public class BookmarkController {
 	 * @author 홍지수
 	 * 북마크 페이지 호출
 	 */
-	@RequestMapping(value="/bookmark")
-	public void bookmark() {
-		System.out.println("북마크 페이지 호출");
+	@RequestMapping(value="/logined/bookmark")
+	public String bookmark() {
+		return "bookmark";
 	}
 
 	/**
 	 * @author 홍지수
 	 * 북마크한 메이트 목록 조회
 	 */
-	@PostMapping(value="/mateBm")
+	@PostMapping(value="/logined/mateBm")
 	@ResponseBody
 	public List<BookmarkUser> findByIdSend(Integer customerNo, HttpSession session){
 		customerNo = (Integer) session.getAttribute("loginInfo");
@@ -44,7 +44,7 @@ public class BookmarkController {
 	 * @author 홍지수
 	 * 북마크 한 모집 목록 조회
 	 */
-	@PostMapping(value="/recBm")
+	@PostMapping(value="/logined/recBm")
 	@ResponseBody
 	public List<BookmarkRecruit> findByIdCustomerNo(Integer customerNo, HttpSession session){
 		customerNo = (Integer) session.getAttribute("loginInfo");	
@@ -56,7 +56,7 @@ public class BookmarkController {
 	 * @author 홍지수
 	 * 모집 북마크 추가
 	 */
-	@PostMapping(value="/bmToRec")
+	@PostMapping(value="/logined/bmToRec")
 	@ResponseBody
 	public String bmRecruit(String recruitNo, Integer customerNo, HttpSession session) {
 		customerNo = (Integer) session.getAttribute("loginInfo");	
@@ -68,7 +68,7 @@ public class BookmarkController {
 	 * @author 홍지수
 	 * 모집 북마크 삭제
 	 */
-	@PostMapping(value="delBmToRec")
+	@PostMapping(value="/logined/delBmToRec")
 	@ResponseBody
 	public String delBmRecruit(String recruitNo, Integer customerNo, HttpSession session) {
 		customerNo = (Integer) session.getAttribute("loginInfo");	

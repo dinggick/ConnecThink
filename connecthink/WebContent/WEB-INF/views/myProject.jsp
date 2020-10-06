@@ -211,7 +211,7 @@
 			let $section = $('.tr-section');
 
 			$.ajax({
-						url : "${contextPath}/myTeam",
+						url : "${contextPath}/logined/myTeam",
 						method : "POST",
 						data : {${_csrf.parameterName} : '${_csrf.token}'},
 						success : function(teams) {
@@ -248,7 +248,7 @@
 			let $myTeamList = $(".tr-section");
 			
 			$.ajax({
-				url : "${contextPath}/lookUpmyTeam",
+				url : "${contextPath}/logined/lookUpmyTeam",
 				method : "POST",
 				data : {${_csrf.parameterName} : '${_csrf.token}'},
 				success : function(teams) {
@@ -285,8 +285,7 @@
 		//클릭 시 팀 상세 페이지로 이동
 		function projectDetail(e){
 			let $projectNo = $(e).siblings("div.projectNo").html();
-			let url = "${contextPath}/project_detail?projectNo=" + $projectNo ;
-			alert(url);
+			let url = "${contextPath}/logined/project_detail?projectNo=" + $projectNo ;
 			location.href = url;
 		}
 		
