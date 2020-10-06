@@ -112,10 +112,8 @@
 												&nbsp; 
 												<a class="msg" onclick="openMsgModal()"><span ><img src="img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
-
 											</div>
 										</div>
-
 
 										<!--                                         <div class="location"> -->
 										<!--                                             <p> <i class="fa fa-clock-o"></i> Part-time</p> -->
@@ -136,6 +134,14 @@
 						</div>
 					</div>
 					<div class="descript_wrap white-bg">
+						<div class="single_wrap">
+							<h4>역할군</h4>
+							<ul style="list-style: none;">
+							<c:forEach items="${customer.customerPositions}" var ="cp">
+								<p>${cp.position.name}</p>
+							</c:forEach>
+							</ul>
+						</div>
 						<div class="single_wrap">
 							<h4>학력</h4>
 							<p>

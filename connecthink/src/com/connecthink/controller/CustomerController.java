@@ -287,7 +287,8 @@ public class CustomerController {
 	public ModelAndView findByNo(Integer customerNo, HttpSession session) {
 		ModelAndView mnv = new ModelAndView();
 		//멤버상세
-		Customer c = service.findByCustomerNo(customerNo);		
+		Customer c = service.findByNo(customerNo);//service.findByCustomerNo(customerNo);
+		
 		mnv.addObject("customer", c);
 		
 		//컨넥띵크 히스토리
