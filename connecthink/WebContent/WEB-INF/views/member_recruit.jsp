@@ -110,7 +110,7 @@
 												</span></a> 
 												
 												&nbsp; 
-												<a class="msg" data-toggle="modal" data-target="#msgModal"><span ><img src="img/mail2.png" alt=""
+												<a class="msg" onclick="openMsgModal()"><span ><img src="img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
 
 											</div>
@@ -128,7 +128,7 @@
 									<img src="${contextPath}/img/dogpic.png" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
-										<button class="smallbtn" onclick="openModal()" data-toggle="modal" data-target="#myModal" id="inviteButton">초대하기</button>
+										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
 										
 									</div>
 								</div>
@@ -282,7 +282,11 @@
 		bookClick();
 	   
 	});
-		function openModal(){
+		function openMsgModal(){
+			$('#msgModal').modal("show"); 
+		}
+		function openInviteModal(){
+			$('#myModal').modal("show"); 
 			var $selectSection = $('.input_field.position1');
 			
 			$.ajax({

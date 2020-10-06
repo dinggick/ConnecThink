@@ -220,7 +220,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));
 			//repository에 인서트
 			notiController.save(newNoti);
-			WebSocketSession receiveSession = loginUser.get(otherNo);			
+			WebSocketSession receiveSession = loginUserMap.get(otherNo);			
 			String sendPmJson = "connecthinksystem:pm:";
 			sendPmJson += mapper.writeValueAsString(newNoti);
 			if(receiveSession!=null) {
