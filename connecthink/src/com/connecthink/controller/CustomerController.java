@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,8 @@ import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.mail.VerificationMail;
+import com.connecthink.repository.CustomerPositionRepository;
+import com.connecthink.repository.ExperienceRepository;
 import com.connecthink.service.CustomerService;
 import com.connecthink.service.PositionService;
 import com.connecthink.dto.ProjectHistoryDTO;
@@ -49,6 +52,10 @@ public class CustomerController {
 	private ProjectHistoryService pservice;
 	@Autowired
 	private ProjectService projectService;
+	@Autowired
+	private CustomerPositionRepository cpRepository;
+	@Autowired
+	private ExperienceRepository expRepository;
 	
 	@Autowired
 	private PasswordEncoder pwdEncoder;
@@ -206,9 +213,12 @@ public class CustomerController {
 	 * @return
 	 */
 	@RequestMapping("/logined/modifyCustomerInfo")
+	@Transactional
 	public ResponseEntity<String> modifyCustomerInfo(CustomerForModifyDTO data, HttpSession session) {
 		int customerNo = (Integer)session.getAttribute("loginInfo");
 		//수정 시작
+		cpRepository.deleteByCustomerNo(customerNo);
+		expRepository.deleteByCustomerNo(customerNo);
 		Customer customerForModify = service.findByNo(customerNo);
 		//비밀번호
 		customerForModify.setPassword(pwdEncoder.encode(data.getPassword()));
