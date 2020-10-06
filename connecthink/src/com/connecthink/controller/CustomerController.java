@@ -60,7 +60,7 @@ public class CustomerController {
 	@Autowired
 	private PasswordEncoder pwdEncoder;
 
-	@RequestMapping("/all/mateList")
+	@RequestMapping("/all/customerList")
 	public ModelAndView findAll() {
 		System.out.println("matelist test");
 		ModelAndView mnv = new ModelAndView();
@@ -74,7 +74,7 @@ public class CustomerController {
 		}
 		
 		mnv.addObject("customer", list);
-		mnv.setViewName("/mate");
+		mnv.setViewName("/customer");
 		
 		return mnv; 
 	}

@@ -225,7 +225,7 @@ span.customerNo {
 		
 		//로드 시 customerNo와 projectNo 비교
 		$(function(){
-			if(managerNo != customerNo || status == 2){
+			if(managerNo != customerNo && status == 2){
 				$(".boxed-btn3").attr("disabled", true);
 				$(".boxed-btn3").css("display", "none");
 				
@@ -235,6 +235,9 @@ span.customerNo {
 						return ($(this).height()/3);
 					}
 				});
+			} else if(managerNo != customerNo){
+				$(".boxed-btn3").attr("disabled", true);
+				$(".boxed-btn3").css("display", "none");
 			}
 			
 			if(managerNo == customerNo && status == 2){
