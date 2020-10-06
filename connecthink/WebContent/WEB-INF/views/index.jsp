@@ -57,6 +57,10 @@
 .featured_candidates_area.candidate_page_padding{
 	padding: 50px 70px;
 }
+.thumbimg{
+ max-width: 60;
+   border-radius: 50%;
+}
 
 </style>
 <body>
@@ -263,11 +267,29 @@
 	<script>
 
 	$(document).ready(function(){
-
+	
 	loadMemberList();
 	loadProjectList();
-
+	if(${!empty sessionScope.loginInfo}) {	
+		console.log("hello");
+		checkNotification();	
+		}
 	});
+	function checkNotification() {	
+		console.log('${sessionScope.loginInfo}');
+		$.ajax({
+			url: "/connecthink/checkNotification",			
+			data:  { customerNo : '${sessionScope.loginInfo}', 
+				${_csrf.parameterName} : '${_csrf.token}'},   
+			success: function(data) {
+				console.log(data);
+				if (data == "success") {
+					$('#bell').hide();
+					$('#notibell').show();	
+				}
+			}			
+		});
+	}	
 
 	function loadMemberList() {
 		var $memberSection = $("div.main_member_area > .container > .row:nth-child(2)");
@@ -280,8 +302,11 @@
 				var txt = "";
 				for (x in responseObj) {
 					txt += "<div class='col-md-6 col-lg-3'><div class='single_catagory'>" +
-							"<div class='thumb' style='float: right;'> " +
-							"<img src='${contextPath}/img/candiateds/1.png' alt=''></div>"+
+							"<div class='thumb' style='float: right;'> ";
+					txt +=  '<img class="thumbimg" src="http://localhost/storage/customer/'+responseObj[x].customerNo+'.jpg"';
+					txt += 'onerror="this.src='+"'${contextPath}/img/d2.jpg'"+'"'+' alt="">';
+							
+					txt +=	"</div>"+
 							"<a href='#' onclick='memberDetail("+responseObj[x].customerNo+")'><h4>"+responseObj[x].name+"</h4></a>" +
 							" <input type='text' id='customerNo' value='"+responseObj[x].customerNo + "' hidden='hidden'>";							 
 					
@@ -302,14 +327,19 @@
 	    	url : "/connecthink/projectList",  
 	    	method: "GET",
 	    	data:   {${_csrf.parameterName} : '${_csrf.token}'},    
-			success: function(responseObj) {
-				console.log(responseObj);
+			success: function(responseObj) {				
 				var txt = "";
 				for (x in responseObj) {
 					var deadline = new Date(responseObj[x].deadline).toISOString().substring(0, 10);;
 
-					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='projectDetail(this);'>" +
-							"<div class='thumbnail'><div class='test'><img src='${contextPath}/img/default.png' alt='모집 사진'></div></div>" +
+					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='projectDetail(this);'>";
+					txt += '<div class="thumbnail"><div class="test">';		
+					
+					txt += '<img src="http://localhost/storage/customer/'+responseObj[x].recruitNo+'.jpg"';
+					txt += 'onerror="this.src='+"'${contextPath}/img/default.png'"+'"'+' alt="">';
+					txt += '</div>'
+					
+					txt += "</div>" +
 							"<h4 class='mt-4 mr-4 ml-4 rec_title'>" + responseObj[x].requirement + "</h4>" +
 					"<ul style='list-style: none;'><li class='wanna'>" + responseObj[x].position.name + "</li>" +
 						
@@ -323,7 +353,7 @@
 	    });
 	}
 	function memberDetail(customerNo) {
-		let url = "${contextPath}/member_detail?customerNo=" + customerNo ;
+		let url = "${contextPath}/logined/member_detail?customerNo=" + customerNo ;
 		location.href = url;
 	}
 	function projectDetail(e) {

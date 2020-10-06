@@ -31,4 +31,8 @@ public class PersonalMSGTest {
 //			System.out.println("발신자 : " + m.getSend().getName() + " / 메세지 내용 : " + m.getContent());
 //		});
 	}
+	//@Test
+	void count() {		
+		System.out.println(repository.countUnreadMsg(2));		
+	}
 }

@@ -38,7 +38,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 	//현재 접속중인 사용자들의 메세지를 상대별로 나눠서 담음
 	Map<Integer, Map<Integer, List<PersonalMessage>>> pmMap = new HashMap<Integer, Map<Integer, List<PersonalMessage>>>();
 
-	//customerNo에 해당하는 사용자의 Notifcation List를 담음
+	//customerNo에 해당하는 사용자의 Notification List를 담음
 	Map<Integer,List<Notification>> notiMap = new HashMap<Integer,List<Notification>>();
 
 	//접속한 회원 객체
@@ -73,6 +73,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 		String gotMessage = message.getPayload();
 		PersonalMessage newPm = new PersonalMessage();
 		Notification newNoti = new Notification();
+		String alert = "false";
 
 		System.out.println("클라이언트로부터 메세지가 도착했습니다 : " + gotMessage);
 
@@ -81,13 +82,31 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 		if(!pmMap.containsKey(customer_no)) {
 			System.out.println("★ pmMap에 해당 유저가 없어 해당 유저를 추가했습니다. ★");
 			Map<Integer, List<PersonalMessage>> pmSortMap = pmController.findByCustomerNoAndSort(customer_no);
+			Iterator<List<PersonalMessage>> pmItMap = pmSortMap.values().iterator();
+			while(pmItMap.hasNext()) {
+				List<PersonalMessage> pms = pmItMap.next();
+				Iterator<PersonalMessage> Itpms = pms.iterator();
+				while(Itpms.hasNext()) {
+					PersonalMessage arr = Itpms.next();
+					if(arr.getStatus() == 0)	{
+						alert = "true";
+					}
+				}				
+			}
 			pmMap.put(customer_no, pmSortMap);
 			System.out.println("PMMAP IN HANDLER : " + pmMap);
+			System.out.println(alert);
 		}
 		// notiMap에 해당 유저가 없는 경우
 		if (!notiMap.containsKey(customer_no)) {
 			List<Notification> pmList = notiController.findByCustomerNo(customer_no);
+			System.out.println("SIZE"+pmList.size());
 			notiMap.put(customer_no, pmList);
+		}
+		if (gotMessage.contains("connecthinksystem:checkNoti:")) {
+			String sendAlert ="connecthinksystem:checkNoti:" + alert;
+			
+			session.sendMessage(new TextMessage(sendAlert));
 		}
 
 		// 1. 나와 메세지를 주고받는 사람들의 리스트

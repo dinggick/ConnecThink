@@ -314,7 +314,7 @@ ul.list>li {
 					</div>
 					<div class="row">
 						<div class="system">
-							커넥띵크 알림<span class="new">1</span>
+							커넥띵크 알림<span class="new" id= "notinew"></span>
 						</div>
 						<div class="col-12 list_wrap">
 							<ul class="list cat-list personList">
@@ -332,7 +332,7 @@ ul.list>li {
 										<div class="msg_sender">
 											<img src="${contextPath}/img/person.png">
 											<span class="otherNoInBox">0</span>
-<!-- 											<span class="personName">고디바</span> -->
+											<span class="personName">ConnecThink</span>
 										</div>
 									</div>
 									<div class="msg_body">
@@ -409,6 +409,8 @@ var $msgContent = $("#msg_content");
 wSocket.send("connecthinksystem:loadList");
 wSocket.send("connecthinksystem:loadNotis:");
 
+
+
 //------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
 // fxLoadNotiCnt(loginedCustomer);
 // fxLoadNoti(loginedCustomer);
@@ -459,7 +461,7 @@ $msgContent.keypress(function(event){
 });
 
 //프로필 사진을 클릭하면 상세 정보 팝업창 띄우기
-$("img").click(function(e){
+$(".msg_sender>img").click(function(e){
 	memberDetail(this);
 });
 $(".personName").click(function(e){
@@ -481,49 +483,7 @@ function memberDetail(e) {
 	}
 }
 
-//읽지않은 notification의 갯수를 불러오는 함수
-// function fxLoadNotiCnt(customerNo){
-// 	$.ajax({
-// 		url:"${contextPath}/inbox/unreadNoti"
-// 		,method:"GET"
-// 			//{customerNo : ${sessionScope.loginInfo},
-// 		,data: {customerNo : customerNo,
-// 			${_csrf.parameterName} : '${_csrf.token}'}
-// 		,success:function(count){
-// 			$notiCnt.html(count);
-// 		}
-// 	});
-// }
-	
-//내가 받은 notification 전체를 불러오는 함수
-// function fxLoadNoti(customerNo){
-// 	$.ajax({
-// 		url:"${contextPath}/inbox/allNoti"
-// 		,method:"GET"
-// 			//{customerNo : ${sessionScope.loginInfo},
-// 		,data: {customerNo : customerNo,
-// 			${_csrf.parameterName} : '${_csrf.token}'}
-// 		,success:function(noties){
 
-// 			let otherData = '<img src="${contextPath}/img/person.png"><span class="otherNo" id="otherNoInBox">0</span><span class="personName">컨넥띵크</span>';
-
-// 			let sectionData = "";
-// 			let newDate = new Date(0);
-// 			noties.forEach(function(noti, index){
-// 				let sendDate = new Date(noti.notifyDate);
-// 				if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
-// 					sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
-// 					newDate = sendDate;
-// 				}
-// 				sectionData += '<div class="receive_msg">' + noti.content + '</div>';
-// 				sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-// 				sectionData += '<div style="clear:both;"></div>';
-// 			});
-// 			$otherInfoSection.html(otherData);
-// 			$msgSection.html(sectionData);
-// 		}
-// 	});
-// }
 </script>
 </body>
 </html>

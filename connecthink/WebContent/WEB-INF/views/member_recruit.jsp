@@ -7,6 +7,7 @@
 <c:set var = "project" value="${requestScope.project}"/>
 <c:set var="isManager" value="${requestScope.isManager }"/>
 <c:set var="invited" value="${requestScope.invited }"/>
+<c:set var="userInfo" value ="${sessionScope.loginInfo }"/>
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -110,7 +111,7 @@
 												</span></a> 
 												
 												&nbsp; 
-												<a class="msg" onclick="openMsgModal()"><span ><img src="img/mail2.png" alt=""
+												<a class="msg" onclick="openMsgModal()"><span ><img src="${contextPath}/img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
 
 											</div>
@@ -316,7 +317,7 @@
 			var recruitNo = document.getElementById('project_no').value;
 			
 			$.ajax({
-				url: "${contextPath}/inviteMember",
+				url: "${contextPath}/logined/inviteMember",
 				method: "POST",
 				data: {
 					customerNo: ${customer.customerNo}, 
@@ -336,14 +337,14 @@
 		function addBookmark() {
 			
 			$.ajax({
-				url : "${contextPath}/bmMember",
+				url : "${contextPath}/logined/bmMember",
 				method : "POST",
 				data : {
 					customerNo : '${customer.customerNo}',					
 					${_csrf.parameterName} : '${_csrf.token}'
 				},
 				success : function(data) {
-					console.log(data);					
+								
 					if (data == "success") {
 						
 						$("span.bm").css("display", "none");
@@ -354,7 +355,7 @@
 		}
 		function deleteBookmark(){
 			$.ajax({
-				url : "${contextPath}/delBmMember",
+				url : "${contextPath}/logined/delBmMember",
 				method : "POST",
 				data : {
 					customerNo : '${customer.customerNo}',	
@@ -387,14 +388,13 @@
 				$('#msgModal').modal("hide"); 
 			}
 		}
-		function bookClick (){
-			
+		function bookClick (){				
 			$.ajax({
-				url : "${contextPath}/mateBm",
+				url : "${contextPath}/logined/mateBm",
 				method : "POST",
-				data : {
-					customerNo : ${sessionScope.loginInfo},
-					${_csrf.parameterName} : '${_csrf.token}'},
+				data : {					
+					${_csrf.parameterName} : '${_csrf.token}'
+					},
 				success :  function(list) {
 					list.forEach(function(bm, index){
 						console.log(bm);

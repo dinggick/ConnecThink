@@ -489,7 +489,7 @@ span.customerNo {
 				data : {recruitNo : recNo,
 						${_csrf.parameterName} : '${_csrf.token}'},
 				success : function(data){
-					console.log(data);
+					
 					let $section = $(".apply_now");
 					$sectionReplace = $section.replaceWith($section);
 					$sectionReplace.find("span.bm_count").html(data);				

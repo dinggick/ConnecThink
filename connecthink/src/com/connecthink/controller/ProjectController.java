@@ -162,8 +162,12 @@ public class ProjectController {
 	@GetMapping(value="/lookUpMyProject")
 	@ResponseBody
 	public List<Project> lookUpMyProject(HttpSession session){
-		int customer_no = (int) session.getAttribute("loginInfo");
-		return service.lookUpMyProject(customer_no);
+		try {
+			int customer_no = (int) session.getAttribute("loginInfo");
+			return service.lookUpMyProject(customer_no);
+		} catch(NullPointerException e){
+			return null;
+		}		
 	}
 
 	/**

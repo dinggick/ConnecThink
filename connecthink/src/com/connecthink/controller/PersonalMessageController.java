@@ -45,4 +45,7 @@ public class PersonalMessageController {
 	public void save(PersonalMessage pm) {
 		service.save(pm);
 	}
+	public Integer countUnreadMsg(Integer CustomerNo) {
+		return service.countUnreadMsg(CustomerNo);
+	}
 }

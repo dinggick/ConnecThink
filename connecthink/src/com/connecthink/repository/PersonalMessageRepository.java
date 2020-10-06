@@ -26,4 +26,7 @@ public interface PersonalMessageRepository extends JpaRepository<PersonalMessage
 			"WHERE receive = ?1 OR send = ?1\r\n" + 
 			"ORDER BY create_date")
 	public List<PersonalMessage> findByCustomerNo(Integer customerNo);
+	@Query(nativeQuery = true, value = "SELECT COUNT(personal_msg_no) FROM personal_msg"
+			+ " WHERE receive = ?1 AND read_status = 0")
+	public Integer countUnreadMsg(Integer CustomerNo);
 }
