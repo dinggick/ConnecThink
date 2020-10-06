@@ -13,6 +13,9 @@ public interface BookmarkRecruitRepository extends JpaRepository<BookmarkRecruit
 	 * @author 홍지수
 	 * 내가 북마크한 모집 목록
 	 */
+	@Query(nativeQuery = true, value = 
+			"select * from bookmark_recruit br JOIN recruit r ON (br.recruit_no = r.recruit_no) where customer_no = ?1 order by r.create_date desc"
+			)
 	public List<BookmarkRecruit> findByIdCustomerNo(Integer customerNo);
 	
 	/**

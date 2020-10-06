@@ -38,7 +38,7 @@ public class MemberService {
 		Member member = new Member();
 		MemberId ids = new MemberId();
 		Integer mNo = 0;
-		Integer status = 0;
+		Integer status = 10;
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
 		Iterator<Member> iter = recruit.getMembers().iterator();
@@ -46,14 +46,13 @@ public class MemberService {
 			try {
 				mNo = iter.next().getCustomer().getCustomerNo();
 				status = iter.next().getEnterStatus();
-				System.out.println("테스트 : "+mNo+status);
+				System.out.println("테스트 : "+mNo+ "상태 : " + status);
 			}catch (Exception e) {
 				mNo = customerNo;
-				System.out.println("어디");
 			}
 		}
 		
-		if(mNo != customerNo) {
+		if(mNo == customerNo && status == 10) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();
 			
@@ -67,7 +66,7 @@ public class MemberService {
 
 			memberRepository.save(member);
 			
-		} else {
+		} else if (mNo == customerNo && status >= 0) {
 			throw new AddException("이미 지원함");
 		}
 		

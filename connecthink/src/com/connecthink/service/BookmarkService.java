@@ -51,8 +51,8 @@ public class BookmarkService {
 	}
 	
 	@Transactional
-	public List<BookmarkUser> findByIdSend(Integer customerNo) {
-		List<BookmarkUser> list = bmUserRepository.findByIdSend(customerNo);
+	public List<BookmarkUser> findByIdSendOrderByReceiveDesc(Integer customerNo) {
+		List<BookmarkUser> list = bmUserRepository.findByIdSendOrderByReceiveDesc(customerNo);
 		list.forEach(bu -> {
 			bu.getReceive().getName();
 			Iterator<CustomerPosition> iter = bu.getReceive().getCustomerPositions().iterator();

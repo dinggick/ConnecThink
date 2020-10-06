@@ -357,7 +357,7 @@ h4 .requir{
 	 					if(answer == true){
 	 						location.href = "${contextPath}/add_rec?ProjectNo="+pNo;
 	 					} else {
-	 						location.href = "${contextPath}/index";
+	 						location.href = "${contextPath}/";
 	 					}
 	 				} else {
 	 					alert("등록 실패");
