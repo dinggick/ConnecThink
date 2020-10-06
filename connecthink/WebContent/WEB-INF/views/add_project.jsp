@@ -185,7 +185,7 @@ h4 .requir{
 			let data = new FormData($(form)[0]);
 			alert(data);
 			$.ajax({
-				url : "${contextPath}/addProject",
+				url : "${contextPath}/logined/addProject",
 				method : "POST",
 				enctype : "multipart/form-data",
 	 			processData: false,
