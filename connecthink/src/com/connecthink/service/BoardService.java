@@ -1,6 +1,7 @@
 package com.connecthink.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -181,6 +182,11 @@ public class BoardService {
 	 */
 	public void updateProject(Integer projectNo) {
 		Project p =projectRepository.findById(projectNo).get();
+		p.getRecruits().forEach(r ->{
+			r.getMembers().forEach(m ->{
+				m.setQuitDate(new Date());
+			});
+		});
 		
 		p.setProjectStatus(2);
 		
