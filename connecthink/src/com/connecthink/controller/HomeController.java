@@ -26,6 +26,11 @@ public class HomeController {
 		return "header";
 	}
 	
+	@RequestMapping("/about")
+	public void about() {
+		
+	}
+	
 	@RequestMapping("/member_recruit")
 	public void recruit() {
 		System.out.println("멤버 상세");
