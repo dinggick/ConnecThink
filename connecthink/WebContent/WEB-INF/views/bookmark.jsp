@@ -50,6 +50,11 @@
 	height: 70px !important;
 }
 
+.thumb img {
+	width: 70px !important;
+	height: 70px !important;
+}
+
 
 
 </style>

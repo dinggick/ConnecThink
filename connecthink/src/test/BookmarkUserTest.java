@@ -33,7 +33,7 @@ class BookmarkUserTest {
 
 	@Test
 	void findByIdSendTest() {
-		repository.findByIdSend(1).forEach(bu -> {
+		repository.findByIdSendOrderByReceiveDesc(1).forEach(bu -> {
 			System.out.println("관심 등록한 사용자 번호 : " + bu.getSend().getCustomerNo());
 			System.out.println("관심 등록 대상자 번호 : " + bu.getReceive().getCustomerNo());
 			Set<CustomerPosition> cp = bu.getReceive().getCustomerPositions();

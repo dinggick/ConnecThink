@@ -448,7 +448,7 @@ span.customerNo {
 		function bookClick (){
 			let recNo = "${recNo}";
 			$.ajax({
-				url : "${contextPath}/recBm",
+				url : "${contextPath}/logined/recBm",
 				method : "POST",
 				data : {recruitNo : recNo,
 					${_csrf.parameterName} : '${_csrf.token}'},
