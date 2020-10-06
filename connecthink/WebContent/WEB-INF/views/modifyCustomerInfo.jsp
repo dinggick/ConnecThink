@@ -349,7 +349,7 @@
 		 			},
 		 			data : formData,
 		 			success : (data, textStatus, jqXHR) => {
-		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?t=" + Math.random());
+		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime());
 		 				$(this).prev().css("width", "48").css("height", "48");
 		 			},
 		 			error : () => {
