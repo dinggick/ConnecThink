@@ -32,7 +32,7 @@ public class BookmarkController {
 	 * @author 홍지수
 	 * 북마크한 메이트 목록 조회
 	 */
-	@PostMapping(value="/logined/mateBm")
+	@PostMapping(value="/logined/customerBm")
 	@ResponseBody
 	public List<BookmarkUser> findByIdSendOrderByReceiveDesc(Integer customerNo, HttpSession session){
 		customerNo = (Integer) session.getAttribute("loginInfo");
