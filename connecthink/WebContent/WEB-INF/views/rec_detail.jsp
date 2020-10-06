@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="detail" value="${requestScope.detail}" />
@@ -17,7 +17,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- <link rel="manifest" href="site.webmanifest"> -->
-<link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
+<link rel="shortcut icon" type="image/x-icon"
+	href="${contextPath}/img/favicon.png">
 <!-- Place favicon.ico in the root directory -->
 
 <!-- CSS here -->
@@ -127,8 +128,9 @@ span.customerNo {
 							<div class="jobs_right text-right pt-2">
 								<div class="apply_now">
 									<span class="bm_count">${bmCount}</span> <img
-										src="${contextPath}/img/bookmark.png" class="bm mr-2" onclick="bookmark();">
-									<img src="${contextPath}/img/bookmark2.png" class="on mr-2"
+										src="${contextPath}/img/bookmark.png" class="bm mr-2"
+										onclick="bookmark();"> <img
+										src="${contextPath}/img/bookmark2.png" class="on mr-2"
 										onclick="delmark();"> <span class="rec_no">${recNo}</span>
 								</div>
 							</div>
@@ -146,11 +148,14 @@ span.customerNo {
 										<li>모집직무 : ${rec.position.name}</li>
 										<li>모집인원 : ${rec.headCount}</li>
 										<li>요구사항 : ${rec.requirement}</li>
-										<fmt:formatDate var="dl" value="${rec.deadline}" pattern="yyyy-MM-dd"/>
+										<fmt:formatDate var="dl" value="${rec.deadline}"
+											pattern="yyyy-MM-dd" />
 										<li>모집기한 : ${dl}</li>
 										<li>모집상세</li>
-										<c:forEach items="${requestScope.fList}" var="fList" varStatus="status">
-											<span style="padding-left: 50px;">${fList}</span><br>
+										<c:forEach items="${requestScope.fList}" var="fList"
+											varStatus="status">
+											<span style="padding-left: 50px;">${fList}</span>
+											<br>
 										</c:forEach>
 									</c:if>
 								</c:forEach>
@@ -170,16 +175,19 @@ span.customerNo {
 							<ul class="mb-4">
 								<li>${detail.purpose}</li>
 							</ul>
-							
+
 							<div class="team_member mt-2">
 								<!-- 팀원 프로필 -->
 								<h4 class="mt-3">프로젝트를 함께 할 팀원</h4>
 								<c:forEach items="${member}" var="member" varStatus="status">
-									<div class="single_candidates mb-4 mr-3"style="display: inline-block;">
+									<div class="single_candidates mb-4 mr-3"
+										style="display: inline-block;">
 										<div class="thumb text-center mr-2">
-										<img src="http://localhost/storage/customer/${member.customerNo}.jpg"
-										onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진" onclick="memberDetail(this);">
-											<span class="customerNo">${member.customerNo}</span> <span
+											<img
+												src="http://localhost/storage/customer/${member.customerNo}.jpg"
+												onerror="this.src='${contextPath}/img/d2.jpg'" alt="프로필사진"
+												onclick="memberDetail(this);"> <span
+												class="customerNo">${member.customerNo}</span> <span
 												style="font-size: 0.9em;">${member.name}</span>
 										</div>
 									</div>
@@ -195,12 +203,14 @@ span.customerNo {
 							<!-- 팀장 프로필 -->
 							<div class="thumb text-center mr-2">
 								<div style="width: 70px; height: 99px;">
-								<div>[팀장]</div> 
-								<img src="http://localhost/storage/customer/${manager.customerNo}.jpg"
-										onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진" onclick="memberDetail(this);" class="mt-1">
-							 	<span class="customerNo">${manager.customerNo}</span>
-							 	<div>${manager.name}</div>
-							 	</div>
+									<div>[팀장]</div>
+									<img
+										src="http://localhost/storage/customer/${manager.customerNo}.jpg"
+										onerror="this.src='${contextPath}/img/d2.jpg'" alt="프로필사진"
+										onclick="memberDetail(this);" class="mt-1"> <span
+										class="customerNo">${manager.customerNo}</span>
+									<div>${manager.name}</div>
+								</div>
 							</div>
 						</div>
 						<div class="rec_foot_right">
@@ -212,32 +222,60 @@ span.customerNo {
 			</div>
 		</div>
 	</div>
-		<div class="modal fade" id="msgModal" role="dialog">
+	
+	<!-- 메세지 모달 -->
+	<div class="modal fade" id="msgModal" role="dialog">
 		<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
-				 <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLongTitle">메세지</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		                <span aria-hidden="true">&times;</span>
-		            </button>					
+				<div class="modal-header">
+					<h5 class="modal-title" id="loginModalLongTitle">메세지</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="modal-body">
-			
-					<div class="col-md-9">					
-							<textarea id="msg_content" rows="10" cols="50" style="border: none; resize:none"></textarea>			
-									
+
+					<div class="col-md-9">
+						<textarea id="msg_content" rows="10" cols="50"
+							style="border: none; resize: none"></textarea>
+
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" id ="sendButton" onclick="sendPersonalMsg()">보내기</button>
-				
+					<button type="button" class="btn btn-default" id="sendButton"
+						onclick="sendPersonalMsg()">보내기</button>
+
 				</div>
 			</div>
 
 		</div>
 	</div>
-	
+
+	<!-- 종료 모달  -->
+	<div class="modal fade" id = "ending">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title">종료 된 모집</h4>
+				</div>
+				<div class="modal-body text-center p-5">
+					<h5>모집이 종료 되었습니다 :(</h5>
+				</div>
+				<div class="modal-footer ending">
+					<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/'">확인</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+
+
+
+
 	<!-- 본문 끝 -->
 	<!-- footer start -->
 	<footer class="footer">
@@ -286,6 +324,7 @@ span.customerNo {
 	<c:forEach items="${detail.recruits}" var="rec" varStatus="status">
 		<c:if test="${recNo eq rec.recruitNo}">
 			var recName = "${rec.requirement}";
+			var status = "${rec.recruitStatus}";
 		</c:if>
 	</c:forEach>
 	
@@ -297,6 +336,20 @@ span.customerNo {
 			data += '<button class="boxed-btn mt-4" onclick="modify();">수정하기</button>';
 			data += '<button class="boxed-btn mt-4 ml-2" onclick="del();">삭제하기</button>';
 			$section.html(data);
+			
+			let $mdal = $("div.ending");
+			let mdata = "";
+			mdata =	'<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>'
+			$mdal.html(mdata);
+		}
+		
+		if(status == 2){
+			$(".boxed-btn").css("display","none");
+			$("#ending").modal("show").css({
+				"margin-top" : function(){
+					return ($(this).height()/3);
+				}
+			});
 		}
 	});
 	
