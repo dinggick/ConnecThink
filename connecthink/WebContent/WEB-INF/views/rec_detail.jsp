@@ -373,6 +373,8 @@ span.customerNo {
 		//지원하기
 		function apply(){
 			let recNo = "${recNo}";
+			let managerNo = "${manager.customerNo}";
+			var notiContent = "님이" + "${detail.title}" + "에 지원을 하였습니다.";
 			if(customerNo == ""){
 				alert("로그인 후 사용 가능합니다");
 			} else {
@@ -388,6 +390,7 @@ span.customerNo {
 						success: function(response){
 							if(response == "success"){
 								alert("지원 성공");
+								wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
 							} else {
 								alert("이미 지원했거나 속해있는 프로젝트 입니다");
 							}

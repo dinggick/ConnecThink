@@ -16,13 +16,13 @@ public class PersonalMessageController {
 	@Autowired
 	PersonalMessageService service;
 
-	@RequestMapping(value="/inbox")
-	public void inbox() {
-		
+	@RequestMapping(value="/logined/inbox")
+	public String inbox() {
+		return "inbox";
 	}
 	
 	/**
-	 * @author IM CRYSTAL
+	 * @author 임수정
 	 * 한 회원의 번호로 그 회원의 모든 personal message를 가져와서, 상대방별로 분류해 map에 담는다.
 	 * map의 key는 상대방 회원번호, value는 그 상대방과 나눈 personal message를 모두 담은 List. 
 	 */
@@ -31,7 +31,7 @@ public class PersonalMessageController {
 	}
 	
 	/**
-	 * @author IM CRYSTAL
+	 * @author 임수정
 	 * 인박스에서 상대회원과의 메세지함에 들어갔을 때, 상대방이 보낸 메세지를 읽음 처리한다. (=status를 1로 update)
 	 */
 	public void updateStatus(Integer customerNo, Integer otherNo) {
@@ -39,7 +39,7 @@ public class PersonalMessageController {
 	}
 	
 	/**
-	 * @author IM CRYSTAL
+	 * @author 임수정
 	 * personal message를 DB에 insert 혹은 update 한다.
 	 */
 	public void save(PersonalMessage pm) {

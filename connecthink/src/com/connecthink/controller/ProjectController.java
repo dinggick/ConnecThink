@@ -35,9 +35,9 @@ public class ProjectController {
 	 * @author 임수정
 	 * manageTeam.jsp 보여주기
 	 */
-	@RequestMapping("/manageTeam")
-	public void manageTeam() {
-
+	@RequestMapping("/logined/manageTeam")
+	public String manageTeam() {
+		return "manageTeam";
 	}
 
 	/**

@@ -23,7 +23,7 @@ import com.connecthink.entity.PersonalMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class headerWebSocketHandler extends TextWebSocketHandler {
-
+	
 	@Autowired
 	private PersonalMessageController pmController;
 	@Autowired
@@ -33,7 +33,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 
 	/* PersonalMessage & Notification용 변수 */
 	//현재 접속중인 사용자들과 세션 정보를 담음
-	Map<Integer, WebSocketSession> loginUser = new HashMap<Integer, WebSocketSession>();
+	Map<Integer, WebSocketSession> loginUserMap = new HashMap<Integer, WebSocketSession>();
 
 	//현재 접속중인 사용자들의 메세지를 상대별로 나눠서 담음
 	Map<Integer, Map<Integer, List<PersonalMessage>>> pmMap = new HashMap<Integer, Map<Integer, List<PersonalMessage>>>();
@@ -62,7 +62,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 		System.out.println("HttpSession ID : "+customer_no+" webSocketID : "+session.getId()+" 접속");
 
 		//map에 회원번호와 세션 담기
-		loginUser.put(customer_no, session);
+		loginUserMap.put(customer_no, session);
 	}
 
 
@@ -72,6 +72,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 		Integer customer_no = (Integer)session.getAttributes().get("loginInfo");
 		String gotMessage = message.getPayload();
 		PersonalMessage newPm = new PersonalMessage();
+		Notification newNoti = new Notification();
 
 		System.out.println("클라이언트로부터 메세지가 도착했습니다 : " + gotMessage);
 
@@ -81,6 +82,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			System.out.println("★ pmMap에 해당 유저가 없어 해당 유저를 추가했습니다. ★");
 			Map<Integer, List<PersonalMessage>> pmSortMap = pmController.findByCustomerNoAndSort(customer_no);
 			pmMap.put(customer_no, pmSortMap);
+			System.out.println("PMMAP IN HANDLER : " + pmMap);
 		}
 		// notiMap에 해당 유저가 없는 경우
 		if (!notiMap.containsKey(customer_no)) {
@@ -91,6 +93,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 		// 1. 나와 메세지를 주고받는 사람들의 리스트
 		if (gotMessage.contains("connecthinksystem:loadList")) {
 			System.out.println("★ 유저와 메세지를 주고받는 사람들의 리스트를 전송하겠습니다.★");
+			System.out.println("PMMAP IN HANDLER : " + pmMap);
 			Map<Integer, List<PersonalMessage>> pmSortMap = pmMap.get(customer_no);
 
 			//상대방 번호를 iterator로 가져온다.
@@ -154,8 +157,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			});
 		}
 		//2.1 회원의 노티 화면에 보여주기
-		if(gotMessage.contains("connecthinksystem:loadNotis:")) {
-			
+		if(gotMessage.contains("connecthinksystem:loadNotis:")) {			
 			List<Notification> nts = notiMap.get(customer_no);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadNotis:";
@@ -185,7 +187,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			pmController.save(newPm);
 			System.out.println("★새로 전송한 personal message를 디비에 insert 했습니다. ★");
 			//상대방에게 메세지 전송
-			WebSocketSession receiveSession = loginUser.get(otherNo);
+			WebSocketSession receiveSession = loginUserMap.get(otherNo);
 			String sendPmJson = "connecthinksystem:pm:";
 			sendPmJson += mapper.writeValueAsString(newPm);
 			System.out.println("이 메세지를 보낼거예요 : " + sendPmJson);
@@ -205,16 +207,52 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			}
 			pmMap.get(customer_no).get(otherNo).add(newPm);
 		}
-
-		
-
+		//4. 노티 보내기
+		if(gotMessage.contains("connecthinksystem:nto:")) {
+			String[] contentArr = gotMessage.split(":");
+			Integer otherNo = Integer.parseInt(contentArr[2]);
+			String pmContent = contentArr[3];
+			thisCustomer = customerController.findCustomerByNo(customer_no);
+			otherCustomer = customerController.findCustomerByNo(otherNo);
+			pmContent = thisCustomer.getName() + pmContent;
+			newNoti.setCustomer(otherCustomer); newNoti.setContent(pmContent);
+			newNoti.setRead_status(0);
+			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));
+			//repository에 인서트
+			notiController.save(newNoti);
+			WebSocketSession receiveSession = loginUserMap.get(otherNo);			
+			String sendPmJson = "connecthinksystem:pm:";
+			sendPmJson += mapper.writeValueAsString(newNoti);
+			if(receiveSession!=null) {
+				//접속 중일 때 실시간 전송
+				receiveSession.sendMessage(new TextMessage(sendPmJson));
+				System.out.println("★ 상대방이 접속 중이라 실시간으로 메세지 전송 완료. ★");
+			}
+			session.sendMessage(new TextMessage(sendPmJson));
+			notiMap.get(otherNo).add(newNoti);			
+		}
 	}
 
 	@Override
 	//클라이언트에서 연결을 종료 할 경우
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
 		Integer customer_no = (Integer)session.getAttributes().get("loginInfo");
-		loginUser.remove(customer_no);
+		loginUserMap.remove(customer_no);
 	}
 
+	//get 메소드
+	public Map<Integer, WebSocketSession> getLoginUserMap() {
+		return loginUserMap;
+	}
+
+
+	public Map<Integer, Map<Integer, List<PersonalMessage>>> getPmMap() {
+		return pmMap;
+	}
+
+
+	public Map<Integer, List<Notification>> getNotiMap() {
+		return notiMap;
+	}
+	
 }

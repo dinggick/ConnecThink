@@ -51,7 +51,7 @@ public class MemberService {
 				mNo = customerNo;
 			}
 		}
-		
+
 		if(mNo == customerNo && status == 10) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();

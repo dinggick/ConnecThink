@@ -58,7 +58,7 @@ public class Recruit {
 	@Column(name = "recruit_status")
 	private Integer recruitStatus;
 	
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "recruit_no")
 	private Set<Member> members;
 	
