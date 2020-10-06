@@ -239,7 +239,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 
 
    function onMessage(e) {
-	   
+	}
 
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){

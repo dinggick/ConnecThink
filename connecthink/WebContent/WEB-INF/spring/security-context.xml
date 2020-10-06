@@ -14,11 +14,12 @@
 		<security:intercept-url access="permitAll" pattern="/all/**" />
 		<security:intercept-url access="hasRole('ROLE_CUSTOMER')" pattern="/logined/**" />
 
-		<security:logout logout-url="/logout" invalidate-session="true" />
+		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID" />
 
 
 		<security:session-management invalid-session-url="/">
-			<security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />
+			<security:concurrency-control max-sessions="1"
+				error-if-maximum-exceeded="true" />
 		</security:session-management>
 	</security:http>
 	

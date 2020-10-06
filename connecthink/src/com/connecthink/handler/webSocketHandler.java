@@ -130,12 +130,14 @@ public class webSocketHandler extends TextWebSocketHandler{
 						for(Message msg : msgBox) {
 							session.sendMessage(new TextMessage(msg.getWriter().getCustomerNo()+":"+msg.getContent()+":"+msg.getCreateDate()+":"+msg.getWriter().getName()));
 						}
-						//메세지를 클라이언트 에게 모두 보냈음을 구분하는 메세지
-						session.sendMessage(new TextMessage("loadingCompleate:"));
 						//구분자 메세지 넣어주기
 						diviMsg.setContent(DIVISION);
 						msgBox.add(diviMsg);
 					}
+					
+					//메세지를 클라이언트 에게 모두 보냈음을 구분하는 메세지
+					session.sendMessage(new TextMessage("loadingCompleate:"));
+					
 					
 					//담은 메세지를 key -> (프로젝트 번호), value -> (List<Message) 맵
 					Map<Integer,List<Message>> msgMap = new HashMap<Integer,List<Message>>();
@@ -155,13 +157,6 @@ public class webSocketHandler extends TextWebSocketHandler{
 					}
 					chatCnt = 0;
 				}
-//				if(logMember.containsKey(project_no)) {//해당 프로젝트 넘버의 해당하는 배열이 있을경우
-//					logMember.get(project_no).add(getUserId(session));
-//				}else {//없을경우 배열을 생성해서 배열안에 접속중인 customer_no 를 넣고 그 배열을 map 에 넣어준다
-//					List<Integer> members = new ArrayList<Integer>();
-//					members.add(getUserId(session));
-//					logMember.put(project_no,members);
-//				}
 				
 			}else {
 				ObjectMapper mapper = new ObjectMapper();

@@ -11,9 +11,11 @@ import org.springframework.security.core.userdetails.User;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.CustomerAuth;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode(of = "username")
 public class CustomUser extends User {
 	private Customer customer;
 
