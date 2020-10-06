@@ -154,8 +154,9 @@ public class ProjectController {
 	public void add_project() {
 	}
 
-	/* @author kimdongjun
-	 * 프로젝트 협업 으로 가기위한 내 프로젝트 보여주기
+	/**
+	 * @author DongJun
+	 * 프로젝트 추가 뷰 호출
 	 */
 	@GetMapping(value="/lookUpMyProject")
 	@ResponseBody
@@ -185,7 +186,7 @@ public class ProjectController {
 	}
 	
 	/**
-	 *  @author kimdongjun
+	 *  @author DongJun
 	 *  내가 속해있는 팀 목록 조회
 	 */
 	@PostMapping(value="/lookUpmyTeam")

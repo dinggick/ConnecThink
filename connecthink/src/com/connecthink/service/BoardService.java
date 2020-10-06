@@ -38,19 +38,12 @@ public class BoardService {
 	private CustomerRepository customerRepository;
 	
 	@Autowired
-	private MemberRepository memberRepository;
-	
-	@Autowired
 	private PositionRepository positionRepository;
-	
-	@Autowired
-	private RecruitRepository recruitRepository; 
 	
 	/**
 	 * 로그를 위한 사용자가 보낸 메세지 저장
 	 * @author DongJun
 	 */
-	
 	public void sendMessage(int project_no,List<Message> messageList) {
 		System.out.println("sendMessage service 들어옴");
 		System.out.println("websocket 에게 받은 메세지 리스트 사이즈 : "+messageList.size());
@@ -97,9 +90,11 @@ public class BoardService {
 		memberInfo.add(pjInfo.getManagerNo()+":"+customerRepository.findById(pjInfo.getManagerNo()).get().getName()+":"+"teamLeader");
 		projectRepository.findById(project_no).get().getRecruits().forEach(r -> {
 			r.getMembers().forEach(m ->{
-				m.setPosition(positionRepository.findById(m.getRecruit().getPosition().getPositionNo()).get().getName());
-				members.add(m);
-				memberInfo.add(m.getCustomer().getCustomerNo()+":"+m.getCustomer().getName()+":"+positionRepository.findById(m.getRecruit().getPosition().getPositionNo()).get().getName());
+				if(m.getEnterStatus() == 1) {
+					m.setPosition(positionRepository.findById(m.getRecruit().getPosition().getPositionNo()).get().getName());
+					members.add(m);
+					memberInfo.add(m.getCustomer().getCustomerNo()+":"+m.getCustomer().getName()+":"+positionRepository.findById(m.getRecruit().getPosition().getPositionNo()).get().getName());				
+				}
 			});
 		});
 		return memberInfo;
