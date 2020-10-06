@@ -1330,8 +1330,11 @@ scale
 			isManager : ${isManager},
 			teamTitle :  "${title}",
 			defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png"
+		},created(){
+			this.showMemberList();
 		}
 		,methods : {
+			//맴버 정보 가져오기
 			showMemberList(){
 				axios
 			  	.get('/connecthink/lookUpMember', {
@@ -1343,11 +1346,12 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost/storage/customer/"+memberInfo[0]+".jpg"});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost:8080/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
 			},//showMemberList
+			
 			//프로젝트 종료
 			endProject(){
 				var Backlen=history.length;  
@@ -1366,6 +1370,7 @@ scale
 	                });
 				}
 			},
+			
 			//프로젝트탈퇴
 			endMyProject(){
 				var Backlen=history.length;   
@@ -1384,12 +1389,16 @@ scale
 	                });
 				}
 			},
+			
 			//유저의 이미지 없을경우 default image 로 대체
 			imageNotFound(event){
 				event.target.src = this.defaultImg;
 			}
-		},
+			
+		}//method
 	});
+	
+	var loginUsers = new Array();
 	
 	//채팅 헤더 토글
 	var chat = new Vue({
@@ -1408,18 +1417,23 @@ scale
 		   showNotify : false,
 		   isLoadingNow : true,
 		   defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png",
-		   userImg : ""
+		   userImg : "",
+		   compleate : false
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
-			  sideBar.showMemberList();
-			  this.connect();
-    		}//created
-		  
-		   //변화가 있을경우
-		  ,updated(){
+			this.connect();
+			}//created
+    	  //변화가 있을경우
+		  ,updated(ev){
+			this.$nextTick(function() {
+	  			if(this.compleate){
+	  				this.isOnline();	
+	  			}
+			});
+			
+			
 			var chatDiv = document.getElementById("chatContent");
-		 	
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
@@ -1470,7 +1484,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.125/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.14:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1486,11 +1500,18 @@ scale
 						}
 						else if(datas[0] == "loginInfo"){
 							var loguserArray = datas[1].substring(1,datas[1].length-1).split(",");
-							var className = "status online";
+							var className = "status online";							
+							let cnt = 0;
 							loguserArray.forEach(customer_no => {
-								var dc = document.getElementById(customer_no.trim()+"no");
- 								dc.setAttribute("class",className);
+								var dom = document.getElementById(customer_no.trim()+"no");
+								if(dom == null){ // dom rendering X
+									loginUsers[cnt] = customer_no;
+									cnt++;
+								}else{
+									dom.setAttribute("class",className);
+								}								
 							});
+							this.compleate = true;
 						}else if(datas[0] == "logoutInfo"){
 							var logoutUser_no = datas[1];
 							var className = "status offline";
@@ -1508,7 +1529,7 @@ scale
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//가져온 유저의 프로필 사진
-								let imageUrl = "http://localhost/storage/customer/"+user+".jpg";
+								let imageUrl = "http://localhost:8080/storage/customer/"+user+".jpg";
 								
 								//전송한 사람이 내가 아닐경우
 								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});
@@ -1557,6 +1578,17 @@ scale
 			  //유저의 이미지 없을경우 default image 로 대체
 			  imageNotFound(event){
 				  event.target.src = this.defaultImg;
+			  },			  
+			  //로그인 한 유저의 li dom 접근하여 class 속성 변경
+			  isOnline(){
+				  var className = "status online";
+					if(loginUsers.length != 0){
+						for(let i = 0; i < loginUsers.length; i++){
+							var customer_no = loginUsers[i];
+							document.getElementById(customer_no.trim()+"no").setAttribute("class",className);
+							this.compleate = false;
+						}
+					}
 			  }
 		  }//method
 		});
