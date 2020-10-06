@@ -183,9 +183,8 @@ h4 .requir{
 	$(".submit").click(function(){
 		if(check() != false){
 			let data = new FormData($(form)[0]);
-			alert(data);
 			$.ajax({
-				url : "${contextPath}/addProject",
+				url : "${contextPath}/logined/addProject",
 				method : "POST",
 				enctype : "multipart/form-data",
 	 			processData: false,
@@ -195,9 +194,9 @@ h4 .requir{
 	 				if(response.status == "success"){
 	 					let answer = confirm("프로젝트 등록이 완료 되었습니다. 모집을 등록하시겠습니까?");
 	 					if (answer == true){
-	 						location.href="${contextPath}/add_rec?projectNo="+response.projectNo;
+	 						location.href="${contextPath}/logined/add_rec?projectNo="+response.projectNo;
 	 					} else {
-	 						location.href = "${contextPath}/index";
+	 						location.href = "${contextPath}/";
 	 					}
 	 				} else {
 	 					alert("등록실패");
