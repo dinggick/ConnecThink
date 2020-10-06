@@ -159,7 +159,7 @@ public class ProjectController {
 	 * @author DongJun
 	 * 프로젝트 추가 뷰 호출
 	 */
-	@GetMapping(value="/lookUpMyProject")
+	@GetMapping(value="/logined/lookUpMyProject")
 	@ResponseBody
 	public List<Project> lookUpMyProject(HttpSession session){
 		int customer_no = (int) session.getAttribute("loginInfo");

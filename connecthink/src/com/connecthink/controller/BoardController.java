@@ -35,7 +35,7 @@ public class BoardController {
 	 *  @author DongJun, 재원
 	 *  팀 협업 스페이스로 이동
 	 */
-   @RequestMapping("/board")
+   @RequestMapping("/logined/board")
    ModelAndView board(HttpSession session,HttpServletRequest req,@RequestParam("project_no") int project_no) {
       ModelAndView mv = new ModelAndView();
       Project pjInfo =  pjService.lookUpMyManager(project_no);
