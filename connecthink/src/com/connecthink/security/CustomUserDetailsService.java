@@ -44,5 +44,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		return c == null ? null : new CustomUser(c, authorities);
 	}
+	
+	public List<Integer> getLoginInfos() {
+		return loginInfos;
+	}
 
 }
