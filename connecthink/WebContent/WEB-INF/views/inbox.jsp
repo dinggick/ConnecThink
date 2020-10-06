@@ -407,6 +407,7 @@ var $msgContent = $("#msg_content");
 
 //-------------- 인박스 들어오자마자 상대방 리스트 불러오기 --------------
 wSocket.send("connecthinksystem:loadList");
+wSocket.send("connecthinksystem:loadNotis:");
 
 //------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
 // fxLoadNotiCnt(loginedCustomer);
