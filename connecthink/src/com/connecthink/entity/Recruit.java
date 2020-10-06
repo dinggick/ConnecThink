@@ -46,6 +46,9 @@ public class Recruit {
 	@Column(name = "recruit_no", length = 20)
 	private String recruitNo;
 	
+	@Column(name = "project_no")
+	private Integer projectNo;
+	
 	@Column(name = "head_count")
 	private Integer headCount;
 	
@@ -59,7 +62,7 @@ public class Recruit {
 	private Integer recruitStatus;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "recruit_no")
+	@JoinColumn(name = "recruit_no", updatable = false)
 	private Set<Member> members;
 	
 	@OneToOne(cascade = CascadeType.ALL)
