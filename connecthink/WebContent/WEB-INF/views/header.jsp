@@ -164,16 +164,17 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
-	
+	alert("websocket open");
    }
    //연결이 끊어졌을때
    function onClose(e) {
     alert("WebSocket closed!");
    }
    //메세지 수신시
-   function onMessage(e) {	
-   console.log(e.data);
+   function onMessage(e) {	   
    //수신한 메세지가 상대방 목록 불러오기인 경우
+   alert(e.data);
+   var $msgSection = $('.msg_body');
    if (e.data.includes("connecthinksystem:loadList:")){
       let otherStr = "";
       //처음 항목이 올 때는 리스트를 비운다.
@@ -183,7 +184,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
       } else {
          otherStr = e.data.replace("connecthinksystem:loadList:","");
       }
-      otherObj = JSON.parse(otherStr);
+      otherObj = JSON.parse(otherStr)
       console.log(otherObj);
       
       let sectionData = $listSection.html();
@@ -236,8 +237,27 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
       }
       $msgSection.html(sectionData);
    }
-
-
+   //수신한 메세지가 노티인 경우
+   else if (e.data.includes("connecthinksystem:loadNotis:")){
+	   console.log("loadingNotis");
+	   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
+	   MSGs = JSON.parse(pmStr);
+	   console.log(MSGs);
+	      let sectionData = "";
+	      let newDate = new Date(0);
+	      MSGs.forEach(function(msg, index){
+	         let sendDate = new Date(msg.notifyDate);
+	         if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+	            sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+	            newDate = sendDate;
+	         }
+	        	sectionData += '<div class="receive_msg">' + msg.content + '</div>';
+	            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+	            sectionData += '<div style="clear:both;"></div>';
+	      });
+	      $msgSection.html(sectionData);
+	   }
+   }
    function onMessage(e) {
 	   
 

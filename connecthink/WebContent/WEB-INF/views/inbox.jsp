@@ -332,7 +332,7 @@ ul.list>li {
 										<div class="msg_sender">
 											<img src="${contextPath}/img/person.png">
 											<span class="otherNoInBox">0</span>
-											<span class="personName">고디바</span>
+<!-- 											<span class="personName">고디바</span> -->
 										</div>
 									</div>
 									<div class="msg_body">
@@ -429,7 +429,6 @@ $listSection.on("click","li.person",function(e){
 });
 
 $(".system").click(function(e){
-// 	fxLoadNoti(loginedCustomer);
 	wSocket.send("connecthinksystem:loadNotis:");
 	return false;
 });
