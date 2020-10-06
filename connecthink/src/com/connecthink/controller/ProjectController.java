@@ -33,7 +33,7 @@ public class ProjectController {
 
 	/**
 	 * @author 임수정
-	 * 내 지원 목록 보기
+	 * 내가 지원한 프로젝트 목록 보기
 	 */
 	@PostMapping(value="/manageProject/myApplication")
 	@ResponseBody
@@ -43,34 +43,14 @@ public class ProjectController {
 
 	/**
 	 * @author 임수정
-	 * 내가 받은 초대 목록 보기
+	 * 내가 초대 받은 프로젝트 목록 보기
 	 */
 	@PostMapping(value="/manageProject/myInvitation")
 	@ResponseBody
 	public List<Project> MyInvitation(Integer memberNo) {
 		return service.findMyInvitation(memberNo);
 	}
-
-	/**
-	 * @author 임수정
-	 * 내 프로젝트에 초대했던 멤버 목록 보기
-	 */
-	@PostMapping(value="/manageProject/invited")
-	@ResponseBody
-	public List<Project> Invited(Integer managerNo) {
-		return service.findInvited(managerNo);
-	}
 	
-	/**
-	 * @author 임수정
-	 * 내 프로젝트에 지원한 멤버 목록 보기
-	 */
-	@PostMapping(value="/manageProject/applied")
-	@ResponseBody
-	public List<Project> Applied(Integer managerNo) {
-		return service.findApplied(managerNo);
-
-	}
 	/** @author 이혜림
 	 * 멤버를 초대할 프로젝트 불러오기*/
 	@GetMapping(value="/memberModal")

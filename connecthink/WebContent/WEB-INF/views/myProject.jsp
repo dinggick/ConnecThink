@@ -95,8 +95,15 @@
 	text-decoration: none;
 	font-weight: 500;
 	cursor: pointer;
-	transition: all 0.3s ease 0s;
+	transition: all 0.2s ease 0s;
 	padding: 8px 20px 8px 20px;
+}
+.manageInvited, .manageApplied {
+	font-size: 0.9em;
+	padding: 8 8 8 8;
+}
+.manageInvited:hover, .manageApplied:hover {
+	color: #f44a40;
 }
 .allow-my-invi, .allow-in {
 	color: #38a4ff;
@@ -306,7 +313,9 @@
 						} else {
 							data += '<div class="status">종료</div>';
 						}
-						data += '<div class="manageMember text-center">초대/지원 관리</div></div>';
+						data += '<div class="manageMember text-center">';
+						data += '<a href="#" class="manage-bnt manageInvited" style="margin-right: 10px;">초대 관리 ▼</a>';
+						data += '<a href="#" class="manage-bnt manageApplied">지원 관리 ▼</a></div></div>';
 					});
 				} else {
 					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 팀이 없습니다.</div>";

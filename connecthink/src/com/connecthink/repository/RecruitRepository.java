@@ -33,4 +33,10 @@ public interface RecruitRepository extends JpaRepository<Recruit, String> {
 	 */
 	@Procedure("DELETE_RECRUIT")
 	public void deleteRec(String recruitNo);
+	
+	/**
+	 * @author IM CRYSTAL
+	 * 특정 프로젝트에 해당하는 모집 목록 반환
+	 */
+//	public List<Recruit> findBy
 }
