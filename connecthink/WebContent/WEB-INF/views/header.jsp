@@ -162,7 +162,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
-//     alert("Welcome, " + loginedCustomer + "! WebSocket opened!");
+	
    }
    //연결이 끊어졌을때
    function onClose(e) {

@@ -547,7 +547,7 @@ function allow(recruitNo, memberNo){
 function fxRecruitDetail(recruitNo){
 	window.open("about:blank", "winName");
 	let form = document.recruitForm;
-	form.action = "${contextPath}/rec_detail";
+	form.action = "${contextPath}/all/rec_detail";
 	form.target = "winName";
 	$(form).find("input[name=recNo]").val(recruitNo);
 	form.submit();
@@ -557,7 +557,7 @@ function fxRecruitDetail(recruitNo){
 function fxMemberDetail(memberNo){
 	window.open("about:blank", "winName");
 	let form = document.memberForm;
-	form.action = "${contextPath}/member_recruit";
+	form.action = "${contextPath}/all/member_recruit";
 	form.target = "winName";
 	$(form).find("input[name=customerNo]").val(memberNo);
 	form.submit();

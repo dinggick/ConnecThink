@@ -402,7 +402,6 @@ var $listSection = $("ul.personList");
 var $otherInfoSection = $(".msg_sender");
 var $msgSection = $(".msg_body");
 var $notiCnt = $(".system>.new");
-var testCustomer = 101;
 var $sendBtn = $("#send-btn");
 var $msgContent = $("#msg_content");
 
@@ -459,7 +458,29 @@ $msgContent.keypress(function(event){
     }
 });
 
+//프로필 사진을 클릭하면 상세 정보 팝업창 띄우기
+$("img").click(function(e){
+	memberDetail(this);
+});
+$(".personName").click(function(e){
+	memberDetail(this);
+});
+
+//이름을 클릭하면 상세 정보 팝업창 띄우기
+
 //-------------------------- 함수 ----------------------------
+
+//상세 정보 팝업창 띄우기
+function memberDetail(e) {
+	if(loginedCustomer == ""){
+		alert("로그인 후 사용 가능 합니다");
+	} else {
+		let customerNo = $(e).siblings(".otherNoInBox").html();
+		let url = "${contextPath}/member_detail?customerNo="+customerNo;
+		window.open(url,"_blank", "height=800, width=800");
+	}
+}
+
 //읽지않은 notification의 갯수를 불러오는 함수
 // function fxLoadNotiCnt(customerNo){
 // 	$.ajax({
