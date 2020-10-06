@@ -10,7 +10,7 @@
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Job Board</title>
+<title>회원 상세</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -110,7 +110,7 @@
 												</span></a> 
 												
 												&nbsp; 
-												<a class="msg" onclick="openMsgModal()"><span ><img src="img/mail2.png" alt=""
+												<a class="msg" onclick="openMsgModal()"><span ><img src="${contextPath}/img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
 											</div>
 										</div>
@@ -342,7 +342,7 @@
 		function addBookmark() {
 			
 			$.ajax({
-				url : "${contextPath}/bmMember",
+				url : "${contextPath}/logined/bmCustomer",
 				method : "POST",
 				data : {
 					customerNo : '${customer.customerNo}',					
@@ -360,7 +360,7 @@
 		}
 		function deleteBookmark(){
 			$.ajax({
-				url : "${contextPath}/delBmMember",
+				url : "${contextPath}/logined/delBmCustomer",
 				method : "POST",
 				data : {
 					customerNo : '${customer.customerNo}',	
@@ -396,7 +396,7 @@
 		function bookClick (){
 			
 			$.ajax({
-				url : "${contextPath}/logined/mateBm",
+				url : "${contextPath}/logined/customerBm",
 				method : "POST",
 				data : {
 					customerNo : ${sessionScope.loginInfo},

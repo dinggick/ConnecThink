@@ -80,13 +80,13 @@ height: 70px !important;
 				<!-- 박스 -->
 				<c:forEach items="${customer}" var="customer" varStatus="status">
 				<div class="col-md-6 col-lg-4">
-					<div class="single_candidates" onclick="mateDetail(this);">
+					<div class="single_candidates" onclick="customerDetail(this);">
 						<div class="thumb" style="display: inline-block;">
                             <img src="http://localhost/storage/customer/${customer.customerNo}.jpg" onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진">
 						</div>
 						<h4 style="display: inline-block;" class="ml-3 mt-2">${customer.name}</h4>
 						<span class="customerNo">${customer.customerNo}</span>
-						<ul class="mateInfo mt-4" style="list-style: none;">
+						<ul class="customerInfo mt-4" style="list-style: none;">
 							<c:forEach items="${customer.customerPositions}" var="position" varStatus="st1">
 							<li class="position" style="font-weight: bold;">${position.position.name}</li>
 							</c:forEach>
@@ -145,15 +145,15 @@ height: 70px !important;
 
 	<script>
 	$(function(){
-		fetch("${contextPath}/all/mateList").then(function(data){
+		fetch("${contextPath}/all/customerList").then(function(data){
 			console.log("fetch ajax 성공");
 		});
 	});
 	
 	//클릭 시 상세 페이지로 이동
-	function mateDetail(e){
+	function customerDetail(e){
 		let $customerNo = $(e).find("span.customerNo").html();
-		let url = "${contextPath}/member_detail?customerNo=" + $customerNo ;
+		let url = "${contextPath}/logined/customer_detail?customerNo=" + $customerNo ;
 		location.href = url;
 		
 	}
