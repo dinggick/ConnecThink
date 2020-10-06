@@ -1,68 +1,106 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 
 <head>
-   
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Job Board</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="manifest" href="site.webmanifest"> -->
-    <link rel="shortcut icon" type="image/x-icon" href="${contextPath}/img/favicon.png">
-    <!-- Place favicon.ico in the root directory -->
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Job Board</title>
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSS here -->
-    <link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
-    <link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
-    <link rel="stylesheet" href="${contextPath}/css/nice-select.css">
-    <link rel="stylesheet" href="${contextPath}/css/flaticon.css">
-    <link rel="stylesheet" href="${contextPath}/css/gijgo.css">
-    <link rel="stylesheet" href="${contextPath}/css/animate.min.css">
-    <link rel="stylesheet" href="${contextPath}/css/slicknav.css">
-    <link rel="stylesheet" href="${contextPath}/css/w3school.css">
+<!-- <link rel="manifest" href="site.webmanifest"> -->
+<link rel="shortcut icon" type="image/x-icon"
+	href="${contextPath}/img/favicon.png">
+<!-- Place favicon.ico in the root directory -->
 
-    <link rel="stylesheet" href="${contextPath}/css/style.css">
-    <!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
+<!-- CSS here -->
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+<link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+<link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+<link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+<link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+<link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+<link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+<link rel="stylesheet" href="${contextPath}/css/slicknav.css">
+<link rel="stylesheet" href="${contextPath}/css/w3school.css">
+
+<link rel="stylesheet" href="${contextPath}/css/style.css">
+<!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 </head>
 <style>
-
-@media (min-width:1200px) {
-    .container {
-        max-width: 100%!important;
-    }
+@media ( min-width :1200px) {
+	.container {
+		max-width: 100% !important;
+	}
 }
 
-.container {
-    width: 100%;
-    padding-left: 0px!important;
-    padding-right:0px!important;
-    margin-right: 0px!important;
-    margin-left: 0px!important;
+.container:not(.chapter_1_tl) {
+	width: 100%;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	margin-right: 0px !important;
+	margin-left: 0px !important;
 }
+
 .w-100 {
-    height: 700px;
-    width: 1400px !important;
+	height: 700px;
+	width: 1400px !important;
 }
 
-.rec_title{
- overflow: hidden;
- text-overflow: ellipsis;
- white-space: nowrap;
+.rec_title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
-.featured_candidates_area.candidate_page_padding{
+
+.featured_candidates_area.candidate_page_padding {
 	padding: 50px 70px;
 }
 
+.chapter_1_tl {
+	position: relative; top : 50%;
+	left: 50%;
+	margin-left: -32%;
+	width: 70%;
+	text-align: left;
+	top: 50%;
+}
+
+.main_title {
+	font-size: 35px;
+	font-weight: 900;
+	line-height: 50px;
+	color: #ffffff;
+	word-spacing: 2px;
+	text-shadow: 1px 1px 5px  #565656;
+}
+
+.main_title_desc {
+	font-size: 17px;
+	line-height: 35px;
+	margin: 25px 0px 60px;
+	color: #ffffff;
+	text-shadow: 1px 1px 5px  #565656;
+}
+
+.service_intro_bt {
+	font-size: 16px;
+	font-weight: 900;
+	padding: 14px 31px;
+	cursor: pointer;
+	transition-duration: 0.2s;
+	border-radius: 40px;
+}
+
+.service_intro_bt:hover {
+	color: #ffd285;
+}
 </style>
 <body>
-	<!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
 
 	<!-- header-start -->
 	<header>
@@ -74,42 +112,42 @@
 	<div class="slider_area">
 		<div class="single_slider  d-flex align-items-center slider_bg_1">
 			<div class="container">
-			<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" src="${contextPath}/img/banner/main2.jpg" alt="First slide">
-       <div class="carousel-caption d-none d-md-block">
-   	 <h5>caption</h5>
-   
-  </div>
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="${contextPath}/img/banner/main1.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="${contextPath}/img/banner/main1.png" alt="Third slide">
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-				<div class="row align-items-center">
+				<div id="carouselExampleControls" class="carousel slide"
+					data-ride="carousel">
+					<div class="carousel-inner">
 
+						<div class="carousel-item">
+							<img class="d-block w-100" src="" alt="Third slide">
+						</div>
+						<div class="chapter_1_tl">
+							<div class="main_title">
+								동료를 구하는,<br>
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;팀빌딩
+								플랫폼
+							</div>
+							<div class="main_title_desc">
+								connecThink 는 사람과 사람을 이어주는 플랫폼입니다.<br> 특별한 무언가를 함께 만들 사람을
+								찾고 있다면,<br> connecThink 에서 프로젝트를 시작해보세요.
+							</div>
+							<button class="service_intro_bt"
+								onclick="location.href= '${contextPath}/about' ">서비스소개
+								안내</button>
+						</div>
 
+					</div>
+				</div>
+				<div class="row align-items-center"></div>
+			</div>
+			<div
+				class="ilstration_img wow fadeInRight d-none d-lg-block text-right"
+				data-wow-duration="1s" data-wow-delay=".2s">
+				<!-- 			<img src="${contextPath}/img/banner/illustration.png" alt=""> -->
 			</div>
 		</div>
-		<div
-			class="ilstration_img wow fadeInRight d-none d-lg-block text-right"
-			data-wow-duration="1s" data-wow-delay=".2s">
-			<!-- 			<img src="${contextPath}/img/banner/illustration.png" alt=""> -->
-		</div>
-	</div>
+
+
+
+
 	</div>
 	<!-- slider_area_end -->
 
@@ -123,9 +161,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				
-			</div>
+			<div class="row"></div>
 		</div>
 	</div>
 	<!-- popular_catagory_area_end  -->
@@ -139,9 +175,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-
-			</div>
+			<div class="row"></div>
 		</div>
 	</div>
 
@@ -259,7 +293,7 @@
 	<script src="${contextPath}/js/jquery.validate.min.js"></script>
 	<script src="${contextPath}/js/mail-script.js"></script>
 	<script src="${contextPath}/js/main.js"></script>
-	
+
 	<script>
 
 	$(document).ready(function(){

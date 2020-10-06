@@ -40,7 +40,7 @@
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
                                     <a href="/connecthink/">
-                                        <img src="${contextPath}/img/logo.png" alt="">
+                                        <img src="${contextPath}/img/logo.png" alt="">	
                                     </a>
                                 </div>
                             </div>
@@ -49,7 +49,6 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="${contextPath}/about">서비스 소개</a></li>
                                             <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
                                            
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
