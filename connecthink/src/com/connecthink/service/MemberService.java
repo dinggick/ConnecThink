@@ -66,7 +66,7 @@ public class MemberService {
 
 			memberRepository.save(member);
 			
-		} else if (mNo == customerNo && status >= 0) {
+		} else if (mNo != customerNo && status >= 0) {
 			throw new AddException("이미 지원함");
 		}
 		
