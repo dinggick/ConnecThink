@@ -615,6 +615,8 @@ scale
 .usty{
 	 list-style:none;
 	 padding-left:0px;
+	 min-height:20px;
+	 overflow-y:auto; 
 }
 
 /* profile */
@@ -629,7 +631,8 @@ scale
 	cursor:pointer;
 }
 .friend img{
-	width:40px;
+	width:50px;
+	height: 45px;
 	border-radius:50%;
 	margin:15px;
 	float:left;
@@ -1034,7 +1037,7 @@ scale
 				</li>	
 				<li v-for="member in memberList">
 					<div class="friend">
-						<img src="https://cdn.clien.net/web/api/file/F01/9857567/225ef14007e0b0.jpg" />
+						<img :src="member.imageRoute" @error = "imageNotFound"/>
 						<div class="profile">
 							<p><strong>{{ member.name }}</strong></p>
 							<p><span>{{ member.position }}</span></p>
@@ -1198,15 +1201,15 @@ scale
 									  </div>
 									 </div>
 									
-									
 									<div id="msgs" v-for="msg in msgs" v-show="!isLoadingNow">
 									<!-- 메세지 받을때 -->
 										<div class="chat-message-group reception" v-if="msg.reception">
 											<div class="chat-thumb">
 												<figure class="image is-32x32">
 													<img
-														src="https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png"
-														style="width: 30px;">
+														@error = "imageNotFound"
+														:src="msg.imageRoute"
+														style="width: 30px">
 												</figure>
 											</div>
 											
@@ -1215,7 +1218,6 @@ scale
 												<div class="message">{{msg.content}}</div>
 												<div class="from">{{msg.createDate}}</div>
 											</div>
-												
 										</div>
 									
 										<!-- 메세지 보낼때 -->
@@ -1252,12 +1254,15 @@ scale
 			
 			<!-- notify -->
 		 <transition name="bounce" v-model="notifyMsg">	
-			<div class="position-top" v-show='showNotify'>
+			<div class="position-top" v-show='showNotify'  v-on:click="close">
 			    <div class="notify-card-success">
-			        <i class="fa fa-times close-icon" aria-hidden="true" v-on:click="close"></i>
+			        <i class="fa fa-times close-icon" aria-hidden="false"></i>
 			        <div class="notify-message">
 			            <div class="notify-logo">
 			                <i class="fa fa-check-circle success-icon" aria-hidden="true"></i>              
+			            </div>
+			            <div class="friend">
+			            		<img :src="userImg" @error = "imageNotFound">
 			            </div>
 			            <div class="notify-data">
 								{{ notifyMsg }}			
@@ -1323,10 +1328,13 @@ scale
 			memberList : [],
 			toggle: false,
 			isManager : ${isManager},
-			teamTitle :  "${title}"
-			
+			teamTitle :  "${title}",
+			defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png"
+		},created(){
+			this.showMemberList();
 		}
 		,methods : {
+			//맴버 정보 가져오기
 			showMemberList(){
 				axios
 			  	.get('/connecthink/lookUpMember', {
@@ -1338,26 +1346,35 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0]});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost:8080/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
 			},//showMemberList
+			
 			//프로젝트 종료
 			endProject(){
-				axios.get('/connecthink/endProject',{
-                	params:{
-                		project_no: ${project_no}
-                	}
-                })
-                .then(response => {	
-                	alert('종료완료!')
-                	window.open('${contextPath}','_self').close();
-                	window.close();
-                });
+				var Backlen=history.length;  
+				
+				var answer = confirm('프로젝트를 종료하시겠습니까?');
+				if(answer ==true){
+					axios.get('/connecthink/endProject',{
+	                	params:{
+	                		project_no: ${project_no}
+	                	}
+	                })
+	                .then(response => {	
+	                	alert('종료완료!');
+	                	history.go(-Backlen); // Return at the beginning
+	                	window.location.replace("${contextPath}");
+	                });
+				}
 			},
+			
 			//프로젝트탈퇴
 			endMyProject(){
+				var Backlen=history.length;   
+
 				var answer = confirm('정말 탈퇴하시겠습니까? 중도탈퇴시 참여기록이 남지않습니다!');
 				if(answer == true){
 					axios.get('/connecthink/endMyProject',{
@@ -1367,12 +1384,21 @@ scale
 	                })
 	                .then(response => {	
 	                	alert('탈퇴완료!')
-	                	self.close();
+	                	history.go(-Backlen); // Return at the beginning
+	    				window.location.replace("${contextPath}");	
 	                });
-				}	
+				}
+			},
+			
+			//유저의 이미지 없을경우 default image 로 대체
+			imageNotFound(event){
+				event.target.src = this.defaultImg;
 			}
-		},
+			
+		}//method
 	});
+	
+	var loginUsers = new Array();
 	
 	//채팅 헤더 토글
 	var chat = new Vue({
@@ -1389,18 +1415,25 @@ scale
 		   notifyMsg : null,
 		   onoff : true,
 		   showNotify : false,
-		   isLoadingNow : true
+		   isLoadingNow : true,
+		   defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png",
+		   userImg : "",
+		   compleate : false
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
-			  sideBar.showMemberList();
-			  this.connect();
-    		}//created
-		  
-		   //변화가 있을경우
-		  ,updated(){
+			this.connect();
+			}//created
+    	  //변화가 있을경우
+		  ,updated(ev){
+			this.$nextTick(function() {
+	  			if(this.compleate){
+	  				this.isOnline();	
+	  			}
+			});
+			
+			
 			var chatDiv = document.getElementById("chatContent");
-		 	
 			
 			if(bottom_flag){
 				chatDiv.scrollTop = chatDiv.scrollHeight;
@@ -1421,7 +1454,7 @@ scale
 			  },
 			  
 			  //메세지 전송 클릭시 유효성 
-			  sendMsg(e) {				
+			  sendMsg(e) {	
 				  if(this.message == ''){
 					  alert('메세지를 작성 하세요');  
 				  }else{
@@ -1451,7 +1484,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.50:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.14:8080/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1467,11 +1500,18 @@ scale
 						}
 						else if(datas[0] == "loginInfo"){
 							var loguserArray = datas[1].substring(1,datas[1].length-1).split(",");
-							var className = "status online";
+							var className = "status online";							
+							let cnt = 0;
 							loguserArray.forEach(customer_no => {
-								var dc = document.getElementById(customer_no.trim()+"no");
- 								dc.setAttribute("class",className);
+								var dom = document.getElementById(customer_no.trim()+"no");
+								if(dom == null){ // dom rendering X
+									loginUsers[cnt] = customer_no;
+									cnt++;
+								}else{
+									dom.setAttribute("class",className);
+								}								
 							});
+							this.compleate = true;
 						}else if(datas[0] == "logoutInfo"){
 							var logoutUser_no = datas[1];
 							var className = "status offline";
@@ -1488,19 +1528,24 @@ scale
 							if(this.writer == user){
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
+								//가져온 유저의 프로필 사진
+								let imageUrl = "http://localhost:8080/storage/customer/"+user+".jpg";
+								
 								//전송한 사람이 내가 아닐경우
-								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name});
+								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});
 								
 								//토글이 닫혀있을때 notify show
 								if(!this.toggle && this.onoff){
-									this.close();
-									if(this.notifyMsg != null){
-										this.open();
-										this.notifyMsg = name+" 님이 "+msg+" 내용의 메세지를 전송 했습니다.";
+									if(this.showNotify == true){
+										this.showNotify = false;	
+										this.showNotify = true;
+										this.userImg = imageUrl;
+										this.notifyMsg = name+" : "+msg;
 									}else{
 										this.open();
-										this.notifyMsg = name+" 님이 "+msg+" 내용의 메세지를 전송 했습니다.";
-										setTimeout(this.close, 2000);
+										this.userImg = imageUrl;
+										this.notifyMsg = name+" : "+msg;
+										setTimeout(this.close, 3000);
 									}
 								}
 							}
@@ -1515,12 +1560,35 @@ scale
 				  var minute = date.getMinutes() <= 9 ? "0"+date.getMinutes() : date.getMinutes();
 				  var getTime = date.getHours() + ":" +minute;
 				  return getTime;
-			  },close(){ 
+			  },
+			  close(){ 
 				 this.showNotify = false;
-			  },open(){
+			  },
+			  open(){
 				this.showNotify = true;  
-			  },onOff(ev){
+			  },
+			  ChatOn(){
+				console.log("notify click!");
+				this.showNotify = false;
+				this.toggle = true;
+			  },
+			  onOff(ev){
 			  	this.onoff = ev.target.checked;
+			  },
+			  //유저의 이미지 없을경우 default image 로 대체
+			  imageNotFound(event){
+				  event.target.src = this.defaultImg;
+			  },			  
+			  //로그인 한 유저의 li dom 접근하여 class 속성 변경
+			  isOnline(){
+				  var className = "status online";
+					if(loginUsers.length != 0){
+						for(let i = 0; i < loginUsers.length; i++){
+							var customer_no = loginUsers[i];
+							document.getElementById(customer_no.trim()+"no").setAttribute("class",className);
+							this.compleate = false;
+						}
+					}
 			  }
 		  }//method
 		});
@@ -1545,7 +1613,7 @@ scale
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
 					 
 					 if(event.droptarget == null){
-						 event.droptarget = getTaskNo;
+						 event.droptarget = dragover;
 					 }
 					 
 					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.connecthink.entity.ChatRoom;
@@ -198,19 +199,9 @@ public class BoardService {
 	public void exitProject(Integer customerNo, Integer projectNo) {
 		Project p = projectRepository.findById(projectNo).get();
 		p.getRecruits().forEach(r -> {
-			r.getMembers().forEach(m -> {
-				if(m.getId().getMemberNo() == customerNo) {
-					Member memberToRemove = new Member();
-					MemberId ids = new MemberId();
-					
-					ids.setMemberNo(customerNo);
-					ids.setRecruitNo(r.getRecruitNo());
-					
-					memberToRemove.setId(ids);
-					memberToRemove.setCustomer(customerRepository.findById(customerNo).get());
-					memberToRemove.setRecruit(recruitRepository.findById("1R1").get());
-					
-					memberRepository.delete(memberToRemove);
+			r.getMembers().forEach(m ->{
+				if(customerNo == m.getId().getMemberNo()) {
+					projectRepository.deleteByMemberByProjcet(customerNo, r.getRecruitNo());
 					return;
 				}
 			});

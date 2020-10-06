@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 
@@ -205,6 +206,10 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	 * @author 변재원
 	 * 팀 탈퇴하기
 	 */
-	@Query(nativeQuery = true, value = "DELETE FROM MEMBER WHERE MEMBER_NO=?1 AND RECRUIT_NO=?2")
+	@Query(nativeQuery = true, value = "DELETE FROM Member WHERE member_no= ?1 AND recruit_no =?2")
+	@Modifying
 	public void deleteByMemberByProjcet(Integer customerNo, String recruitNo);
+	
+	@Query(nativeQuery = true, value = "DELETE FROM Member")
+	public void test();
 }

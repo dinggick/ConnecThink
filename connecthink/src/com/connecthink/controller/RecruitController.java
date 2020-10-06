@@ -131,9 +131,9 @@ public class RecruitController {
 		}
 		
 		if(whatYouCallValue.equals("/all/rec_detail")) {
-			mnv.setViewName("/rec_detail");			
+			mnv.setViewName("rec_detail");			
 		} else {
-			mnv.setViewName("/modify_rec");
+			mnv.setViewName("modify_rec");
 		}
 
 		return mnv;
@@ -143,7 +143,7 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 모집 등록, 수정
 	 */
-	@PostMapping(value= {"/addRec", "/modifyRec"})
+	@PostMapping(value= {"/logined/addRec", "/logined/modifyRec"})
 	@ResponseBody
 	public String addRec(RecruitDTO recruitDTO, HttpServletRequest request) {
 		//요청 받은 url 담아주기
@@ -172,7 +172,7 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 모집 등록 페이지
 	 */
-	@RequestMapping(value = "/add_rec")
+	@RequestMapping(value = "/logined/add_rec")
 	public void add_rec() {
 		System.out.println("모집등록페이지 호출");
 	}
@@ -189,7 +189,7 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 모집 삭제(단일)
 	 */
-	@PostMapping("/delRec")
+	@PostMapping("/logined/delRec")
 	@ResponseBody
 	public Map delRec(String recruitNo) {
 		Map<String, Object> result = new HashMap<>();
@@ -208,7 +208,7 @@ public class RecruitController {
 	 * @author 홍지수
 	 * 프로젝트 삭제 전 모집 삭제(전체)
 	 */
-	@PostMapping("/delRecAll")
+	@PostMapping("/logined/delRecAll")
 	@ResponseBody
 	public Map delRecAll(Integer projectNo, String recruitNo) {
 		Map<String, Object> result = new HashMap<>();
