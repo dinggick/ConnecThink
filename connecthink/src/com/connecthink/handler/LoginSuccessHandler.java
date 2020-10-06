@@ -8,9 +8,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import com.connecthink.controller.NotificationController;
+import com.connecthink.controller.PersonalMessageController;
 import com.connecthink.security.CustomUser;
 
 import lombok.extern.log4j.Log4j;
@@ -37,6 +40,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		if (roleNames.contains("ROLE_CUSTOMER")) {
 			System.out.println(auth.getPrincipal());
 			request.getSession().setAttribute("loginInfo", ((CustomUser)auth.getPrincipal()).getCustomer().getCustomerNo());
+
 			response.sendRedirect("/");
 			return;
 		}

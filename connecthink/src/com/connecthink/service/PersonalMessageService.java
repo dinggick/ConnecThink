@@ -95,5 +95,8 @@ public class PersonalMessageService {
 	public void save(PersonalMessage pm) {
 		repository.save(pm);
 	}
+	public Integer countUnreadMsg(Integer CustomerNo) {
+		return repository.countUnreadMsg(CustomerNo);
+	}
 
 }

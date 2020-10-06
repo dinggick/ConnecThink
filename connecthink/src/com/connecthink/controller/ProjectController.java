@@ -154,6 +154,12 @@ public class ProjectController {
 			//return new ArrayList<>();
 		}
 		
+//		try {
+//			int customer_no = (int) session.getAttribute("loginInfo");
+//			return service.lookUpMyProject(customer_no);
+//		} catch(NullPointerException e){
+//			return null;
+//		}		
 	}
 
 	/**

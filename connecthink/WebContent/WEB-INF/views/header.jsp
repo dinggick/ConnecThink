@@ -2,6 +2,7 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%-- <c:set var="notification" value="${request.notification }"/> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,8 +78,8 @@
                                          		</c:choose>
                                             </ul>                                                                               
                                          </div>
-                                        <a href="#"><img class="personicon" id ="bell" src="${contextPath}/img/bell.png"></a>
-                                        <a href="#"><img class="personicon" id ="notibell" style="display:none" src="${contextPath}/img/active.png"></a>
+                                        <a href="#" onclick="inbox()"><img class="personicon" id ="bell" src="${contextPath}/img/bell.png"></a>
+                                        <a href="#" onclick="inbox()"><img class="personicon" id ="notibell" style="display:none" src="${contextPath}/img/notification.png"></a>
                                         
 							<div class="sidebar">
 								<a href="#"><img class="personicon" src="${contextPath}/img/pmenu.png" onclick="openNav()"></a>
@@ -135,6 +136,16 @@
 
     <!-- header-end -->
 <script>
+// $(document).ready(function(){
+// 	if ('${notification}' =="n") {
+// 		$('#bell').show();
+// 	$('#notibell').hide();	
+// 	} else {
+// 		$('#bell').hide();
+// 		$('#notibell').show();	
+// 	}
+	
+// });
 var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
@@ -144,6 +155,12 @@ function openNav() {
 
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
+}
+function inbox(){
+	$('#bell').show();
+	$('#notibell').hide();	
+	let url = "${contextPath}/logined/inbox" ;
+	location.href = url;	
 }
 
 //------------------------ 웹소켓 --------------------------------
@@ -157,7 +174,8 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
-	
+	///------------메인화면에서 노티아이콘 보여줄지 결정-----------------
+	wSocket.send("connecthinksystem:checkNoti:");
    }
    //연결이 끊어졌을때
    function onClose(e) {
@@ -165,6 +183,11 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    }
    //메세지 수신시
    function onMessage(e) {	
+	   console.log(e.data);
+	if (e.data.includes("connecthinksystem:checkNoti:true")){
+		$('#bell').hide();
+		$('#notibell').show();	
+	}
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
@@ -262,8 +285,8 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 			$msgSection.scrollTop(scrollLocation);
 		}
 	}
-	  else if (e.data.includes("connecthinksystem:loadNotis:")){
-		   console.log("loadingNotis");
+	  else if (e.data.includes("connecthinksystem:loadNotis:")){		 
+		   $('#notinew').hide();
 		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
 		   MSGs = JSON.parse(pmStr);
 		   console.log(MSGs);
@@ -334,6 +357,9 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 					$listSection.html(sectionData);
 				}
 			}
+		} else {
+			$('#bell').hide();
+			$('#notibell').show();
 		}
 	}
    }
