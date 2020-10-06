@@ -396,7 +396,7 @@
 		function bookClick (){
 			
 			$.ajax({
-				url : "${contextPath}/mateBm",
+				url : "${contextPath}/logined/mateBm",
 				method : "POST",
 				data : {
 					customerNo : ${sessionScope.loginInfo},
