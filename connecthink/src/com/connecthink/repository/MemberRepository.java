@@ -3,6 +3,7 @@ package com.connecthink.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
@@ -13,7 +14,10 @@ public interface MemberRepository extends JpaRepository<Member, MemberId>{
 	
 	/**
 	 * @author IM CRYSTAL
-	 * 특정 프로젝트에 초대된 멤버 목록 보기
+	 * 특정 모집에 초대된 멤버 목록 반환
 	 */
-	public List<Member> findInvitedByProjectNo(Integer projectNo);
+	@Query(nativeQuery = true, value = "SELECT *\r\n" + 
+			"FROM member\r\n" + 
+			"WHERE recruit_no = ?1 AND invited = ?2")
+	public List<Member> findAllByRecruitNoAndInvited(String recruitNo, Integer invited);
 }

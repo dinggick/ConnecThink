@@ -1,19 +1,17 @@
 package com.connecthink.service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
-import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
 import com.connecthink.exception.AddException;
 import com.connecthink.repository.CustomerRepository;
@@ -80,22 +78,21 @@ public class MemberService {
 	 * 특정 프로젝트에 초대된 멤버 목록 보기
 	 */
 	public List<Member> findInvitedByProjectNo(Integer projectNo){
-		
-		List<Project> pList = projectRepository.findInvitedByProjectNo(projectNo);
-		for(Project p : pList) {
-			Iterator<Recruit> rIter = p.getRecruits().iterator();
-			while (rIter.hasNext()) {
-				Recruit r = rIter.next();
-				Set<Member> Members = r.getMembers();
-				Iterator<Member> mIter = Members.iterator();
-				while (mIter.hasNext()) {
-					Member m = mIter.next();
-					m.getCustomer();
+		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
+		List<Member> mList = new ArrayList<Member>();
+		if(rList.size() != 0) {
+			for(Recruit r : rList) {
+				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 1);
+				if(tempMList.size() != 0) {
+					for(Member m : tempMList) {
+						m.getCustomer().getExperiences();
+						mList.add(m);
+						System.out.println("초대된 멤버 : " + m);
+					}
 				}
-				r.getPosition().getName();
 			}
 		}
-		return pList;
+		return mList;
 	}
 	
 	/**
@@ -103,20 +100,20 @@ public class MemberService {
 	 * 특정 프로젝트에 지원한 멤버 목록 보기
 	 */
 	public List<Member> findAppliedByProjectNo(Integer projectNo){
-		List<Project> pList = projectRepository.findAppliedByProjectNo(projectNo);
-		for(Project p : pList) {
-			Iterator<Recruit> rIter = p.getRecruits().iterator();
-			while (rIter.hasNext()) {
-				Recruit r = rIter.next();
-				Set<Member> Members = r.getMembers();
-				Iterator<Member> mIter = Members.iterator();
-				while (mIter.hasNext()) {
-					Member m = mIter.next();
-					m.getCustomer();
+		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
+		List<Member> mList = new ArrayList<Member>();
+		if(rList.size() != 0) {
+			for(Recruit r : rList) {
+				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 0);
+				if(tempMList.size() != 0) {
+					for(Member m : tempMList) {
+						m.getCustomer().getExperiences();
+						mList.add(m);
+						System.out.println("지원한 멤버 : " + m);
+					}
 				}
-				r.getPosition().getName();
 			}
 		}
-		return pList;
+		return mList;
 	}
 }

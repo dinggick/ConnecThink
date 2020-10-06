@@ -1,5 +1,11 @@
 package test;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.transaction.Transactional;
+
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.connecthink.entity.Customer;
+import com.connecthink.entity.Experience;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Recruit;
@@ -25,8 +32,9 @@ import com.connecthink.repository.RecruitRepository;
 @ExtendWith(SpringExtension.class)
 //@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\mvc-servlet.xml")
 @ContextHierarchy({ @ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\root-context.xml"),
-		@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml") })
-
+	@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\security-context.xml"),
+	@ContextConfiguration(locations = "file:WebContent\\WEB-INF\\spring\\appservlet\\servlet-context.xml")
+})
 class MemberTest {
 	@Autowired
 	private MemberRepository repository;
@@ -64,7 +72,8 @@ class MemberTest {
 //		});
 //	}
 	
-	@Test
+//	@Test
+	@Transactional
 	void recruit() {
 		Member member = new Member();
 		MemberId ids = new MemberId();
@@ -85,5 +94,16 @@ class MemberTest {
 
 		
 		repository.save(member);
+	}
+	
+	@Test
+	@Transactional
+	@DisplayName("지원자 찾기")
+	public void findInvitedTest() {
+		List<Member> mList = repository.findAllByRecruitNoAndInvited("9R2", 0);
+		for(Member m : mList) {
+			Set<Experience> eSet = m.getCustomer().getExperiences();
+			System.out.println(m);
+		}
 	}
 }

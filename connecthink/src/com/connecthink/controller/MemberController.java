@@ -41,7 +41,7 @@ public class MemberController {
 	 * @author 임수정
 	 * 특정 프로젝트에 초대된 멤버 목록 보기
 	 */
-	@PostMapping(value="/manageProject/invited")
+	@PostMapping(value="/manageMember/invited")
 	@ResponseBody
 	public List<Member> Invited(Integer projectNo) {
 		return service.findInvitedByProjectNo(projectNo);
@@ -51,7 +51,7 @@ public class MemberController {
 	 * @author 임수정
 	 * 특정 프로젝트에 지원한 멤버 목록 보기
 	 */
-	@PostMapping(value="/manageProject/applied")
+	@PostMapping(value="/manageMember/applied")
 	@ResponseBody
 	public List<Member> Applied(Integer projectNo) {
 		return service.findAppliedByProjectNo(projectNo);
