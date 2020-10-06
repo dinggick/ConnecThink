@@ -12,5 +12,5 @@ public interface BookmarkUserRepository extends JpaRepository<BookmarkUser, Book
 	 * @author 홍지수
 	 * 북마크한 멤버 목록
 	 */
-	public List<BookmarkUser> findByIdSend(Integer send);
+	public List<BookmarkUser> findByIdSendOrderByReceiveDesc(Integer send);
 }
