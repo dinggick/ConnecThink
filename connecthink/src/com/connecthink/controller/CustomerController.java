@@ -293,7 +293,7 @@ public class CustomerController {
 		return service.findTopMembers();
 	}
 	//멤버상세 
-	@RequestMapping("/member_detail")	
+	@RequestMapping("/logined/customer_detail")	
 	public ModelAndView findByNo(Integer customerNo, HttpSession session) {
 		ModelAndView mnv = new ModelAndView();
 		//멤버상세
@@ -329,7 +329,7 @@ public class CustomerController {
 		}
 		mnv.addObject("invited", yn);
 		
-		mnv.setViewName("member_recruit");
+		mnv.setViewName("customer_recruit");
 		
 		return mnv;
 	}

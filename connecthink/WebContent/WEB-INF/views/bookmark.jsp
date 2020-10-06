@@ -297,7 +297,7 @@
 		//클릭 시 회원 상세 페이지로 이동(미완)
 		function customerDetail(e){
 			let $customerNo = $(e).find("li.customerNo").html();			
-			let url = "${contextPath}/logined/member_detail?customerNo=" + $customerNo ;
+			let url = "${contextPath}/logined/customer_detail?customerNo=" + $customerNo ;
 			location.href = url;
 			
 		}
