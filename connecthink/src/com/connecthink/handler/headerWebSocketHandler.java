@@ -71,6 +71,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 		Integer customer_no = (Integer)session.getAttributes().get("loginInfo");
 		String gotMessage = message.getPayload();
 		PersonalMessage newPm = new PersonalMessage();
+		Notification newNoti = new Notification();
 
 		System.out.println("클라이언트로부터 메세지가 도착했습니다 : " + gotMessage);
 
@@ -154,8 +155,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			});
 		}
 		//2.1 회원의 노티 화면에 보여주기
-		if(gotMessage.contains("connecthinksystem:loadNotis:")) {
-			
+		if(gotMessage.contains("connecthinksystem:loadNotis:")) {			
 			List<Notification> nts = notiMap.get(customer_no);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadNotis:";
@@ -198,9 +198,30 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			//해당 유저의 pmList에 메세지 추가
 			pmMap.get(customer_no).get(otherNo).add(newPm);
 		}
-
-		
-
+		//4. 노티 보내기
+		if(gotMessage.contains("connecthinksystem:nto:")) {
+			String[] contentArr = gotMessage.split(":");
+			Integer otherNo = Integer.parseInt(contentArr[2]);
+			String pmContent = contentArr[3];
+			thisCustomer = customerController.findCustomerByNo(customer_no);
+			otherCustomer = customerController.findCustomerByNo(otherNo);
+			pmContent = thisCustomer.getName() + pmContent;
+			newNoti.setCustomer(otherCustomer); newNoti.setContent(pmContent);
+			newNoti.setRead_status(0);
+			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));
+			//repository에 인서트
+			notiController.save(newNoti);
+			WebSocketSession receiveSession = loginUser.get(otherNo);			
+			String sendPmJson = "connecthinksystem:pm:";
+			sendPmJson += mapper.writeValueAsString(newNoti);
+			if(receiveSession!=null) {
+				//접속 중일 때 실시간 전송
+				receiveSession.sendMessage(new TextMessage(sendPmJson));
+				System.out.println("★ 상대방이 접속 중이라 실시간으로 메세지 전송 완료. ★");
+			}
+			session.sendMessage(new TextMessage(sendPmJson));
+			notiMap.get(otherNo).add(newNoti);			
+		}
 	}
 
 	@Override

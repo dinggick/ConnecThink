@@ -84,7 +84,9 @@
                                          		</c:choose>
                                             </ul>                                                                               
                                          </div>
-                                        <a href="#"><img class="personicon" src="${contextPath}/img/bell.png"></a>
+                                        <a href="#"><img class="personicon" id ="bell" src="${contextPath}/img/bell.png"></a>
+                                        <a href="#"><img class="personicon" id ="notibell" style="display:none" src="${contextPath}/img/active.png"></a>
+                                        
 							<div class="sidebar">
 								<a href="#"><img class="personicon" src="${contextPath}/img/pmenu.png" onclick="openNav()"></a>
 								<div id="mySidenav" class="sidenav">
@@ -169,8 +171,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     alert("WebSocket closed!");
    }
    //메세지 수신시
-   function onMessage(e) {
-
+   function onMessage(e) {	
    console.log(e.data);
    //수신한 메세지가 상대방 목록 불러오기인 경우
    if (e.data.includes("connecthinksystem:loadList:")){
@@ -298,7 +299,6 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 		}
 		$msgSection.html(sectionData);
 	}
-
    }
    //에러 발생시
    function onError(e) {
