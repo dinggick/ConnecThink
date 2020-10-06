@@ -29,7 +29,7 @@ public class ManageMemberService {
 	 */
 	public void deleteById(String recruitNo, Integer memberNo) {
 		System.out.println("in ManageMemberService : deleteById 메소드 실행");
-		repository.deleteByIdRecruitNoAndIdMemberNo(recruitNo, memberNo);
+		repository.deleteByRecruitNoAndMemberNo(recruitNo, memberNo);
 	}
 	
 	/**
