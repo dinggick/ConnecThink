@@ -18,7 +18,7 @@ public class MemberController {
 	 * @author 홍지수
 	 * 모집에 지원하기
 	 */
-	@PostMapping(value = "/recruit")
+	@PostMapping(value = "/logined/recruit")
 	@ResponseBody
 	public String recruit(Integer customerNo, String recruitNo, HttpSession session) {
 		customerNo = (Integer) session.getAttribute("loginInfo");
