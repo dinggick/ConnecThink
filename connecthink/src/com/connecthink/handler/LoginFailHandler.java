@@ -14,7 +14,7 @@ public class LoginFailHandler implements AuthenticationFailureHandler{
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		// TODO Auto-generated method stub
+		exception.printStackTrace();
 		System.out.println("-------------------login fail-----------------");
 		System.out.println(request.getParameter("username"));
 		System.out.println(request.getParameter("password"));
