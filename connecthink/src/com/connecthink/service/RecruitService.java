@@ -97,7 +97,7 @@ public class RecruitService {
 
 		System.out.println("서비스 : " + recruitDTO.getUrl());
 
-		if(recruitDTO.getUrl().equals("/addRec")) {
+		if(recruitDTO.getUrl().equals("/logined/addRec")) {
 			rNo = project.getProjectNo()+"R"+ (num+1);
 		} else {
 			rNo = recruitDTO.getRecruitNo();

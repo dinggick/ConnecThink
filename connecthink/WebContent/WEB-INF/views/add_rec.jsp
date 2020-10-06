@@ -345,7 +345,7 @@ h4 .requir{
 		let pNo = location.search.split('=').pop();
 		if(check() != false){
 			$.ajax({
-	 			url : "${contextPath}/addRec",
+	 			url : "${contextPath}/logined/addRec",
 	 			method : "POST",
 	 			enctype : "multipart/form-data",
 	 			processData: false,
