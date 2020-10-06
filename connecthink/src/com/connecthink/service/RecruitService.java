@@ -81,7 +81,7 @@ public class RecruitService {
 	 */
 	public void addRec(RecruitDTO recruitDTO) {
 		Recruit recruit = new Recruit();
-
+		
 		//projectNo
 		Project project = projectRepository.findById(recruitDTO.getProjectNo()).get();
 
@@ -97,7 +97,7 @@ public class RecruitService {
 
 		System.out.println("서비스 : " + recruitDTO.getUrl());
 
-		if(recruitDTO.getUrl().equals("/addRec")) {
+		if(recruitDTO.getUrl().equals("/logined/addRec")) {
 			rNo = project.getProjectNo()+"R"+ (num+1);
 		} else {
 			rNo = recruitDTO.getRecruitNo();
@@ -146,10 +146,10 @@ public class RecruitService {
 		recruit.setDeadline(recruitDTO.getDeadline());
 		recruit.setRequirement(recruitDTO.getRequirement());
 		recruit.setRecruitStatus(1); //기본 값 1
-
+		recruit.setProjectNo(recruitDTO.getProjectNo());
+		
 		//project에 recruit 담기(더하기)
 		project.getRecruits().add(recruit);
-
 		//save 메서드 호출
 		projectRepository.save(project);
 	}

@@ -30,7 +30,12 @@ public class BoardController {
    
    @Autowired
    private ProjectService pjService;
-   @RequestMapping("/board")
+   
+   /**
+	 *  @author DongJun, 재원
+	 *  팀 협업 스페이스로 이동
+	 */
+   @RequestMapping("/logined/board")
    ModelAndView board(HttpSession session,HttpServletRequest req,@RequestParam("project_no") int project_no) {
       ModelAndView mv = new ModelAndView();
       Project pjInfo =  pjService.lookUpMyManager(project_no);
@@ -46,7 +51,11 @@ public class BoardController {
         mv.addObject("list", taskList);
 		return mv;
 	}
-	
+   
+   /**
+	 *  @author DongJun
+	 *  내가 속해있는 프로젝트 맴버 조회
+	 */
    	@RequestMapping("/lookUpMember")
 	@ResponseBody
 	public List<String> lookUpMember(int project_no) {
@@ -54,10 +63,18 @@ public class BoardController {
 		return members;
 	}
 	
+   	/**
+	 *  @author DongJun
+	 *  내가 속해있는 프로젝트 의 메세지 조회
+	 */
 	public List<Message> lookUpMsg(int project_no){
 		return service.lookUpMsg(project_no);
 	}
 	
+	/**
+	 *  @author DongJun
+	 *  내가 속해있는 프로젝트 의 메세지 저장
+	 */
 	public void sendMsg(int project_no, List<Message> msgs) {
 		service.sendMessage(project_no, msgs);
 	}

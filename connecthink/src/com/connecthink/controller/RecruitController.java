@@ -173,8 +173,8 @@ public class RecruitController {
 	 * 모집 등록 페이지
 	 */
 	@RequestMapping(value = "/logined/add_rec")
-	public void add_rec() {
-		System.out.println("모집등록페이지 호출");
+	public String add_rec() {
+		return "add_rec";
 	}
 	
 //	멤버 초대 메소드

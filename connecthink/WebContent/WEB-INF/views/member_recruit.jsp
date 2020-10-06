@@ -110,12 +110,10 @@
 												</span></a> 
 												
 												&nbsp; 
-												<a class="msg" data-toggle="modal" data-target="#msgModal"><span ><img src="img/mail2.png" alt=""
+												<a class="msg" onclick="openMsgModal()"><span ><img src="img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
-
 											</div>
 										</div>
-
 
 										<!--                                         <div class="location"> -->
 										<!--                                             <p> <i class="fa fa-clock-o"></i> Part-time</p> -->
@@ -128,7 +126,7 @@
 									<img src="${contextPath}/img/dogpic.png" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
-										<button class="smallbtn" onclick="openModal()" data-toggle="modal" data-target="#myModal" id="inviteButton">초대하기</button>
+										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
 										
 									</div>
 								</div>
@@ -136,6 +134,14 @@
 						</div>
 					</div>
 					<div class="descript_wrap white-bg">
+						<div class="single_wrap">
+							<h4>역할군</h4>
+							<ul style="list-style: none;">
+							<c:forEach items="${customer.customerPositions}" var ="cp">
+								<p>${cp.position.name}</p>
+							</c:forEach>
+							</ul>
+						</div>
 						<div class="single_wrap">
 							<h4>학력</h4>
 							<p>
@@ -282,7 +288,11 @@
 		bookClick();
 	   
 	});
-		function openModal(){
+		function openMsgModal(){
+			$('#msgModal').modal("show"); 
+		}
+		function openInviteModal(){
+			$('#myModal').modal("show"); 
 			var $selectSection = $('.input_field.position1');
 			
 			$.ajax({
@@ -386,7 +396,7 @@
 		function bookClick (){
 			
 			$.ajax({
-				url : "${contextPath}/mateBm",
+				url : "${contextPath}/logined/mateBm",
 				method : "POST",
 				data : {
 					customerNo : ${sessionScope.loginInfo},

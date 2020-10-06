@@ -345,7 +345,7 @@ h4 .requir{
 		let pNo = location.search.split('=').pop();
 		if(check() != false){
 			$.ajax({
-	 			url : "${contextPath}/addRec",
+	 			url : "${contextPath}/logined/addRec",
 	 			method : "POST",
 	 			enctype : "multipart/form-data",
 	 			processData: false,
@@ -355,9 +355,9 @@ h4 .requir{
 	 				if(response == "success"){
 	 					let answer = confirm("등록이 완료 되었습니다. 추가 모집을 등록하시겠습니까?");
 	 					if(answer == true){
-	 						location.href = "${contextPath}/add_rec?ProjectNo="+pNo;
+	 						location.href = "${contextPath}/logined/add_rec?ProjectNo="+pNo;
 	 					} else {
-	 						location.href = "${contextPath}/index";
+	 						location.href = "${contextPath}/";
 	 					}
 	 				} else {
 	 					alert("등록 실패");

@@ -34,9 +34,9 @@ public class BookmarkController {
 	 */
 	@PostMapping(value="/logined/mateBm")
 	@ResponseBody
-	public List<BookmarkUser> findByIdSend(Integer customerNo, HttpSession session){
+	public List<BookmarkUser> findByIdSendOrderByReceiveDesc(Integer customerNo, HttpSession session){
 		customerNo = (Integer) session.getAttribute("loginInfo");
-		List<BookmarkUser> list = service.findByIdSend(customerNo);
+		List<BookmarkUser> list = service.findByIdSendOrderByReceiveDesc(customerNo);
 		return list;
 	}
 

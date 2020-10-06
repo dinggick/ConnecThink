@@ -21,6 +21,8 @@ public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 	
 	@Override
 	public void sessionDestroyed(HttpSessionEvent event) {
+		super.sessionDestroyed(event);
+		
 		System.out.println("sessionDestroyed 실행~~~~");
 		
 		//HttpSession 객체 가져오기
@@ -51,6 +53,7 @@ public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 			hwsHandler.getNotiMap().remove(loginedCustomer);
 			System.out.println("★notiMap에서 회원 삭제 완료★");
 		}
+		
 	}
-
+	
 }

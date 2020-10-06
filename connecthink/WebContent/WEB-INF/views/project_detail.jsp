@@ -155,6 +155,27 @@ span.customerNo {
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- 종료 모달  -->
+	<div class="modal fade" id = "ending">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title">종료 된 프로젝트</h4>
+				</div>
+				<div class="modal-body text-center p-5">
+					<h5>프로젝트가 종료 되었습니다 :(</h5>
+				</div>
+				<div class="modal-footer ending">
+					<button type="button" class="btn btn-primary" onclick="location.href='${contextPath}/'">확인</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 	<!-- 본문 끝 -->
 	<!-- footer start -->
 	<footer class="footer">
@@ -200,12 +221,34 @@ span.customerNo {
 		let projectNo = "${detail.projectNo}";
 		let managerNo = "${detail.managerNo}";
 		let customerNo = "${sessionScope.loginInfo}";
+		let status = "${detail.projectStatus}";
 		
 		//로드 시 customerNo와 projectNo 비교
 		$(function(){
-			if(managerNo != customerNo){
+			if(managerNo != customerNo || status == 2){
 				$(".boxed-btn3").attr("disabled", true);
 				$(".boxed-btn3").css("display", "none");
+				
+				$(".boxed-btn3").css("display","none");
+				$("#ending").modal("show").css({
+					"margin-top" : function(){
+						return ($(this).height()/3);
+					}
+				});
+			}
+			
+			if(managerNo == customerNo && status == 2){
+				let $mdal = $("div.ending");
+				let mdata = "";
+				mdata =	'<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>'
+				$mdal.html(mdata);
+				
+				$(".boxed-btn3").css("display","none");
+				$("#ending").modal("show").css({
+					"margin-top" : function(){
+						return ($(this).height()/3);
+					}
+				});
 			}
 		});
 		

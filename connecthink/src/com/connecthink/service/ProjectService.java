@@ -134,7 +134,7 @@ public class ProjectService {
 	}
 
 	/**
-	 * @author kimdongjun
+	 * @author DongJun
 	 * 프로젝트에 해당하는 팀장 번호 보여주기
 	 */
 	public Project lookUpMyManager(int project_no) {
@@ -142,7 +142,7 @@ public class ProjectService {
 	}
 
 	/**
-	 * @author kimdongjun
+	 * @author DongJun
 	 * 내가 속해있는 팀 조회
 	 */
 	public List<Project> lookUpMyTeam(int customer_no) {

@@ -3,6 +3,7 @@ package com.connecthink.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.connecthink.entity.Notification;
@@ -24,4 +25,14 @@ public interface NotificationRepository extends JpaRepository<Notification, Noti
 	 */
 	@Query(nativeQuery = true, value = "SELECT * FROM notification WHERE customer_no = ?1 ORDER BY notify_date")
 	public List<Notification> findByCustomerNo(Integer CustomerNo);
+	@Query(nativeQuery = true, value = "INSERT INTO notification values(?1,     (\r\n" + 
+			"        SELECT\r\n" + 
+			"            nvl((MAX(notification_no) + 1), 0)\r\n" + 
+			"        FROM\r\n" + 
+			"            notification\r\n" + 
+			"        WHERE\r\n" + 
+			"            customer_no = ?1\r\n" + 
+			"    ), ?2, sysdate, 0)")
+	@Modifying
+	public void insert(Integer CustomerNo, String Content);
 }

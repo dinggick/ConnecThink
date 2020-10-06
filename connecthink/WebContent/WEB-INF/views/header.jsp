@@ -49,8 +49,8 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
+                                            <li><a href="${contextPath}/about">서비스 소개</a></li>
                                             <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
-                                           
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
                                             <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>
@@ -84,7 +84,9 @@
                                          		</c:choose>
                                             </ul>                                                                               
                                          </div>
-                                        <a href="#"><img class="personicon" src="${contextPath}/img/bell.png"></a>
+                                        <a href="#"><img class="personicon" id ="bell" src="${contextPath}/img/bell.png"></a>
+                                        <a href="#"><img class="personicon" id ="notibell" style="display:none" src="${contextPath}/img/active.png"></a>
+                                        
 							<div class="sidebar">
 								<a href="#"><img class="personicon" src="${contextPath}/img/pmenu.png" onclick="openNav()"></a>
 								<div id="mySidenav" class="sidenav">
@@ -169,8 +171,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     alert("WebSocket closed!");
    }
    //메세지 수신시
-   function onMessage(e) {
-	   
+   function onMessage(e) {	
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
@@ -268,6 +269,25 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 			$msgSection.scrollTop(scrollLocation);
 		}
 	}
+	  else if (e.data.includes("connecthinksystem:loadNotis:")){
+		   console.log("loadingNotis");
+		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
+		   MSGs = JSON.parse(pmStr);
+		   console.log(MSGs);
+		      let sectionData = "";
+		      let newDate = new Date(0);
+		      MSGs.forEach(function(msg, index){
+		         let sendDate = new Date(msg.notifyDate);
+		         if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
+		            sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
+		            newDate = sendDate;
+		         }
+		        	sectionData += '<div class="receive_msg">' + msg.content + '</div>';
+		            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+		            sectionData += '<div style="clear:both;"></div>';
+		      });
+		      $msgSection.html(sectionData);
+		   }
 	//수신한 메세지가 Personal Message인 경우
 	else if (e.data.includes("connecthinksystem:pm:")){
 		let pmStr = e.data.replace("connecthinksystem:pm:","");
@@ -323,8 +343,8 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 			}
 		}
 	}
-
-   }
+   }
+   
    //에러 발생시
    function onError(e) {
     alert( "오류발생 : " + e.data );

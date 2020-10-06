@@ -143,7 +143,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"	JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
 			"	JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
 			"WHERE\r\n" + 
-			"	m.enter_status = 1 AND m.member_no = ?1 AND m.invited = 1")
+			"	m.enter_status = 1 AND m.member_no = ?1")
 	public List<Project> lookUpMyTeam(Integer memberNo);
 	
 	/**
@@ -185,7 +185,7 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 			"    JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
 			"    JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
 			"WHERE\r\n" + 
-			"    m.member_no = ?1")
+			"    m.member_no = ?1 AND M.ENTER_STATUS  =1")
 	public List<Project> findByCustomerNo(Integer customerNo);
 	
 	/**

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!doctype html>
+
 <html class="no-js" lang="zxx">
 
 <head>
@@ -332,7 +332,7 @@ ul.list>li {
 										<div class="msg_sender">
 											<img src="${contextPath}/img/person.png">
 											<span class="otherNoInBox">0</span>
-											<span class="personName">고디바</span>
+<!-- 											<span class="personName">고디바</span> -->
 										</div>
 									</div>
 									<div class="msg_body">
@@ -407,6 +407,7 @@ var $msgContent = $("#msg_content");
 
 //-------------- 인박스 들어오자마자 상대방 리스트 불러오기 --------------
 wSocket.send("connecthinksystem:loadList");
+wSocket.send("connecthinksystem:loadNotis:");
 
 //------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
 // fxLoadNotiCnt(loginedCustomer);
@@ -429,7 +430,6 @@ $listSection.on("click","li.person",function(e){
 });
 
 $(".system").click(function(e){
-// 	fxLoadNoti(loginedCustomer);
 	wSocket.send("connecthinksystem:loadNotis:");
 	return false;
 });

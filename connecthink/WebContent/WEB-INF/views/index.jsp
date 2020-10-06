@@ -329,7 +329,7 @@
 	function projectDetail(e) {
 		let $recNo = $(e).find("#recruitNo").val();
 		alert($recNo);
-		let url = "${contextPath}/rec_detail?recNo=" + $recNo ;
+		let url = "${contextPath}/all/rec_detail?recNo=" + $recNo ;
 		location.href = url;
 	}
 	</script>

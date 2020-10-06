@@ -26,7 +26,9 @@ public class NotificationController {
 	}
 
 	public void save(Notification pm) {
-		service.save(pm);
-		
+		service.save(pm);		
+	}
+	public void insert(Integer CustomerNo, String Content) {
+		service.insert(CustomerNo, Content);
 	}
 }
