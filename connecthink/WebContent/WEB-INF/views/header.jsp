@@ -53,14 +53,7 @@
                                             <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
-                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>
-<!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
-<!--                                                 <ul class="submenu"> -->
-<!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
-<!--                                                     <li><a href="job_details.html">job details </a></li> -->
-<!--                                                     <li><a href="elements.html">elements</a></li> -->
-<!--                                                 </ul> -->
-<!--                                             </li> -->
+                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>                                           
                                         </ul>
                                     </nav>
                                 </div>

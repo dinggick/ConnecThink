@@ -117,7 +117,7 @@ public class ManageMemberTest {
 		String recruitNo = "6R2";
 		Integer memberNo = 101;
 		try {
-			mmrepo.deleteByIdRecruitNoAndIdMemberNo(recruitNo, memberNo);
+			//mmrepo.deleteByIdRecruitNoAndIdMemberNo(recruitNo, memberNo);
 			System.out.println("지원 취소 완료");
 		} catch (Exception e) {
 			e.printStackTrace();

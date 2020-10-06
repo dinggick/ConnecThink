@@ -99,7 +99,7 @@
 									<a href="#"><h4>${customer.name}</h4></a>
 									<div class="links_locat d-flex align-items-center">
 										<div class="location">
-<%-- 											<p>${customer.postion.name }</p> --%>
+ 											<%--<p>${customer.postion.name }</p> --%>
 											<div class="bookmark">
 												<a class="bmspan"><span onclick="addBookmark()" class ="bm"> <img src="${contextPath}/img/bookmark.png"   alt="" 
 													style="width: 18px; height: 18px;">
@@ -123,7 +123,7 @@
 							</div>
 							<div class="thumb">
 								<div class="profilepic" style="padding-left: 90px">
-									<img src="${contextPath}/img/dogpic.png" alt=""
+									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
