@@ -185,8 +185,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			});
 		}
 		//2.1 회원의 노티 화면에 보여주기
-		if(gotMessage.contains("connecthinksystem:loadNotis:")) {	
-			
+		if(gotMessage.contains("connecthinksystem:loadNotis:")) {				
 			List<Notification> nts = notiMap.get(customer_no);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadNotis:";
@@ -196,7 +195,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			//읽음상태 읽음으로 바꾸기
 			nts.forEach(pm -> {				
 					pm.setRead_status(1);
-					notiController.save(pm);				
+					notiController.insert(pm.getCustomer().getCustomerNo(),pm.getContent());				
 			});
 		}
 

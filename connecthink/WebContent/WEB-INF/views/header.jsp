@@ -276,7 +276,8 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 			$msgSection.scrollTop(scrollLocation);
 		}
 	}
-	  else if (e.data.includes("connecthinksystem:loadNotis:")){		 
+	  else if (e.data.includes("connecthinksystem:loadNotis:")){	
+		   $('.msg_header span personName').html("ConnecThink");
 		   $('#notinew').hide();
 		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
 		   MSGs = JSON.parse(pmStr);
