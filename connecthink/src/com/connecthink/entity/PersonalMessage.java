@@ -1,6 +1,5 @@
 package com.connecthink.entity;
 
-import java.util.Date;
 import java.sql.Timestamp;
 
 import javax.persistence.CascadeType;
@@ -16,6 +15,9 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,9 +29,9 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-
 @Entity
 @Table(name = "personal_msg")
+
 @SequenceGenerator(	//시퀀스
 		   name = "PERSONAL_MSG_NO_SEQ_GENERATOR"// 사용할 sequence 이름
 		  ,sequenceName ="PERSONAL_MSG_NO_SEQ" // 실제 데이터베이스 sequence 이름
@@ -39,6 +41,7 @@ import lombok.Setter;
 public class PersonalMessage {
 	@Id
 	@Column(name = "personal_msg_no")
+	
 	@GeneratedValue(strategy = GenerationType.SEQUENCE
 	,generator = "PERSONAL_MSG_NO_SEQ_GENERATOR")
 	private Integer personalMsgNo;

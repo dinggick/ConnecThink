@@ -2,6 +2,7 @@
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%-- <c:set var="notification" value="${request.notification }"/> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +41,7 @@
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
                                     <a href="/connecthink/">
-                                        <img src="${contextPath}/img/logo.png" alt="">
+                                        <img src="${contextPath}/img/logo.png" alt="">	
                                     </a>
                                 </div>
                             </div>
@@ -49,18 +50,11 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
-                                           
+                                            <li><a href="${contextPath}/about">서비스 소개</a></li>
+                                            <li><a href="${contextPath}/all/customerList">모집중인 회원</a></li>
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
-                                            <li><a href="contact.html">진행중인 공모전</a></li>
-                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>
-<!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
-<!--                                                 <ul class="submenu"> -->
-<!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
-<!--                                                     <li><a href="job_details.html">job details </a></li> -->
-<!--                                                     <li><a href="elements.html">elements</a></li> -->
-<!--                                                 </ul> -->
-<!--                                             </li> -->
+                                            <li><a href="${contextPath}/event">진행중인 교육·행사</a></li>
+                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>                                           
                                         </ul>
                                     </nav>
                                 </div>
@@ -84,8 +78,8 @@
                                          		</c:choose>
                                             </ul>                                                                               
                                          </div>
-                                        <a href="#"><img class="personicon" id ="bell" src="${contextPath}/img/bell.png"></a>
-                                        <a href="#"><img class="personicon" id ="notibell" style="display:none" src="${contextPath}/img/active.png"></a>
+                                        <a href="#" onclick="inbox()"><img class="personicon" id ="bell" src="${contextPath}/img/bell.png"></a>
+                                        <a href="#" onclick="inbox()"><img class="personicon" id ="notibell" style="display:none" src="${contextPath}/img/notification.png"></a>
                                         
 							<div class="sidebar">
 								<a href="#"><img class="personicon" src="${contextPath}/img/pmenu.png" onclick="openNav()"></a>
@@ -142,6 +136,7 @@
 
     <!-- header-end -->
 <script>
+
 var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
@@ -152,10 +147,16 @@ function openNav() {
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
 }
+function inbox(){
+	$('#bell').show();
+	$('#notibell').hide();	
+	let url = "${contextPath}/logined/inbox" ;
+	location.href = url;	
+}
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -164,7 +165,8 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
-	
+	///------------메인화면에서 노티아이콘 보여줄지 결정-----------------
+	wSocket.send("connecthinksystem:checkNoti:");
    }
    //연결이 끊어졌을때
    function onClose(e) {
@@ -172,6 +174,11 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    }
    //메세지 수신시
    function onMessage(e) {	
+	   console.log(e.data);
+	if (e.data.includes("connecthinksystem:checkNoti:true")){
+		$('#bell').hide();
+		$('#notibell').show();	
+	}
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
@@ -264,13 +271,13 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 	 		let scrollLocation = document.querySelector("#firstUnreadMsg").offsetTop - 107;
 	 		$msgSection.scrollTop(scrollLocation);
 		}else{
-			//표시가 없을 경우 바닥으로 이동
+			//표시가 없을 경우 메세지를 전부 읽은 것이므로 바닥으로 이동
 			let scrollLocation = $msgSection.prop('scrollHeight');
 			$msgSection.scrollTop(scrollLocation);
 		}
 	}
-	  else if (e.data.includes("connecthinksystem:loadNotis:")){
-		   console.log("loadingNotis");
+	  else if (e.data.includes("connecthinksystem:loadNotis:")){		 
+		   $('#notinew').hide();
 		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
 		   MSGs = JSON.parse(pmStr);
 		   console.log(MSGs);
@@ -292,6 +299,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 	else if (e.data.includes("connecthinksystem:pm:")){
 		let pmStr = e.data.replace("connecthinksystem:pm:","");
 		pmObj = JSON.parse(pmStr);
+		console.log(pmObj);
 		//inbox에 들어와있을 때 할 작업.
 		if(window.location.href.includes("inbox")) {
 			let otherNo = "";
@@ -311,6 +319,8 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 					sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
 					sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
 					sectionData += '<div style="clear:both;"></div>';
+					//메세지를 읽은 것이므로 읽음 상태를 변경함.
+ 					updateStatus(pmObj.personalMsgNo);
 				} else {
 					sectionData += '<div class="send_msg">' + pmObj.content + '</div>';
 					sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
@@ -338,13 +348,42 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 					$listSection.html(sectionData);
 				}
 			}
+		} else {
+			$('#bell').hide();
+			$('#notibell').show();
+		}
+	} else if (e.data.includes("connecthinksystem:noti:")) {
+		let pmStr = e.data.replace("connecthinksystem:noti:","");
+		pmObj = JSON.parse(pmStr);
+		if(window.location.href.includes("inbox")) {
+			let sectionData = $msgSection.html();
+			let sendDate = new Date(pmObj.notifyDate);
+			sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
+            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+            sectionData += '<div style="clear:both;"></div>';
+            $msgSection.html(sectionData);
+            let scrollLocation = $msgSection.prop('scrollHeight');
+			$msgSection.scrollTop(scrollLocation);
+		} else {
+			$('#bell').hide();
+			$('#notibell').show();
 		}
 	}
+	
    }
    
    //에러 발생시
    function onError(e) {
     alert( "오류발생 : " + e.data );
    }
+   
+//------------------------ Ajax ------------------------------
+//메세지 함에 들어와있을 때 전송된 메세지를 읽음 처리
+function updateStatus(personalMsgNo) {
+	$.ajax({
+		url:"${contextPath}/inbox/updateStatusOne"
+		,data: {'personalMsgNo' : personalMsgNo}
+	});
+}
 </script>
 </html>

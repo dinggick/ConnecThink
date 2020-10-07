@@ -7,10 +7,11 @@
 <c:set var = "project" value="${requestScope.project}"/>
 <c:set var="isManager" value="${requestScope.isManager }"/>
 <c:set var="invited" value="${requestScope.invited }"/>
+<c:set var="userInfo" value ="${sessionScope.loginInfo }"/>
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Job Board</title>
+<title>회원 상세</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -99,7 +100,7 @@
 									<a href="#"><h4>${customer.name}</h4></a>
 									<div class="links_locat d-flex align-items-center">
 										<div class="location">
-<%-- 											<p>${customer.postion.name }</p> --%>
+ 											<%--<p>${customer.postion.name }</p> --%>
 											<div class="bookmark">
 												<a class="bmspan"><span onclick="addBookmark()" class ="bm"> <img src="${contextPath}/img/bookmark.png"   alt="" 
 													style="width: 18px; height: 18px;">
@@ -110,7 +111,7 @@
 												</span></a> 
 												
 												&nbsp; 
-												<a class="msg" onclick="openMsgModal()"><span ><img src="img/mail2.png" alt=""
+												<a class="msg" onclick="openMsgModal()"><span ><img src="${contextPath}/img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
 											</div>
 										</div>
@@ -123,7 +124,7 @@
 							</div>
 							<div class="thumb">
 								<div class="profilepic" style="padding-left: 90px">
-									<img src="${contextPath}/img/dogpic.png" alt=""
+									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
@@ -322,7 +323,7 @@
 			var recruitNo = document.getElementById('project_no').value;
 			
 			$.ajax({
-				url: "${contextPath}/inviteMember",
+				url: "${contextPath}/logined/inviteMember",
 				method: "POST",
 				data: {
 					customerNo: ${customer.customerNo}, 
@@ -342,14 +343,14 @@
 		function addBookmark() {
 			
 			$.ajax({
-				url : "${contextPath}/bmMember",
+				url : "${contextPath}/logined/bmMember",
 				method : "POST",
 				data : {
 					customerNo : '${customer.customerNo}',					
 					${_csrf.parameterName} : '${_csrf.token}'
 				},
 				success : function(data) {
-					console.log(data);					
+								
 					if (data == "success") {
 						
 						$("span.bm").css("display", "none");
@@ -360,7 +361,7 @@
 		}
 		function deleteBookmark(){
 			$.ajax({
-				url : "${contextPath}/delBmMember",
+				url : "${contextPath}/logined/delBmMember",
 				method : "POST",
 				data : {
 					customerNo : '${customer.customerNo}',	
@@ -393,14 +394,13 @@
 				$('#msgModal').modal("hide"); 
 			}
 		}
-		function bookClick (){
-			
+		function bookClick (){				
 			$.ajax({
-				url : "${contextPath}/mateBm",
+				url : "${contextPath}/logined/mateBm",
 				method : "POST",
-				data : {
-					customerNo : ${sessionScope.loginInfo},
-					${_csrf.parameterName} : '${_csrf.token}'},
+				data : {					
+					${_csrf.parameterName} : '${_csrf.token}'
+					},
 				success :  function(list) {
 					list.forEach(function(bm, index){
 						console.log(bm);

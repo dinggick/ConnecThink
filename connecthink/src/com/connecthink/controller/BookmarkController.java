@@ -32,7 +32,7 @@ public class BookmarkController {
 	 * @author 홍지수
 	 * 북마크한 메이트 목록 조회
 	 */
-	@PostMapping(value="/logined/mateBm")
+	@PostMapping(value="/logined/customerBm")
 	@ResponseBody
 	public List<BookmarkUser> findByIdSendOrderByReceiveDesc(Integer customerNo, HttpSession session){
 		customerNo = (Integer) session.getAttribute("loginInfo");
@@ -89,7 +89,7 @@ public class BookmarkController {
 		return count;
 	}
 	//멤버에 북마크 추가
-	@PostMapping(value="/bmMember")
+	@PostMapping(value="/logined/bmMember")
 	@ResponseBody
 	public String bmUser(Integer customerNo, HttpSession session) {
 		Integer user = (Integer) session.getAttribute("loginInfo");
@@ -97,7 +97,7 @@ public class BookmarkController {
 		return "success";
 	}
 	//멤버 북마크 삭제
-	@PostMapping(value="delBmMember")
+	@PostMapping(value="/logined/delBmMember")
 	@ResponseBody
 	public String delBmMember(Integer customerNo, Integer user) {
 		service.delBmMember(customerNo, user);
