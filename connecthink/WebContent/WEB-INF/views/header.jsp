@@ -170,7 +170,7 @@ var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
    }
    //연결이 끊어졌을때
    function onClose(e) {
-    alert("WebSocket closed!");
+
    }
    //메세지 수신시
    function onMessage(e) {	
@@ -278,7 +278,7 @@ var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
 	}	
 
 	  else if (e.data.includes("connecthinksystem:loadNotis:")){
-		  $('.msg_header > div > span.personName').html("ConnecThink");		
+		  $('.msg_header > div > span.personName').html("ConnecThink"); 
 		   $('#notinew').hide();
 		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
 		   MSGs = JSON.parse(pmStr);
