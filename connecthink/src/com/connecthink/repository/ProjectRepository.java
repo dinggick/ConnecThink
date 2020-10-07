@@ -111,27 +111,24 @@ public interface ProjectRepository extends JpaRepository<Project, Integer> {
 	 * @author 임수정
 	 * 내가 지원한 프로젝트 목록
 	 */
-	@Query(nativeQuery = true, value = "SELECT p.*\r\n" + 
-			"FROM\r\n" + 
-			"	member m\r\n" + 
-			"	JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
-			"	JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
-			"WHERE\r\n" + 
-			"	m.enter_status = 0 AND m.member_no = ?1 AND m.invited = 0")
-	public List<Project> findMyApplication(Integer memberNo);
+//	@Query(nativeQuery = true, value = "SELECT p.*\r\n" + 
+//			"FROM\r\n" + 
+//			"	member m\r\n" + 
+//			"	JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
+//			"	JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
+//			"WHERE\r\n" + 
+//			"	m.enter_status = 0 AND m.member_no = ?1 AND m.invited = ?2")
+//	public List<Project> findMyAppliedOrIvited(Integer memberNo, Integer invited);
 	
 	/**
 	 * @author 임수정
-	 * 내가 초대받은 프로젝트 목록
+	 * 내가 초대받거나 지원한 프로젝트 목록
 	 */
-	@Query(nativeQuery = true, value = "SELECT p.*\r\n" + 
-			"FROM\r\n" + 
-			"	member m\r\n" + 
-			"	JOIN recruit  r ON ( m.recruit_no = r.recruit_no )\r\n" + 
-			"	JOIN project  p ON ( r.project_no = p.project_no )\r\n" + 
-			"WHERE\r\n" + 
-			"	m.enter_status = 0 AND m.member_no = ?1 AND m.invited = 1")
-	public List<Project> findMyInvitation(Integer memberNo);
+	@Query(nativeQuery = true, value = "SELECT distinct p.*\r\n" + 
+			"FROM member m JOIN recruit r ON ( m.recruit_no = r.recruit_no )\r\n" + 
+			"              JOIN project p ON ( r.project_no = p.project_no )\r\n" + 
+			"WHERE m.enter_status = 0 AND m.member_no = ?1 AND m.invited = ?2")
+	public List<Project> findMyInvitiedOrApplied(Integer memberNo, Integer invited);
 	
 	/**
 	 * @author 김동준

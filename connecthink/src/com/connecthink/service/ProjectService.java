@@ -48,7 +48,7 @@ public class ProjectService {
 	 * 내가 지원한 프로젝트 찾기
 	 */
 	public List<InvitedOrAppliedProjectDTO> findMyApplication(Integer memberNo) {
-		List<Project> pList = projectRepository.findMyApplication(memberNo);
+		List<Project> pList = projectRepository.findMyInvitiedOrApplied(memberNo, 0);
 		List<InvitedOrAppliedProjectDTO> appliedPList = new ArrayList<InvitedOrAppliedProjectDTO>();
 		for(Project p : pList) {
 			Set<Recruit> recruits = p.getRecruits();
@@ -76,7 +76,7 @@ public class ProjectService {
 	 * 내가 초대받은 프로젝트 찾기
 	 */
 	public List<InvitedOrAppliedProjectDTO> findMyInvitation(Integer memberNo) {
-		List<Project> pList = projectRepository.findMyInvitation(memberNo);
+		List<Project> pList = projectRepository.findMyInvitiedOrApplied(memberNo, 1);
 		List<InvitedOrAppliedProjectDTO> invitedPList = new ArrayList<InvitedOrAppliedProjectDTO>();
 		for(Project p : pList) {
 			Set<Recruit> recruits = p.getRecruits();

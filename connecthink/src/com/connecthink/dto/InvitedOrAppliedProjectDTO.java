@@ -25,6 +25,6 @@ public class InvitedOrAppliedProjectDTO {
 	
 	private String positionName;
 	
-	private Date deadLine;
+	private Date deadline;
 	
 }
