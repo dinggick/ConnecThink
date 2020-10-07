@@ -245,13 +245,14 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			String[] contentArr = gotMessage.split(":");
 			Integer otherNo = Integer.parseInt(contentArr[2]);
 			String pmContent = contentArr[3];
-			if (customer_no != otherNo) 
-			thisCustomer = customerController.findCustomerByNo(customer_no);
-//			otherCustomer = customerController.findCustomerByNo(otherNo);
-//			pmContent = thisCustomer.getName() + pmContent;
-//			newNoti.setCustomer(otherCustomer); newNoti.setContent(pmContent);
-//			newNoti.setRead_status(0);
-//			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));
+//			if (customer_no != otherNo) {
+//				thisCustomer = customerController.findCustomerByNo(customer_no);
+//			}
+			otherCustomer = customerController.findCustomerByNo(otherNo);
+
+			newNoti.setCustomer(otherCustomer); newNoti.setContent(pmContent);
+			newNoti.setRead_status(0);
+			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));
 			
 			//repository에 인서트
 			notiController.insert(otherNo, pmContent);
@@ -265,7 +266,11 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 				System.out.println("★ 상대방이 접속 중이라 실시간으로 메세지 전송 완료. ★");
 			}
 			session.sendMessage(new TextMessage(sendPmJson));
-			notiMap.get(otherNo).add(newNoti);			
+			System.out.println("#############"+otherNo + "$$$$$$"+newNoti);
+			if(!notiMap.containsKey(otherNo)) {
+				notiMap.put(otherNo, new ArrayList<Notification>());	
+			} 
+			notiMap.get(otherNo).add(newNoti);
 		}
 	}
 

@@ -294,6 +294,8 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 		            sectionData += '<div style="clear:both;"></div>';
 		      });
 		      $msgSection.html(sectionData);
+		      let scrollLocation = $msgSection.prop('scrollHeight');
+				$msgSection.scrollTop(scrollLocation);
 		   }
 	//수신한 메세지가 Personal Message인 경우
 	else if (e.data.includes("connecthinksystem:pm:")){
