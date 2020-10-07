@@ -333,6 +333,7 @@
             $(".thumb").on("click", "img", function(e) {
                 $(this).next().trigger("click");
             });
+			
 			//프로필 클릭 후 input file에 사진 등록하면 화면에 해당 사진을 보여주기
 			$(".thumb").find("input[type=file]").change(function() {
 // 				$(this).prev().attr("src", $(this).val());
@@ -344,13 +345,33 @@
 		 			enctype : "multipart/form-data",
 		 			processData : false,
 		 			contentType : false,
+		 			async : false,
 		 			beforeSend : function(xhr) {
 		 				xhr.setRequestHeader('${_csrf.headerName}', '${_csrf.token}');
 		 			},
 		 			data : formData,
 		 			success : (data, textStatus, jqXHR) => {
-		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime());
-		 				$(this).prev().css("width", "48").css("height", "48");
+		 				var imgUrl = "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime();
+		 				
+		 				$.ajax({
+		 					url : "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg",
+		 					method : "GET",
+		 					responseType: "image/jpg",
+		 					async : false,
+		 					data : {t : new Date().getTime()},
+		 					success : (data, textStatus, xhr) => {
+		 						console.log(data);
+		 					},
+		 					error : (xhr) => {
+		 						console.log(xhr);
+		 					}
+		 				});
+		 				
+		 				$(this).prev().remove();
+		 				$(this).before($("<img src='" + imgUrl + "' style='width: 48; height: 48;'>"));
+		 				
+// 		 				$(this).prev().attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime());
+// 		 				$(this).prev().css("width", "48").css("height", "48");
 		 			},
 		 			error : () => {
 		 				
