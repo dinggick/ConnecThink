@@ -87,7 +87,7 @@ public class MemberService {
 		List<ManageMemberDTO> mmList = new ArrayList<ManageMemberDTO>();
 		if(rList.size() != 0) {
 			for(Recruit r : rList) {
-				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 1);
+				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 0, 1);
 				if(tempMList.size() != 0) {
 					for(Member m : tempMList) {
 						m.getCustomer().getExperiences();
@@ -112,7 +112,7 @@ public class MemberService {
 		List<ManageMemberDTO> mmList = new ArrayList<ManageMemberDTO>();
 		if(rList.size() != 0) {
 			for(Recruit r : rList) {
-				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 0);
+				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 0, 0);
 				if(tempMList.size() != 0) {
 					for(Member m : tempMList) {
 						m.getCustomer().getExperiences();
