@@ -21,6 +21,7 @@ import com.connecthink.entity.Customer;
 import com.connecthink.entity.Notification;
 import com.connecthink.entity.PersonalMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class headerWebSocketHandler extends TextWebSocketHandler {
 	
@@ -49,6 +50,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 
 	//parsing mapper
 	ObjectMapper mapper = new ObjectMapper();
+	
 
 	@Override
 	//클라이언트에서 접속을 성공할때 발생
@@ -170,6 +172,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			List<PersonalMessage> pms = pmMap.get(customer_no).get(otherNo);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadPms:";
+			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			loadPmsMsg += mapper.writeValueAsString(pms);
 			session.sendMessage(new TextMessage(loadPmsMsg));
 			System.out.println("★" + contentArr[2] + "번 회원과 주고받은 메세지를 전송했습니다.★");
@@ -187,6 +190,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			List<Notification> nts = notiMap.get(customer_no);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadNotis:";
+			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			loadPmsMsg += mapper.writeValueAsString(nts);
 			session.sendMessage(new TextMessage(loadPmsMsg));			
 			//읽음상태 읽음으로 바꾸기
@@ -207,12 +211,15 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			newPm.setSend(thisCustomer); newPm.setReceive(otherCustomer);
 			newPm.setContent(pmContent); newPm.setStatus(0);
 			newPm.setCreateDate(new Timestamp(System.currentTimeMillis()));
-			//repository에 인서트
-			pmController.save(newPm);
+			
 			System.out.println("★새로 전송한 personal message를 디비에 insert 했습니다. ★");
 			//상대방에게 메세지 전송
 			WebSocketSession receiveSession = loginUserMap.get(otherNo);
 			String sendPmJson = "connecthinksystem:pm:";
+			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+			String test = mapper.writeValueAsString(newPm);
+			System.out.println(test);
+			
 			sendPmJson += mapper.writeValueAsString(newPm);
 			System.out.println("이 메세지를 보낼거예요 : " + sendPmJson);
 			if(receiveSession!=null) {
@@ -224,6 +231,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 				pmMap.get(otherNo).get(customer_no).add(newPm);
 				System.out.println("★ 상대방이 접속 중이라 실시간으로 메세지 전송 완료. ★");
 			}
+			//repository에 인서트
+			pmController.save(newPm);
 			session.sendMessage(new TextMessage(sendPmJson));
 			//해당 유저의 pmList에 메세지 추가
 			if(!pmMap.get(customer_no).containsKey(otherNo)) {
@@ -236,7 +245,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			String[] contentArr = gotMessage.split(":");
 			Integer otherNo = Integer.parseInt(contentArr[2]);
 			String pmContent = contentArr[3];
-//			thisCustomer = customerController.findCustomerByNo(customer_no);
+			if (customer_no != otherNo) 
+			thisCustomer = customerController.findCustomerByNo(customer_no);
 //			otherCustomer = customerController.findCustomerByNo(otherNo);
 //			pmContent = thisCustomer.getName() + pmContent;
 //			newNoti.setCustomer(otherCustomer); newNoti.setContent(pmContent);
@@ -247,6 +257,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			notiController.insert(otherNo, pmContent);
 			WebSocketSession receiveSession = loginUserMap.get(otherNo);			
 			String sendPmJson = "connecthinksystem:noti:";
+			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			sendPmJson += mapper.writeValueAsString(newNoti);
 			if(receiveSession!=null) {
 				//접속 중일 때 실시간 전송
