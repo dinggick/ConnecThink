@@ -334,7 +334,8 @@
 					${_csrf.parameterName} : '${_csrf.token}'
 					},
 				success: function(data){
-					if (data == "success") {
+					if (data.status == "success") {
+						alert(data.msg);
 						$('#myModal').modal("hide"); 		
 						wSocket.send("connecthinksystem:nto:"+ ${customer.customerNo} + ":" + notiContent);	
 					} else {
