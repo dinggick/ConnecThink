@@ -61,7 +61,8 @@
 	padding: 50px 70px;
 }
 .thumbimg{
- max-width: 60;
+ width: 60px;
+ height: 60px;
    border-radius: 50%;
 }
 
