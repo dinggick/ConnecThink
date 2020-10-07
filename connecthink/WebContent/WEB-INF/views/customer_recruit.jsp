@@ -334,8 +334,9 @@
 					${_csrf.parameterName} : '${_csrf.token}'
 					},
 				success: function(data){
-					if (data == "success") {
-						$('#myModal').modal("hide"); 		
+					if (data.status == "success") {
+						$('#myModal').modal("hide");
+						alert(data.msg);
 						wSocket.send("connecthinksystem:nto:"+ ${customer.customerNo} + ":" + notiContent);	
 					} else {
 						alert(data.msg);						
@@ -402,7 +403,7 @@
 		}
 		function bookClick (){				
 			$.ajax({
-				url : "${contextPath}/logined/mateBm",
+				url : "${contextPath}/logined/customerBm",
 				method : "POST",
 				data : {					
 					${_csrf.parameterName} : '${_csrf.token}'

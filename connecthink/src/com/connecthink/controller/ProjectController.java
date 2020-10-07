@@ -63,7 +63,7 @@ public class ProjectController {
 			m.getRecruits().forEach(c -> {
 				n.add(c);
 				c.getMembers().forEach(g -> {
-					if (g.getCustomer().getCustomerNo() == customerNo && g.getInvited() ==1 ) {
+					if (g.getCustomer().getCustomerNo().equals(customerNo) && g.getInvited() ==1 ) {
 						n.remove(c);
 					}
 				});
