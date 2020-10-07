@@ -3,6 +3,7 @@ package com.connecthink.service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -42,17 +43,14 @@ public class MemberService {
 		boolean isExists = false;
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
-		System.out.println(recruit.getMembers().size());
-		if(recruit.getMembers().size()>0) {
-			Iterator<Member> iter = recruit.getMembers().iterator();
-			while(iter.hasNext()) {
-				if(iter.next().getCustomer().getCustomerNo() == customerNo && iter.next().getInvited() >= 0) {
+		Set<Member> m = recruit.getMembers();	
+		if(m.size()>0) {
+			for(Member ms : m) {
+				if(ms.getCustomer().getCustomerNo() == customerNo && ms.getInvited() >= 0 && ms.getEnterStatus() >= 0) {
 					isExists = true;
 				}
-				System.out.println(isExists);
 			}
 		}
-		
 		if(isExists == false) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();
@@ -68,11 +66,9 @@ public class MemberService {
 
 			
 			memberRepository.save(member);
-		
 			
 		} else {
-			System.out.println("이미 지원함");
-			throw new AddException("이미 지원");
+			throw new AddException("이미 지원/초대/속해있는 팀입니다.");
 		}
 
 	}

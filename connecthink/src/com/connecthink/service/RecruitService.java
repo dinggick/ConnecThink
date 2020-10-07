@@ -160,14 +160,15 @@ public class RecruitService {
 		MemberId mi = new MemberId();
 		Customer c = customerRepository.findByCustomerNo(customerNo);
 		Recruit r = recruitRepository.findById(recruitNo).get();
+		Set<Member> ms = r.getMembers();
 		boolean isExists = false;
-		if(r.getMembers().size() > 0) {
-			Iterator<Member> iter = r.getMembers().iterator();
-			while(iter.hasNext()) {
-				if(iter.next().getCustomer().getCustomerNo() == customerNo && iter.next().getEnterStatus() >= 0) {
+		if(ms.size() > 0) {
+			for(Member mm : ms) {
+				if(mm.getCustomer().getCustomerNo() == customerNo && mm.getInvited() == 0) {
 					isExists = true;
 				}
 			}
+			
 		}
 				
 		if(isExists == false) {
@@ -180,7 +181,7 @@ public class RecruitService {
 			m.setEnterStatus(0);
 			memberRepository.save(m);
 		} else {
-			throw new AddException("이미 지원했거나 초대 한 회원임");
+			throw new AddException("이미 지원/초대/속해있는 회원입니다");
 		}
 		
 		

@@ -181,16 +181,17 @@ public class RecruitController {
 //	멤버 초대 메소드
 	@PostMapping(value="/logined/inviteMember")	
 	@ResponseBody
-	public String inviteMember(Integer customerNo, String recruitNo) {
-		String status = "";
+	public Map inviteMember(Integer customerNo, String recruitNo) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		try {
-			status = "success";
+			result.put("status", "success");
+			result.put("msg", "초대 완료");
 			recruitService.saveInvite(recruitNo, customerNo);
 		} catch (AddException e) {
-			status = "fail";
-			e.printStackTrace();
+			result.put("status", "fail");
+			result.put("msg", e.getMessage());
 		}
-		return status;
+		return result;
 	}
 	
 	/**
