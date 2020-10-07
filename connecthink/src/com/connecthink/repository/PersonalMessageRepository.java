@@ -37,7 +37,7 @@ public interface PersonalMessageRepository extends JpaRepository<PersonalMessage
 	public List<PersonalMessage> findByCustomerNo(Integer customerNo);
 
 	@Query(nativeQuery = true, value = "SELECT COUNT(personal_msg_no) FROM personal_msg"
-			+ " WHERE receive = ?1 AND read_status = 0")
+			+ " WHERE receive = ?1 AND status = 0")
 	public Integer countUnreadMsg(Integer CustomerNo);
 
 }

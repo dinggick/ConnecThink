@@ -136,16 +136,7 @@
 
     <!-- header-end -->
 <script>
-// $(document).ready(function(){
-// 	if ('${notification}' =="n") {
-// 		$('#bell').show();
-// 	$('#notibell').hide();	
-// 	} else {
-// 		$('#bell').hide();
-// 		$('#notibell').show();	
-// 	}
-	
-// });
+
 var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
@@ -361,7 +352,24 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 			$('#bell').hide();
 			$('#notibell').show();
 		}
+	} else if (e.data.includes("connecthinksystem:noti:")) {
+		let pmStr = e.data.replace("connecthinksystem:noti:","");
+		pmObj = JSON.parse(pmStr);
+		if(window.location.href.includes("inbox")) {
+			let sectionData = $msgSection.html();
+			let sendDate = new Date(pmObj.notifyDate);
+			sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
+            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+            sectionData += '<div style="clear:both;"></div>';
+            $msgSection.html(sectionData);
+            let scrollLocation = $msgSection.prop('scrollHeight');
+			$msgSection.scrollTop(scrollLocation);
+		} else {
+			$('#bell').hide();
+			$('#notibell').show();
+		}
 	}
+	
    }
    
    //에러 발생시

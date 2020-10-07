@@ -336,7 +336,7 @@ ul.list>li {
 										</div>
 									</div>
 									<div class="msg_body">
-										<div class="receive_msg">테스트.</div>
+										<div class="receive_msg"></div>
 										<div style="clear: both;"></div>
 									</div>
 								</div>
