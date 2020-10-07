@@ -66,11 +66,9 @@ public class MemberService {
 
 			
 			memberRepository.save(member);
-		
 			
 		} else {
-			System.out.println("이미 지원함");
-			throw new AddException("이미 지원");
+			throw new AddException("이미 지원/초대/속해있는 팀입니다.");
 		}
 
 	}

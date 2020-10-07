@@ -332,11 +332,11 @@
 					},
 				success: function(data){
 					console.log(data);
-					if (data == "success") {
+					if (data.status == "success") {
 						$('.close').click();
-						alert("초대 완료");
+						alert(data.msg);
 					} else {
-						alert("이미 팀에 속해있거나 초대한 팀원입니다");
+						alert(data.msg);						
 					}
 				}
 			});

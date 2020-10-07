@@ -163,7 +163,6 @@ public class RecruitService {
 		Set<Member> ms = r.getMembers();
 		boolean isExists = false;
 		if(ms.size() > 0) {
-//			}
 			for(Member mm : ms) {
 				if(mm.getCustomer().getCustomerNo() == customerNo && mm.getInvited() == 0) {
 					isExists = true;
@@ -182,7 +181,7 @@ public class RecruitService {
 			m.setEnterStatus(0);
 			memberRepository.save(m);
 		} else {
-			throw new AddException("이미 지원했거나 초대 한 회원임");
+			throw new AddException("이미 지원/초대/속해있는 회원입니다");
 		}
 		
 		
