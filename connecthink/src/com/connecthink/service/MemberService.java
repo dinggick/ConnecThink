@@ -40,13 +40,15 @@ public class MemberService {
 		Member member = new Member();
 		MemberId ids = new MemberId();
 		Integer mNo = 0;
+		Integer iv = 100;
 		boolean isExists = false;
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
 		Iterator<Member> iter = recruit.getMembers().iterator();
 		while(iter.hasNext()) {
 			mNo = iter.next().getCustomer().getCustomerNo();
-			if(mNo == customerNo) {
+			iv = iter.next().getInvited();
+			if(mNo == customerNo && iv >= 0) {
 				isExists = true;
 			}
 			System.out.println("테스트 : "+mNo );
@@ -63,6 +65,7 @@ public class MemberService {
 			member.setId(ids);
 			member.setCustomer(c);
 			member.setRecruit(r);
+			member.setInvited(0);
 			member.setEnterStatus(0);
 
 			
