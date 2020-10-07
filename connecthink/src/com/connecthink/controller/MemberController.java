@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.connecthink.dto.ManageMemberDTO;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
@@ -48,7 +49,7 @@ public class MemberController {
 	 */
 	@PostMapping(value="/manageMember/invited")
 	@ResponseBody
-	public List<Member> Invited(Integer projectNo) {
+	public List<ManageMemberDTO> Invited(Integer projectNo) {
 		return service.findInvitedByProjectNo(projectNo);
 	}
 	
@@ -58,7 +59,7 @@ public class MemberController {
 	 */
 	@PostMapping(value="/manageMember/applied")
 	@ResponseBody
-	public List<Member> Applied(Integer projectNo) {
+	public List<ManageMemberDTO> Applied(Integer projectNo) {
 		return service.findAppliedByProjectNo(projectNo);
 	}
 
