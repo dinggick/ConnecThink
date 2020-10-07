@@ -300,6 +300,7 @@
 		let recruitNo = $(tableRow).find(".recruitNo").html();
 		let memberNo = $(tableRow).find(".memberNo").html();
 		
+		
 		//내 지원 취소하기 / 지원한 사람 거절하기 / 초대 취소하기 / 초대 거절하기
 		if ($(this).attr("class").search("deny") > 0) {
 			let denyConfirm = confirm("정말 " + this.innerHTML + "하시겠습니까?");
@@ -683,7 +684,7 @@
 			,success:function(result){
 				if(result=="success"){
 					alert("수락되었습니다.");
-					//wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
+					wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
 					
 				}
 			}

@@ -124,7 +124,7 @@
 							</div>
 							<div class="thumb">
 								<div class="profilepic" style="padding-left: 90px">
-									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt=""
+									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt="" onerror="this.src='${contextPath}/img/d2.jpg'"
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
