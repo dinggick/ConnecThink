@@ -18,6 +18,6 @@ public interface MemberRepository extends JpaRepository<Member, MemberId>{
 	 */
 	@Query(nativeQuery = true, value = "SELECT *\r\n" + 
 			"FROM member\r\n" + 
-			"WHERE recruit_no = ?1 AND enter_status = ?2 invited = ?3")
+			"WHERE recruit_no = ?1 AND enter_status = ?2 and invited = ?3")
 	public List<Member> findAllByRecruitNoAndInvited(String recruitNo, Integer enterStatus, Integer invited);
 }

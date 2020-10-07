@@ -683,7 +683,7 @@
 			,success:function(result){
 				if(result=="success"){
 					alert("수락되었습니다.");
-					wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
+					//wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
 					
 				}
 			}
