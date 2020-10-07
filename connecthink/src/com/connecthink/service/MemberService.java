@@ -47,8 +47,7 @@ public class MemberService {
 		System.out.println(m.size());
 		if(m.size()>0) {
 			for(Member ms : m) {
-				if(ms.getCustomer().getCustomerNo() == customerNo && ms.getInvited() >= 0 && ms.getEnterStatus() >= 0) {
-					System.out.println("qqqqqqqqq" + ms.getCustomer().getCustomerNo());
+				if(ms.getCustomer().getCustomerNo().equals(customerNo)) {
 					isExists = true;
 				}
 			}
