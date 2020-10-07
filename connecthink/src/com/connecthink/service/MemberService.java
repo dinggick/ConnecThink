@@ -1,12 +1,13 @@
 package com.connecthink.service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
@@ -66,10 +67,53 @@ public class MemberService {
 
 			memberRepository.save(member);
 			
-		} else if (mNo == customerNo && status >= 0) {
+		} else if (mNo != customerNo && status >= 0) {
 			throw new AddException("이미 지원함");
 		}
 		
 	}
 	
+	/**
+	 * @author IM CRYSTAL
+	 * 특정 프로젝트에 초대된 멤버 목록 보기
+	 */
+	public List<Member> findInvitedByProjectNo(Integer projectNo){
+		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
+		List<Member> mList = new ArrayList<Member>();
+		if(rList.size() != 0) {
+			for(Recruit r : rList) {
+				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 1);
+				if(tempMList.size() != 0) {
+					for(Member m : tempMList) {
+						m.getCustomer().getExperiences();
+						mList.add(m);
+						System.out.println("초대된 멤버 : " + m);
+					}
+				}
+			}
+		}
+		return mList;
+	}
+	
+	/**
+	 * @author IM CRYSTAL
+	 * 특정 프로젝트에 지원한 멤버 목록 보기
+	 */
+	public List<Member> findAppliedByProjectNo(Integer projectNo){
+		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
+		List<Member> mList = new ArrayList<Member>();
+		if(rList.size() != 0) {
+			for(Recruit r : rList) {
+				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 0);
+				if(tempMList.size() != 0) {
+					for(Member m : tempMList) {
+						m.getCustomer().getExperiences();
+						mList.add(m);
+						System.out.println("지원한 멤버 : " + m);
+					}
+				}
+			}
+		}
+		return mList;
+	}
 }

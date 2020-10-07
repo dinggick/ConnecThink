@@ -1,18 +1,14 @@
 package com.connecthink.listener;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import org.springframework.web.servlet.FrameworkServlet;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.connecthink.handler.headerWebSocketHandler;
 
@@ -28,33 +24,31 @@ public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 		super.sessionDestroyed(event);
 		
 		System.out.println("sessionDestroyed 실행~~~~");
+		
 		//HttpSession 객체 가져오기
 		HttpSession session = event.getSession();
+		
 		//ServletRequestAttributes 객체 가져오기
 		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
+		
 		//HttpServletRequest 객체 가져오기
 		HttpServletRequest request = attr.getRequest();
+		
 		//DispatcherServlet으로 로딩된 context 가져오기
-		WebApplicationContext wc = RequestContextUtils.findWebApplicationContext(request);
-		
-		System.out.println("WebApplicationContext : " + wc);
-		
+		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.connecthink");
+
 		//Spring Bean 가져오기
-		headerWebSocketHandler hwsHandler = (headerWebSocketHandler)wc.getBean(headerWebSocketHandler.class);
+		headerWebSocketHandler hwsHandler = (headerWebSocketHandler)ac.getBean("headerWebSocketHandler",headerWebSocketHandler.class);
 		
-		System.out.println("headerWebSocketHandler : " + hwsHandler);
-		
+		//사라질 session에서 로그아웃 할 유저 정보 가져오기
 		Integer loginedCustomer = (Integer)session.getAttribute("loginInfo");
-		System.out.println("로그인 유저 : " + loginedCustomer);
-		System.out.println("PMMAP : " + hwsHandler.getPmMap());
-		if(hwsHandler.getLoginUserMap().containsKey(loginedCustomer)) {
-			hwsHandler.getLoginUserMap().remove(loginedCustomer);
-			System.out.println("★loginUserMap에서 회원 삭제 완료★");
-		}
+
+		//헤더웹소켓 핸들러의 pmMap에 해당 유저의 정보가 남아있다면 지우기
 		if(hwsHandler.getPmMap().containsKey(loginedCustomer)) {
 			hwsHandler.getPmMap().remove(loginedCustomer);
 			System.out.println("★pmMap에서 회원 삭제 완료★");
 		}
+		//헤더웹소켓 핸들러의 notiMap에 해당 유저의 정보가 남아있다면 지우기
 		if(hwsHandler.getNotiMap().containsKey(loginedCustomer)) {
 			hwsHandler.getNotiMap().remove(loginedCustomer);
 			System.out.println("★notiMap에서 회원 삭제 완료★");

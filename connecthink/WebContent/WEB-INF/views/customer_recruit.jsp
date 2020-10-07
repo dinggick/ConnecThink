@@ -11,7 +11,7 @@
 <head>
 
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Job Board</title>
+<title>회원 상세</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -100,7 +100,7 @@
 									<a href="#"><h4>${customer.name}</h4></a>
 									<div class="links_locat d-flex align-items-center">
 										<div class="location">
-<%-- 											<p>${customer.postion.name }</p> --%>
+ 											<%--<p>${customer.postion.name }</p> --%>
 											<div class="bookmark">
 												<a class="bmspan"><span onclick="addBookmark()" class ="bm"> <img src="${contextPath}/img/bookmark.png"   alt="" 
 													style="width: 18px; height: 18px;">
@@ -113,10 +113,8 @@
 												&nbsp; 
 												<a class="msg" onclick="openMsgModal()"><span ><img src="${contextPath}/img/mail2.png" alt=""
 													style="width: 18px; height: 18px;"> 메시지 </span></a>
-
 											</div>
 										</div>
-
 
 										<!--                                         <div class="location"> -->
 										<!--                                             <p> <i class="fa fa-clock-o"></i> Part-time</p> -->
@@ -126,7 +124,7 @@
 							</div>
 							<div class="thumb">
 								<div class="profilepic" style="padding-left: 90px">
-									<img src="${contextPath}/img/dogpic.png" alt=""
+									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt=""
 										style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
@@ -137,6 +135,14 @@
 						</div>
 					</div>
 					<div class="descript_wrap white-bg">
+						<div class="single_wrap">
+							<h4>역할군</h4>
+							<ul style="list-style: none;">
+							<c:forEach items="${customer.customerPositions}" var ="cp">
+								<p>${cp.position.name}</p>
+							</c:forEach>
+							</ul>
+						</div>
 						<div class="single_wrap">
 							<h4>학력</h4>
 							<p>

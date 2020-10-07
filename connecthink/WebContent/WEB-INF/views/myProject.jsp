@@ -16,19 +16,18 @@
 <!-- Place favicon.ico in the root directory -->
 
 <!-- CSS here -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/owl.carousel.min.css">
-<link rel="stylesheet" href="css/magnific-popup.css">
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<link rel="stylesheet" href="css/themify-icons.css">
-<link rel="stylesheet" href="css/nice-select.css">
-<link rel="stylesheet" href="css/flaticon.css">
-<link rel="stylesheet" href="css/gijgo.css">
-<link rel="stylesheet" href="css/animate.min.css">
-<link rel="stylesheet" href="css/slicknav.css">
-
-<link rel="stylesheet" href="css/style.css">
-<!-- <link rel="stylesheet" href="css/responsive.css"> -->
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+<link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+<link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+<link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+<link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+<link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+<link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+<link rel="stylesheet" href="${contextPath}/css/slicknav.css">
+<link rel="stylesheet" href="${contextPath}/css/style.css">
+<!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 
 <style>
 
@@ -38,18 +37,18 @@
 	white-space: nowrap;
 }
 
-.manage_team_area {
+.manage_project_area {
 	background: #F5F7FA;
 	padding-top: 100px;
 	padding-bottom: 100px;
 }
 
-.myTeam_team_area{
+.myProject_project_area{
 	background: #F5F7FA;
 	padding-bottom: 100px;
 }
 
-.manage_team_table_warp {
+.manage_project_table_warp {
 	margin-bottom: 30px;
 	padding-top: 10px;
 	padding-left: 30px;
@@ -63,23 +62,22 @@
 	line-height: 40px;
 	font-weight: 500;
 }
-.table-row>div {
-	font-size: 1em;
-}
 .title {
-	width: 40%;
+	width: 36%;
 }
-
-.theme {
-	width: 30%;
+.purpose, .name, .theme, .position, .status, .deadline {
+	width: 16%;
 }
-.date {
-	width: 30%;
+.status, .deadline {
+	width: 12%;
 }
-.status {
-	width: 10%;
+.manageMember {
+	width: 20%;
+ 	text-align: center;
 }
-
+.projectNo, .member_no, .recruit_no {
+	display:none;
+}
 .table-row>.title:hover, .table-row>.name:hover {
 	color: #00D363;
 	transition: 0.3s;
@@ -91,8 +89,49 @@
 .table-row>:last-child {
 	overflow: visible;
 }
+.manage-bnt {
+	border-radius: 20px;
+	text-align: center;
+	text-decoration: none;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease 0s;
+	padding: 8px 20px 8px 20px;
+}
+.manageInvited, .manageApplied {
+	width: 50%;
+	font-size: 0.9em;
+	padding: 8 8 8 8;
+}
+.manageInvited:hover, .manageApplied:hover {
+	color: #f44a40;
+}
+.allow-my-invi, .allow-in {
+	color: #38a4ff;
+	border: 1px solid #38a4ff;
+}
 
+.allow-my-invi:hover, .allow-in:hover {
+	color: #fff;
+	background: #38a4ff;
+	border: 1px solid transparent;
+}
+.deny-my-app, .deny-my-invi, .deny-to-invite, .deny-in {
+	color: #f44a40;
+	border: 1px solid #f44a40;
+}
 
+.deny-my-app:hover, .deny-my-invi:hover, .deny-to-invite:hover, .deny-in:hover {
+	color: #fff;
+	background: #f44a40;
+	border: 1px solid transparent;
+}
+.showMember {
+  width: 100%;
+  background: #F2F2F2;
+  display: none;
+  overflow: hidden;
+}
 </style>
 
 </head>
@@ -125,23 +164,26 @@
 
 
 	<!--목록 시작 -->
-	<div class="manage_team_area">
+	<div class="manage_project_area">
         <div class="container">
             <div class="row">
-                <div class="col-12 manageMenu mb-1">
-                    <button class="genric-btn default radius myProject" onclick="myTeam();">내가 등록한 팀</button>
-                    <button class="genric-btn default radius lookUpMyTeam" onclick="lookUpMyTeam();">내가 속해있는 팀</button>
-                    </div>
+                <div class="col-12 manageMenu">
+                    <button class="genric-btn default radius myProject" onclick="myProject();">내가 등록한 팀</button>
+                    <button class="genric-btn default radius lookUpmyProject" onclick="lookUpmyProject();">내가 속해있는 팀</button>
+                    <button id="myApplication" class="genric-btn default radius" onclick="fxMyApplication();">내가 지원한 팀</button>
+                    <button id="myInvitaion" class="genric-btn default radius" onclick="fxMyInvitation();">초대받은 팀</button>
+                </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <div class="manage_team_table_warp bg-white">
+                    <div class="manage_project_table_warp bg-white">
 					<div class="progress-table bg-white">
 						<div class="table-head bg-white">
 							<div class="title">프로젝트 명</div>
+							<div class="purpose position">목적</div>
 							<div class="theme">주제</div>
-							<div class="date">등록날짜</div>
-							<div class="status">상태</div>
+							<div class="status deadline">상태</div>
+							<div class="manageMember managerName text-center">초대/지원 관리</div>
 						</div>
 						<div class="tr-section">
 							<div class="table-row bg-white">
@@ -152,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 	
 	
@@ -170,127 +212,408 @@
 
 	<!-- link that opens popup -->
 	<!-- JS here -->
-	<script src="js/vendor/modernizr-3.5.0.min.js"></script>
-	<script src="js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="js/popper.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/owl.carousel.min.js"></script>
-	<script src="js/isotope.pkgd.min.js"></script>
-	<script src="js/ajax-form.js"></script>
-	<script src="js/waypoints.min.js"></script>
-	<script src="js/jquery.counterup.min.js"></script>
-	<script src="js/imagesloaded.pkgd.min.js"></script>
-	<script src="js/scrollIt.js"></script>
-	<script src="js/jquery.scrollUp.min.js"></script>
-	<script src="js/wow.min.js"></script>
-	<script src="js/nice-select.min.js"></script>
-	<script src="js/jquery.slicknav.min.js"></script>
-	<script src="js/jquery.magnific-popup.min.js"></script>
-	<script src="js/plugins.js"></script>
-	<script src="js/gijgo.min.js"></script>
+    <script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+    <script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+    <script src="${contextPath}/js/popper.min.js"></script>
+    <script src="${contextPath}/js/bootstrap.min.js"></script>
+    <script src="${contextPath}/js/owl.carousel.min.js"></script>
+    <script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+    <script src="${contextPath}/js/ajax-form.js"></script>
+    <script src="${contextPath}/js/waypoints.min.js"></script>
+    <script src="${contextPath}/js/jquery.counterup.min.js"></script>
+    <script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+    <script src="${contextPath}/js/scrollIt.js"></script>
+    <script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+    <script src="${contextPath}/js/wow.min.js"></script>
+    <script src="${contextPath}/js/nice-select.min.js"></script>
+    <script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+    <script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+    <script src="${contextPath}/js/plugins.js"></script>
+    <script src="${contextPath}/js/gijgo.min.js"></script>
 
-
-
-	<!--contact js-->
-	<script src="js/contact.js"></script>
-	<script src="js/jquery.ajaxchimp.min.js"></script>
-	<script src="js/jquery.form.js"></script>
-	<script src="js/jquery.validate.min.js"></script>
-	<script src="js/mail-script.js"></script>
-
-
-	<script src="js/main.js"></script>
+    <!--contact js-->
+    <script src="${contextPath}/js/contact.js"></script>
+    <script src="${contextPath}/js/jquery.ajaxchimp.min.js"></script>
+    <script src="${contextPath}/js/jquery.form.js"></script>
+    <script src="${contextPath}/js/jquery.validate.min.js"></script>
+    <script src="${contextPath}/js/mail-script.js"></script>
+    <script src="${contextPath}/js/main.js"></script>
 
 	<script>
-		$(function() {
-			myTeam();
-		});
-		
-		//내가 등록한 팀 불러오기
-		function myTeam() {
-			let $section = $('.tr-section');
+	//섹션 설정
+	var loginedCustomer = ${sessionScope.loginInfo};
+	var $section = $(".tr-section");
+	var $tableHead = $(".table-head");
+	var $manageInTHead = $tableHead.find(".manageMember");
+	var $purposeOrPositionInTHead = $tableHead.find(".purpose");
+	var $statusOrdeadlineInTHead = $tableHead.find(".status");
 
-			$.ajax({
-						url : "${contextPath}/logined/myTeam",
-						method : "POST",
-						data : {${_csrf.parameterName} : '${_csrf.token}'},
-						success : function(teams) {
-							let data = "";
-							//forEach
-							let size = teams.length;
-							if (size > 0) {
-								teams.forEach(function(team, index) {
-									data += '<div class="table-row bg-white">';
-									data += '<div class="managerNo" style="display:none;">'+ team.managerNo +'</div>';
-									data += '<div class="projectNo" style="display:none;">'+ team.projectNo +'</div>';
-									data += '<div class="title" onclick="projectDetail(this);">' + team.title + '</div>';
-									data += '<div class="theme">'+ team.theme +'</div>';
-									let date = new Date(team.createDate);
-									data += '<div class="date">'+ date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() +'</div>';
-									if(team.projectStatus == 1){
-										data += '<div class="status"> 진행중 </div></div>';
-									} else {
-										data += '<div class="status"> 종료 </div></div>';
-									}
-								});
-							} else {
-								data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 팀이 없습니다.</div>";
-							}
-							$section.html(data);
-						}
-					});
-			$(".myProject").css("background", "#fff");
-			$(".lookUpMyTeam").css("background", "#f9f9ff");
-		}
+	$(function() {
+		myProject();
+	});
+	
+	//메뉴 버튼 누르면 바탕 색 바뀌기
+	let $menuBtnArray = $(".manageMenu>button");
+	$menuBtnArray.each(function(i){
+		$(this).click(function(e){
+			//바탕 색 바뀌기
+			$menuBtnArray.css("background-color","#f9f9ff");
+			$(this).css("background-color","#fff");
+		});
+	});
+	
+	//관리버튼 클릭
+	$section.on("click", "a.manage-bnt", function(e){
+		let tableRow = this.parentNode.parentNode;
+		let recruitNo = $(tableRow).find(".recruit_no").html();
+		let memberNo = $(tableRow).find(".member_no").html();
 		
-		//내가 속해있는 팀 불러오기
-		function lookUpMyTeam(){
-			let $myTeamList = $(".tr-section");
-			
-			$.ajax({
-				url : "${contextPath}/logined/lookUpmyTeam",
-				method : "POST",
-				data : {${_csrf.parameterName} : '${_csrf.token}'},
-				success : function(teams) {
-					let data = "";
-					//forEach
-					let size = teams.length;
-					if (size > 0) {
-						teams.forEach(function(team, index) {
-							data += '<div class="table-row bg-white">';
-							data += '<div class="managerNo" style="display:none;">'+ team.managerNo +'</div>';
-							data += '<div class="projectNo" style="display:none;">'+ team.projectNo +'</div>';
-							data += '<div class="title" onclick="projectDetail(this);">' + team.title + '</div>';
-							data += '<div class="theme">'+ team.theme +'</div>';
-							let date = new Date(team.createDate);
-							data += '<div class="date">'+ date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() +'</div>';
-							if(team.projectStatus == 1){
-								data += '<div class="status"> 진행중 </div></div>';
-							} else {
-								data += '<div class="status"> 종료 </div></div>';
+		//내 지원 취소하기 / 지원한 사람 거절하기 / 초대 취소하기 / 초대 거절하기
+		if ($(this).attr("class").search("deny") > 0) {
+			let denyConfirm = confirm("정말 " + this.innerHTML + "하시겠습니까?");
+			if(denyConfirm==1){
+				deny(recruitNo, memberNo, this.innerHTML);
+	 			$(this.parentNode.parentNode).remove();
+			}
+		}
+		//지원자 수락하기 / 초대 수락하기
+		else if ($(this).attr("class").search("allow") > 0) {
+			let allowConfirm = confirm("정말 수락하시겠습니까?");
+			if(allowConfirm==1){
+				allow(recruitNo, memberNo);
+				$(this.parentNode.parentNode).remove();
+			}
+		}
+		//기본 이벤트, 이벤트 전파 막기
+		return false;
+	});
+	
+	//클릭 시 팀 상세 페이지로 이동
+	function projectDetail(e){
+		let $projectNo = $(e).siblings("div.projectNo").html();
+		let url = "${contextPath}/logined/project_detail?projectNo=" + $projectNo ;
+		location.href = url;
+	}
+	
+	//내가 등록한 팀 불러오기
+	function myProject() {
+		$.ajax({
+			url : "${contextPath}/logined/myTeam",
+			method : "POST",
+			data : {${_csrf.parameterName} : '${_csrf.token}'},
+			success : function(projects) {
+				$manageInTHead.html("초대/지원 관리");
+				$purposeOrPositionInTHead.html("목적");
+				$statusOrdeadlineInTHead.html("상태");
+				let data = "";
+				//forEach
+				let size = projects.length;
+				if (size > 0) {
+					projects.forEach(function(project, index) {
+						data += '<div class="table-row bg-white">';
+						data += '<div class="projectNo">'+ project.projectNo +'</div>';
+						data += '<div class="title" onclick="projectDetail(this);">' + project.title + '</div>';
+						data += '<div class="purpose">'+ project.purpose +'</div>';
+						data += '<div class="theme">'+ project.theme +'</div>';
+						if(project.projectStatus == 1){
+							data += '<div class="status">진행중</div>';
+						} else {
+							data += '<div class="status">종료</div>';
+						}
+						data += '<div class="manageMember text-center">';
+						data += '<a href="#" class="manage-bnt manageInvited ctrl" onclick="findInvited(this);" style="margin-right: 10px;">초대 관리 ▼</a>';
+						data += '<a href="#" class="manage-bnt manageApplied ctrl" onclick="findApplied(this);">지원 관리 ▼</a></div></div>';
+						data += '<div class="showMember invitedMember">-</div>';
+						data += '<div class="showMember appliedMember">-</div>';
+					});
+				} else {
+					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 팀이 없습니다.</div>";
+				}
+				$section.html(data);
+			}
+		});
+	}
+	
+	//내가 속해있는 팀 불러오기
+	function lookUpmyProject(){
+		let $myProjectList = $(".tr-section");
+		$.ajax({
+			url : "${contextPath}/logined/lookUpmyTeam",
+			method : "POST",
+			data : {${_csrf.parameterName} : '${_csrf.token}'},
+			success : function(projects) {
+				$manageInTHead.html("");
+				$purposeOrPositionInTHead.html("목적");
+				$statusOrdeadlineInTHead.html("상태");
+				let data = "";
+				//forEach
+				let size = projects.length;
+				if (size > 0) {
+					projects.forEach(function(project, index) {
+						data += '<div class="table-row bg-white">';
+						data += '<div class="projectNo">'+ project.projectNo +'</div>';
+						data += '<div class="title" onclick="projectDetail(this);">' + project.title + '</div>';
+						data += '<div class="purpose">'+ project.purpose +'</div>';
+						data += '<div class="theme">'+ project.theme +'</div>';
+						if(project.projectStatus == 1){
+							data += '<div class="status">진행중</div>';
+						} else {
+							data += '<div class="status">종료</div>';
+						}
+						data += '<div class="manageMember"></div></div>';
+					});
+				} else {
+					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>내가 속한 팀이 없습니다.</div>";
+				}
+				$myProjectList.html(data);
+			}
+		}); // ajax
+	}
+
+	//내가 지원한 프로젝트
+	function fxMyApplication(){
+		$.ajax({
+			url:"${contextPath}/manageProject/myApplication"
+			,method:"POST"
+			,data: {memberNo : loginedCustomer,
+	            ${_csrf.parameterName} : '${_csrf.token}'}
+			,success:function(projects){
+				$manageInTHead.html("지원 관리");
+				$purposeOrPositionInTHead.html("역할");
+				$statusOrdeadlineInTHead.html("모집마감일");
+				let sectionData = "";
+				projects.forEach(function(project, pIndex){
+					let recruits = project.recruits;
+					recruits.forEach(function(recruit, rIndex){
+						recruit.members.forEach(function(member, mIndex){
+							if(member.customer.customerNo == loginedCustomer) {
+								sectionData += '<div class="table-row bg-white">';
+								sectionData += '<div class="recruit_no">'+ recruit.recruitNo +'</div>';
+								sectionData += '<div class="title" onclick="projectDetail(this);">' + project.title + '</div>';
+								sectionData += '<div class="member_no">'+ loginedCustomer +'</div>';
+								sectionData += '<div class="position">' + recruit.position.name + '</div>';
+								sectionData += '<div class="theme">' + project.theme + '</div>';
+								let date = new Date(recruit.deadline);
+								sectionData += '<div class="deadline">' + date.getFullYear()+'.';
+								if( (date.getMonth()+1) < 10 ){
+									sectionData += '0' + (date.getMonth()+1) + '.';
+								} else {
+									sectionData += (date.getMonth()+1) + '.';
+								}
+								if( date.getDate() < 10 ) {
+									sectionData += '0' + date.getDate() + "</div>";
+								} else {
+									sectionData += date.getDate() + "</div>";
+								}
+								sectionData += '<div class="manageMember text-center">';
+								sectionData += '<a href="#" class="manage-bnt deny-my-app">취소</a></div></div>';
 							}
 						});
-					} else {
-						data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>내가 속한 팀이 없습니다.</div>";
-					}
-					$myTeamList.html(data);
+					});
+				});
+				if(sectionData == ""){
+					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 팀이 없습니다.</div>";
 				}
-			}); // ajax
-			
-			$(".myProject").css("background", "#f9f9ff");
-			$(".lookUpMyTeam").css("background", "#fff");
-		}
-		
-		
-		//클릭 시 팀 상세 페이지로 이동
-		function projectDetail(e){
-			let $projectNo = $(e).siblings("div.projectNo").html();
-			let url = "${contextPath}/logined/project_detail?projectNo=" + $projectNo ;
-			location.href = url;
-		}
-		
+				$section.html(sectionData);
+			}
+		});
+	}
+
+	//나에게 초대를 보낸 팀 보여주기
+	function fxMyInvitation() {
+		$.ajax({
+			url:"${contextPath}/manageProject/myInvitation"
+			,method:"POST"
+			,data : {memberNo : ${sessionScope.loginInfo},
+	            ${_csrf.parameterName} : '${_csrf.token}'}
+			,success:function(projects){
+				$manageInTHead.html("초대 관리");
+				$purposeOrPositionInTHead.html("역할");
+				$statusOrdeadlineInTHead.html("모집마감일");
+				let sectionData = "";
+				projects.forEach(function(project, pIndex){
+					let recruits = project.recruits;
+					recruits.forEach(function(recruit, rIndex){
+						recruit.members.forEach(function(member, mIndex){
+							if(member.customer.customerNo == ${sessionScope.loginInfo}) {
+								sectionData += '<div class="table-row bg-white">';
+								sectionData += '<div class="recruit_no">'+ recruit.recruitNo +'</div>';
+								sectionData += '<div class="title" onclick="projectDetail(this);">' + project.title + '</div>';
+								sectionData += '<div class="member_no">'+ loginedCustomer +'</div>';
+								sectionData += '<div class="position">' + recruit.position.name + '</div>';
+								sectionData += '<div class="theme">' + project.theme + '</div>';
+								let date = new Date(recruit.deadline);
+								sectionData += '<div class="deadline">' + date.getFullYear()+'.';
+								if( (date.getMonth()+1) < 10 ){
+									sectionData += '0' + (date.getMonth()+1) + '.';
+								} else {
+									sectionData += (date.getMonth()+1) + '.';
+								}
+								if( date.getDate() < 10 ) {
+									sectionData += '0' + date.getDate() + "</div>";
+								} else {
+									sectionData += date.getDate() + "</div>";
+								}
+								sectionData += '<div class="manageMember text-center">';
+								sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
+								sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
+							}
+						});
+					});
+				});
+				if(sectionData == ""){
+					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
+				}
+				$section.html(sectionData);
+			}
+		});
+	}
 	
+	//초대 관리 섹션 조작
+	function findInvited(e){
+		//지원 관리 컨트롤 버튼
+		let appliedCtrl = $(e).next()[0];
+		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
+		let $invitedSection = $(e.parentNode.parentNode).next();
+		//이 프로젝트에 지원한 사람들을 보여주고 관리할 섹션
+		let $appliedSection = $(e.parentNode.parentNode).next().next();
+
+		//초대 관리 섹션이 보여지고 있을 경우
+		if ($(e).hasClass('active')) {
+			//active 클래스를 지우고 섹션을 감춘다.
+			$(e).removeClass('active');
+			$invitedSection.css("display","none");
+			e.innerHTML = "초대 관리 ▼";
+		//초대 관리 섹션이 감춰져 있을 경우
+		} else {
+			//만약 지원 관리 섹션이 보여지고 있다면 감춘다.
+			if ($(appliedCtrl).hasClass('active')){
+				$(appliedCtrl).removeClass('active');
+				appliedCtrl.innerHTML = "지원 관리 ▼";
+				$appliedSection.css("display","none");
+			}
+			//active 클래스를 추가하고 섹션을 보여준다.
+			$(e).addClass('active');
+			$invitedSection.css("display","inline-block");
+			e.innerHTML = "초대 관리 ▲";
+			let sectionData = "";
+			$.ajax({
+				url:"${contextPath}/manageMember/invited"
+				,method:"POST"
+				,data : { "projectNo" : 9,
+					${_csrf.parameterName} : '${_csrf.token}'}
+				,success:function(members){
+					console.log(members);
+					if(members.length > 0) {
+						members.forEach(function(member, index){
+							sectionData += "<div class='table-row'>";
+							sectionData += "<div>" + member.customer.customerNo + "</div>";
+							sectionData += "</div>";
+						});
+					} else {
+						sectionData += "<div class='text-center'>초대자가 없습니다.</div>";
+					}
+					$invitedSection.html(sectionData);
+				}
+			});
+		}
+	}
+	
+	//지원 관리 div 조작
+	function findApplied(e){
+		//초대 관리 컨트롤 버튼
+		let invitedCtrl = $(e).prev()[0];
+		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
+		let $invitedSection = $(e.parentNode.parentNode).next();
+		//이 프로젝트에 지원한 사람들을 보여주고 관리할 섹션
+		let $appliedSection = $(e.parentNode.parentNode).next().next();
 		
+		//지원 관리 섹션이 보여지고 있을 경우
+		if ($(e).hasClass('active')) {
+			//active 클래스를 지우고 섹션을 감춘다.
+			$(e).removeClass('active');
+			$appliedSection.css("display","none");
+			e.innerHTML = "지원 관리 ▼";
+		//지원 관리 섹션이 감춰져 있을 경우
+		} else {
+			//만약 초대 관리 섹션이 보여지고 있다면 감춘다.
+			if ($(invitedCtrl).hasClass('active')){
+				$(invitedCtrl).removeClass('active');
+				invitedCtrl.innerHTML = "초대 관리 ▼";
+				$invitedSection.css("display","none");
+			}
+			//active 클래스를 추가하고 섹션을 보여준다.
+			$(e).addClass('active');
+			$appliedSection.css("display","inline-block");
+			e.innerHTML = "지원 관리 ▲";
+			let sectionData = "";
+			$.ajax({
+				url:"${contextPath}/manageMember/applied"
+				,method:"POST"
+				,data : { "projectNo" : 9,
+					${_csrf.parameterName} : '${_csrf.token}'}
+				,success:function(members){
+					console.log(members);
+					if(members.length > 0) {
+						members.forEach(function(member, index){
+							sectionData += "<div class='table-row'>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "</div>";
+						});
+					} else {
+						sectionData += "<div class='text-center'>지원자가 없습니다.</div>";
+					}
+					$appliedSection.html(sectionData);
+				}
+			});
+		}
+	}
+
+	//거절, 취소하기
+	function deny(recruitNo, memberNo, question){
+		$.ajax({
+			url:"${contextPath}/manageMember/deny"
+			,method:"POST"
+			,data : { recruitNo : recruitNo,
+					memberNo : memberNo,
+		            ${_csrf.parameterName} : '${_csrf.token}'}
+			,success:function(result){
+				if(result=="success"){
+					alert(question + " 되었습니다.");
+				}
+			}
+		});
+	}
+
+	//수락하기
+	function allow(recruitNo, memberNo){
+		$.ajax({
+			url:"${contextPath}/manageMember/allow"
+			,method:"POST"
+			,data : { recruitNo : recruitNo,
+					memberNo : memberNo,
+		            ${_csrf.parameterName} : '${_csrf.token}'}
+			,success:function(result){
+				if(result=="success"){
+					alert("수락되었습니다.");
+				}
+			}
+		});
+	}
+
+	//새 창으로 멤버 상세보기 페이지 열기
+	function fxMemberDetail(memberNo){
+		window.open("about:blank", "winName");
+		let form = document.memberForm;
+		form.action = "${contextPath}/all/member_recruit";
+		form.target = "winName";
+		$(form).find("input[name=customerNo]").val(memberNo);
+		form.submit();
+	}
+
 	</script>
 </body>
 

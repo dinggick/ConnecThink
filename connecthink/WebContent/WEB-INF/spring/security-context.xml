@@ -14,13 +14,9 @@
 		<security:intercept-url access="permitAll" pattern="/all/**" />
 		<security:intercept-url access="hasRole('ROLE_CUSTOMER')" pattern="/logined/**" />
 
-		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="JSESSIONID" />
+		<security:logout logout-url="/logout" invalidate-session="true"
+			success-handler-ref="customLogoutSuccess" />
 
-
-		<security:session-management invalid-session-url="/">
-			<security:concurrency-control max-sessions="1"
-				error-if-maximum-exceeded="true" />
-		</security:session-management>
 	</security:http>
 	
 	<security:authentication-manager>
@@ -33,4 +29,5 @@
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	<bean id="customLoginFail" class="com.connecthink.handler.LoginFailHandler"></bean>
 	<bean id="customUserDetailsService" class="com.connecthink.security.CustomUserDetailsService"></bean>
+	<bean id="customLogoutSuccess" class="com.connecthink.handler.CustomLogoutSuccessHandler"></bean>
 </beans>

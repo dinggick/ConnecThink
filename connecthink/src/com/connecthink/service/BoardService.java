@@ -185,6 +185,7 @@ public class BoardService {
 		p.getRecruits().forEach(r ->{
 			r.getMembers().forEach(m ->{
 				m.setQuitDate(new Date());
+				r.setRecruitStatus(2);
 			});
 		});
 		

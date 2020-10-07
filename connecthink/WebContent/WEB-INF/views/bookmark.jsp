@@ -38,7 +38,7 @@
 	white-space: nowrap;
 }
 
-.mate, .team, .userName {
+.customer, .project, .userName {
 	display: inline-block !important;
 	vertical-align: top;
 }
@@ -93,8 +93,8 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 col-lg-12 bookMenu">
-					<button class="genric-btn default radius mate_tab" style="background: #fff" onclick="mtab();">멤버</button>
-					<button class="genric-btn default radius team_tab"onclick="ttab();">모집</button>
+					<button class="genric-btn default radius customer_tab" style="background: #fff" onclick="ctab();">회원</button>
+					<button class="genric-btn default radius project_tab"onclick="ptab();">모집</button>
 				</div>
 				<!-- 메이트 -->
 				<div class="list col-md-12 col-lg-12">
@@ -179,89 +179,89 @@
 
 	<script>
 		$(function() {
-			mtab()
+			ctab();
 		});
 
-		function mtab() {
+		function ctab() {
 			let $section = $('div.list');
 
 			$.ajax({
-						url : "${contextPath}/logined/mateBm",
+						url : "${contextPath}/logined/customerBm",
 						method : "POST",
 						data : {${_csrf.parameterName} : '${_csrf.token}'},
-						success : function(mates) {
+						success : function(customers) {
 							let data = "";
 							//forEach
-							let size = mates.length;
+							let size = customers.length;
 							if (size > 0) {
-								mates.forEach(function(mate, idx) {
-									data += '<div class="col-md-6 col-lg-4 mate pl-0 mt-1">';
-									data += '<div class="single_candidates" onclick="mateDetail(this);">';
+								customers.forEach(function(customer, idx) {
+									data += '<div class="col-md-6 col-lg-4 customer pl-0 mt-1">';
+									data += '<div class="single_candidates" onclick="customerDetail(this);">';
 									data += '<div class="thumb">';
-									data += '<img src="http://localhost/storage/customer/'+mate.receive.customerNo+'.jpg"';
+									data += '<img src="http://localhost/storage/customer/'+customer.receive.customerNo+'.jpg"';
 									data += 'onerror="this.src='+"'${contextPath}/img/d2.jpg'"+'"'+' alt="">';
 									data += '</div>'
 									data += '<div class = "username offset-md-3"><h4 class="ml-5">';
-									data += mate.receive.name;
+									data += customer.receive.name;
 									data += '</h4></div>'
-									data += '<ul class="mateInfo mt-4" style="list-style: none;">';
+									data += '<ul class="customerInfo mt-4" style="list-style: none;">';
 
-									let positions = mate.receive.customerPositions;
+									let positions = customer.receive.customerPositions;
 									positions.forEach(function(position,index) {
 										data += '<li class="position" style="font-weight: bold;">';
 										data += position.position.name;
 										data += '</li>'
 									});
 										data += '<li class="intro">';
-										data += mate.receive.about;
+										data += customer.receive.about;
 										data += '</li>'
 										data += '<li class="customerNo" style="display:none;">';
-										data += mate.receive.customerNo;
+										data += customer.receive.customerNo;
 										data += '</li>';
 										data += '</ul>';
 										data += '</div></div>';
 								});
 							} else {
 								data += '<div class="col-md-12 col-lg-12 pl-0 pt-5 pb-5 mt-1 bg-white text-center">';
-								data += '북마크 한 메이트가 없습니다';
+								data += '북마크 한 회원이 없습니다';
 								data += '</div>';
 
 							}
 							$section.html(data);
 						}
 					});
-			$(".mate_tab").css("background", "#fff");
-			$(".team_tab").css("background", "#f9f9ff");
+			$(".customer_tab").css("background", "#fff");
+			$(".project_tab").css("background", "#f9f9ff");
 		}
 
-		function ttab() {
+		function ptab() {
 			let $section = $('div.list');
 
 			$.ajax({
 						url : "${contextPath}/logined/recBm",
 						method : "POST",
 						data : {${_csrf.parameterName} : '${_csrf.token}'},
-						success : function(teams) {
+						success : function(projects) {
 							let data = "";
-							let size = teams.length;
+							let size = projects.length;
 							if (size > 0) {
-								teams
-										.forEach(function(team, index) {
+								projects
+										.forEach(function(project, index) {
 											let dl = new Date(
-													team.recruit.deadline)
-											data += '<div class="col-md-6 col-lg-4 mt-1 pl-0 team">';
+													project.recruit.deadline)
+											data += '<div class="col-md-6 col-lg-4 mt-1 pl-0 project">';
 											data += '<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">';
 											data += '<div class="thumbnail">';
 											data += '<div class="test">';
-											data += '<img src="http://localhost/storage/recruit/img/'+team.recruit.recruitNo+'.jpg"';
+											data += '<img src="http://localhost/storage/recruit/img/'+project.recruit.recruitNo+'.jpg"';
 											data += 'onerror="this.src='+"'${contextPath}/img/default.png'"+'"'+' alt="">';
 											data += '</div></div>';
 											data += '<h4 class="mt-4 mr-4 ml-4 rec_title">';
-											data += team.recruit.requirement;
+											data += project.recruit.requirement;
 											data += '</h4>'
 											data += '<ul style="list-style: none;">';
 											data += '<li class="wanna">';
-											data += team.recruit.position.name;
+											data += project.recruit.position.name;
 											data += '</li>'
 											data += '<li class="peorid">';
 											data += dl.getFullYear() + "."
@@ -269,7 +269,7 @@
 													+ dl.getDate();
 											data += '</li>'
 											data += '<li class="recNo" style="display: none;">';
-											data += team.recruit.recruitNo;
+											data += project.recruit.recruitNo;
 											data += '</li>';
 											data += '</ul>';
 											data += '</div></div>';
@@ -283,8 +283,8 @@
 						}
 					});
 
-			$(".mate_tab").css("background", "#f9f9ff");
-			$(".team_tab").css("background", "#fff");
+			$(".customer_tab").css("background", "#f9f9ff");
+			$(".project_tab").css("background", "#fff");
 		}
 		
 		//클릭 시 모집 상세 페이지로 이동
@@ -295,9 +295,9 @@
 		}
 		
 		//클릭 시 회원 상세 페이지로 이동(미완)
-		function mateDetail(e){
+		function customerDetail(e){
 			let $customerNo = $(e).find("li.customerNo").html();			
-			let url = "${contextPath}/member_detail?customerNo=" + $customerNo ;
+			let url = "${contextPath}/logined/customer_detail?customerNo=" + $customerNo ;
 			location.href = url;
 			
 		}

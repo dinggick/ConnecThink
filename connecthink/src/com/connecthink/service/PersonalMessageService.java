@@ -82,6 +82,14 @@ public class PersonalMessageService {
 
 	/**
 	 * @author IM CRYSTAL
+	 * 인박스에서 상대회원과의 메세지함에 들어가 있을 때, 상대가 보낸 메세지를 실시간으로 읽음 처리한다.
+	 */
+	public void updateStatusOne(Integer personalMsgNo) {
+		repository.updateStatusOne(personalMsgNo);
+	}
+	
+	/**
+	 * @author IM CRYSTAL
 	 * personal message를 DB에 insert 혹은 update 한다.
 	 */
 	public void save(PersonalMessage pm) {

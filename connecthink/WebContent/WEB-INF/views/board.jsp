@@ -1346,7 +1346,7 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost:8080/storage/customer/"+memberInfo[0]+".jpg"});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
@@ -1529,7 +1529,7 @@ scale
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//가져온 유저의 프로필 사진
-								let imageUrl = "http://localhost:8080/storage/customer/"+user+".jpg";
+								let imageUrl = "http://localhost/storage/customer/"+user+".jpg";
 								
 								//전송한 사람이 내가 아닐경우
 								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});

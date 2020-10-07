@@ -360,7 +360,7 @@ span.customerNo {
 			}else{
 				let no = $("span.rec_no").text();
 				$.ajax({
-					url : "${contextPath}/bmToRec",
+					url : "${contextPath}/logined/bmToRec",
 					method : "POST",
 					data : {
 						recruitNo : no,
@@ -384,7 +384,7 @@ span.customerNo {
 			let no = $("span.rec_no").text();
 			
 			$.ajax({
-				url : "${contextPath}/delBmToRec",
+				url : "${contextPath}/logined/delBmToRec",
 				method : "POST",
 				data : {
 					recruitNo : no,
@@ -408,7 +408,7 @@ span.customerNo {
 				alert("로그인 후 사용 가능 합니다");
 			} else {
 				let $cNo = $(e).siblings("span.customerNo").html();
-				let url = "${contextPath}/member_detail?customerNo="+$cNo;
+				let url = "${contextPath}/logined/member_detail?customerNo="+$cNo;
 				window.open(url,"_blank", "height=800, width=800");
 			}
 		}
@@ -435,7 +435,7 @@ span.customerNo {
 				let answer = confirm("지원하시겠습니까?");
 				if(answer == true){
 					$.ajax({
-						url : "${contextPath}/recruit",
+						url : "${contextPath}/logined/recruit",
 						method : "POST",
 						data :  {
 							recruitNo : recNo,
@@ -461,14 +461,14 @@ span.customerNo {
 			let answer = confirm('"'+recName+'"' + "을(를) 삭제하시겠습니까?");
 			if(answer == true){
 			$.ajax({
-				url : "${contextPath}/delRec",
+				url : "${contextPath}/logined/delRec",
 				method : "POST",
 				data : {recruitNo : recNo,
 						${_csrf.parameterName} : '${_csrf.token}'},
 				success : function(response){
 					if(response.status == "success"){
 						alert("삭제 완료");
-						location.href="${contextPath}/myProject"
+						location.href="${contextPath}/logined/myProject"
 					} else {
 						alert(response.msg);
 					}

@@ -17,6 +17,15 @@ public interface PersonalMessageRepository extends JpaRepository<PersonalMessage
 			"SET status = 1\r\n" + 
 			"WHERE receive = ?1 AND send = ?2")
 	public void updateStatus(Integer customerNo, Integer otherNo);
+	
+	/**
+	 * @author IM CRYSTAL
+	 * 인박스에서 상대회원과의 메세지함에 들어가 있을 때, 상대가 보낸 메세지를 실시간으로 읽음 처리한다.
+	 */
+	@Query(nativeQuery = true, value = "UPDATE personal_msg\r\n" + 
+			"SET status = 1\r\n" + 
+			"WHERE personal_msg_no = ?1")
+	public void updateStatusOne(Integer personalMsgNo);
 
 	/**
 	 * @author IM CRYSTAL
@@ -26,7 +35,9 @@ public interface PersonalMessageRepository extends JpaRepository<PersonalMessage
 			"WHERE receive = ?1 OR send = ?1\r\n" + 
 			"ORDER BY create_date")
 	public List<PersonalMessage> findByCustomerNo(Integer customerNo);
+
 	@Query(nativeQuery = true, value = "SELECT COUNT(personal_msg_no) FROM personal_msg"
 			+ " WHERE receive = ?1 AND read_status = 0")
 	public Integer countUnreadMsg(Integer CustomerNo);
+
 }

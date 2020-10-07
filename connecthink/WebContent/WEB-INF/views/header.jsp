@@ -41,7 +41,7 @@
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
                                     <a href="/connecthink/">
-                                        <img src="${contextPath}/img/logo.png" alt="">
+                                        <img src="${contextPath}/img/logo.png" alt="">	
                                     </a>
                                 </div>
                             </div>
@@ -50,18 +50,11 @@
                                     <nav>
                                         <ul id="navigation">
                                             <li><a href="index.html">메인홈</a></li>
-                                            <li><a href="${contextPath}/all/mateList">모집중인 멤버</a></li>
-                                           
+                                            <li><a href="${contextPath}/about">서비스 소개</a></li>
+                                            <li><a href="${contextPath}/all/customerList">모집중인 회원</a></li>
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="contact.html">진행중인 공모전</a></li>
-                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>
-<!--                                              <li><a href="#"><img class="personicon" src="${contextPath}/img/person.png"><i class="ti-angle-down"></i></a> -->
-<!--                                                 <ul class="submenu"> -->
-<!--                                                     <li><a href="candidate.html">Candidates </a></li> -->
-<!--                                                     <li><a href="job_details.html">job details </a></li> -->
-<!--                                                     <li><a href="elements.html">elements</a></li> -->
-<!--                                                 </ul> -->
-<!--                                             </li> -->
+                                            <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>                                           
                                         </ul>
                                     </nav>
                                 </div>
@@ -189,7 +182,6 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     alert("WebSocket closed!");
    }
    //메세지 수신시
-  
    function onMessage(e) {	
 	   console.log(e.data);
 	if (e.data.includes("connecthinksystem:checkNoti:true")){
@@ -288,7 +280,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 	 		let scrollLocation = document.querySelector("#firstUnreadMsg").offsetTop - 107;
 	 		$msgSection.scrollTop(scrollLocation);
 		}else{
-			//표시가 없을 경우 바닥으로 이동
+			//표시가 없을 경우 메세지를 전부 읽은 것이므로 바닥으로 이동
 			let scrollLocation = $msgSection.prop('scrollHeight');
 			$msgSection.scrollTop(scrollLocation);
 		}
@@ -316,6 +308,7 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 	else if (e.data.includes("connecthinksystem:pm:")){
 		let pmStr = e.data.replace("connecthinksystem:pm:","");
 		pmObj = JSON.parse(pmStr);
+		console.log(pmObj);
 		//inbox에 들어와있을 때 할 작업.
 		if(window.location.href.includes("inbox")) {
 			let otherNo = "";
@@ -335,6 +328,8 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 					sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
 					sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
 					sectionData += '<div style="clear:both;"></div>';
+					//메세지를 읽은 것이므로 읽음 상태를 변경함.
+ 					updateStatus(pmObj.personalMsgNo);
 				} else {
 					sectionData += '<div class="send_msg">' + pmObj.content + '</div>';
 					sectionData += '<div class="send_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
@@ -373,5 +368,14 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
    function onError(e) {
     alert( "오류발생 : " + e.data );
    }
+   
+//------------------------ Ajax ------------------------------
+//메세지 함에 들어와있을 때 전송된 메세지를 읽음 처리
+function updateStatus(personalMsgNo) {
+	$.ajax({
+		url:"${contextPath}/inbox/updateStatusOne"
+		,data: {'personalMsgNo' : personalMsgNo}
+	});
+}
 </script>
 </html>
