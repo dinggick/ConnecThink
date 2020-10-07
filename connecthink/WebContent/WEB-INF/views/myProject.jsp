@@ -267,7 +267,7 @@
 		let tableRow = this.parentNode.parentNode;
 		let recruitNo = $(tableRow).find(".recruit_no").html();
 		let memberNo = $(tableRow).find(".member_no").html();
-		
+		let managerNo = $(tableRow).find(".managerNo").val();
 		//내 지원 취소하기 / 지원한 사람 거절하기 / 초대 취소하기 / 초대 거절하기
 		if ($(this).attr("class").search("deny") > 0) {
 			let denyConfirm = confirm("정말 " + this.innerHTML + "하시겠습니까?");
@@ -277,10 +277,14 @@
 			}
 		}
 		//지원자 수락하기 / 초대 수락하기
-		else if ($(this).attr("class").search("allow") > 0) {
+		else if ($(this).attr("class").search("allow") > 0) {	
+			var isInvite = "지원";
 			let allowConfirm = confirm("정말 수락하시겠습니까?");
 			if(allowConfirm==1){
-				allow(recruitNo, memberNo);
+				if ($(this).attr("class").search("allow-my-invi") > 0) {
+					isInvite = "초대";
+				}				
+				allow(recruitNo, memberNo, isInvite, managerNo);
 				$(this.parentNode.parentNode).remove();
 			}
 		}
@@ -427,6 +431,7 @@
 			,data : {memberNo : ${sessionScope.loginInfo},
 	            ${_csrf.parameterName} : '${_csrf.token}'}
 			,success:function(projects){
+				console.log(projects);
 				$manageInTHead.html("초대 관리");
 				$purposeOrPositionInTHead.html("역할");
 				$statusOrdeadlineInTHead.html("모집마감일");
@@ -455,6 +460,7 @@
 									sectionData += date.getDate() + "</div>";
 								}
 								sectionData += '<div class="manageMember text-center">';
+								sectionData += '<input type="text" class="managerNo" hidden="hidden" value="'+ project.managerNo + '">';
 								sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
 								sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
 							}
@@ -589,7 +595,8 @@
 	}
 
 	//수락하기
-	function allow(recruitNo, memberNo){
+	function allow(recruitNo, memberNo, isInvite, managerNo){
+		var notiContent = memberNo + "님이 " + recruitNo + "에 " + isInvite +  "수락을 하였습니다 :)!";				
 		$.ajax({
 			url:"${contextPath}/manageMember/allow"
 			,method:"POST"
@@ -599,6 +606,8 @@
 			,success:function(result){
 				if(result=="success"){
 					alert("수락되었습니다.");
+					wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
+					
 				}
 			}
 		});

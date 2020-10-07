@@ -52,9 +52,10 @@ public class HomeController {
 	}
 	@RequestMapping("/checkNotification")
 	public ResponseEntity<String> checkNoti(Integer customerNo) {
-		System.out.println("HELLLLLLLLLLLLLLLLO");
+		
 		int pm = pmservice.countUnreadMsg(customerNo);
 		int nt = ntservice.countUnreadNoti(customerNo);
+		System.out.println("HELLLLLLLLLLLLLLLLO"+ pm + "#####" +nt);
 		if (pm > 0 || nt > 0) {
 			return ResponseEntity.status(HttpStatus.OK).body("success");
 		} 

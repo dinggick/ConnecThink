@@ -304,13 +304,11 @@
 	
 	loadMemberList();
 	loadProjectList();
-	if(${!empty sessionScope.loginInfo}) {	
-		console.log("hello");
+	if(${!empty sessionScope.loginInfo}) {			
 		checkNotification();	
 		}
 	});
-	function checkNotification() {	
-		console.log('${sessionScope.loginInfo}');
+	function checkNotification() {			
 		$.ajax({
 			url: "/connecthink/checkNotification",			
 			data:  { customerNo : '${sessionScope.loginInfo}', 
@@ -320,6 +318,9 @@
 				if (data == "success") {
 					$('#bell').hide();
 					$('#notibell').show();	
+				} else {
+					$('#bell').show();
+					$('#notibell').hide();	
 				}
 			}			
 		});
@@ -387,12 +388,11 @@
 	    });
 	}
 	function memberDetail(customerNo) {
-		let url = "${contextPath}/logined/member_detail?customerNo=" + customerNo ;
+		let url = "${contextPath}/logined/customer_detail?customerNo=" + customerNo ;
 		location.href = url;
 	}
 	function projectDetail(e) {
-		let $recNo = $(e).find("#recruitNo").val();
-		alert($recNo);
+		let $recNo = $(e).find("#recruitNo").val();		
 		let url = "${contextPath}/all/rec_detail?recNo=" + $recNo ;
 		location.href = url;
 	}
