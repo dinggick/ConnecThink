@@ -439,7 +439,7 @@
 					let recruits = project.recruits;
 					recruits.forEach(function(recruit, rIndex){
 						recruit.members.forEach(function(member, mIndex){
-							if(member.customer.customerNo == loginedCustomer) {
+							if(member.customer.customerNo == loginedCustomer && member.invited == 0) {
 								sectionData += '<div class="table-row bg-white">';
 								sectionData += '<div class="recruitNo">'+ recruit.recruitNo +'</div>';
 								sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
@@ -487,44 +487,38 @@
 				$purposeOrPositionInTHead.html("역할");
 				$statusOrdeadlineInTHead.html("모집마감일");
 				let sectionData = "";
-				projects.forEach(function(project, pIndex){
-					let recruits = project.recruits;
-					recruits.forEach(function(recruit, rIndex){
-						recruit.members.forEach(function(member, mIndex){
-							if(member.customer.customerNo == ${sessionScope.loginInfo}) {
-								sectionData += '<div class="table-row bg-white">';
-								sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
-								sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
-								sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + recruit.requirement + '</span></div>';
-								sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
-								sectionData += "<div class='recruitNo'>" + recruit.recruitNo + "</div>";
-								sectionData += '<div class="position">' + recruit.position.name + '</div>';
-								sectionData += '<div class="theme">' + project.theme + '</div>';
-								let date = new Date(recruit.deadline);
-								sectionData += '<div class="deadline">' + date.getFullYear()+'.';
-								if( (date.getMonth()+1) < 10 ){
-									sectionData += '0' + (date.getMonth()+1) + '.';
-								} else {
-									sectionData += (date.getMonth()+1) + '.';
-								}
-								if( date.getDate() < 10 ) {
-									sectionData += '0' + date.getDate() + "</div>";
-								} else {
-									sectionData += date.getDate() + "</div>";
-								}
-								sectionData += '<div class="manageMember text-center">';
-								sectionData += '<input type="text" class="managerNo" hidden="hidden" value="'+ project.managerNo + '">';
-								sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
-								sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
-							}
-						});
-					});
-				});
-				if(sectionData == ""){
+				if(projects.length > 0) {
+					projects.forEach(function(project, pIndex){
+						sectionData += '<div class="table-row bg-white">';
+						sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
+						sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
+						sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + project.requirement + '</span></div>';
+						sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
+						sectionData += "<div class='recruitNo'>" + project.recruitNo + "</div>";
+						sectionData += '<div class="position">' + project.positionName + '</div>';
+						sectionData += '<div class="theme">' + project.theme + '</div>';
+						let date = new Date(project.deadline);
+						sectionData += '<div class="deadline">' + date.getFullYear()+'.';
+						if( (date.getMonth()+1) < 10 ){
+							sectionData += '0' + (date.getMonth()+1) + '.';
+						} else {
+							sectionData += (date.getMonth()+1) + '.';
+						}
+						if( date.getDate() < 10 ) {
+							sectionData += '0' + date.getDate() + "</div>";
+						} else {
+							sectionData += date.getDate() + "</div>";
+						}
+						sectionData += '<div class="manageMember text-center">';
+						sectionData += '<input type="text" class="managerNo" hidden="hidden" value="'+ project.managerNo + '">';
+						sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
+						sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
+					}
+				} else {
 					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
 				}
-				$section.html(sectionData);
-			}
+			});
+			$section.html(sectionData);
 		});
 	}
 	

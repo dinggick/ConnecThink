@@ -170,7 +170,7 @@ var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
    }
    //연결이 끊어졌을때
    function onClose(e) {
-    alert("WebSocket closed!");
+
    }
    //메세지 수신시
    function onMessage(e) {	
