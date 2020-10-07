@@ -156,7 +156,7 @@ function inbox(){
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -276,7 +276,7 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 			$msgSection.scrollTop(scrollLocation);
 		}
 	}
-	  else if (e.data.includes("connecthinksystem:loadNotis:")){		 
+	  else if (e.data.includes("connecthinksystem:loadNotis:")){
 		   $('#notinew').hide();
 		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
 		   MSGs = JSON.parse(pmStr);
@@ -299,7 +299,6 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 	else if (e.data.includes("connecthinksystem:pm:")){
 		let pmStr = e.data.replace("connecthinksystem:pm:","");
 		pmObj = JSON.parse(pmStr);
-		console.log(pmObj);
 		//inbox에 들어와있을 때 할 작업.
 		if(window.location.href.includes("inbox")) {
 			let otherNo = "";
