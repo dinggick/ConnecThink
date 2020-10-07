@@ -52,7 +52,7 @@ public class MemberService {
 				}
 			}
 		}
-		System.out.println("dddddddddddd" + isExists );
+		
 		if(isExists == false) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();
