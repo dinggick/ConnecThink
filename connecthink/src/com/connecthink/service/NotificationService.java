@@ -27,9 +27,7 @@ public class NotificationService {
 	public List<Notification> findByCustomerNo(Integer CustomerNo) {
 		return repository.findByCustomerNo(CustomerNo);
 	}
-	public void save(Notification nt) {
-		repository.save(nt);
-	}
+	
 	public void insert(Integer CustomerNo, String Content) {
 		repository.insert(CustomerNo, Content);
 	}

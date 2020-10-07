@@ -299,6 +299,8 @@
 		let tableRow = this.parentNode.parentNode;
 		let recruitNo = $(tableRow).find(".recruitNo").html();
 		let memberNo = $(tableRow).find(".memberNo").html();
+		let projectName = $(tableRow).find(".title").text();
+		let managerNo = typeof($(tableRow).find(".managerNo").val()) != 'undefined' ? $(tableRow).find(".managerNo").val() : 0;
 		
 		
 		//내 지원 취소하기 / 지원한 사람 거절하기 / 초대 취소하기 / 초대 거절하기
@@ -316,8 +318,8 @@
 			if(allowConfirm==1){
 				if ($(this).attr("class").search("allow-my-invi") > 0) {
 					isInvite = "초대";
-				}				
-				allow(recruitNo, memberNo, isInvite, managerNo);
+				} 				
+				allow(recruitNo, memberNo, isInvite, managerNo, projectName);
 				$(this.parentNode.parentNode).remove();
 			}
 		}
@@ -642,6 +644,7 @@
 							sectionData += "<div class='memberPosition' onclick='recruitDetail(this);'>" + member.positionName + "</div>";
 							sectionData += "<div class='memberAbout'>" + member.about + "</div>";
 							sectionData += "<div class='manageMemberDto'>";
+							sectionData += "<div class='title' hidden='hidden'>" + projectNo +"</div>";
 							sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
 							sectionData += '<a href="#" class="manage-bnt deny-in">거절</a></div>';
 							sectionData += "</div>";
@@ -672,8 +675,18 @@
 	}
 
 	//수락하기
-	function allow(recruitNo, memberNo, isInvite, managerNo){
-		var notiContent = memberNo + "님이 " + recruitNo + "에 " + isInvite +  "수락을 하였습니다 :)!";				
+	function allow(recruitNo, memberNo, isInvite, managerNo, projectName){
+		console.log(recruitNo + ":"+memberNo+":"+isInvite+":" +managerNo +":" +projectName);
+		var notiContent ="";
+		var receiver = "";
+		if(isInvite == "초대") {
+			receiver = managerNo;
+			notiContent = memberNo + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
+		} else {
+			receiver = memberNo;
+			notiContent = projectName + "번 프로젝트에 팀원이 되셨습니다 :)!";			
+		}		
+		console.log(notiContent);
 		$.ajax({
 			url:"${contextPath}/manageMember/allow"
 			,method:"POST"
@@ -683,7 +696,8 @@
 			,success:function(result){
 				if(result=="success"){
 					alert("수락되었습니다.");
-					wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
+					wSocket.send("connecthinksystem:nto:"+ receiver + ":" + notiContent);					
+
 				}
 			}
 		});
