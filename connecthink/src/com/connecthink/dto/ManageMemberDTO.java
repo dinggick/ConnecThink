@@ -1,6 +1,5 @@
 package com.connecthink.dto;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -12,16 +11,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LatestPersonalMessageDTO {
-	private Integer otherNo;
-	
-	private String otherName;
-	
-	private String content;
-	
-	private Timestamp createDate;
+public class ManageMemberDTO {
 
-	private Integer status;
+	private Integer memberNo;
 	
-	private Integer newCnt;
+	private String memberName;
+	
+	private String about;
+	
+	private String recruitNo;
+	
+	private String positionName;
+
 }

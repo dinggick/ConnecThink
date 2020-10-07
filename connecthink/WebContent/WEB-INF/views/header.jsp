@@ -53,7 +53,7 @@
                                             <li><a href="${contextPath}/about">서비스 소개</a></li>
                                             <li><a href="${contextPath}/all/customerList">모집중인 회원</a></li>
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
-                                            <li><a href="contact.html">진행중인 공모전</a></li>
+                                            <li><a href="${contextPath}/event">진행중인 교육·행사</a></li>
                                             <li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>                                           
                                         </ul>
                                     </nav>
@@ -136,16 +136,7 @@
 
     <!-- header-end -->
 <script>
-// $(document).ready(function(){
-// 	if ('${notification}' =="n") {
-// 		$('#bell').show();
-// 	$('#notibell').hide();	
-// 	} else {
-// 		$('#bell').hide();
-// 		$('#notibell').show();	
-// 	}
-	
-// });
+
 var loginedCustomer = ${sessionScope.loginInfo};
 
 function openNav() {
@@ -165,7 +156,7 @@ function inbox(){
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -361,7 +352,24 @@ var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
 			$('#bell').hide();
 			$('#notibell').show();
 		}
+	} else if (e.data.includes("connecthinksystem:noti:")) {
+		let pmStr = e.data.replace("connecthinksystem:noti:","");
+		pmObj = JSON.parse(pmStr);
+		if(window.location.href.includes("inbox")) {
+			let sectionData = $msgSection.html();
+			let sendDate = new Date(pmObj.notifyDate);
+			sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
+            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+            sectionData += '<div style="clear:both;"></div>';
+            $msgSection.html(sectionData);
+            let scrollLocation = $msgSection.prop('scrollHeight');
+			$msgSection.scrollTop(scrollLocation);
+		} else {
+			$('#bell').hide();
+			$('#notibell').show();
+		}
 	}
+	
    }
    
    //에러 발생시

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.connecthink.dto.ManageMemberDTO;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
@@ -30,6 +31,8 @@ public class MemberController {
 		String status = "";
 		System.out.println("컨트롤러");
 		try {
+			System.out.println("드러오얀????");
+			
 			service.recruit(customerNo, recruitNo);
 			status = "success";
 		}catch (Exception e) {
@@ -46,7 +49,7 @@ public class MemberController {
 	 */
 	@PostMapping(value="/manageMember/invited")
 	@ResponseBody
-	public List<Member> Invited(Integer projectNo) {
+	public List<ManageMemberDTO> Invited(Integer projectNo) {
 		return service.findInvitedByProjectNo(projectNo);
 	}
 	
@@ -56,7 +59,7 @@ public class MemberController {
 	 */
 	@PostMapping(value="/manageMember/applied")
 	@ResponseBody
-	public List<Member> Applied(Integer projectNo) {
+	public List<ManageMemberDTO> Applied(Integer projectNo) {
 		return service.findAppliedByProjectNo(projectNo);
 	}
 
