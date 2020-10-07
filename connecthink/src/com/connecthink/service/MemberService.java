@@ -23,10 +23,10 @@ import com.connecthink.repository.RecruitRepository;
 public class MemberService {
 	@Autowired
 	private MemberRepository memberRepository;
-	
+
 	@Autowired
 	private CustomerRepository customerRepository;
-	
+
 	@Autowired
 	private RecruitRepository recruitRepository;
 
@@ -36,25 +36,23 @@ public class MemberService {
 	 * @throws AddException 
 	 */
 	public void recruit(Integer customerNo, String recruitNo) throws AddException {
-		System.out.println("서비스드러어오ㅗ오ㅗ오오ㅗ");
 		Member member = new Member();
 		MemberId ids = new MemberId();
 		Integer mNo = 0;
-		Integer status = 10;
+		boolean isExists = false;
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
 		Iterator<Member> iter = recruit.getMembers().iterator();
 		while(iter.hasNext()) {
-			try {
-				mNo = iter.next().getCustomer().getCustomerNo();
-				status = iter.next().getEnterStatus();
-				System.out.println("테스트 : "+mNo+ "상태 : " + status);
-			}catch (Exception e) {
-				mNo = customerNo;
+			mNo = iter.next().getCustomer().getCustomerNo();
+			if(mNo == customerNo) {
+				isExists = true;
 			}
+			System.out.println("테스트 : "+mNo );
+			System.out.println(isExists);
 		}
 		
-		if(mNo == customerNo && status == 10) {
+		if(isExists == false) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();
 			
@@ -66,16 +64,16 @@ public class MemberService {
 			member.setRecruit(r);
 			member.setEnterStatus(0);
 
-			System.out.println("서비스드러어오ㅗ오ㅗ오오ㅗ11111111111111111");
-			memberRepository.save(member);
-			System.out.println("서비스드러어오ㅗ오ㅗ오오ㅗㅈㅁㄹㄷㄶㄱ옷러허ㅘㅓㅎㄹㅇㄴㅁㄴ호");
 			
-		} else if (mNo != customerNo && status >= 0) {
-			throw new AddException("이미 지원함");
-		}
+			memberRepository.save(member);
 		
+			
+		} else {
+			System.out.println("이미 지원함");
+			throw new AddException("이미 지원");
+		}
 	}
-	
+
 	/**
 	 * @author IM CRYSTAL
 	 * 특정 프로젝트에 초대된 멤버 목록 보기
@@ -97,7 +95,7 @@ public class MemberService {
 		}
 		return mList;
 	}
-	
+
 	/**
 	 * @author IM CRYSTAL
 	 * 특정 프로젝트에 지원한 멤버 목록 보기
