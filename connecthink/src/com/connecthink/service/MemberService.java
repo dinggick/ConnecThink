@@ -39,20 +39,18 @@ public class MemberService {
 	public void recruit(Integer customerNo, String recruitNo) throws AddException {
 		Member member = new Member();
 		MemberId ids = new MemberId();
-		Integer mNo = 0;
-		Integer iv = 100;
 		boolean isExists = false;
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
-		Iterator<Member> iter = recruit.getMembers().iterator();
-		while(iter.hasNext()) {
-			mNo = iter.next().getCustomer().getCustomerNo();
-			iv = iter.next().getInvited();
-			if(mNo == customerNo && iv >= 0) {
-				isExists = true;
+		System.out.println(recruit.getMembers().size());
+		if(recruit.getMembers().size()>0) {
+			Iterator<Member> iter = recruit.getMembers().iterator();
+			while(iter.hasNext()) {
+				if(iter.next().getCustomer().getCustomerNo() == customerNo && iter.next().getInvited() >= 0) {
+					isExists = true;
+				}
+				System.out.println(isExists);
 			}
-			System.out.println("테스트 : "+mNo );
-			System.out.println(isExists);
 		}
 		
 		if(isExists == false) {
@@ -76,6 +74,7 @@ public class MemberService {
 			System.out.println("이미 지원함");
 			throw new AddException("이미 지원");
 		}
+
 	}
 
 	/**

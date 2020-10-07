@@ -26,6 +26,7 @@ import com.connecthink.dto.RecruitDTO;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
+import com.connecthink.exception.AddException;
 import com.connecthink.service.BookmarkService;
 import com.connecthink.service.CustomerService;
 import com.connecthink.service.MemberService;
@@ -180,9 +181,16 @@ public class RecruitController {
 //	멤버 초대 메소드
 	@PostMapping(value="/logined/inviteMember")	
 	@ResponseBody
-	public String inviteMember(Integer customerNo, String recruitNo) {		
-		recruitService.saveInvite(recruitNo, customerNo);
-		return "success";
+	public String inviteMember(Integer customerNo, String recruitNo) {
+		String status = "";
+		try {
+			status = "success";
+			recruitService.saveInvite(recruitNo, customerNo);
+		} catch (AddException e) {
+			status = "fail";
+			e.printStackTrace();
+		}
+		return status;
 	}
 	
 	/**

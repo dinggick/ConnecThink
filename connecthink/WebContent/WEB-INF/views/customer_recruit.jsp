@@ -124,8 +124,8 @@
 							</div>
 							<div class="thumb">
 								<div class="profilepic" style="padding-left: 90px">
-									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt="" onerror="this.src='${contextPath}/img/d2.jpg'"
-										style="width: 50px; height: 50px; border-radius: 50%;">
+									<img src="http://localhost/storage/customer/${customer.customerNo}.jpg" alt=""
+										onerror="this.src='${contextPath}/img/d2.jpg'" style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
 										
@@ -333,7 +333,10 @@
 				success: function(data){
 					console.log(data);
 					if (data == "success") {
-						$('.close').click();					
+						$('.close').click();
+						alert("초대 완료");
+					} else {
+						alert("이미 팀에 속해있거나 초대한 팀원입니다");
 					}
 				}
 			});
