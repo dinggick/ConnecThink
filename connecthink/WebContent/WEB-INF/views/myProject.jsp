@@ -158,6 +158,7 @@
   width: 100%;
   display: none;
   overflow: hidden;
+  padding: 10px 0px 10px 0px;
 }
 </style>
 
@@ -210,7 +211,7 @@
 							<div class="purpose position">목적</div>
 							<div class="theme">주제</div>
 							<div class="status deadline">상태</div>
-							<div class="manageMember text-center">초대/지원한 회원</div>
+							<div class="manageMember text-center">이 프로젝트에 초대/지원한 회원</div>
 						</div>
 						<div class="tr-section">
 							<div class="table-row bg-white">
@@ -311,7 +312,7 @@
 	 			$(this.parentNode.parentNode).remove();
 			}
 		}
-		//지원자 수락하기 / 초대 수락하기
+		//지원목록 수락하기 / 초대 수락하기
 		else if ($(this).attr("class").search("allow") > 0) {	
 			var isInvite = "지원";
 			let allowConfirm = confirm("정말 수락하시겠습니까?");
@@ -357,7 +358,7 @@
 			method : "POST",
 			data : {${_csrf.parameterName} : '${_csrf.token}'},
 			success : function(projects) {
-				$manageInTHead.html("초대/지원한 회원");
+				$manageInTHead.html("이 프로젝트에 초대/지원한 회원");
 				$purposeOrPositionInTHead.html("목적");
 				$statusOrdeadlineInTHead.html("상태");
 				let data = "";
@@ -376,8 +377,8 @@
 							data += '<div class="status">종료</div>';
 						}
 						data += '<div class="manageMember text-center">';
-						data += '<a href="#" class="manageInvited ctrl" onclick="findInvited(this,' + project.projectNo + ');" style="margin-right: 10px;">초대자 ▼</a>';
-						data += '<a href="#" class="manageApplied ctrl" onclick="findApplied(this,' + project.projectNo + ');">지원자 ▼</a></div></div>';
+						data += '<a href="#" class="manageInvited ctrl" onclick="findInvited(this,' + project.projectNo + ');" style="margin-right: 10px;">초대목록 ▼</a>';
+						data += '<a href="#" class="manageApplied ctrl" onclick="findApplied(this,' + project.projectNo + ');">지원목록 ▼</a></div></div>';
 						data += '<div class="showMember invitedMember progress-table bg-white">-</div>';
 						data += '<div class="showMember appliedMember progress-table bg-white">-</div>';
 					});
@@ -437,39 +438,35 @@
 				$purposeOrPositionInTHead.html("역할");
 				$statusOrdeadlineInTHead.html("모집마감일");
 				let sectionData = "";
-				projects.forEach(function(project, pIndex){
-					let recruits = project.recruits;
-					recruits.forEach(function(recruit, rIndex){
-						recruit.members.forEach(function(member, mIndex){
-							if(member.customer.customerNo == loginedCustomer) {
-								sectionData += '<div class="table-row bg-white">';
-								sectionData += '<div class="recruitNo">'+ recruit.recruitNo +'</div>';
-								sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
-								sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
-								sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + recruit.requirement + '</span></div>';
-								sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
-								sectionData += '<div class="position">' + recruit.position.name + '</div>';
-								sectionData += '<div class="theme">' + project.theme + '</div>';
-								let date = new Date(recruit.deadline);
-								sectionData += '<div class="deadline">' + date.getFullYear()+'.';
-								if( (date.getMonth()+1) < 10 ){
-									sectionData += '0' + (date.getMonth()+1) + '.';
-								} else {
-									sectionData += (date.getMonth()+1) + '.';
-								}
-								if( date.getDate() < 10 ) {
-									sectionData += '0' + date.getDate() + "</div>";
-								} else {
-									sectionData += date.getDate() + "</div>";
-								}
-								sectionData += '<div class="manageMember text-center">';
-								sectionData += '<a href="#" class="manage-bnt deny-my-app">취소</a></div></div>';
-							}
-						});
+				if(projects.length > 0) {
+					projects.forEach(function(project, pIndex){
+						sectionData += '<div class="table-row bg-white">';
+						sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
+						sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
+						sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + project.requirement + '</span></div>';
+						sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
+						sectionData += "<div class='recruitNo'>" + project.recruitNo + "</div>";
+						sectionData += '<div class="position">' + project.positionName + '</div>';
+						sectionData += '<div class="theme">' + project.theme + '</div>';
+						let date = new Date(project.deadline);
+						console.log(date);
+						sectionData += '<div class="deadline">' + date.getFullYear()+'.';
+						if( (date.getMonth()+1) < 10 ){
+							sectionData += '0' + (date.getMonth()+1) + '.';
+						} else {
+							sectionData += (date.getMonth()+1) + '.';
+						}
+						if( date.getDate() < 10 ) {
+							sectionData += '0' + date.getDate() + "</div>";
+						} else {
+							sectionData += date.getDate() + "</div>";
+						}
+						sectionData += '<div class="manageMember text-center">';
+						sectionData += '<input type="text" class="managerNo" hidden="hidden" value="'+ project.managerNo + '">';
+						sectionData += '<a href="#" class="manage-bnt deny-my-app">취소</a></div></div>';
 					});
-				});
-				if(sectionData == ""){
-					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 팀이 없습니다.</div>";
+				} else {
+					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
 				}
 				$section.html(sectionData);
 			}
@@ -489,40 +486,35 @@
 				$purposeOrPositionInTHead.html("역할");
 				$statusOrdeadlineInTHead.html("모집마감일");
 				let sectionData = "";
-				projects.forEach(function(project, pIndex){
-					let recruits = project.recruits;
-					recruits.forEach(function(recruit, rIndex){
-						recruit.members.forEach(function(member, mIndex){
-							if(member.customer.customerNo == ${sessionScope.loginInfo}) {
-								sectionData += '<div class="table-row bg-white">';
-								sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
-								sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
-								sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + recruit.requirement + '</span></div>';
-								sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
-								sectionData += "<div class='recruitNo'>" + recruit.recruitNo + "</div>";
-								sectionData += '<div class="position">' + recruit.position.name + '</div>';
-								sectionData += '<div class="theme">' + project.theme + '</div>';
-								let date = new Date(recruit.deadline);
-								sectionData += '<div class="deadline">' + date.getFullYear()+'.';
-								if( (date.getMonth()+1) < 10 ){
-									sectionData += '0' + (date.getMonth()+1) + '.';
-								} else {
-									sectionData += (date.getMonth()+1) + '.';
-								}
-								if( date.getDate() < 10 ) {
-									sectionData += '0' + date.getDate() + "</div>";
-								} else {
-									sectionData += date.getDate() + "</div>";
-								}
-								sectionData += '<div class="manageMember text-center">';
-								sectionData += '<input type="text" class="managerNo" hidden="hidden" value="'+ project.managerNo + '">';
-								sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
-								sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
-							}
-						});
+				if(projects.length > 0) {
+					projects.forEach(function(project, pIndex){
+						sectionData += '<div class="table-row bg-white">';
+						sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
+						sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
+						sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + project.requirement + '</span></div>';
+						sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
+						sectionData += "<div class='recruitNo'>" + project.recruitNo + "</div>";
+						sectionData += '<div class="position">' + project.positionName + '</div>';
+						sectionData += '<div class="theme">' + project.theme + '</div>';
+						let date = new Date(project.deadline);
+						console.log(date);
+						sectionData += '<div class="deadline">' + date.getFullYear()+'.';
+						if( (date.getMonth()+1) < 10 ){
+							sectionData += '0' + (date.getMonth()+1) + '.';
+						} else {
+							sectionData += (date.getMonth()+1) + '.';
+						}
+						if( date.getDate() < 10 ) {
+							sectionData += '0' + date.getDate() + "</div>";
+						} else {
+							sectionData += date.getDate() + "</div>";
+						}
+						sectionData += '<div class="manageMember text-center">';
+						sectionData += '<input type="text" class="managerNo" hidden="hidden" value="'+ project.managerNo + '">';
+						sectionData += '<a href="#" class="manage-bnt allow-my-invi" style="margin-right: 10px;">수락</a>';
+						sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
 					});
-				});
-				if(sectionData == ""){
+				} else {
 					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
 				}
 				$section.html(sectionData);
@@ -532,31 +524,31 @@
 	
 	//내가 등록한 프로젝트에 초대받은 사람 관리 섹션 조작
 	function findInvited(e, projectNo){
-		//지원자 컨트롤 버튼(지원관리 섹션이 보여지고 있는지 감시하기 위해 필요)
+		//지원목록 컨트롤 버튼(지원관리 섹션이 보여지고 있는지 감시하기 위해 필요)
 		let appliedCtrl = $(e).next()[0];
 		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
 		let $invitedSection = $(e.parentNode.parentNode).next();
 		//이 프로젝트에 지원한 사람들을 보여주고 관리할 섹션
 		let $appliedSection = $(e.parentNode.parentNode).next().next();
 
-		//초대자 섹션이 보여지고 있을 경우
+		//초대목록 섹션이 보여지고 있을 경우
 		if ($(e).hasClass('active')) {
 			//active 클래스를 지우고 섹션을 감춘다.
 			$(e).removeClass('active');
 			$invitedSection.css("display","none");
-			e.innerHTML = "초대자 ▼";
-		//초대자 섹션이 감춰져 있을 경우
+			e.innerHTML = "초대목록 ▼";
+		//초대목록 섹션이 감춰져 있을 경우
 		} else {
-			//만약 지원자 섹션이 보여지고 있다면 감춘다.
+			//만약 지원목록 섹션이 보여지고 있다면 감춘다.
 			if ($(appliedCtrl).hasClass('active')){
 				$(appliedCtrl).removeClass('active');
-				appliedCtrl.innerHTML = "지원자 ▼";
+				appliedCtrl.innerHTML = "지원목록 ▼";
 				$appliedSection.css("display","none");
 			}
 			//active 클래스를 추가하고 섹션을 보여준다.
 			$(e).addClass('active');
 			$invitedSection.css("display","inline-block");
-			e.innerHTML = "초대자 ▲";
+			e.innerHTML = "초대목록 ▲";
 			let sectionData = "";
 			$.ajax({
 				url:"${contextPath}/manageMember/invited"
@@ -585,7 +577,7 @@
 							sectionData += "</div>";
 						});
 					} else {
-						sectionData += "<div class='text-center'>초대자가 없습니다.</div>";
+						sectionData += "<div class='text-center'>이 프로젝트에 초대한 회원이 없습니다.</div>";
 					}
 					$invitedSection.html(sectionData);
 				}
@@ -595,31 +587,31 @@
 	
 	//내가 등록한 프로젝트에 지원한 사람 관리 섹션 조작
 	function findApplied(e, projectNo){
-		//초대자 컨트롤 버튼(초대관리 섹션이 보여지고 있는지 감시하기 위해 필요)
+		//초대목록 컨트롤 버튼(초대관리 섹션이 보여지고 있는지 감시하기 위해 필요)
 		let invitedCtrl = $(e).prev()[0];
 		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
 		let $invitedSection = $(e.parentNode.parentNode).next();
 		//이 프로젝트에 지원한 사람들을 보여주고 관리할 섹션
 		let $appliedSection = $(e.parentNode.parentNode).next().next();
 		
-		//지원자 섹션이 보여지고 있을 경우
+		//지원목록 섹션이 보여지고 있을 경우
 		if ($(e).hasClass('active')) {
 			//active 클래스를 지우고 섹션을 감춘다.
 			$(e).removeClass('active');
 			$appliedSection.css("display","none");
-			e.innerHTML = "지원자 ▼";
-		//지원자 섹션이 감춰져 있을 경우
+			e.innerHTML = "지원목록 ▼";
+		//지원목록 섹션이 감춰져 있을 경우
 		} else {
-			//만약 초대자 섹션이 보여지고 있다면 감춘다.
+			//만약 초대목록 섹션이 보여지고 있다면 감춘다.
 			if ($(invitedCtrl).hasClass('active')){
 				$(invitedCtrl).removeClass('active');
-				invitedCtrl.innerHTML = "초대자 ▼";
+				invitedCtrl.innerHTML = "초대목록 ▼";
 				$invitedSection.css("display","none");
 			}
 			//active 클래스를 추가하고 섹션을 보여준다.
 			$(e).addClass('active');
 			$appliedSection.css("display","inline-block");
-			e.innerHTML = "지원자 ▲";
+			e.innerHTML = "지원목록 ▲";
 			let sectionData = "";
 			$.ajax({
 				url:"${contextPath}/manageMember/applied"
@@ -684,9 +676,8 @@
 			notiContent = memberNo + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
 		} else {
 			receiver = memberNo;
-			notiContent = projectName + "번 프로젝트에 팀원이 되셨습니다 :)!";			
-		}		
-		console.log(notiContent);
+			notiContent = "축하드립니다. " +projectName + "번 프로젝트의 팀원이 되셨습니다. 프로젝트 스페이스를 확인해주세요.";			
+		}				
 		$.ajax({
 			url:"${contextPath}/manageMember/allow"
 			,method:"POST"

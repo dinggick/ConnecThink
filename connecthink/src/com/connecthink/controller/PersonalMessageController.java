@@ -44,6 +44,7 @@ public class PersonalMessageController {
 	 */
 	@RequestMapping("/inbox/updateStatusOne")
 	public void updateStatusOne(Integer personalMsgNo) {
+		System.out.println("personalMsgNo : " + personalMsgNo);
 		service.updateStatusOne(personalMsgNo);
 	}
 	

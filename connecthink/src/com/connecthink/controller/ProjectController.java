@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.connecthink.dto.InvitedOrAppliedProjectDTO;
 import com.connecthink.dto.ProjectDTO;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
@@ -37,7 +38,7 @@ public class ProjectController {
 	 */
 	@PostMapping(value="/manageProject/myApplication")
 	@ResponseBody
-	public List<Project> MyApplication(Integer memberNo) {
+	public List<InvitedOrAppliedProjectDTO> MyApplication(Integer memberNo) {
 		return service.findMyApplication(memberNo);
 	}
 
@@ -47,7 +48,7 @@ public class ProjectController {
 	 */
 	@PostMapping(value="/manageProject/myInvitation")
 	@ResponseBody
-	public List<Project> MyInvitation(Integer memberNo) {
+	public List<InvitedOrAppliedProjectDTO> MyInvitation(Integer memberNo) {
 		return service.findMyInvitation(memberNo);
 	}
 	

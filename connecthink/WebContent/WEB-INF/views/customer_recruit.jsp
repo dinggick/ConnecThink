@@ -335,8 +335,8 @@
 					},
 				success: function(data){
 					if (data.status == "success") {
-						$('#myModal').modal("hide");
 						alert(data.msg);
+						$('#myModal').modal("hide");
 						wSocket.send("connecthinksystem:nto:"+ ${customer.customerNo} + ":" + notiContent);	
 					} else {
 						alert(data.msg);						

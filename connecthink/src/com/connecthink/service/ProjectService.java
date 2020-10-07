@@ -1,5 +1,6 @@
 package com.connecthink.service;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.connecthink.dto.InvitedOrAppliedProjectDTO;
 import com.connecthink.dto.ProjectDTO;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.Project;
@@ -45,46 +47,58 @@ public class ProjectService {
 	 * @author IM CRYSTAL
 	 * 내가 지원한 프로젝트 찾기
 	 */
-	public List<Project> findMyApplication(Integer memberNo) {
-		List<Project> pList = projectRepository.findMyApplication(memberNo);
+	public List<InvitedOrAppliedProjectDTO> findMyApplication(Integer memberNo) {
+		List<Project> pList = projectRepository.findMyInvitiedOrApplied(memberNo, 0);
+		List<InvitedOrAppliedProjectDTO> appliedPList = new ArrayList<InvitedOrAppliedProjectDTO>();
 		for(Project p : pList) {
 			Set<Recruit> recruits = p.getRecruits();
 			Iterator<Recruit> iter = recruits.iterator();
 			while (iter.hasNext()) {
 				Recruit r = iter.next();
 				for(Member m : r.getMembers()) {
-					if(m.getInvited() > 0) {
-						iter.remove();
+					if(m.getCustomer().getCustomerNo().intValue() == memberNo.intValue() && m.getEnterStatus() == 0 && m.getInvited() == 0) {
+						appliedPList.add(new InvitedOrAppliedProjectDTO(p.getProjectNo(),
+																		p.getManagerNo(),
+																		p.getTitle(),
+																		p.getTheme(),
+																		r.getRecruitNo(),
+																		r.getRequirement(),
+																		r.getPosition().getName(),
+																		r.getDeadline()));
 					}
-					System.out.println(m.getCustomer());
 				}
-				System.out.println(r.getPosition().getName());
 			}
 		}
-		return pList;
+		return appliedPList;
 	}
 
 	/**
 	 * @author IM CRYSTAL
 	 * 내가 초대받은 프로젝트 찾기
 	 */
-	public List<Project> findMyInvitation(Integer memberNo) {
-		List<Project> pList = projectRepository.findMyInvitation(memberNo);
+	public List<InvitedOrAppliedProjectDTO> findMyInvitation(Integer memberNo) {
+		List<Project> pList = projectRepository.findMyInvitiedOrApplied(memberNo, 1);
+		List<InvitedOrAppliedProjectDTO> invitedPList = new ArrayList<InvitedOrAppliedProjectDTO>();
 		for(Project p : pList) {
 			Set<Recruit> recruits = p.getRecruits();
 			Iterator<Recruit> iter = recruits.iterator();
 			while (iter.hasNext()) {
 				Recruit r = iter.next();
 				for(Member m : r.getMembers()) {
-					if(m.getInvited() == 0) {
-						iter.remove();
+					if(m.getCustomer().getCustomerNo().intValue() == memberNo.intValue() && m.getEnterStatus() == 0 && m.getInvited() == 1) {
+						invitedPList.add(new InvitedOrAppliedProjectDTO(p.getProjectNo(),
+																		p.getManagerNo(),
+																		p.getTitle(),
+																		p.getTheme(),
+																		r.getRecruitNo(),
+																		r.getRequirement(),
+																		r.getPosition().getName(),
+																		r.getDeadline()));
 					}
-					System.out.println(m.getCustomer());
 				}
-				System.out.println(r.getPosition().getName());
 			}
 		}
-		return pList;
+		return invitedPList;
 	}
 
 	/**
