@@ -11,6 +11,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.connecthink.handler.headerWebSocketHandler;
+import com.connecthink.security.CustomUserDetailsService;
 
 public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 	
@@ -28,14 +29,15 @@ public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 		//HttpSession 객체 가져오기
 		HttpSession session = event.getSession();
 		
-		//ServletRequestAttributes 객체 가져오기
-		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
 		
+		//ServletRequestAttributes 객체 가져오기
+//		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.currentRequestAttributes();
+//		ServletRequestAttributes attr = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		//HttpServletRequest 객체 가져오기
-		HttpServletRequest request = attr.getRequest();
+//		HttpServletRequest request = attr.getRequest();
 		
 		//DispatcherServlet으로 로딩된 context 가져오기
-		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(request.getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.connecthink");
+		ApplicationContext ac = WebApplicationContextUtils.getWebApplicationContext(session.getServletContext(), "org.springframework.web.servlet.FrameworkServlet.CONTEXT.connecthink");
 
 		//Spring Bean 가져오기
 		headerWebSocketHandler hwsHandler = (headerWebSocketHandler)ac.getBean("headerWebSocketHandler",headerWebSocketHandler.class);
@@ -53,7 +55,10 @@ public class CustomHttpSessionEventPublisher extends HttpSessionEventPublisher {
 			hwsHandler.getNotiMap().remove(loginedCustomer);
 			System.out.println("★notiMap에서 회원 삭제 완료★");
 		}
-		
+
+		//중복 로그인 방지를 위한 loginInfo List에서 삭제되는 세션의 loginInfo를 제거
+		CustomUserDetailsService userDetailsService = (CustomUserDetailsService)ac.getBean("customUserDetailsService", CustomUserDetailsService.class);
+		userDetailsService.getLoginInfos().remove(loginedCustomer);
 	}
 	
 }
