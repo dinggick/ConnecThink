@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.connecthink.dto.ManageMemberDTO;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Member;
 import com.connecthink.entity.MemberId;
@@ -77,43 +78,49 @@ public class MemberService {
 	 * @author IM CRYSTAL
 	 * 특정 프로젝트에 초대된 멤버 목록 보기
 	 */
-	public List<Member> findInvitedByProjectNo(Integer projectNo){
+	public List<ManageMemberDTO> findInvitedByProjectNo(Integer projectNo){
 		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
-		List<Member> mList = new ArrayList<Member>();
+		List<ManageMemberDTO> mmList = new ArrayList<ManageMemberDTO>();
 		if(rList.size() != 0) {
 			for(Recruit r : rList) {
 				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 1);
 				if(tempMList.size() != 0) {
 					for(Member m : tempMList) {
 						m.getCustomer().getExperiences();
-						mList.add(m);
-						System.out.println("초대된 멤버 : " + m);
+						mmList.add(new ManageMemberDTO(m.getCustomer().getCustomerNo()
+								,m.getCustomer().getName()
+								,m.getCustomer().getAbout()
+								,r.getRecruitNo()
+								,r.getPosition().getName()));
 					}
 				}
 			}
 		}
-		return mList;
+		return mmList;
 	}
 	
 	/**
 	 * @author IM CRYSTAL
 	 * 특정 프로젝트에 지원한 멤버 목록 보기
 	 */
-	public List<Member> findAppliedByProjectNo(Integer projectNo){
+	public List<ManageMemberDTO> findAppliedByProjectNo(Integer projectNo){
 		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
-		List<Member> mList = new ArrayList<Member>();
+		List<ManageMemberDTO> mmList = new ArrayList<ManageMemberDTO>();
 		if(rList.size() != 0) {
 			for(Recruit r : rList) {
 				List<Member> tempMList = memberRepository.findAllByRecruitNoAndInvited(r.getRecruitNo(), 0);
 				if(tempMList.size() != 0) {
 					for(Member m : tempMList) {
 						m.getCustomer().getExperiences();
-						mList.add(m);
-						System.out.println("지원한 멤버 : " + m);
+						mmList.add(new ManageMemberDTO(m.getCustomer().getCustomerNo()
+								,m.getCustomer().getName()
+								,m.getCustomer().getAbout()
+								,r.getRecruitNo()
+								,r.getPosition().getName()));
 					}
 				}
 			}
 		}
-		return mList;
+		return mmList;
 	}
 }

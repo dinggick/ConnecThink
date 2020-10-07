@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
-@Service
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectHistoryDTO {
