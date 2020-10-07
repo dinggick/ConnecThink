@@ -409,12 +409,6 @@ var $msgContent = $("#msg_content");
 wSocket.send("connecthinksystem:loadList");
 wSocket.send("connecthinksystem:loadNotis:");
 
-
-
-//------------- 페이지 로드되자마자 목록 불러오고 알림 보여주기 ------------
-// fxLoadNotiCnt(loginedCustomer);
-// fxLoadNoti(loginedCustomer);
-
 //------------------------ 클릭 이벤트 -------------------------
 $listSection.on("click","li.person",function(e){
 	//새로 온 메세지 갯수 알림 지우기
