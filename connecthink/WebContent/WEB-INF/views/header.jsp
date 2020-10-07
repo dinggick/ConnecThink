@@ -41,7 +41,7 @@
                             <div class="col-xl-3 col-lg-2">
                                 <div class="logo">
                                     <a href="/connecthink/">
-                                        <img src="${contextPath}/img/logo.png" alt="">
+                                        <img src="${contextPath}/img/logo.png" alt="">	
                                     </a>
                                 </div>
                             </div>
