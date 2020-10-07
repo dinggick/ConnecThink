@@ -15,6 +15,8 @@ public class InvitedOrAppliedProjectDTO {
 	
 	private Integer projectNo;
 	
+	private Integer managerNo;
+	
 	private String title;
 	
 	private String theme;
