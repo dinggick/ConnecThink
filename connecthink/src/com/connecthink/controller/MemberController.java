@@ -29,6 +29,8 @@ public class MemberController {
 		customerNo = (Integer) session.getAttribute("loginInfo");
 		String status = "";
 		try {
+			System.out.println("드러오얀????");
+			
 			service.recruit(customerNo, recruitNo);
 			status = "success";
 		}catch (Exception e) {

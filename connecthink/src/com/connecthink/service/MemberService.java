@@ -36,6 +36,7 @@ public class MemberService {
 	 * @throws AddException 
 	 */
 	public void recruit(Integer customerNo, String recruitNo) throws AddException {
+		System.out.println("서비스드러어오ㅗ오ㅗ오오ㅗ");
 		Member member = new Member();
 		MemberId ids = new MemberId();
 		Integer mNo = 0;
@@ -52,7 +53,7 @@ public class MemberService {
 				mNo = customerNo;
 			}
 		}
-
+		
 		if(mNo == customerNo && status == 10) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();
@@ -65,7 +66,9 @@ public class MemberService {
 			member.setRecruit(r);
 			member.setEnterStatus(0);
 
+			System.out.println("서비스드러어오ㅗ오ㅗ오오ㅗ11111111111111111");
 			memberRepository.save(member);
+			System.out.println("서비스드러어오ㅗ오ㅗ오오ㅗㅈㅁㄹㄷㄶㄱ옷러허ㅘㅓㅎㄹㅇㄴㅁㄴ호");
 			
 		} else if (mNo != customerNo && status >= 0) {
 			throw new AddException("이미 지원함");
