@@ -1,6 +1,8 @@
 package com.connecthink.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,9 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.connecthink.dto.ManageMemberDTO;
-import com.connecthink.entity.Member;
-import com.connecthink.entity.Project;
-import com.connecthink.entity.Recruit;
+import com.connecthink.exception.AddException;
 import com.connecthink.service.MemberService;
 
 @Controller
@@ -26,21 +26,18 @@ public class MemberController {
 	 */
 	@PostMapping(value = "/logined/recruit")
 	@ResponseBody
-	public String recruit(Integer customerNo, String recruitNo, HttpSession session) {
+	public Map recruit(Integer customerNo, String recruitNo, HttpSession session) {
+		Map<String, Object> result = new HashMap<String, Object>();
 		customerNo = (Integer) session.getAttribute("loginInfo");
-		String status = "";
-		System.out.println("컨트롤러");
-		try {
-			System.out.println("드러오얀????");
-			
+		try {			
 			service.recruit(customerNo, recruitNo);
-			status = "success";
-		}catch (Exception e) {
-			status = "fail";
-			System.out.println("컨트롤러 catch");
-			e.printStackTrace();
+			result.put("status", "success");
+			result.put("msg", "지원 완료");
+		}catch (AddException e) {
+			result.put("status", "fail");
+			result.put("msg", e.getMessage());
 		}
-		return status;
+		return result;
 	}
 	
 	/**

@@ -96,14 +96,14 @@ class MemberTest {
 		repository.save(member);
 	}
 	
-	@Test
-	@Transactional
-	@DisplayName("지원자 찾기")
-	public void findInvitedTest() {
-		List<Member> mList = repository.findAllByRecruitNoAndInvited("9R2", 0);
-		for(Member m : mList) {
-			Set<Experience> eSet = m.getCustomer().getExperiences();
-			System.out.println(m);
-		}
-	}
+//	@Test
+//	@Transactional
+//	@DisplayName("지원자 찾기")
+//	public void findInvitedTest() {
+//		List<Member> mList = repository.findAllByRecruitNoAndInvited("9R2", 0);
+//		for(Member m : mList) {
+//			Set<Experience> eSet = m.getCustomer().getExperiences();
+//			System.out.println(m);
+//		}
+//	}
 }

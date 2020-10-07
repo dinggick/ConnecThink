@@ -442,11 +442,11 @@ span.customerNo {
 							${_csrf.parameterName} : '${_csrf.token}'
 						},
 						success: function(response){
-							if(response == "success"){
-								alert("지원 성공");
+							if(response.status == "success"){
+								alert(response.msg);
 								wSocket.send("connecthinksystem:nto:"+ managerNo + ":" + notiContent);
 							} else {
-								alert("이미 지원했거나 속해있는 프로젝트 입니다");
+								alert(response.msg);
 							}
 						}
 					});

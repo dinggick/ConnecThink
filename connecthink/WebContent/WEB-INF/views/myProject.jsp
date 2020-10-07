@@ -80,14 +80,14 @@
  	text-align: center;
 }
 .memberAbout {
-	width: 30%;
+	width: 40%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 .memberName, .memberPosition {
 	width: 20%;
-	padding-left: 20px;
+	padding-left: 40px;
 }
 .table-row>.memberName, .table-row>.memberPosition {
 	width: 20%;
@@ -98,7 +98,7 @@
 	color: #00D363;
 }
 .manageMemberDto {
-	width: 30%;
+	width: 20%;
 	text-align: center;
 }
 .projectNo, .memberNo, .recruitNo {
@@ -301,6 +301,7 @@
 		let memberNo = $(tableRow).find(".memberNo").html();
 		let projectName = $(tableRow).find(".title").text();
 		let managerNo = typeof($(tableRow).find(".managerNo").val()) != 'undefined' ? $(tableRow).find(".managerNo").val() : 0;
+		
 		
 		//내 지원 취소하기 / 지원한 사람 거절하기 / 초대 취소하기 / 초대 거절하기
 		if ($(this).attr("class").search("deny") > 0) {
@@ -580,8 +581,7 @@
 							sectionData += "<div class='memberPosition' onclick='recruitDetail(this);'>" + member.positionName + "</div>";
 							sectionData += "<div class='memberAbout'>" + member.about + "</div>";
 							sectionData += "<div class='manageMemberDto'>";
-							sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
-							sectionData += '<a href="#" class="manage-bnt deny-in">거절</a></div>';
+							sectionData += '<a href="#" class="manage-bnt deny-to-invite">취소</a></div>';
 							sectionData += "</div>";
 						});
 					} else {
@@ -697,6 +697,7 @@
 				if(result=="success"){
 					alert("수락되었습니다.");
 					wSocket.send("connecthinksystem:nto:"+ receiver + ":" + notiContent);					
+
 				}
 			}
 		});

@@ -53,6 +53,9 @@ public class ProjectService {
 			while (iter.hasNext()) {
 				Recruit r = iter.next();
 				for(Member m : r.getMembers()) {
+					if(m.getInvited() > 0) {
+						iter.remove();
+					}
 					System.out.println(m.getCustomer());
 				}
 				System.out.println(r.getPosition().getName());
@@ -73,6 +76,9 @@ public class ProjectService {
 			while (iter.hasNext()) {
 				Recruit r = iter.next();
 				for(Member m : r.getMembers()) {
+					if(m.getInvited() == 0) {
+						iter.remove();
+					}
 					System.out.println(m.getCustomer());
 				}
 				System.out.println(r.getPosition().getName());
