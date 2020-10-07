@@ -40,6 +40,11 @@ public class HomeController {
 		
 	}
 	
+	@RequestMapping("/event")
+	public void event() {
+		
+	}
+	
 	@RequestMapping("/logined/member_recruit")
 	public void recruit() {
 		System.out.println("멤버 상세");
