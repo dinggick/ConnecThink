@@ -676,7 +676,7 @@
 			notiContent = memberNo + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
 		} else {
 			receiver = memberNo;
-			notiContent = "축하드립니다. " projectName + "번 프로젝트의 팀원이 되셨습니다. 프로젝트 스페이스를 확인해주세요.";			
+			notiContent = "축하드립니다. " +projectName + "번 프로젝트의 팀원이 되셨습니다. 프로젝트 스페이스를 확인해주세요.";			
 		}				
 		$.ajax({
 			url:"${contextPath}/manageMember/allow"
