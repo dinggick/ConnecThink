@@ -64,6 +64,10 @@
 }
 .title {
 	width: 36%;
+	padding-left:20px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .purpose, .theme, .position, .status, .deadline {
 	width: 16%;
@@ -99,13 +103,10 @@
 .projectNo, .memberNo, .recruitNo {
 	display:none;
 }
-.table-row>.title:hover, .table-row>.name:hover {
+.title>span:hover, .table-row>.name:hover {
 	color: #00D363;
 	transition: 0.3s;
 	cursor: pointer;
-}
-.table-head>:first-child, .table-row>:nth-child(2) {
-	padding-left:20px;
 }
 .table-row>:last-child {
 	overflow: visible;
@@ -329,7 +330,6 @@
 	
 	//클릭 시 모집 상세 페이지로 이동
 	function recruitDetail(e){
-		console.log(e);
 		let $recNo = $(e).siblings(".recruitNo").html();
 		let url = "${contextPath}/all/rec_detail?recNo=" + $recNo;
 		window.open(url,"_blank", "height=800, width=800");
@@ -440,7 +440,9 @@
 							if(member.customer.customerNo == loginedCustomer) {
 								sectionData += '<div class="table-row bg-white">';
 								sectionData += '<div class="recruitNo">'+ recruit.recruitNo +'</div>';
-								sectionData += '<div class="title" onclick="projectDetail(this);">' + project.title + '</div>';
+								sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
+								sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
+								sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + recruit.requirement + '</span></div>';
 								sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
 								sectionData += '<div class="position">' + recruit.position.name + '</div>';
 								sectionData += '<div class="theme">' + project.theme + '</div>';
@@ -489,9 +491,11 @@
 						recruit.members.forEach(function(member, mIndex){
 							if(member.customer.customerNo == ${sessionScope.loginInfo}) {
 								sectionData += '<div class="table-row bg-white">';
-								sectionData += '<div class="recruitNo">'+ recruit.recruitNo +'</div>';
-								sectionData += '<div class="title" onclick="projectDetail(this);">' + project.title + '</div>';
+								sectionData += '<div class="projectNo">'+ project.projectNo +'</div>';
+								sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
+								sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + recruit.requirement + '</span></div>';
 								sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
+								sectionData += "<div class='recruitNo'>" + recruit.recruitNo + "</div>";
 								sectionData += '<div class="position">' + recruit.position.name + '</div>';
 								sectionData += '<div class="theme">' + project.theme + '</div>';
 								let date = new Date(recruit.deadline);
@@ -523,7 +527,7 @@
 	}
 	
 	//내가 등록한 프로젝트에 초대받은 사람 관리 섹션 조작
-	function findInvited(e){
+	function findInvited(e, projectNo){
 		//지원자 컨트롤 버튼(지원관리 섹션이 보여지고 있는지 감시하기 위해 필요)
 		let appliedCtrl = $(e).next()[0];
 		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
@@ -553,7 +557,7 @@
 			$.ajax({
 				url:"${contextPath}/manageMember/invited"
 				,method:"POST"
-				,data : { "projectNo" : 9,
+				,data : { "projectNo" : projectNo,
 					${_csrf.parameterName} : '${_csrf.token}'}
 				,success:function(members){
 					console.log(members);
@@ -570,7 +574,7 @@
 							sectionData += "<div class='memberNo'>" + member.memberNo + "</div>";
 							sectionData += "<div class='memberName' onclick='memberDetail(this);'>" + member.memberName + "</div>";
 							sectionData += "<div class='recruitNo'>" + member.recruitNo + "</div>";
-							sectionData += "<div class='memberPosition' onclick='recruitDetail(this)';>" + member.positionName + "</div>";
+							sectionData += "<div class='memberPosition' onclick='recruitDetail(this);'>" + member.positionName + "</div>";
 							sectionData += "<div class='memberAbout'>" + member.about + "</div>";
 							sectionData += "<div class='manageMemberDto'>";
 							sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
@@ -587,7 +591,7 @@
 	}
 	
 	//내가 등록한 프로젝트에 지원한 사람 관리 섹션 조작
-	function findApplied(e){
+	function findApplied(e, projectNo){
 		//초대자 컨트롤 버튼(초대관리 섹션이 보여지고 있는지 감시하기 위해 필요)
 		let invitedCtrl = $(e).prev()[0];
 		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
@@ -617,7 +621,7 @@
 			$.ajax({
 				url:"${contextPath}/manageMember/applied"
 				,method:"POST"
-				,data : { "projectNo" : 9,
+				,data : { "projectNo" : projectNo,
 					${_csrf.parameterName} : '${_csrf.token}'}
 				,success:function(members){
 					if(members.length > 0) {
@@ -633,7 +637,7 @@
 							sectionData += "<div class='memberNo'>" + member.memberNo + "</div>";
 							sectionData += "<div class='memberName' onclick='memberDetail(this);'>" + member.memberName + "</div>";
 							sectionData += "<div class='recruitNo'>" + member.recruitNo + "</div>";
-							sectionData += "<div class='memberPosition' onclick='recruitDetail(this)';>" + member.positionName + "</div>";
+							sectionData += "<div class='memberPosition' onclick='recruitDetail(this);'>" + member.positionName + "</div>";
 							sectionData += "<div class='memberAbout'>" + member.about + "</div>";
 							sectionData += "<div class='manageMemberDto'>";
 							sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
