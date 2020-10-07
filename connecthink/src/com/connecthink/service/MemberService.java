@@ -44,13 +44,16 @@ public class MemberService {
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
 		Set<Member> m = recruit.getMembers();	
+		System.out.println(m.size());
 		if(m.size()>0) {
 			for(Member ms : m) {
 				if(ms.getCustomer().getCustomerNo() == customerNo && ms.getInvited() >= 0 && ms.getEnterStatus() >= 0) {
+					System.out.println("qqqqqqqqq" + ms.getCustomer().getCustomerNo());
 					isExists = true;
 				}
 			}
 		}
+		System.out.println("dddddddddddd" + isExists );
 		if(isExists == false) {
 			Customer c = customerRepository.findById(customerNo).get();
 			Recruit r = recruitRepository.findById(recruitNo).get();
