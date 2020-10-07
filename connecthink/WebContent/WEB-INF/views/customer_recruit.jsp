@@ -402,7 +402,7 @@
 		}
 		function bookClick (){				
 			$.ajax({
-				url : "${contextPath}/logined/mateBm",
+				url : "${contextPath}/logined/customerBm",
 				method : "POST",
 				data : {					
 					${_csrf.parameterName} : '${_csrf.token}'
