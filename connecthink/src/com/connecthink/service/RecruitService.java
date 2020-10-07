@@ -164,7 +164,7 @@ public class RecruitService {
 		boolean isExists = false;
 		if(ms.size() > 0) {
 			for(Member mm : ms) {
-				if(mm.getCustomer().getCustomerNo() == customerNo && mm.getInvited() == 0) {
+				if(mm.getCustomer().getCustomerNo().equals(customerNo) && mm.getInvited() >= 0) {
 					isExists = true;
 				}
 			}
