@@ -87,6 +87,7 @@
 }
 .memberName, .memberPosition {
 	width: 20%;
+	padding-left: 20px;
 }
 .table-row>.memberName, .table-row>.memberPosition {
 	width: 20%;
@@ -372,8 +373,8 @@
 							data += '<div class="status">종료</div>';
 						}
 						data += '<div class="manageMember text-center">';
-						data += '<a href="#" class="manageInvited ctrl" onclick="findInvited(this);" style="margin-right: 10px;">초대자 ▼</a>';
-						data += '<a href="#" class="manageApplied ctrl" onclick="findApplied(this);">지원자 ▼</a></div></div>';
+						data += '<a href="#" class="manageInvited ctrl" onclick="findInvited(this,' + project.projectNo + ');" style="margin-right: 10px;">초대자 ▼</a>';
+						data += '<a href="#" class="manageApplied ctrl" onclick="findApplied(this,' + project.projectNo + ');">지원자 ▼</a></div></div>';
 						data += '<div class="showMember invitedMember progress-table bg-white">-</div>';
 						data += '<div class="showMember appliedMember progress-table bg-white">-</div>';
 					});
@@ -624,6 +625,7 @@
 				,data : { "projectNo" : projectNo,
 					${_csrf.parameterName} : '${_csrf.token}'}
 				,success:function(members){
+					console.log(members);
 					if(members.length > 0) {
 						sectionData += "<div class='table-head'>";
 						sectionData += "<div class='memberName'>이름</div>";
