@@ -28,11 +28,14 @@ public class MemberController {
 	public String recruit(Integer customerNo, String recruitNo, HttpSession session) {
 		customerNo = (Integer) session.getAttribute("loginInfo");
 		String status = "";
+		System.out.println("컨트롤러");
 		try {
 			service.recruit(customerNo, recruitNo);
 			status = "success";
 		}catch (Exception e) {
 			status = "fail";
+			System.out.println("컨트롤러 catch");
+			e.printStackTrace();
 		}
 		return status;
 	}
