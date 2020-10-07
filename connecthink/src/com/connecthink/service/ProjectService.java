@@ -82,28 +82,6 @@ public class ProjectService {
 	}
 
 	/**
-	 * @author IM CRYSTAL
-	 * 내가 리더이며 초대자가 있는 프로젝트 찾기
-	 */
-	public List<Project> findInvited(Integer managerNo){
-		List<Project> pList = projectRepository.findByManagerNo(managerNo);
-		for(Project p : pList) {
-			Iterator<Recruit> rIter = p.getRecruits().iterator();
-			while (rIter.hasNext()) {
-				Recruit r = rIter.next();
-				Set<Member> Members = r.getMembers();
-				Iterator<Member> mIter = Members.iterator();
-				while (mIter.hasNext()) {
-					Member m = mIter.next();
-					m.getCustomer();
-				}
-				r.getPosition().getName();
-			}
-		}
-		return pList;
-	}
-
-	/**
 	 * @author 홍지수
 	 * 모집 상세보기
 	 */
@@ -121,28 +99,6 @@ public class ProjectService {
 			});
 		});
 		return p;
-	}
-
-	/**
-	 * @author IM CRYSTAL
-	 * 내가 리더이며 지원한 멤버가 있는 프로젝트
-	 */
-	public List<Project> findApplied(Integer managerNo){
-		List<Project> pList = projectRepository.findByManagerNo(managerNo);
-		for(Project p : pList) {
-			Iterator<Recruit> rIter = p.getRecruits().iterator();
-			while (rIter.hasNext()) {
-				Recruit r = rIter.next();
-				Set<Member> Members = r.getMembers();
-				Iterator<Member> mIter = Members.iterator();
-				while (mIter.hasNext()) {
-					Member m = mIter.next();
-					m.getCustomer();
-				}
-				r.getPosition().getName();
-			}
-		}
-		return pList;
 	}
 
 	/**

@@ -95,8 +95,16 @@
 	text-decoration: none;
 	font-weight: 500;
 	cursor: pointer;
-	transition: all 0.3s ease 0s;
+	transition: all 0.2s ease 0s;
 	padding: 8px 20px 8px 20px;
+}
+.manageInvited, .manageApplied {
+	width: 50%;
+	font-size: 0.9em;
+	padding: 8 8 8 8;
+}
+.manageInvited:hover, .manageApplied:hover {
+	color: #f44a40;
 }
 .allow-my-invi, .allow-in {
 	color: #38a4ff;
@@ -117,6 +125,12 @@
 	color: #fff;
 	background: #f44a40;
 	border: 1px solid transparent;
+}
+.showMember {
+  width: 100%;
+  background: #F2F2F2;
+  display: none;
+  overflow: hidden;
 }
 </style>
 
@@ -180,7 +194,7 @@
                     </div>
                 </div>
             </div>
-            </div>
+        </div>
     </div>
 	
 	
@@ -306,7 +320,11 @@
 						} else {
 							data += '<div class="status">종료</div>';
 						}
-						data += '<div class="manageMember text-center">초대/지원 관리</div></div>';
+						data += '<div class="manageMember text-center">';
+						data += '<a href="#" class="manage-bnt manageInvited ctrl" onclick="findInvited(this);" style="margin-right: 10px;">초대 관리 ▼</a>';
+						data += '<a href="#" class="manage-bnt manageApplied ctrl" onclick="findApplied(this);">지원 관리 ▼</a></div></div>';
+						data += '<div class="showMember invitedMember">-</div>';
+						data += '<div class="showMember appliedMember">-</div>';
 					});
 				} else {
 					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 팀이 없습니다.</div>";
@@ -450,99 +468,108 @@
 			}
 		});
 	}
+	
+	//초대 관리 섹션 조작
+	function findInvited(e){
+		//지원 관리 컨트롤 버튼
+		let appliedCtrl = $(e).next()[0];
+		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
+		let $invitedSection = $(e.parentNode.parentNode).next();
+		//이 프로젝트에 지원한 사람들을 보여주고 관리할 섹션
+		let $appliedSection = $(e.parentNode.parentNode).next().next();
 
-	//내가 초대한 멤버 보여주기
-	function fxInvited(){
-		$.ajax({
-			url:"${contextPath}/manageProject/invited"
-			,method:"POST"
-			,data: {managerNo : ${sessionScope.loginInfo},
-				${_csrf.parameterName} : '${_csrf.token}'}
-			,success:function(projects){
-				let sectionData = "";
-				if (projects.length == 0){
-					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>팀장을 맡고 있는 프로젝트가 없습니다.</div>";
-				} else {
-					projects.forEach(function(project, pIndex){
-						let recruits = project.recruits;
-						recruits.forEach(function(recruit, rIndex){
-							let members = recruit.members;
-							members.forEach(function(member, mIndex){
-								if(member.enterStatus==0 && member.invited==1){
-									sectionData += '<div class="table-row bg-white">';
-									sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
-									sectionData += '<div class="title">' + project.title + '</div>';
-									sectionData += '<div class="member_no" style="display:none;">'+ member.customer.customerNo +'</div>';
-									sectionData += '<div class="name">' + member.customer.name + '</div>';
-									sectionData += '<div class="position">' + recruit.position.name + '</div>';
-									let date = new Date(recruit.deadline);
-									sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
-									if(recruit.recruitStatus==1){
-										sectionData += '<div class="status">모집중</div>';
-									} else {
-										sectionData += '<div class="status">마감</div>';
-									}
-									sectionData += '<div class="button text-center">';
-									sectionData += '<a href="#" class="manage-bnt deny-to-invite">취소</a></div></div>';
-								}
-							});
-						});
-					});
-				}
-				if(sectionData == ""){
-					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대한 멤버가 없습니다.</div>";
-				}
-				$section.html(sectionData);
+		//초대 관리 섹션이 보여지고 있을 경우
+		if ($(e).hasClass('active')) {
+			//active 클래스를 지우고 섹션을 감춘다.
+			$(e).removeClass('active');
+			$invitedSection.css("display","none");
+			e.innerHTML = "초대 관리 ▼";
+		//초대 관리 섹션이 감춰져 있을 경우
+		} else {
+			//만약 지원 관리 섹션이 보여지고 있다면 감춘다.
+			if ($(appliedCtrl).hasClass('active')){
+				$(appliedCtrl).removeClass('active');
+				appliedCtrl.innerHTML = "지원 관리 ▼";
+				$appliedSection.css("display","none");
 			}
-		});		
+			//active 클래스를 추가하고 섹션을 보여준다.
+			$(e).addClass('active');
+			$invitedSection.css("display","inline-block");
+			e.innerHTML = "초대 관리 ▲";
+			let sectionData = "";
+			$.ajax({
+				url:"${contextPath}/manageMember/invited"
+				,method:"POST"
+				,data : { "projectNo" : 9,
+					${_csrf.parameterName} : '${_csrf.token}'}
+				,success:function(members){
+					console.log(members);
+					if(members.length > 0) {
+						members.forEach(function(member, index){
+							sectionData += "<div class='table-row'>";
+							sectionData += "<div>" + member.customer.customerNo + "</div>";
+							sectionData += "</div>";
+						});
+					} else {
+						sectionData += "<div class='text-center'>초대자가 없습니다.</div>";
+					}
+					$invitedSection.html(sectionData);
+				}
+			});
+		}
 	}
-
-	//내 팀에 지원한 멤버 보여주기
-	function fxApplied(loginedCustomer) {
-		$.ajax({
-			url:"${contextPath}/manageProject/applied"
-			,method:"POST"
-				//{managerNo : ${sessionScope.loginInfo},
-			,data: {managerNo : loginedCustomer,
-				${_csrf.parameterName} : '${_csrf.token}'}
-			,success:function(projects){
-				let sectionData = "";
-				if (projects.length == 0){
-					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>팀장을 맡고 있는 프로젝트가 없습니다.</div>";
-				} else {
-				projects.forEach(function(project, pIndex){
-					let recruits = project.recruits;
-					recruits.forEach(function(recruit, rIndex){
-						let members = recruit.members;
-						members.forEach(function(member, mIndex){
-							if(member.enterStatus==0 && member.invited==0){
-								sectionData += '<div class="table-row bg-white">';
-								sectionData += '<div class="recruit_no" style="display:none;">'+ recruit.recruitNo +'</div>';
-								sectionData += '<div class="title">' + project.title + '</div>';
-								sectionData += '<div class="member_no" style="display:none;">'+ member.customer.customerNo +'</div>';
-								sectionData += '<div class="name">' + member.customer.name + '</div>';
-								sectionData += '<div class="position">' + recruit.position.name + '</div>';
-								let date = new Date(recruit.deadline);
-								sectionData += '<div class="deadline">' + date.getFullYear()+"."+(date.getMonth()+1)+"."+date.getDate() + '</div>';
-								if(recruit.recruitStatus==1){
-									sectionData += '<div class="status">모집중</div>';
-								} else {
-									sectionData += '<div class="status">마감</div>';
-								}
-								sectionData += '<div class="button text-center">';
-								sectionData += '<a href="#" class="manage-bnt allow-in" style="margin-right: 10px;">수락</a>';
-								sectionData += '<a href="#" class="manage-bnt deny-in">거절</a></div></div>';
-							}
+	
+	//지원 관리 div 조작
+	function findApplied(e){
+		//초대 관리 컨트롤 버튼
+		let invitedCtrl = $(e).prev()[0];
+		//이 프로젝트에 초대한 사람들을 보여주고 관리할 섹션
+		let $invitedSection = $(e.parentNode.parentNode).next();
+		//이 프로젝트에 지원한 사람들을 보여주고 관리할 섹션
+		let $appliedSection = $(e.parentNode.parentNode).next().next();
+		
+		//지원 관리 섹션이 보여지고 있을 경우
+		if ($(e).hasClass('active')) {
+			//active 클래스를 지우고 섹션을 감춘다.
+			$(e).removeClass('active');
+			$appliedSection.css("display","none");
+			e.innerHTML = "지원 관리 ▼";
+		//지원 관리 섹션이 감춰져 있을 경우
+		} else {
+			//만약 초대 관리 섹션이 보여지고 있다면 감춘다.
+			if ($(invitedCtrl).hasClass('active')){
+				$(invitedCtrl).removeClass('active');
+				invitedCtrl.innerHTML = "초대 관리 ▼";
+				$invitedSection.css("display","none");
+			}
+			//active 클래스를 추가하고 섹션을 보여준다.
+			$(e).addClass('active');
+			$appliedSection.css("display","inline-block");
+			e.innerHTML = "지원 관리 ▲";
+			let sectionData = "";
+			$.ajax({
+				url:"${contextPath}/manageMember/applied"
+				,method:"POST"
+				,data : { "projectNo" : 9,
+					${_csrf.parameterName} : '${_csrf.token}'}
+				,success:function(members){
+					console.log(members);
+					if(members.length > 0) {
+						members.forEach(function(member, index){
+							sectionData += "<div class='table-row'>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "<div>" + member.customer.name + "</div>";
+							sectionData += "</div>";
 						});
-					});
-				});
-			}
-			if(sectionData == ""){
-				sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 멤버가 없습니다. </div>";
-			}
-			$section.html(sectionData);
-			}
-		});
+					} else {
+						sectionData += "<div class='text-center'>지원자가 없습니다.</div>";
+					}
+					$appliedSection.html(sectionData);
+				}
+			});
+		}
 	}
 
 	//거절, 취소하기
@@ -586,6 +613,7 @@
 		$(form).find("input[name=customerNo]").val(memberNo);
 		form.submit();
 	}
+
 	</script>
 </body>
 

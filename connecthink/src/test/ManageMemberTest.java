@@ -36,8 +36,7 @@ public class ManageMemberTest {
 	@Autowired
 	private ManageMemberRepository mmrepo;
 
-	@Test
-	@javax.transaction.Transactional
+//	@Test
 	@DisplayName("내가 지원한 프로젝트 목록")
 	public void myAppliedProjectTest() {
 		int memberNo = 101;
@@ -117,11 +116,12 @@ public class ManageMemberTest {
 		String recruitNo = "6R2";
 		Integer memberNo = 101;
 		try {
-			//mmrepo.deleteByIdRecruitNoAndIdMemberNo(recruitNo, memberNo);
+			mmrepo.deleteByRecruitNoAndMemberNo(recruitNo, memberNo);
 			System.out.println("지원 취소 완료");
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("지원 취소 실패");
 		}
 	}
+	
 }

@@ -41,12 +41,10 @@
    <logger name="jdbc.resultset">
       <level value="off" />
    </logger>
-   
 
    <!-- Root Logger -->
    <root>
       <priority value="info" />
       <appender-ref ref="console" />
-      <appender-ref ref="springFile" />
    </root>   
 </log4j:configuration>
