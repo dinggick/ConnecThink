@@ -58,6 +58,7 @@ public class ProjectService {
 				for(Member m : r.getMembers()) {
 					if(m.getCustomer().getCustomerNo().intValue() == memberNo.intValue() && m.getEnterStatus() == 0 && m.getInvited() == 0) {
 						appliedPList.add(new InvitedOrAppliedProjectDTO(p.getProjectNo(),
+																		p.getManagerNo(),
 																		p.getTitle(),
 																		p.getTheme(),
 																		r.getRecruitNo(),
@@ -86,6 +87,7 @@ public class ProjectService {
 				for(Member m : r.getMembers()) {
 					if(m.getCustomer().getCustomerNo().intValue() == memberNo.intValue() && m.getEnterStatus() == 0 && m.getInvited() == 1) {
 						invitedPList.add(new InvitedOrAppliedProjectDTO(p.getProjectNo(),
+																		p.getManagerNo(),
 																		p.getTitle(),
 																		p.getTheme(),
 																		r.getRecruitNo(),
