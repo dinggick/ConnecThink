@@ -36,7 +36,7 @@ public class FileController {
 				
 				return ResponseEntity.ok("success");
 			} else {
-				System.out.println("---------------test--------------");
+				System.out.println("ERROR : ProfileImg NULL");
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 			}
 		} catch (IllegalStateException | IOException e) {
