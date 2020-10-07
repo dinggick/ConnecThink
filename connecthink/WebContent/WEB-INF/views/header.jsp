@@ -156,7 +156,7 @@ function inbox(){
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -278,11 +278,11 @@ var wSocket =  new WebSocket("ws://192.168.0.121/connecthink/header/inbox");
 	}	
 
 	  else if (e.data.includes("connecthinksystem:loadNotis:")){
-		  $('.msg_header span personName').html("ConnecThink");
+		  $('.msg_header > div > span.personName').html("ConnecThink");		
 		   $('#notinew').hide();
 		   let pmStr = e.data.replace("connecthinksystem:loadNotis:", "");	  
 		   MSGs = JSON.parse(pmStr);
-		   console.log(MSGs);
+		  
 		      let sectionData = "";
 		      let newDate = new Date(0);
 		      MSGs.forEach(function(msg, index){

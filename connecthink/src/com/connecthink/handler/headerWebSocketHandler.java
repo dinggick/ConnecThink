@@ -195,7 +195,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			//읽음상태 읽음으로 바꾸기
 			nts.forEach(pm -> {				
 					pm.setRead_status(1);
-					notiController.insert(pm.getCustomer().getCustomerNo(),pm.getContent());				
+					notiController.save(pm);				
 			});
 		}
 
@@ -265,7 +265,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 				System.out.println("★ 상대방이 접속 중이라 실시간으로 메세지 전송 완료. ★");
 			}
 			session.sendMessage(new TextMessage(sendPmJson));
-			System.out.println("#############"+otherNo + "$$$$$$"+newNoti);
+			
 			if(!notiMap.containsKey(otherNo)) {
 				notiMap.put(otherNo, new ArrayList<Notification>());	
 			} 

@@ -322,10 +322,9 @@
 		function inviteMember(){			
 			var recruitNo = document.getElementById('project_no').value;
 			var recruitName = $( "#project_no option:selected" ).text();
-			var memberName = '${customer.name}';
-			alert(recruitName);
-			alert(memberName);
+			var memberName = '${customer.name}';			
 			let notiContent = memberName+ "님, "+ recruitName + "에 초대되었습니다. 나의 프로젝트에서 확인해주세요.";
+			console.log(notiContent);
 			$.ajax({
 				url: "${contextPath}/logined/inviteMember",
 				method: "POST",
@@ -335,11 +334,9 @@
 					${_csrf.parameterName} : '${_csrf.token}'
 					},
 				success: function(data){
-					console.log(data);
-
 					if (data == "success") {
-						$('.close').click();		
-						wSocket.send("connecthinksystem:nto:"+ '${customer.customerNo}' + ":" + notiContent);	
+						$('#myModal').modal("hide"); 		
+						wSocket.send("connecthinksystem:nto:"+ ${customer.customerNo} + ":" + notiContent);	
 					} else {
 						alert(data.msg);						
 

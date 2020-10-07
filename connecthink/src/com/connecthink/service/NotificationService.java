@@ -31,4 +31,7 @@ public class NotificationService {
 	public void insert(Integer CustomerNo, String Content) {
 		repository.insert(CustomerNo, Content);
 	}
+	public void save(Notification pm) {
+		repository.save(pm);
+	}
 }
