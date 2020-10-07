@@ -62,6 +62,7 @@ public class MemberService {
 			member.setId(ids);
 			member.setCustomer(c);
 			member.setRecruit(r);
+			member.setInvited(0);
 			member.setEnterStatus(0);
 
 			memberRepository.save(member);
