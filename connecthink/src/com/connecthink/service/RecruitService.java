@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
@@ -15,7 +14,6 @@ import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.connecthink.dto.RecruitDTO;
@@ -25,6 +23,7 @@ import com.connecthink.entity.MemberId;
 import com.connecthink.entity.Position;
 import com.connecthink.entity.Project;
 import com.connecthink.entity.Recruit;
+import com.connecthink.exception.AddException;
 import com.connecthink.exception.RemoveException;
 import com.connecthink.repository.CustomerRepository;
 import com.connecthink.repository.MemberRepository;
@@ -156,21 +155,36 @@ public class RecruitService {
 
 	//메이트 초대 인서트문
 	@Transactional
-	public void saveInvite(String recruitNo, Integer customerNo) {
+	public void saveInvite(String recruitNo, Integer customerNo) throws AddException {
 		Member m = new Member();
-		Customer c = customerRepository.findByCustomerNo(customerNo);
-		Recruit r = new Recruit();
 		MemberId mi = new MemberId();
-		mi.setMemberNo(customerNo);
-		mi.setRecruitNo(recruitNo);
-		r.setRecruitNo(recruitNo);
-		m.setInvited(1);
-		m.setCustomer(c);
-		m.setEnterDate(new Date());
-		m.setRecruit(r);
-		m.setId(mi);
-		m.setEnterStatus(0);
-		memberRepository.save(m);
+		Customer c = customerRepository.findByCustomerNo(customerNo);
+		Recruit r = recruitRepository.findById(recruitNo).get();
+		boolean isExists = false;
+		if(r.getMembers().size() > 0) {
+			Iterator<Member> iter = r.getMembers().iterator();
+			while(iter.hasNext()) {
+				if(iter.next().getCustomer().getCustomerNo() == customerNo && iter.next().getEnterStatus() >= 0) {
+					isExists = true;
+				}
+			}
+		}
+				
+		if(isExists == false) {
+			mi.setMemberNo(customerNo);
+			mi.setRecruitNo(recruitNo);
+			m.setInvited(1);
+			m.setCustomer(c);
+			m.setRecruit(r);
+			m.setId(mi);
+			m.setEnterStatus(0);
+			memberRepository.save(m);
+		} else {
+			throw new AddException("이미 지원했거나 초대 한 회원임");
+		}
+		
+		
+		
 	}
 
 	/**
