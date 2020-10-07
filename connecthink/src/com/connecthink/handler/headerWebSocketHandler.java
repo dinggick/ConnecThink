@@ -90,12 +90,13 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 					PersonalMessage arr = Itpms.next();
 					if(arr.getStatus() == 0)	{
 						alert = "true";
+						
 					}
 				}				
 			}
 			pmMap.put(customer_no, pmSortMap);
 			System.out.println("PMMAP IN HANDLER : " + pmMap);
-			System.out.println(alert);
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@"+alert);
 		}
 		// notiMap에 해당 유저가 없는 경우
 		if (!notiMap.containsKey(customer_no)) {
