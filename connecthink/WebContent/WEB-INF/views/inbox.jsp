@@ -69,7 +69,7 @@
 .searchWhoBar .icon {
  	position: absolute;
  	right: 20px;
- 	top: 70px;
+ 	top: 80px;
  	line-height: 40px;
 	z-index: 3;
 }
