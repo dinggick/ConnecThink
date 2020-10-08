@@ -161,7 +161,7 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
     wSocket.onerror = function(e) { onError(e) };
-
+	
 //---------------------- 웹소켓 함수 -------------------------------
    //연결이 정상적으로 이루어졌을때
    function onOpen(e) {
@@ -178,6 +178,9 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 	if (e.data.includes("connecthinksystem:checkNoti:true")){
 		$('#bell').hide();
 		$('#notibell').show();	
+	} else {
+		$('#bell').show();
+		$('#notibell').hide();	
 	}
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
@@ -352,8 +355,10 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 				}
 			}
 		} else {
-			$('#bell').hide();
-			$('#notibell').show();
+			if (pmObj.receive.customerNo == loginedCustomer) {
+				$('#bell').hide();
+				$('#notibell').show();
+			}
 		}
 	} else if (e.data.includes("connecthinksystem:noti:")) {
 		let pmStr = e.data.replace("connecthinksystem:noti:","");
@@ -368,8 +373,10 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
             let scrollLocation = $msgSection.prop('scrollHeight');
 			$msgSection.scrollTop(scrollLocation);
 		} else {
-			$('#bell').hide();
-			$('#notibell').show();
+			if(pmObj.customer.customerNo ==loginedCustomer ){
+				$('#bell').hide();
+				$('#notibell').show();
+			}
 		}
 	}
 	
@@ -388,5 +395,6 @@ function updateStatus(personalMsgNo) {
 		,data: {'personalMsgNo' : personalMsgNo}
 	});
 }
+
 </script>
 </html>
