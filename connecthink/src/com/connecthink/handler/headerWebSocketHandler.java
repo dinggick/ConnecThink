@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -49,7 +50,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 	Customer otherCustomer = new Customer();
 
 	//parsing mapper
-	ObjectMapper mapper = new ObjectMapper();
+	@Autowired
+	private Jackson2ObjectMapperFactoryBean mapperFactory;
 	
 
 	@Override
@@ -158,6 +160,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 				pmDTO.setOtherNo(otherNo); pmDTO.setOtherName(customerController.findCustomerByNo(otherNo).getName());
 				pmDTO.setContent(latestPm.getContent()); pmDTO.setCreateDate(latestPm.getCreateDate());
 				pmDTO.setStatus(latestPm.getStatus()); pmDTO.setNewCnt(newCnt);
+				ObjectMapper mapper = mapperFactory.getObject();
 				loadListMsg += mapper.writeValueAsString(pmDTO);
 				//클라이언트로 보내기
 				session.sendMessage(new TextMessage(loadListMsg));
@@ -172,7 +175,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			List<PersonalMessage> pms = pmMap.get(customer_no).get(otherNo);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadPms:";
-			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+			ObjectMapper mapper = mapperFactory.getObject();
+//			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			loadPmsMsg += mapper.writeValueAsString(pms);
 			session.sendMessage(new TextMessage(loadPmsMsg));
 			System.out.println("★" + contentArr[2] + "번 회원과 주고받은 메세지를 전송했습니다.★");
@@ -189,7 +193,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			List<Notification> nts = notiMap.get(customer_no);
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadNotis:";
-			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+			ObjectMapper mapper = mapperFactory.getObject();
+//			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			loadPmsMsg += mapper.writeValueAsString(nts);
 			session.sendMessage(new TextMessage(loadPmsMsg));			
 			//읽음상태 읽음으로 바꾸기
@@ -215,7 +220,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			//상대방에게 메세지 전송
 			WebSocketSession receiveSession = loginUserMap.get(otherNo);
 			String sendPmJson = "connecthinksystem:pm:";
-			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+			ObjectMapper mapper = mapperFactory.getObject();
+//			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			String test = mapper.writeValueAsString(newPm);
 			System.out.println(test);
 			
@@ -257,7 +263,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			notiController.insert(otherNo, pmContent);
 			WebSocketSession receiveSession = loginUserMap.get(otherNo);			
 			String sendPmJson = "connecthinksystem:noti:";
-			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
+			ObjectMapper mapper = mapperFactory.getObject();
+//			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			sendPmJson += mapper.writeValueAsString(newNoti);
 			if(receiveSession!=null) {
 				//접속 중일 때 실시간 전송
