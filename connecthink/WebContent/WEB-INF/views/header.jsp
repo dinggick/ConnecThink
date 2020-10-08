@@ -289,9 +289,20 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 		      MSGs.forEach(function(msg, index){
 		         let sendDate = new Date(msg.notifyDate);
 		         if(newDate.getFullYear() != sendDate.getFullYear() || newDate.getMonth() != sendDate.getMonth() || newDate.getDate() != sendDate.getDate()){
-		            sectionData += '<div class="msg_date">' + sendDate.getFullYear()+"."+(sendDate.getMonth()+1)+"."+sendDate.getDate() + "</div>";
-		            newDate = sendDate;
-		         }
+		        	 sectionData += '<div class="msg_date">' + sendDate.getFullYear()+'.';
+						if( (sendDate.getMonth()+1) < 10 ){
+							sectionData += '0' + (sendDate.getMonth()+1) + '.';
+						} else {
+							sectionData += (sendDate.getMonth()+1) + '.';
+						}
+						if( sendDate.getDate() < 10 ) {
+							sectionData += '0' + sendDate.getDate() + "</div>";
+						} else {
+							sectionData += sendDate.getDate() + "</div>";
+						}
+						newDate = sendDate;
+					}
+		         
 		        	sectionData += '<div class="receive_msg">' + msg.content + '</div>';
 		            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
 		            sectionData += '<div style="clear:both;"></div>';
@@ -362,15 +373,19 @@ var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
 		let pmStr = e.data.replace("connecthinksystem:noti:","");
 		pmObj = JSON.parse(pmStr);
 		console.log(pmObj);
-		if(window.location.href.includes("inbox")) {
-			let sectionData = $msgSection.html();
-			let sendDate = new Date(pmObj.notifyDate);
-			sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
-            sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
-            sectionData += '<div style="clear:both;"></div>';
-            $msgSection.html(sectionData);
-            let scrollLocation = $msgSection.prop('scrollHeight');
-			$msgSection.scrollTop(scrollLocation);
+		if(window.location.href.includes("inbox")) {			
+			if ($('.msg_header > div > span.personName').html() == 'ConnecThink') {
+				let sectionData = $msgSection.html();
+				let sendDate = new Date(pmObj.notifyDate);
+				sectionData += '<div class="receive_msg">' + pmObj.content + '</div>';
+            	sectionData += '<div class="receive_time">' + sendDate.getHours() +':'+ sendDate.getMinutes() + '</div>';
+            	sectionData += '<div style="clear:both;"></div>';
+            	$msgSection.html(sectionData);
+            	let scrollLocation = $msgSection.prop('scrollHeight');
+				$msgSection.scrollTop(scrollLocation);
+			} else {
+				 $('#notinew').show();
+			}
 		} else {
 			$('#bell').hide();
 			$('#notibell').show();
