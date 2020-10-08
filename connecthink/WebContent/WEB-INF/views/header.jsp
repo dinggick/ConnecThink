@@ -154,7 +154,7 @@ function inbox(){
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://192.168.0.156/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -361,6 +361,7 @@ var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
 	} else if (e.data.includes("connecthinksystem:noti:")) {
 		let pmStr = e.data.replace("connecthinksystem:noti:","");
 		pmObj = JSON.parse(pmStr);
+		console.log(pmObj);
 		if(window.location.href.includes("inbox")) {
 			let sectionData = $msgSection.html();
 			let sendDate = new Date(pmObj.notifyDate);
@@ -371,10 +372,8 @@ var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
             let scrollLocation = $msgSection.prop('scrollHeight');
 			$msgSection.scrollTop(scrollLocation);
 		} else {
-			if(pmObj.customer.customerNo ==loginedCustomer ){
-				$('#bell').hide();
-				$('#notibell').show();
-			}
+			$('#bell').hide();
+			$('#notibell').show();
 		}
 	}
 	
