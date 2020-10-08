@@ -536,7 +536,8 @@ scale
   	top: 0;
   	right: 25px;
   	font-size: 36px;
-  	margin-left: 50px;
+  	margin-left: 20px;
+  	margin-right:10px;
   	margin-top: 14px;
   	color:#2E2EFE;
   	transiton:0.5s;
@@ -547,7 +548,7 @@ scale
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 250px;
+    width: 300px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -595,7 +596,7 @@ scale
 
 @media(min-width:900px) {
     .nnnn {
-        width: 270px;
+        width: 300px;
         transiton:0.5s
     }
 }
