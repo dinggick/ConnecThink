@@ -49,7 +49,6 @@
                                 <div class="main-menu  d-none d-lg-block">
                                     <nav>
                                         <ul id="navigation">
-                                            <li><a href="index.html">메인홈</a></li>
                                             <li><a href="${contextPath}/all/customerList">모집중인 회원</a></li>
                                             <li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
                                             <li><a href="${contextPath}/event">진행중인 교육·행사</a></li>

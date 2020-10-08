@@ -10,13 +10,14 @@
 						<div class="footer_widget wow fadeInUp" data-wow-duration="1s"
 							data-wow-delay=".3s">
 							<div class="footer_logo">
-								<a href="#"> <img src="${contextPath}/img/logo.png" alt="">
+								<a href="/connecthink/"> <img src="${contextPath}/img/logo.png" alt="">
 								</a>
 							</div>
 							<p>
 								ConnecThink@support.com <br> +10 873 672 6782 <br> 600/D,
 								Green road, NewYork
 							</p>
+							
 							<div class="socail_links">
 								<ul>
 									<li><a href="#"> <i class="ti-facebook"></i>
@@ -37,10 +38,7 @@
 							data-wow-delay=".4s">
 							<h3 class="footer_title">Company</h3>
 							<ul>
-								<li><a href="#">About </a></li>
-								<li><a href="#"> Pricing</a></li>
-								<li><a href="#">Carrier Tips</a></li>
-								<li><a href="#">FAQ</a></li>
+								<li><a href="${contextPath}/about">서비스 소개</a></li>
 							</ul>
 
 						</div>
@@ -50,25 +48,14 @@
 							data-wow-delay=".5s">
 							<h3 class="footer_title">Category</h3>
 							<ul>
-								<li><a href="#">Design & Art</a></li>
-								<li><a href="#">Engineering</a></li>
-								<li><a href="#">Sales & Marketing</a></li>
-								<li><a href="#">Finance</a></li>
+								<li><a href="${contextPath}/all/customerList">모집중인 회원</a></li>
+								<li><a href="${contextPath}/all/rec">모집중인 프로젝트</a></li>
+								<li><a href="${contextPath}/logined/add_project">프로젝트 등록</a></li>
+								<li><a href="${contextPath}/event">진행중인 교육·행사</a></li>
 							</ul>
 						</div>
 					</div>
-					<div class="col-xl-4 col-md-6 col-lg-4">
-						<div class="footer_widget wow fadeInUp" data-wow-duration="1.3s"
-							data-wow-delay=".6s">
-							<h3 class="footer_title">Subscribe</h3>
-							<form action="#" class="newsletter_form">
-								<input type="text" placeholder="Enter your mail">
-								<button type="submit">Subscribe</button>
-							</form>
-							<p class="newsletter_text">Esteem spirit temper too say
-								adieus who direct esteem esteems luckily.</p>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</div>
