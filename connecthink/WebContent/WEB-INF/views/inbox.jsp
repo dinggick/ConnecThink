@@ -408,6 +408,8 @@ var $msgContent = $("#msg_content");
 //-------------- 인박스 들어오자마자 상대방 리스트 불러오기 --------------
 wSocket.send("connecthinksystem:loadList");
 wSocket.send("connecthinksystem:loadNotis:");
+//메세지 보내는 입력창과 버튼 지우기
+$("div.send").css("display","none");
 
 //------------------------ 클릭 이벤트 -------------------------
 $listSection.on("click","li.person",function(e){
