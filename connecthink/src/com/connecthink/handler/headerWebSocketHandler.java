@@ -21,6 +21,8 @@ import com.connecthink.dto.LatestPersonalMessageDTO;
 import com.connecthink.entity.Customer;
 import com.connecthink.entity.Notification;
 import com.connecthink.entity.PersonalMessage;
+import com.connecthink.repository.CustomerRepository;
+import com.connecthink.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -32,6 +34,8 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 	private NotificationController notiController;
 	@Autowired
 	private CustomerController customerController;
+	@Autowired
+	private CustomerRepository customerRepository;
 
 	/* PersonalMessage & Notification용 변수 */
 	//현재 접속중인 사용자들과 세션 정보를 담음
@@ -194,14 +198,19 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			//클라이언트로 보내기
 			String loadPmsMsg = "connecthinksystem:loadNotis:";
 			ObjectMapper mapper = mapperFactory.getObject();
-//			mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS,false);
 			loadPmsMsg += mapper.writeValueAsString(nts);
 			session.sendMessage(new TextMessage(loadPmsMsg));			
-			//읽음상태 읽음으로 바꾸기
-			nts.forEach(pm -> {				
-					pm.setRead_status(1);
-					notiController.save(pm);				
-			});
+//			//읽음상태 읽음으로 바꾸기
+//			nts.forEach(pm -> {				
+//					pm.setRead_status(1);
+//					System.out.println(pm.getId());
+//					notiController.save(pm);				
+//			});
+			Customer c = customerController.findCustomerByNo(customer_no);
+			c.getNotifications().forEach(notification -> {
+				notification.setRead_status(1);
+			});			
+			customerRepository.save(c);
 		}
 
 		//3. 내가 메세지를 보낼 경우
@@ -254,8 +263,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 
 			newNoti.setCustomer(otherCustomer); newNoti.setContent(pmContent);
 			newNoti.setRead_status(0); 
-			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));
-			
+			newNoti.setNotifyDate((new Timestamp(System.currentTimeMillis())));			
 			
 			//repository에 인서트
 			notiController.insert(otherNo, pmContent);
@@ -268,8 +276,7 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 				//접속 중일 때 실시간 전송
 				receiveSession.sendMessage(new TextMessage(sendPmJson));
 				System.out.println("★ 상대방이 접속 중이라 실시간으로 메세지 전송 완료. ★");
-			}
-		
+			}		
 			
 			if(!notiMap.containsKey(otherNo)) {
 				notiMap.put(otherNo, new ArrayList<Notification>());	

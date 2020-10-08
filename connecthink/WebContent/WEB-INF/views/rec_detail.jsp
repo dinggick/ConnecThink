@@ -428,7 +428,7 @@ span.customerNo {
 			let recNo = "${recNo}";
 			let managerNo = "${manager.customerNo}";
 			let customerNo = "${sessionScope.loginInfo}";
-			var notiContent = customerNo + "님이 " + "${detail.title}" + "에 지원을 하였습니다. 나의 프로젝트를 확인해 주세요.";			
+			var notiContent = "${detail.title}" + "에 지원자가 있습니다. 나의 프로젝트를 확인해 주세요.";			
 			if(customerNo == ""){
 				alert("로그인 후 사용 가능합니다");
 			} else {
