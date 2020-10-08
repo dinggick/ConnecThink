@@ -69,7 +69,7 @@
 .searchWhoBar .icon {
  	position: absolute;
  	right: 20px;
- 	top: 70px;
+ 	top: 80px;
  	line-height: 40px;
 	z-index: 3;
 }
@@ -345,7 +345,7 @@ ul.list>li {
 										<div class="writeMsg">
 											<textarea class="single-textarea" id="msg_content"
 												placeholder="Message" onfocus="this.placeholder = ''"
-												onblur="this.placeholder = 'Message'" required></textarea>
+												onblur="this.placeholder = 'Message'" maxlength="100" required></textarea>
 										</div>
 										<div class="sendMsg">
 											<button class="send-btn" id="send-btn">전송</button>
@@ -408,6 +408,8 @@ var $msgContent = $("#msg_content");
 //-------------- 인박스 들어오자마자 상대방 리스트 불러오기 --------------
 wSocket.send("connecthinksystem:loadList");
 wSocket.send("connecthinksystem:loadNotis:");
+//메세지 보내는 입력창과 버튼 지우기
+$("div.send").css("display","none");
 
 //------------------------ 클릭 이벤트 -------------------------
 $listSection.on("click","li.person",function(e){
@@ -420,6 +422,8 @@ $listSection.on("click","li.person",function(e){
 	//해당 회원 번호와 이름을 msg header에 넣어주기
 	$(".otherNoInBox").html(otherNoInList);
 	$(".msg_sender>.personName").html(otherName);
+	//메세지 보내는 입력창과 버튼 보이기
+	$("div.send").css("display","block");
 	//웹소켓으로 해당 회원과 주고받은 메세지를 전부 가져오도록 요청
 	wSocket.send("connecthinksystem:loadPms:"+otherNoInList);
 	return false;
@@ -427,6 +431,8 @@ $listSection.on("click","li.person",function(e){
 
 $(".system").click(function(e){
 	wSocket.send("connecthinksystem:loadNotis:");
+	//메세지 보내는 입력창과 버튼 지우기
+	$("div.send").css("display","none");
 	return false;
 });
 

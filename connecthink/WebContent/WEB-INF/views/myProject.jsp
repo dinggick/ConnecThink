@@ -63,11 +63,12 @@
    font-weight: 500;
 }
 .title {
-   width: 36%;
-   padding-left:20px;
-   overflow: hidden;
-   text-overflow: ellipsis;
-   white-space: nowrap;
+	width: 36%;
+	padding-left:20px;
+	padding-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .purpose, .theme, .position, .status, .deadline {
    width: 16%;
@@ -196,10 +197,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 manageMenu">
-                    <button class="genric-btn default radius myProject" style="background-color:#fff;" onclick="myProject();">내가 등록한 팀</button>
-                    <button class="genric-btn default radius lookUpmyProject" onclick="lookUpmyProject();">내가 속해있는 팀</button>
-                    <button id="myApplication" class="genric-btn default radius" onclick="fxMyApplication();">내가 지원한 팀</button>
-                    <button id="myInvitaion" class="genric-btn default radius" onclick="fxMyInvitation();">초대받은 팀</button>
+                    <button class="genric-btn default radius myProject" style="background-color:#fff;" onclick="myProject();">내가 등록한 프로젝트</button>
+                    <button class="genric-btn default radius lookUpmyProject" onclick="lookUpmyProject();">내가 속해있는 프로젝트</button>
+                    <button id="myApplication" class="genric-btn default radius" onclick="fxMyApplication();">내가 지원한 프로젝트</button>
+                    <button id="myInvitaion" class="genric-btn default radius" onclick="fxMyInvitation();">초대받은 프로젝트</button>
                 </div>
             </div>
             <div class="row">
@@ -383,7 +384,7 @@
 						data += '<div class="showMember appliedMember progress-table bg-white">-</div>';
 					});
 				} else {
-					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 팀이 없습니다.</div>";
+					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 프로젝트가 없습니다.</div>";
 				}
 				$section.html(data);
 			}
@@ -419,7 +420,7 @@
 						data += '<div class="manageMember"></div></div>';
 					});
 				} else {
-					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>내가 속한 팀이 없습니다.</div>";
+					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>내가 속한 프로젝트가 없습니다.</div>";
 				}
 				$myProjectList.html(data);
 			}
@@ -466,7 +467,7 @@
 						sectionData += '<a href="#" class="manage-bnt deny-my-app">취소</a></div></div>';
 					});
 				} else {
-					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
+					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>지원한 프로젝트가 없습니다.</div>";
 				}
 				$section.html(sectionData);
 			}
@@ -515,7 +516,7 @@
 						sectionData += '<a href="#" class="manage-bnt deny-my-invi">거절</a></div></div>';
 					});
 				} else {
-					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 팀이 없습니다.</div>";
+					sectionData = "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>초대받은 프로젝트가 없습니다.</div>";
 				}
 				$section.html(sectionData);
 			}
