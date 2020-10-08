@@ -132,7 +132,7 @@ public class RecruitController {
 		}
 		
 		if(whatYouCallValue.equals("/all/rec_detail")) {
-			mnv.setViewName("rec_detail");			
+			mnv.setViewName("rec_detail");
 		} else {
 			mnv.setViewName("modify_rec");
 		}
