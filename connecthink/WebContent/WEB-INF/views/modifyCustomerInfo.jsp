@@ -138,7 +138,7 @@
                         		</div>
                         		<div class="col-md-10">
                         			<div class="input_field">
-                        				<input type="text" name="about" placeholder="한 줄 소개 " required>
+                        				<input type="text" name="about" placeholder="한 줄 소개 ">
                         			</div>
                         		</div>
                         		<%-- 졸업 여부 --%>
@@ -215,7 +215,7 @@
 
     <script>
     	function planner() {
-    		return `<select class="position" name="position" required>
+    		return `<select class="position" name="position">
 						<option selected disabled hidden style='display: none' value=''>직무선택</option>
 						<option value="1">사업기획자</option>
 						<option value="2">컨텐츠기획자</option>
@@ -229,7 +229,7 @@
     	}
     	
     	function designer() {
-    		return `<select class="position" name="position" required>
+    		return `<select class="position" name="position">
 						<option selected disabled hidden style='display: none' value=''>직무선택</option>
 						<option value="9">디자이너</option>
 						<option value="10">UI/UX디자이너</option>
@@ -243,7 +243,7 @@
     	}
     	
     	function developer() {
-    		return `<select class="position" name="position" required>
+    		return `<select class="position" name="position">
 						<option selected disabled hidden style='display: none' value=''>직무선택</option>
 						<option value="17">개발자</option>
 						<option value="18">백엔드 개발자</option>
@@ -271,7 +271,7 @@
 	        $(".apply_job_form").on("click", ".addPositionBtn", function(e) {
                 var new_inputs = `<div class="col-md-4 offset-2">
 	    							<div class="input_field position0">
-	    								<select name="position0" class="position" required>
+	    								<select name="position0" class="position">
 	    									<option selected disabled hidden style='display: none' value=''>직군선택</option>
 	    									<option value="1">기획자</option>
 	    									<option value="2">디자이너</option>
@@ -398,7 +398,7 @@
     				if(data.customerPositions.length == 0) {
     					$("#exprs").before(`<div class="col-md-4">
 													<div class="input_field position0">
-														<select name="position0" class="position" required>
+														<select name="position0" class="position">
 															<option selected disabled hidden style='display: none' value=''>직군선택</option>
 															<option value="1">기획자</option>
 															<option value="2">디자이너</option>
@@ -421,7 +421,7 @@
         					else positionElement = `<div class="col-md-4 offset-2">`;
         					
         					positionElement += `<div class="input_field position0">
-    												<select name="position0" class="position" required>
+    												<select name="position0" class="position">
     													<option selected disabled hidden style='display: none' value=''>직군선택</option>
     													<option value="1">기획자</option>
     													<option value="2">디자이너</option>
@@ -504,21 +504,6 @@
             });
             
             $("form").submit(function() {
-            	var isValid = true;
-            	$("input[name=explain]").each(function(index, explain) {
-            		if($(explain).val() == '') {
-            			alert("경험 내용을 입력해주세요");
-            			isValid = false;
-            		}
-            	});
-            	if(!isValid) return false;
-            	$("input[name=term]").each(function(index, term) {
-            		if($(term).val() == '') {
-            			alert("경험 기간 정보를 입력해주세요");
-            			isValid = false;
-            		}
-            	});
-            	if(!isValid) return false;
             	$.ajax({
             		url : "/connecthink/logined/modifyCustomerInfo",
             		method : "POST",
