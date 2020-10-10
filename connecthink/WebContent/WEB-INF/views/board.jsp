@@ -1727,6 +1727,9 @@ scale
 		                	}
 		             })
 		             .then(response => {       	 
+		            		todo.lists.splice(0);
+		                 	todo.list2.splice(0);
+		                 	todo.list3.splice(0);
 		            	 chat.socket.send('taskInfo:d&d:'+${project_no}+":"+getTaskNo+":"+event.droptarget.attributes[1].nodeValue);
 		            	 axios.get('/connecthink/taskList',{
 		     				params: {
@@ -1736,9 +1739,7 @@ scale
 		                 .then(response => {
 		                 	var taskList = response.data;
 		                 	
-		                 	todo.lists.splice(0);
-		                 	todo.list2.splice(0);
-		                 	todo.list3.splice(0);
+		                 
 		                 	
 		                 	taskList.forEach(task =>{
 		                 		if(task.taskStatus==1){
