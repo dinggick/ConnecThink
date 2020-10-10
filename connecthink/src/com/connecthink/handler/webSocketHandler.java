@@ -51,22 +51,76 @@ public class webSocketHandler extends TextWebSocketHandler{
 			
 			//접속한 유저의 웹소캣 id & 해당 유저의 HttpSession 에 저장되어 있는 userId
 			logUser.put(session,customer_no);
-			System.out.println("접속함 : "+customer_no);
 			
-			//제대로 가져왔는지 확인
-			System.out.println("HttpSession ID : "+customer_no+" webSocketID : "+session.getId()+" 접속");
-			
+			//접속자의 customer_no 를 클라이언트 에게 전송
 			session.sendMessage(new TextMessage("userid:"+customer_no));
-		
 	}
 	
 	@Override
 	//클라이언트 에서 send 메소드를 이용하여 메세지 전송을 한 경우
 	protected void handleTextMessage(WebSocketSession session,TextMessage message) throws Exception{
-		
+			
 			int chatCnt = 0;
+		
+			if(message.getPayload().contains("taskInfo")) {
+				String [] tasks  = message.getPayload().split(":");
+				String doWhat = tasks[1];
+				System.out.println("@@@@@@@@@@@@@@@@@@@");
+				System.out.println(doWhat);
+				System.out.println(message.getPayload());
+				System.out.println(doWhat.equals("update"));
+				int projectNo = Integer.parseInt(tasks[2]);
+				System.out.println(projectNo);
+				for(Map.Entry<WebSocketSession,Integer> ws : logUser.entrySet()) {						
+						List<Integer> teamArray = new ArrayList<Integer>();
+						for(Map.Entry<Integer,List<Integer>> entry : logMember.entrySet()){
+								if(projectNo == entry.getKey()) {
+									teamArray = entry.getValue();
+								}
+						}
+						
+						//작성자를 제외한 모든 클라이언트 + 작성자와 같은 프로젝트 넘버의 유저에게만 메세지 전송
+						for(int member_no : teamArray) {
+							if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
+								if(doWhat.equals("add")) {
+									System.out.println("설마여기들어오는거야?");
+									String content = tasks[3];
+									int taskNo = Integer.parseInt(tasks[4]);
+									int status = Integer.parseInt(tasks[5]);
+									String name = tasks[6];
+									int taskWriterNo = Integer.parseInt(tasks[7]);
+									
+									ws.getKey().sendMessage(new TextMessage("taskInfo:add:"+content+":"+taskNo+":"+status+":"+name+":"+taskWriterNo));
+								}
+								//task Update
+								else if(doWhat.equals("update")) {
+									System.out.println("update 들어옴@@@@@@@@");
+									int taskNoForUpdate = Integer.parseInt(tasks[3]);
+									String contentForUpdate = tasks[4];
+									ws.getKey().sendMessage(new TextMessage("taskInfo:update:"+taskNoForUpdate+":"+contentForUpdate));
+								}
+								//task drag & drop
+								else if(doWhat.equals("d&d")) {
+									System.out.println("drag & drop 들어옴@@@@@@@@");
+									int taskNoForDD = Integer.parseInt(tasks[3]);
+									int taskStatusForDD = Integer.parseInt(tasks[4]);
+									
+									ws.getKey().sendMessage(new TextMessage("taskInfo:d&d:"+taskNoForDD+":"+taskStatusForDD));
+								}
+								//task delete 
+								else {
+									System.out.println("delete 들어옴@@@@@@@@");
+									int taskNoForDelete = Integer.parseInt(tasks[3]);
+									ws.getKey().sendMessage(new TextMessage("taskInfo:delete:"+taskNoForDelete));
+								}
+							}//if
+						}//for
+					}//for
+					
+			}//taskMessage
+			
 			//client 최초 접속시 이전 message log가 배열의 존재하는지 여부를 알기위해
-			if(message.getPayload().contains("ready")) {
+			else if(message.getPayload().contains("ready")) {
 				
 				String [] logs = message.getPayload().split(":");
 				int project_no = Integer.parseInt(logs[1]);
@@ -97,11 +151,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 				for(Map<Integer,List<Message>> msgList : messageList) {
 					//존재 할 경우
 					if(msgList.containsKey(project_no)) {
-						System.out.println("방존재");
 						if(msgList.get(project_no).size() != 0 ) {
-							System.out.println("000000000000000000000존재한다");
 							int newMsgIndex = msgList.get(project_no).lastIndexOf(diviMsg)+1;
-							System.out.println(newMsgIndex);
 							
 							//해당 메세지 리스트 의 작성자 와 글 내용 보내주기
 							for(Message msg : msgList.get(project_no)) {
@@ -119,7 +170,6 @@ public class webSocketHandler extends TextWebSocketHandler{
 				
 				//존재하지 않을경우 메세지 배열 생성
 				if(chatCnt == 0) {
-					System.out.println(project_no+"채팅 배열 없음");
 					
 					//메세지를 담을 리스트
 					List<Message> msgBox = new ArrayList<Message>();
@@ -144,15 +194,12 @@ public class webSocketHandler extends TextWebSocketHandler{
 					msgMap.put(project_no, msgBox);
 					messageList.add(msgMap);
 					
-					System.out.println(project_no +"채팅 배열 생성");
-					System.out.println(messageList.size()+"개 채팅방 있음");
 					for(Map<Integer,List<Message>> map : messageList){
 						Set set = map.keySet();
 
 						Iterator iterator = set.iterator();
 						while(iterator.hasNext()){
 							  int key = (int) iterator.next();
-							  System.out.println("project_no 방 존재함 : " + key);
 							}
 					}
 					chatCnt = 0;
@@ -190,10 +237,6 @@ public class webSocketHandler extends TextWebSocketHandler{
 					//작성자를 제외한 모든 클라이언트 + 작성자와 같은 프로젝트 넘버의 유저에게만 메세지 전송
 					for(int member_no : teamArray) {
 						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
-							System.out.println("message send Info----");
-							System.out.println(msgParsing.getCreateDate()+"시 분 ");
-							System.out.println(msgParsing.getWriter().getName());
-							System.out.println(member_no+"에게 "+msgParsing.getContent()+"내용 을"+msgParsing.getWriter().getCustomerNo()+"전송");
 							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()+":"+msgParsing.getCreateDate()+":"+msgParsing.getWriter().getName()));
 							
 						}//if
@@ -205,9 +248,6 @@ public class webSocketHandler extends TextWebSocketHandler{
 				for(Map<Integer,List<Message>> msgList : messageList) {
 					if(msgList.containsKey(project_no)) {
 						msgList.get(project_no).add(msgParsing);
-						System.out.println(msgParsing.getContent()+"내용이 "+project_no+"방에 저장");
-						System.out.println(msgList.get(project_no).size()+"개 대화 있음");
-						System.out.println(messageList.size()+"개 채팅방 있음");
 						chatCnt++;
 					}// list add
 				}//for - list add
@@ -218,12 +258,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 	//클라이언트 에서 연결을 종료 할 경우
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
 			int logOutUser = getUserId(session);
-			System.out.println(logOutUser+"접속 해제");
 			for(Map.Entry<Integer,List<Integer>> entry : logMember.entrySet()){
 				for(int ctno : entry.getValue()) {
-					System.out.println("outInfo");
-					System.out.println("ctno : "+ctno);
-					System.out.println("logOutUser : "+logOutUser);
 					if(ctno == logOutUser) {
 						
 						//접속 해제 전 같은 프로젝트 클라이언트 에게 접속해제 알림
@@ -243,12 +279,8 @@ public class webSocketHandler extends TextWebSocketHandler{
 							messageList.forEach(map -> {
 								//해당 프로젝트의 메세지 리스트가 존재 할 경우 즉 메세지가 있을경우 DB INSERT
 								if(map.get(entry.getKey()) != null) {
-									System.out.println("db실행할꺼임");
-									System.out.println("보낼 메세지 함 리스트 : "+map.get(entry.getKey()).size());
-									System.out.println("diviMsg 값이 NEW STRING 이면 초기화 된거임 : "+diviMsg.getContent());
 									int index = map.get(entry.getKey()).lastIndexOf(diviMsg)+1;
 									int arrayCnt = map.get(entry.getKey()).size();
-									System.out.println("구분자 index : "+index);
 									List<Message> newMsgs = new ArrayList<Message>();
 									for(;index<arrayCnt;index++) {
 										newMsgs.add(map.get(entry.getKey()).get(index));
@@ -279,7 +311,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 			}//for
 		}//afterConnectionClosed
 	
-	//현재 접속자 ws로 id값 얻기
+	//현재 접속자 WebSocketSession 로 id값 얻기
 	private int getUserId(WebSocketSession session) {
 		int customer_no = 0;
 		for(WebSocketSession ws : logUser.keySet()) {
@@ -288,8 +320,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 			}
 		}
 		return customer_no;
-	}//getUserId
+	}
 	
+	//접속한 유저의 이름 가져오기
 	private String getName(int customer_no) {
 		return customerController.findCustomerByNo(customer_no).getName();
 	}
