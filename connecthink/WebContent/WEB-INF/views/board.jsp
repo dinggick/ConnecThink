@@ -1486,6 +1486,7 @@ scale
 			  //websocket 연결
 			  connect(){
 				  this.socket = new WebSocket("ws://172.30.1.54/connecthink/chat/boardChat");
+
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1496,7 +1497,114 @@ scale
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
 						var datas = data.split(":");
-						if(datas[0] == "userid"){
+						
+						if(datas[0] == 'taskInfo'){
+							
+								var doWhat = datas[1];
+								
+								//add 요청시
+								if(doWhat == 'add'){
+									var Taskcontent = datas[2];
+									var taskNo = datas[3];
+									var status = datas[4];
+									var name = datas[5];
+									var customerNo = datas[6];
+									if(status == 1){
+										todo.lists.push({content:Taskcontent,taskNo:taskNo,status:status,cName:name,cusNo:customerNo});
+										console.log('complete');
+									}else if(status == 2){
+										todo.list2.push({content:Taskcontent,taskNo:taskNo,status:status,cName:name,cusNo:customerNo});
+									}else{
+										todo.list3.push({content:Taskcontent,taskNo:taskNo,status:status,cName:name,cusNo:customerNo});
+									}
+								}
+								
+								//update 요청
+								else if(doWhat == 'update'){
+									
+									var taskNoForUpdate = datas[2];
+									var taskContentForUpdate = datas[3];
+									
+									todo.lists.forEach(t => {
+				                		if(t.taskNo == taskNoForUpdate) t.content = taskContentForUpdate;
+				                	});
+				                	todo.list2.forEach(t => {
+				                		if(t.taskNo == taskNoForUpdate) t.content = taskContentForUpdate;
+				                	});
+				                	todo.list3.forEach(t => {
+				                		if(t.taskNo == taskNoForUpdate) t.content = taskContentForUpdate;
+				                	});
+									
+								}
+								
+								//delete 요청
+								else if(doWhat == 'delete'){
+					
+									var taskNoForDelete = datas[2];
+									
+									todo.lists.forEach((t, index) => {
+				                		if(t.taskNo == taskNoForDelete) {
+				                			todo.lists.splice(index, 1);
+				                			return true;
+				                		}
+				                	});
+									todo.list2.forEach((t, index) => {
+				                		if(t.taskNo == taskNoForDelete) {
+				                			todo.list2.splice(index, 1);
+				                			return true;
+				                		}
+				                	});
+									todo.list3.forEach((t, index) => {
+				                		if(t.taskNo == taskNoForDelete) {
+				                			todo.list3.splice(index, 1);
+				                			return true;
+				                		}
+				                	});
+								}
+								//drag & Drop
+								else{									
+									var dDTastNo = datas[2];
+									var dDTaskStatus = datas[3];
+									
+									//삭제 하기 전 해당 테스크 임시 저장
+									var task;
+									
+									//1)드래그 드랍 하기 전 영역 찾아서 삭제하기
+									todo.lists.forEach((t, index) => {
+				                		if(t.taskNo == dDTastNo) {
+				                			task = t;
+				                			todo.lists.splice(index, 1);
+				                			return true;
+				                		}
+				                	});
+									todo.list2.forEach((t, index) => {
+				                		if(t.taskNo == dDTastNo) {
+				                			task = t;
+				                			todo.list2.splice(index, 1);
+				                			return true;
+				                		}
+				                	});
+									todo.list3.forEach((t, index) => {
+				                		if(t.taskNo == dDTastNo) {
+				                			task = t;
+				                			todo.list3.splice(index, 1);
+				                			return true;
+				                		}
+				                	});
+
+									//2) 드랍한 영역에 추가해주기
+									if(dDTaskStatus == 1){
+										todo.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.Cname,cusNo:task.cusNo});
+									}else if(dDTaskStatus == 2){
+										todo.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.Cname,cusNo:task.cusNo});
+									}else{
+										todo.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.Cname,cusNo:task.cusNo});
+									}
+									
+								}//drag & drop domain
+						}
+						
+						else if(datas[0] == "userid"){
 							this.writer = datas[1];						
 						}
 						else if(datas[0] == "loginInfo"){
@@ -1611,7 +1719,6 @@ scale
 			options:{
 				 onDragend(event){
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-					 
 					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 axios.get('/connecthink/updateStatus',{
 		                	params:{
@@ -1619,7 +1726,8 @@ scale
 		       					status:event.droptarget.attributes[1].nodeValue
 		                	}
 		             })
-		             .then(response => {	
+		             .then(response => {       	 
+		            	 chat.socket.send('taskInfo:d&d:'+${project_no}+":"+getTaskNo+":"+event.droptarget.attributes[1].nodeValue);
 		            	 axios.get('/connecthink/taskList',{
 		     				params: {
 		     			  	      project_no: ${project_no}
@@ -1631,7 +1739,6 @@ scale
 		                 	todo.lists.splice(0);
 		                 	todo.list2.splice(0);
 		                 	todo.list3.splice(0);
-		                 	//console.log(taskList);
 		                 	
 		                 	taskList.forEach(task =>{
 		                 		if(task.taskStatus==1){
@@ -1640,13 +1747,13 @@ scale
 		                 			todo.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
 		                 		}else{
 		                 			todo.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});	
-		                 		}
-		                 	})
-		                 });
-		             });
-				 }
-			}
-		},
+		                 		}//else
+		                 	})//forEach
+		                 })//second then
+				 })//first then
+			}//onDraged
+		}//options
+		},//data
 		created(){
 			axios.get('/connecthink/taskList',{
 				params: {
@@ -1704,6 +1811,8 @@ scale
 		                	}
 		                })
 		                .then(response => {	
+		                	
+		                	chat.socket.send('taskInfo:update:'+${project_no}+":"+document.getElementById('taskNo').value+":"+this.updateText);
 		                	var taskNoForUpdate = document.getElementById('taskNo').value;
 		                	this.lists.forEach(t => {
 		                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
@@ -1717,7 +1826,7 @@ scale
 		                	this.$forceUpdate();
 		                });
 					}
-					
+				
 				}else{
 					alert('작성자가 아닙니다!');
 				}
@@ -1733,7 +1842,9 @@ scale
 	                	}
 	                })
 	                .then(response => {
+	                	chat.socket.send('taskInfo:delete:'+${project_no}+":"+document.getElementById('taskNo').value);
 	                	var taskNoForDelete = document.getElementById('taskNo').value;
+	                	
 	                	this.lists.forEach((t, index) => {
 	                		if(t.taskNo == taskNoForDelete) {
 	                			this.lists.splice(index, 1);
@@ -1764,8 +1875,6 @@ scale
 				var status = 0;
 				var evPath = ev.path[3].id;
 				
-				console.log(evPath);
-				
 				if(evPath == 'do'){
 					if(this.addName == ''){
 						alert('내용을 입력해주세요!');
@@ -1786,12 +1895,16 @@ scale
 		                    })
 		                    .then(response => {
 		                    	var taskList = response.data;
-		                    	
+		                    	var cnt = 0;
 		                    	this.lists.splice(0);
 		                    	
 		                    	taskList.forEach(task =>{
+		                    		cnt++;
 		                    		if(task.taskStatus==1){
 		                    			this.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    			if(cnt == taskList.length){
+		                    				chat.socket.send('taskInfo:add:'+${project_no}+":"+task.content+":"+task.taskNo+":"+task.taskStatus+":"+task.customer.name+":"+task.customer.customerNo);
+		                    			}
 		                    		}
 		                    	});
 		                    	this.addName='';
@@ -1819,12 +1932,16 @@ scale
 		                    })
 		                    .then(response => {
 		                    	var taskList = response.data;
-		                    	
+		                    	var cnt = 0;
 		                    	this.list2.splice(0);
 		                    	
 		                    	taskList.forEach(task =>{
+		                    		cnt++;
 		                    		if(task.taskStatus==2){
 		                    			this.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    			if(cnt == taskList.length){
+		                    				chat.socket.send('taskInfo:add:'+${project_no}+":"+task.content+":"+task.taskNo+":"+task.taskStatus+":"+task.customer.name+":"+task.customer.customerNo);
+		                    			}
 		                    		}
 		                    	});
 		                    	this.addName1='';
@@ -1851,12 +1968,16 @@ scale
 		                    })
 		                    .then(response => {
 		                    	var taskList = response.data;
-		                    	
+		                    	var cnt = 0;
 		                    	this.list3.splice(0);
 		                    	
 		                    	taskList.forEach(task =>{
+		                    		cnt++;
 		                    		if(task.taskStatus==3){
 		                    			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                    			if(cnt == taskList.length){
+		                    				chat.socket.send('taskInfo:add:'+${project_no}+":"+task.content+":"+task.taskNo+":"+task.taskStatus+":"+task.customer.name+":"+task.customer.customerNo);
+		                    			}
 		                    		}
 		                    	});
 		                    	this.addName2='';
@@ -1866,23 +1987,8 @@ scale
 				}
 				this.$forceUpdate();
 				//끝나는부분
-               },
-               optionss(event){
-  					alert('dd');
-  					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-  					 
-  					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
-  					 axios.get('/connecthink/updateStatus',{
-  		                	params:{
-  		                		taskNo:getTaskNo,
-  		       					status:event.droptarget.attributes[1].nodeValue
-  		                	}
-  		             })
-  		             .then(response => {	
-  		            	console.log(this.lists);
-  		             });
-  				 
-  			}
+               }
+              
 		}
 	});
 

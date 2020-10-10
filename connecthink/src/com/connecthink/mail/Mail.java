@@ -46,7 +46,7 @@ public class Mail {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(userMail));
-			message.setSubject("[이메일인증 - connecThink]");
+			message.setSubject("[connecThink Korea] 이메일 인증번호가 도착 하였습니다.");
 			
 			String verifyCode = String.format("%06d", (int) (Math.random()*1000000));
 			
