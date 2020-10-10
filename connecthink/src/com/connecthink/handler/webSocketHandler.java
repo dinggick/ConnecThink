@@ -119,6 +119,34 @@ public class webSocketHandler extends TextWebSocketHandler{
 					
 			}//taskMessage
 			
+			//프로젝트 맴버 탈퇴 했을경우 같은 프로젝트 맴버들에게 실시간 전송
+			else if(message.getPayload().contains("quitInfo")) {
+				
+				String [] quitInfo  = message.getPayload().split(":");
+				boolean isEnd = message.getPayload().contains("end");
+				int projectNo = Integer.parseInt(quitInfo[1]);
+				int quitCustomer = logUser.get(session);
+				
+				for(Map.Entry<WebSocketSession,Integer> ws : logUser.entrySet()) {						
+					List<Integer> teamArray = new ArrayList<Integer>();
+					for(Map.Entry<Integer,List<Integer>> entry : logMember.entrySet()){
+							if(projectNo == entry.getKey()) {
+								teamArray = entry.getValue();
+							}
+					}
+					//작성자를 제외한 모든 클라이언트 + 작성자와 같은 프로젝트 넘버의 유저에게만 메세지 전송
+					for(int member_no : teamArray) {
+						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
+							if(isEnd) {//프로젝트 종료시
+								ws.getKey().sendMessage(new TextMessage("isTheEnd"));
+							}else {//팀 탈퇴시
+								ws.getKey().sendMessage(new TextMessage("quitInfo:"+quitCustomer));
+							}
+						}//if
+					}//for
+				}//for				
+			}
+			
 			//client 최초 접속시 이전 message log가 배열의 존재하는지 여부를 알기위해
 			else if(message.getPayload().contains("ready")) {
 				
