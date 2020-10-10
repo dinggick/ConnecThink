@@ -122,8 +122,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<textarea name="purpose" maxlength="150" placeholder="프로젝트 목적을 적어주세요(150자 이내) (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)" onkeyup="limit(this, 150);"></textarea>	
-										<span id = "counter" style = "color: gray;">0/150</span>
+										<textarea name="purpose" maxlength="150" placeholder="프로젝트 목적을 적어주세요(100자 이내) (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)" onkeyup="limit(this, 100);"></textarea>	
+										<span id = "counter" style = "color: gray;">0/100</span>
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -328,7 +328,7 @@ h4 .requir{
 				}
 			}
 			
-			$('#counter').html(totalByte + '/150');
+			$('#counter').html(totalByte + '/100');
 			
 			if (totalByte > maxByte) {
 				alert(maxByte + "자를 초과 입력 할 수 없습니다");

@@ -160,17 +160,26 @@ public class RecruitService {
 		MemberId mi = new MemberId();
 		Customer c = customerRepository.findByCustomerNo(customerNo);
 		Recruit r = recruitRepository.findById(recruitNo).get();
-		Set<Member> ms = r.getMembers();
+		
 		boolean isExists = false;
-		if(ms.size() > 0) {
-			for(Member mm : ms) {
-				if(mm.getCustomer().getCustomerNo().equals(customerNo) && mm.getInvited() >= 0) {
-					isExists = true;
-				}
-			}
-			
-		}
+
+		int idx = recruitNo.indexOf("R");
+		Integer projectNo = Integer.parseInt(recruitNo.substring(0, idx));
 				
+		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
+		
+		for(Recruit rec : rList) {
+			Set<Member> ms= rec.getMembers();
+			if(ms.size()>0) {
+				for(Member mm : ms) {
+					if(mm.getCustomer().getCustomerNo().equals(customerNo) && mm.getInvited() >= 0) {
+						isExists = true;
+					}
+				} //member for문 끝
+			}//if 끝
+		} //recruit for문 끝
+		
+		
 		if(isExists == false) {
 			mi.setMemberNo(customerNo);
 			mi.setRecruitNo(recruitNo);

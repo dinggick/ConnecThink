@@ -40,18 +40,27 @@ public class MemberService {
 	public void recruit(Integer customerNo, String recruitNo) throws AddException {
 		Member member = new Member();
 		MemberId ids = new MemberId();
-		boolean isExists = false;
 
-		Recruit recruit = recruitRepository.findById(recruitNo).get();
-		Set<Member> m = recruit.getMembers();	
-		System.out.println(m.size());
-		if(m.size()>0) {
-			for(Member ms : m) {
-				if(ms.getCustomer().getCustomerNo().equals(customerNo)) {
-					isExists = true;
-				}
-			}
-		}
+		boolean isExists = false;
+		
+		int idx = recruitNo.indexOf("R");
+		Integer projectNo = Integer.parseInt(recruitNo.substring(0, idx));
+				
+		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
+		
+		for(Recruit rec : rList) {
+			Set<Member> m = rec.getMembers();
+			if(m.size()>0) {
+				for(Member ms : m) {
+					if(ms.getCustomer().getCustomerNo().equals(customerNo)) {
+						isExists = true;
+					}
+				} //member for문 끝
+			}//if 끝
+		} //recruit for문 끝
+		
+
+		
 		
 		if(isExists == false) {
 			Customer c = customerRepository.findById(customerNo).get();
@@ -70,7 +79,7 @@ public class MemberService {
 			memberRepository.save(member);
 			
 		} else {
-			throw new AddException("이미 지원/초대/속해있는 팀입니다.");
+			throw new AddException("이미 지원/초대/속해있는 프로젝트입니다.");
 		}
 
 	}

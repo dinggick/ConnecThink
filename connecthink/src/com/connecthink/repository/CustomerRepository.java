@@ -28,7 +28,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer>{
 			"where rc.PROJECT_NO = (\r\n" + 
 			"select pj.project_no\r\n" + 
 			"from project pj JOIN recruit rec ON (pj.project_no = rec.project_no)\r\n" + 
-			"where rec.recruit_no=?1) and mb.ENTER_STATUS > 0"
+			"where rec.recruit_no=?1) and mb.ENTER_STATUS = 1"
 			)
 	public List<Customer> findByProject(String recruitNo);
 	
