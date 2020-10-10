@@ -34,16 +34,9 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "notification")
-@SequenceGenerator(	//시퀀스
-		   name = "NOTIFICATION_NO_SEQ_GENERATOR"// 사용할 sequence 이름
-		  ,sequenceName ="NOTIFICATION_NO_SEQ" // 실제 데이터베이스 sequence 이름
-		  ,initialValue = 1
-		  , allocationSize = 1
-		)
+
 public class Notification{
-	@EmbeddedId
-	@GeneratedValue(strategy = GenerationType.SEQUENCE
-	,generator = "NOTIFICATION_NO_SEQ_GENERATOR")
+	@EmbeddedId	
 	private NotificationId id;
 	
 	@MapsId(value = "customerNo")

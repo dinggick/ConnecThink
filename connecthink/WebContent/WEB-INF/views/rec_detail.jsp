@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="detail" value="${requestScope.detail}" />
 <c:set var="manager" value="${requestScope.manager}" />
@@ -83,6 +84,13 @@ li {
 
 span.customerNo {
 	display: none;
+}
+.pcustomerName{
+	display: inline-block;
+    width: 60px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>
 
@@ -188,7 +196,7 @@ span.customerNo {
 												onerror="this.src='${contextPath}/img/d2.jpg'" alt="프로필사진"
 												onclick="memberDetail(this);"> <span
 												class="customerNo">${member.customerNo}</span> <span
-												style="font-size: 0.9em;">${member.name}</span>
+												class ="pcustomerName" style="font-size: 0.9em;">${member.name}</span>
 										</div>
 									</div>
 								</c:forEach>
