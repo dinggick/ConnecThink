@@ -154,7 +154,7 @@ function inbox(){
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://localhost/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -171,7 +171,7 @@ var wSocket =  new WebSocket("ws://192.168.0.115/connecthink/header/inbox");
 
    }
    //메세지 수신시
-   function onMessage(e) {	
+   function onMessage(e) {
 	   console.log(e.data);
 	if (e.data.includes("connecthinksystem:checkNoti:true")){
 		$('#bell').hide();
