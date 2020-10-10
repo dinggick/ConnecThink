@@ -171,7 +171,7 @@ public class BoardService {
 		Task t = taskRepository.findById(taskNo).get();
 		Customer c = t.getCustomer();
 		
-		if(c.getCustomerNo() == customer_no) {
+		if(c.getCustomerNo().equals(customer_no)) {
 			taskRepository.delete(t);
 		}
 	}
@@ -202,7 +202,7 @@ public class BoardService {
 		Project p = projectRepository.findById(projectNo).get();
 		p.getRecruits().forEach(r -> {
 			r.getMembers().forEach(m ->{
-				if(customerNo == m.getId().getMemberNo()) {
+				if(customerNo.equals(m.getId().getMemberNo())) {
 					projectRepository.deleteByMemberByProjcet(customerNo, r.getRecruitNo());
 					return;
 				}

@@ -351,21 +351,21 @@
 		 			},
 		 			data : formData,
 		 			success : (data, textStatus, jqXHR) => {
-		 				var imgUrl = "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime();
+		 				var imgUrl = "http://192.168.0.115/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime();
 		 				
-		 				$.ajax({
-		 					url : "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg",
-		 					method : "GET",
-		 					responseType: "image/jpg",
-		 					async : false,
-		 					data : {t : new Date().getTime()},
-		 					success : (data, textStatus, xhr) => {
-		 						console.log(data);
-		 					},
-		 					error : (xhr) => {
-		 						console.log(xhr);
-		 					}
-		 				});
+// 		 				$.ajax({
+// 		 					url : "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg",
+// 		 					method : "GET",
+// 		 					responseType: "image/jpg",
+// 		 					async : false,
+// 		 					data : {t : new Date().getTime()},
+// 		 					success : (data, textStatus, xhr) => {
+// 		 						console.log(data);
+// 		 					},
+// 		 					error : (xhr) => {
+// 		 						console.log(xhr);
+// 		 					}
+// 		 				});
 		 				
 		 				$(this).prev().remove();
 		 				$(this).before($("<img src='" + imgUrl + "' style='width: 48; height: 48;'>"));

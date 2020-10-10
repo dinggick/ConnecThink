@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -52,7 +53,7 @@ public class Task {
 	@Column(name = "task_status")
 	private Integer taskStatus;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "writer_no")
 	private Customer customer;
 }

@@ -1056,8 +1056,8 @@ scale
 	</div> <!-- SideBar end -->
 	
 	
-	<!-- dash board -->
-	<div id="dashBoard" v-drag-and-drop:options="options">
+	<!-- dash board --><!-- v-drag-and-drop:options -->
+	<div id="dashBoard" v-drag-and-drop="options">
 	
 		<!-- 상세 내용 모달 -->
 		<div class="modal fade" id="contentModal" tabindex="-1" role="dialog"
@@ -1347,7 +1347,7 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://localhost/storage/customer/"+memberInfo[0]+".jpg"});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://172.30.1.54/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
@@ -1485,7 +1485,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://192.168.0.115/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.54/connecthink/chat/boardChat");
 				  
 				  //onopen
 				  this.socket.onopen = () => {
@@ -1530,7 +1530,7 @@ scale
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//가져온 유저의 프로필 사진
-								let imageUrl = "http://localhost/storage/customer/"+user+".jpg";
+								let imageUrl = "http://172.30.1.54/storage/customer/"+user+".jpg";
 								
 								//전송한 사람이 내가 아닐경우
 								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});
@@ -1610,12 +1610,7 @@ scale
 			updateText:'',
 			options:{
 				 onDragend(event){
-					 //console.log(event);
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
-					 
-					 if(event.droptarget == null){
-						 event.droptarget = dragover;
-					 }
 					 
 					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
 					 axios.get('/connecthink/updateStatus',{
@@ -1625,7 +1620,29 @@ scale
 		                	}
 		             })
 		             .then(response => {	
-		            	
+		            	 axios.get('/connecthink/taskList',{
+		     				params: {
+		     			  	      project_no: ${project_no}
+		     			  	}
+		                 })
+		                 .then(response => {
+		                 	var taskList = response.data;
+		                 	
+		                 	todo.lists.splice(0);
+		                 	todo.list2.splice(0);
+		                 	todo.list3.splice(0);
+		                 	//console.log(taskList);
+		                 	
+		                 	taskList.forEach(task =>{
+		                 		if(task.taskStatus==1){
+		                 			todo.lists.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                 		}else if(task.taskStatus==2){
+		                 			todo.list2.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});
+		                 		}else{
+		                 			todo.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});	
+		                 		}
+		                 	})
+		                 });
 		             });
 				 }
 			}
@@ -1650,7 +1667,7 @@ scale
             			this.list3.push({content:task.content,taskNo:task.taskNo,status:task.taskStatus,cName:task.customer.name,cusNo:task.customer.customerNo});	
             		}
             	})
-            })
+            });
 		},
 		methods: {
 			goModal(ev){
@@ -1677,25 +1694,30 @@ scale
 				var writeCusNo = document.getElementById('cusNo').value;
 				
 				if(${sessionScope.loginInfo} == writeCusNo){
-					axios.get('/connecthink/updateContent',{
-	                	params:{
-	       					content:this.updateText,
-	       					taskNo:document.getElementById('taskNo').value
-	                	}
-	                })
-	                .then(response => {	
-	                	var taskNoForUpdate = document.getElementById('taskNo').value;
-	                	this.lists.forEach(t => {
-	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-	                	});
-	                	this.list2.forEach(t => {
-	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-	                	});
-	                	this.list3.forEach(t => {
-	                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
-	                	});
-	                	this.$forceUpdate();
-	                });
+					if(this.updateText == ''){
+						alert('내용을 입력해주세요!');
+					}else{
+						axios.get('/connecthink/updateContent',{
+		                	params:{
+		       					content:this.updateText,
+		       					taskNo:document.getElementById('taskNo').value
+		                	}
+		                })
+		                .then(response => {	
+		                	var taskNoForUpdate = document.getElementById('taskNo').value;
+		                	this.lists.forEach(t => {
+		                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+		                	});
+		                	this.list2.forEach(t => {
+		                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+		                	});
+		                	this.list3.forEach(t => {
+		                		if(t.taskNo == taskNoForUpdate) t.content = this.updateText;
+		                	});
+		                	this.$forceUpdate();
+		                });
+					}
+					
 				}else{
 					alert('작성자가 아닙니다!');
 				}
@@ -1741,6 +1763,8 @@ scale
 			goTask(ev) {
 				var status = 0;
 				var evPath = ev.path[3].id;
+				
+				console.log(evPath);
 				
 				if(evPath == 'do'){
 					if(this.addName == ''){
@@ -1840,9 +1864,25 @@ scale
 		                });	
 					}
 				}
-                
 				this.$forceUpdate();
-              }
+				//끝나는부분
+               },
+               optionss(event){
+  					alert('dd');
+  					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
+  					 
+  					// console.log('바뀐 영역입니다' + event.droptarget.attributes[1].nodeValue);
+  					 axios.get('/connecthink/updateStatus',{
+  		                	params:{
+  		                		taskNo:getTaskNo,
+  		       					status:event.droptarget.attributes[1].nodeValue
+  		                	}
+  		             })
+  		             .then(response => {	
+  		            	console.log(this.lists);
+  		             });
+  				 
+  			}
 		}
 	});
 
