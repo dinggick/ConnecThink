@@ -243,15 +243,17 @@ public class CustomerController {
 		//경험
 		Set<Experience> experiences = new HashSet<Experience>();
 		for(int i = 0; i < data.getExplain().length; i++) {
-			Experience e = new Experience();
-			ExperienceId ids = new ExperienceId();
-			ids.setCustomerNo(customerNo);
-			ids.setExpNo(i);
-			e.setId(ids);
-			e.setCustomer(customerForModify);
-			e.setExplain(data.getExplain()[i]);
-			e.setTerm(data.getTerm()[i]);
-			experiences.add(e);
+			if(!"".equals(data.getExplain()[i]) || !"".equals(data.getTerm()[i])) {
+				Experience e = new Experience();
+				ExperienceId ids = new ExperienceId();
+				ids.setCustomerNo(customerNo);
+				ids.setExpNo(i);
+				e.setId(ids);
+				e.setCustomer(customerForModify);
+				e.setExplain(data.getExplain()[i]);
+				e.setTerm(data.getTerm()[i]);
+				experiences.add(e);
+			}
 		}
 		customerForModify.setExperiences(experiences);
 		service.modify(customerForModify);
