@@ -82,7 +82,7 @@
 					<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">
 						<div class="thumbnail">
 							<div class="test">
-								<img src="http://172.30.1.37/storage/recruit/img/${rec.recruitNo}.jpg" onerror="this.src='${contextPath}/img/default.png'" alt="모집 사진">
+								<img src="http://192.168.0.115/storage/recruit/img/${rec.recruitNo}.jpg" onerror="this.src='${contextPath}/img/default.png'" alt="모집 사진">
 							</div>
 						</div>
 						<h4 class="mt-4 mr-4 ml-4 rec_title">${rec.requirement}</h4>

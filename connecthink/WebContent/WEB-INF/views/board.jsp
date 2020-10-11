@@ -1050,8 +1050,8 @@ scale
 					</div>
 				</li>
 				<li class="outProject">
-					<p v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
-					<p v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
+					<p  v-show="isTheEnd" v-if="${sessionScope.loginInfo} == ${isManager}"><a v-on:click="endProject">프로젝트 종료</a></p>
+					<p  v-show="isTheEnd" v-else><a v-on:click="endMyProject">탈퇴하기</a></p>
 				</li>
 			</ul>
 		</div>
@@ -1333,9 +1333,11 @@ scale
 			toggle: false,
 			isManager : ${isManager},
 			teamTitle :  "${title}",
-			defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png"
+			defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png",
+			isTheEnd : true
 		},created(){
 			this.showMemberList();
+			this.isTheEnd = !${checkStatus};
 		}
 		,methods : {
 			//맴버 정보 가져오기
@@ -1350,7 +1352,7 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://172.30.1.37/storage/customer/"+memberInfo[0]+".jpg"});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://192.168.0.115/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
@@ -1492,7 +1494,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.37/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://192.168.0.115/connecthink/chat/boardChat");
 
 				  
 				  //onopen
@@ -1503,7 +1505,6 @@ scale
 					  this.status = "Connected";
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
-						  console.log(data);
 						var datas = data.split(":");
 						
 						//task 관련 요청시
@@ -1669,7 +1670,7 @@ scale
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//가져온 유저의 프로필 사진
-								let imageUrl = "http://172.30.1.37/storage/customer/"+user+".jpg";
+								let imageUrl = "http://192.168.0.115/storage/customer/"+user+".jpg";
 								
 								//전송한 사람이 내가 아닐경우
 								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});
@@ -1725,8 +1726,12 @@ scale
 					if(loginUsers.length != 0){
 						for(let i = 0; i < loginUsers.length; i++){
 							var customer_no = loginUsers[i];
-							document.getElementById(customer_no.trim()+"no").setAttribute("class",className);
-							this.compleate = false;
+							var dom = document.getElementById(customer_no.trim()+"no");
+							if(dom != null){
+								dom.setAttribute("class",className);
+								this.compleate = false;
+							}
+							
 						}
 					}
 			  }

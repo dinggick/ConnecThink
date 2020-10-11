@@ -176,7 +176,7 @@
     					${_csrf.parameterName} : '${_csrf.token}'},
     			success : (data, textStatus, jqXHR) => {
     				//프로필 사진
-    				$(".thumb>img").attr("src", "http://172.30.1.37/storage/customer/${sessionScope.loginInfo}.jpg");
+    				$(".thumb>img").attr("src", "http://192.168.0.115/storage/customer/${sessionScope.loginInfo}.jpg");
     				//이름
     				$("#customerName").html(data.name);
     				//역할군
@@ -244,7 +244,7 @@
         						method : "POST",
         						data : {${_csrf.parameterName} : '${_csrf.token}'},
         						success : (data, textStatus, jqXHR) => {
-        							location.href = "http://172.30.1.37/connecthink/";
+        							location.href = "http://192.168.0.115/connecthink/";
         						}
         					});
         				},

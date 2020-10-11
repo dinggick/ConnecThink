@@ -89,7 +89,7 @@ height: 70px !important;
 				<div class="col-md-6 col-lg-4">
 					<div class="single_candidates" onclick="customerDetail(this);">
 						<div class="thumb" style="display: inline-block;">
-                            <img src="http://172.30.1.37/storage/customer/${customer.customerNo}.jpg" onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진">
+                            <img src="http://192.168.0.115/storage/customer/${customer.customerNo}.jpg" onerror="this.src='${contextPath}/img/d2.jpg'"alt="프로필사진">
 						</div>
 						<h4 style="display: inline-block;" class="ml-3 mt-2">${customer.name}</h4>
 						<span class="customerNo">${customer.customerNo}</span>
