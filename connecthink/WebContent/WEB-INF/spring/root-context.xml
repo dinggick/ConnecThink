@@ -62,7 +62,7 @@
 		<property name="driverClassName"
 			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="jdbcUrl"
-			value="jdbc:log4jdbc:oracle:thin:@localhost:1521:XE"></property>
+			value="jdbc:log4jdbc:oracle:thin:@connecthinkaws.cko7uw0nmhaz.us-east-2.rds.amazonaws.com:1521:ORCL"></property>
 		<property name="username" value="connecthink"></property>
 		<property name="password" value="connecthink"></property>
 	</bean>

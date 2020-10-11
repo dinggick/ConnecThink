@@ -1350,7 +1350,7 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://172.30.1.6/storage/customer"+memberInfo[0]+".jpg"});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://172.30.1.6/storage/customer/"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios

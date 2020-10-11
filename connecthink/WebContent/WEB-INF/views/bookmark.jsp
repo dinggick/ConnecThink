@@ -204,7 +204,7 @@
 									data += '<div class="col-md-6 col-lg-4 customer pl-0 mt-1">';
 									data += '<div class="single_candidates" onclick="customerDetail(this);">';
 									data += '<div class="thumb">';
-									data += '<img src="http://localhost/storage/customer/'+customer.receive.customerNo+'.jpg"';
+									data += '<img src="http://172.30.1.6/storage/customer/'+customer.receive.customerNo+'.jpg"';
 									data += 'onerror="this.src='+"'${contextPath}/img/d2.jpg'"+'"'+' alt="">';
 									data += '</div>'
 									data += '<div class = "username offset-md-3"><h4 class="ml-5">';
@@ -267,7 +267,7 @@
 											data += '<div class="single_candidates text-center pl-0 pr-0 pt-0" onclick="recDetail(this);">';
 											data += '<div class="thumbnail">';
 											data += '<div class="test">';
-											data += '<img src="http://localhost/storage/recruit/img/'+project.recruit.recruitNo+'.jpg"';
+											data += '<img src="http://172.30.1.6//storage/recruit/img/'+project.recruit.recruitNo+'.jpg"';
 											data += 'onerror="this.src='+"'${contextPath}/img/default.png'"+'"'+' alt="">';
 											data += '</div></div>';
 											data += '<h4 class="mt-4 mr-4 ml-4 rec_title">';
