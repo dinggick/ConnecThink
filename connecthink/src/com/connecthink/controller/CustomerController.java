@@ -227,19 +227,21 @@ public class CustomerController {
 		//졸업 여부
 		customerForModify.setGraduation(data.getGraduation());
 		//역할군
-		Set<CustomerPosition> positions = new HashSet<CustomerPosition>();
-		for(Integer positionNo : data.getPosition()) {
-			CustomerPosition cp = new CustomerPosition();
-			CustomerPositionId ids = new CustomerPositionId();
-			ids.setCustomerNo(customerNo);
-			ids.setPositionNo(positionNo);
-			cp.setId(ids);
-			cp.setCustomer(customerForModify);
-			Position p = positionService.findByNo(positionNo).get();
-			cp.setPosition(p);
-			positions.add(cp);
+		if(data.getPosition() != null) {
+			Set<CustomerPosition> positions = new HashSet<CustomerPosition>();
+			for(Integer positionNo : data.getPosition()) {
+				CustomerPosition cp = new CustomerPosition();
+				CustomerPositionId ids = new CustomerPositionId();
+				ids.setCustomerNo(customerNo);
+				ids.setPositionNo(positionNo);
+				cp.setId(ids);
+				cp.setCustomer(customerForModify);
+				Position p = positionService.findByNo(positionNo).get();
+				cp.setPosition(p);
+				positions.add(cp);
+			}
+			customerForModify.setCustomerPositions(positions);
 		}
-		customerForModify.setCustomerPositions(positions);
 		//경험
 		Set<Experience> experiences = new HashSet<Experience>();
 		for(int i = 0; i < data.getExplain().length; i++) {
