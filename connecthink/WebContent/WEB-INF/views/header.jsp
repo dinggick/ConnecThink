@@ -171,7 +171,7 @@ var wSocket =  new WebSocket("ws://172.30.1.37/connecthink/header/inbox");
 
    }
    //메세지 수신시
-   function onMessage(e) {	
+   function onMessage(e) {
 	   console.log(e.data);
 	if (e.data.includes("connecthinksystem:checkNoti:true")){
 		$('#bell').hide();
