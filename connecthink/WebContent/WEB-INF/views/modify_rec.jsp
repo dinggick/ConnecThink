@@ -205,7 +205,7 @@ h4 .requir {
 										</div>
 										<div class="col-md-10">
 											<div class="input_field">
-												<input type="text" name="requirement" value="${rec.requirement}" required>
+												<input type="text" name="requirement" value="${rec.requirement}" required maxlength="100">
 											</div>
 										</div>
 										<div class="col-md-2">

@@ -97,7 +97,7 @@ h4 .requir{
 								<div class="col-md-10">
 									<div class="input_field">
 										<input type="text" name="title" value="${detail.title}" onkeyup="first(this, 20);">
-										<span id = "counterOne" style = "color: gray;">0/20</span>
+										<span id = "counterOne" style = "color: gray;">0/10</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -106,7 +106,7 @@ h4 .requir{
 								<div class="col-md-10">
 									<div class="input_field">
 										<input type="text" name="about" value="${detail.about}" onkeyup="second(this, 50);">
-										<span id = "counterTwo" style = "color: gray;">0/50</span>
+										<span id = "counterTwo" style = "color: gray;">0/25</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -114,7 +114,7 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name = "theme" value="${detail.theme}">
+										<input type="text" name = "theme" value="${detail.theme}" maxlength="30">
 										</div>
 								</div>
 								<div class="col-md-2">
@@ -122,8 +122,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<textarea name="purpose" type="text" onkeyup="limit(this, 150);">${detail.purpose}</textarea>
-										<span id = "counter" style = "color: gray;">0/150</span>
+										<textarea name="purpose" type="text" onkeyup="limit(this, 100);">${detail.purpose}</textarea>
+										<span id = "counter" style = "color: gray;">0/50</span>
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -269,10 +269,10 @@ h4 .requir{
 			}
 		}
 		
-		$('#counterOne').html(totalByte + '/20');
+		$('#counterOne').html(totalByte/2 + '/10');
 		
 		if (totalByte > maxByte) {
-			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			alert(maxByte/2 + "자를 초과 입력 할 수 없습니다");
 			str2 = strValue.substr(0, len);
 			str.value = str2;
 			first(str, 4000);
@@ -302,10 +302,10 @@ h4 .requir{
 			}
 		}
 		
-		$('#counterTwo').html(totalByte + '/50');
+		$('#counterTwo').html(totalByte/2 + '/25');
 		
 		if (totalByte > maxByte) {
-			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			alert(maxByte/2 + "자를 초과 입력 할 수 없습니다");
 			str2 = strValue.substr(0, len);
 			str.value = str2;
 			second(str, 4000);
@@ -336,10 +336,10 @@ h4 .requir{
 				}
 			}
 			
-			$('#counter').html(totalByte + '/150');
+			$('#counter').html(totalByte/2 + '/50');
 			
 			if (totalByte > maxByte) {
-				alert(maxByte + "자를 초과 입력 할 수 없습니다");
+				alert(maxByte/2 + "자를 초과 입력 할 수 없습니다");
 				str2 = strValue.substr(0, len);
 				str.value = str2;
 				limit(str, 4000);
@@ -365,7 +365,7 @@ h4 .requir{
 					totalByte++;
 				}
 			}
-			$('#counterOne').html(totalByte + '/20');
+			$('#counterOne').html(totalByte/2 + '/10');
 		}
 		
 		function bfabout(){
@@ -385,7 +385,7 @@ h4 .requir{
 					totalByte++;
 				}
 			}
-			$('#counterTwo').html(totalByte + '/50');
+			$('#counterTwo').html(totalByte/2 + '/25');
 		}
 		
 		function bfpurpose(){
@@ -405,7 +405,7 @@ h4 .requir{
 					totalByte++;
 				}
 			}
-			$('#counter').html(totalByte + '/150');
+			$('#counter').html(totalByte/2 + '/50');
 		}
 	
 	</script>
