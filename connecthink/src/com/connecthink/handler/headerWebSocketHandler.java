@@ -200,17 +200,16 @@ public class headerWebSocketHandler extends TextWebSocketHandler {
 			ObjectMapper mapper = mapperFactory.getObject();
 			loadPmsMsg += mapper.writeValueAsString(nts);
 			session.sendMessage(new TextMessage(loadPmsMsg));			
-//			//읽음상태 읽음으로 바꾸기
-//			nts.forEach(pm -> {				
-//					pm.setRead_status(1);
-//					System.out.println(pm.getId());
-//					notiController.save(pm);				
-//			});
-			Customer c = customerController.findCustomerByNo(customer_no);
-			c.getNotifications().forEach(notification -> {
-				notification.setRead_status(1);
-			});			
-			customerRepository.save(c);
+			//읽음상태 읽음으로 바꾸기
+			nts.forEach(pm -> {				
+					pm.setRead_status(1);					
+					notiController.save(pm);				
+			});
+//			Customer c = customerController.findCustomerByNo(customer_no);
+//			c.getNotifications().forEach(notification -> {
+//				notification.setRead_status(1);
+//			});			
+//			customerRepository.save(c);
 		}
 
 		//3. 내가 메세지를 보낼 경우

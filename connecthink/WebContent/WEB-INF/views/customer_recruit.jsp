@@ -127,8 +127,9 @@
 									<img src="http://172.30.1.6/storage/customer/${customer.customerNo}.jpg" alt=""
 										onerror="this.src='${contextPath}/img/d2.jpg'" style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
+									<c:if test="${isManager eq 'y' && customer.customerNo ne sessionScope.loginInfo}">
 										<button class="smallbtn" onclick="openInviteModal()" id="inviteButton">초대하기</button>
-										
+									</c:if>
 									</div>
 								</div>
 							</div>							
@@ -283,11 +284,6 @@
 	<script>
 	$(document).ready(function(){
 		 $(".cancelbtn").hide();		
-		if ('${isManager}' == 'n') {			
-			$(".smallbtn").hide();
-		} else if ('${customer.customerNo}' == '${sessionScope.loginInfo}'){			
-			$(".smallbtn").hide();
-		}
 		bookClick();
 	   
 	});
