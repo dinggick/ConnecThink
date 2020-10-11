@@ -158,7 +158,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 					//해당 프로젝트 넘버의 자료구조가 있는경우 접속중인 맴버 정보들을 같은 프로젝트 유저들에게 전송
 					for(Map.Entry<WebSocketSession,Integer> ws : logUser.entrySet()) {
 						for(int member : logMember.get(project_no)) {
-							if(ws.getValue() == member) {
+							if(ws.getValue() == member && ws.getKey().isOpen()) {
 								ws.getKey().sendMessage(new TextMessage("loginInfo:"+logMember.get(project_no)));
 							}
 						}
@@ -269,7 +269,7 @@ public class webSocketHandler extends TextWebSocketHandler{
 					
 					//작성자를 제외한 모든 클라이언트 + 작성자와 같은 프로젝트 넘버의 유저에게만 메세지 전송
 					for(int member_no : teamArray) {
-						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId())) {
+						if(member_no ==  ws.getValue()&& !ws.getKey().getId().equals(session.getId()) && ws.getKey().isOpen()) {
 							ws.getKey().sendMessage(new TextMessage(sender+":"+msgParsing.getContent()+":"+msgParsing.getCreateDate()+":"+msgParsing.getWriter().getName()));
 							
 						}//if
