@@ -1103,7 +1103,7 @@ scale
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"></textarea>
+					<textarea v-model="addName" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"  v-bind:readonly="isTheEnd"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
@@ -1128,7 +1128,7 @@ scale
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName1" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"></textarea>
+					<textarea v-model="addName1" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)" v-bind:readonly="isTheEnd"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
@@ -1153,7 +1153,7 @@ scale
 					</ul>
 				</div>
 				<div class="add-task card editable2">
-					<textarea v-model="addName2" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)"></textarea>
+					<textarea v-model="addName2" class="tarea" maxlength="100" required="required" onkeyup = "keyup(this)" v-bind:readonly="isTheEnd"></textarea>
 					<button v-on:click="goTask" class="btn btn-primary">ADD</button>
 				</div>
 			</div>
@@ -1241,7 +1241,7 @@ scale
 							<div>
 								<textarea id="chatTextarea" class="chat-textarea"
 									v-model.trim="message" placeholder="메세지를 입력 하세요"
-									@keypress.enter="sendMsg">
+									@keypress.enter="sendMsg" v-bind:readonly="isTheEnd">
 								</textarea>
 							</div>
 						</footer>
@@ -1365,6 +1365,7 @@ scale
 	                	}
 	                })
 	                .then(response => {	
+	                	chat.socket.send("quitInfo:"+${project_no}+":end");
 	                	alert('종료완료!');
 	                	history.go(-Backlen); // Return at the beginning
 	                	window.location.replace("${contextPath}");
@@ -1384,6 +1385,7 @@ scale
 	                	}
 	                })
 	                .then(response => {	
+	                	chat.socket.send("quitInfo:"+${project_no});
 	                	alert('탈퇴완료!')
 	                	history.go(-Backlen); // Return at the beginning
 	    				window.location.replace("${contextPath}");	
@@ -1419,7 +1421,8 @@ scale
 		   isLoadingNow : true,
 		   defaultImg : "https://www.pinclipart.com/picdir/middle/181-1814767_person-svg-png-icon-free-download-profile-icon.png",
 		   userImg : "",
-		   compleate : false
+		   compleate : false,
+		   isTheEnd : false
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
@@ -1485,7 +1488,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.54/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.26:8080/connecthink/chat/boardChat");
 
 				  
 				  //onopen
@@ -1498,8 +1501,8 @@ scale
 					  this.socket.onmessage = ({data}) => {
 						var datas = data.split(":");
 						
+						//task 관련 요청시
 						if(datas[0] == 'taskInfo'){
-							
 								var doWhat = datas[1];
 								
 								//add 요청시
@@ -1511,7 +1514,6 @@ scale
 									var customerNo = datas[6];
 									if(status == 1){
 										todo.lists.push({content:Taskcontent,taskNo:taskNo,status:status,cName:name,cusNo:customerNo});
-										console.log('complete');
 									}else if(status == 2){
 										todo.list2.push({content:Taskcontent,taskNo:taskNo,status:status,cName:name,cusNo:customerNo});
 									}else{
@@ -1628,7 +1630,29 @@ scale
 							dc.setAttribute("class",className);
 						}else if(datas[0] == "loadingCompleate"){
 							this.isLoadingNow = false;
-						}else{
+							
+						}
+						//member 탈퇴시
+						else if(datas[0] == "quitInfo"){
+							//탈퇴한 customer_no
+							var quitCustomer_no = datas[1];
+							
+							//맴버 리스트에 삭제
+							sideBar.memberList.forEach((m, index) => {
+		                		if(m.customer_no == quitCustomer_no) {
+		                			sideBar.memberList.splice(index, 1);
+		                			return true;
+		                		}
+		                	});
+						}
+						//프로젝트 종료시
+						else if(datas[0] == "isTheEnd"){
+							//chat 영역 readOnly set
+							this.isTheEnd = true;
+							//task 영역 readOnly set
+							todo.isTheEnd = true;
+						}
+						else{
 							var user = datas[0];
 							var msg = datas[1];
 							var receptionTime = datas[2]+":"+datas[3];
@@ -1716,6 +1740,7 @@ scale
 			addName2:'',
 			project_no : 0,
 			updateText:'',
+			isTheEnd : false,
 			options:{
 				 onDragend(event){
 					 var getTaskNo = event.items[0].firstChild.firstChild.firstChild.value;
