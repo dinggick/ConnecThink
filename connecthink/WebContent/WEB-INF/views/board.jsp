@@ -1026,6 +1026,9 @@ scale
 <title>board.jsp</title>
 </head>
 <body>
+
+	<a href="${contextPath}/"><img src="https://fontmeme.com/permalink/201006/7c2c538a94b7f47d0c5bbb30b13e33d7.png" style="position:fixed; bottom:0px;" alt="cursive-type" border="0"></a>
+
 	<!-- Sidebar -->
 	<div id="sideBar"> 
 		<a class="menutoggle" id="menu-toggle" @click="toggle = !toggle">☰</a>

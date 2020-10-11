@@ -258,7 +258,7 @@
 	
 	$(() => {
 		//security 적용으로, 로그인이 필요한 페이지에 로그인하지 않고 접근하여 이 페이지로 이동된 경우, 로그인 창을 바로 보여준다
-		if(location.href=="http://localhost/connecthink/login") {
+		if(location.href=="http://172.30.1.6/connecthink/login") {
 			$("#loginModal").modal({keyboard: false, backdrop: 'static'}).find("button.close").css("display", "none");
 		} else {
 			$("#loginModal").find("button.close").css("display", "block");
