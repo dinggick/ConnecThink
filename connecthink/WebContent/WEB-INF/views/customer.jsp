@@ -15,18 +15,18 @@
 <!-- Place favicon.ico in the root directory -->
 
 <!-- CSS here -->
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/bootstrap.min.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/owl.carousel.min.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/magnific-popup.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/font-awesome.min.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/themify-icons.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/nice-select.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/flaticon.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/gijgo.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/animate.min.css">
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/slicknav.css">
+<link rel="stylesheet" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" href="${contextPath}/css/owl.carousel.min.css">
+<link rel="stylesheet" href="${contextPath}/css/magnific-popup.css">
+<link rel="stylesheet" href="${contextPath}/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextPath}/css/themify-icons.css">
+<link rel="stylesheet" href="${contextPath}/css/nice-select.css">
+<link rel="stylesheet" href="${contextPath}/css/flaticon.css">
+<link rel="stylesheet" href="${contextPath}/css/gijgo.css">
+<link rel="stylesheet" href="${contextPath}/css/animate.min.css">
+<link rel="stylesheet" href="${contextPath}/css/slicknav.css">
 
-<link rel="stylesheet" href="${contextPath}/${contextPath}/css/style.css">
+<link rel="stylesheet" href="${contextPath}/css/style.css">
 <!-- <link rel="stylesheet" href="${contextPath}/css/responsive.css"> -->
 <style>
 .thumb {
@@ -112,36 +112,36 @@ height: 70px !important;
 
 	<!-- link that opens popup -->
 	<!-- JS here -->
-	<script src="${contextPath}/${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/popper.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/bootstrap.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/owl.carousel.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/isotope.pkgd.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/ajax-form.js"></script>
-	<script src="${contextPath}/${contextPath}/js/waypoints.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.counterup.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/imagesloaded.pkgd.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/scrollIt.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.scrollUp.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/wow.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/nice-select.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.slicknav.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.magnific-popup.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/plugins.js"></script>
-	<script src="${contextPath}/${contextPath}/js/gijgo.min.js"></script>
+	<script src="${contextPath}/js/vendor/modernizr-3.5.0.min.js"></script>
+	<script src="${contextPath}/js/vendor/jquery-1.12.4.min.js"></script>
+	<script src="${contextPath}/js/popper.min.js"></script>
+	<script src="${contextPath}/js/bootstrap.min.js"></script>
+	<script src="${contextPath}/js/owl.carousel.min.js"></script>
+	<script src="${contextPath}/js/isotope.pkgd.min.js"></script>
+	<script src="${contextPath}/js/ajax-form.js"></script>
+	<script src="${contextPath}/js/waypoints.min.js"></script>
+	<script src="${contextPath}/js/jquery.counterup.min.js"></script>
+	<script src="${contextPath}/js/imagesloaded.pkgd.min.js"></script>
+	<script src="${contextPath}/js/scrollIt.js"></script>
+	<script src="${contextPath}/js/jquery.scrollUp.min.js"></script>
+	<script src="${contextPath}/js/wow.min.js"></script>
+	<script src="${contextPath}/js/nice-select.min.js"></script>
+	<script src="${contextPath}/js/jquery.slicknav.min.js"></script>
+	<script src="${contextPath}/js/jquery.magnific-popup.min.js"></script>
+	<script src="${contextPath}/js/plugins.js"></script>
+	<script src="${contextPath}/js/gijgo.min.js"></script>
 
 
 
 	<!--contact js-->
-	<script src="${contextPath}/${contextPath}/js/contact.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.ajaxchimp.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.form.js"></script>
-	<script src="${contextPath}/${contextPath}/js/jquery.validate.min.js"></script>
-	<script src="${contextPath}/${contextPath}/js/mail-script.js"></script>
+	<script src="${contextPath}/js/contact.js"></script>
+	<script src="${contextPath}/js/jquery.ajaxchimp.min.js"></script>
+	<script src="${contextPath}/js/jquery.form.js"></script>
+	<script src="${contextPath}/js/jquery.validate.min.js"></script>
+	<script src="${contextPath}/js/mail-script.js"></script>
 
 
-	<script src="${contextPath}/${contextPath}/js/main.js"></script>
+	<script src="${contextPath}/js/main.js"></script>
 
 	<script>
 	$(function(){
