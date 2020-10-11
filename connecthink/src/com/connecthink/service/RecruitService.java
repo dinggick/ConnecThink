@@ -212,6 +212,17 @@ public class RecruitService {
 			isDone = false;
 			throw new RemoveException("멤버가 존재합니다");
 		}		
+=======
+
+		Recruit recruit = recruitRepository.findById(recruitNo).get();
+	      if(recruit.getMembers().size() == 0) {
+	         recruitRepository.deleteRec(recruitNo);   
+	         isDone = true;
+	      } else {
+	         isDone = false;
+	         throw new RemoveException("멤버가 존재합니다");
+	      }   
+>>>>>>> bb1b5a4e2174685312b5c8ed96750c14436a4c3d
 
 		//삭제 시 모집 썸네일도 제거
 

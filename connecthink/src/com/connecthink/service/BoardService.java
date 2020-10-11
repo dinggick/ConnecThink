@@ -192,9 +192,10 @@ public class BoardService {
 	public void updateProject(Integer projectNo) {
 		Project p =projectRepository.findById(projectNo).get();
 		p.getRecruits().forEach(r ->{
+			r.setRecruitStatus(2);
 			r.getMembers().forEach(m ->{
 				m.setQuitDate(new Date());
-				r.setRecruitStatus(2);
+				
 			});
 		});
 		

@@ -319,7 +319,7 @@
 				for (x in responseObj) {
 					txt += "<div class='col-md-6 col-lg-3'><div class='single_catagory'>" +
 							"<div class='thumb' style='float: right;'> ";
-					txt +=  '<img class="thumbimg" src="http://localhost/storage/customer/'+responseObj[x].customerNo+'.jpg"';
+					txt +=  '<img class="thumbimg" src="http://172.30.1.6/storage/customer/'+responseObj[x].customerNo+'.jpg"';
 					txt += 'onerror="this.src='+"'${contextPath}/img/d2.jpg'"+'"'+' alt="">';
 							
 					txt +=	"</div>"+
@@ -351,7 +351,7 @@
 					txt += "<div class='col-md-6 col-lg-4'><div class='single_candidates text-center pl-0 pr-0 pt-0' onclick='projectDetail(this);'>";
 					txt += '<div class="thumbnail"><div class="test">';		
 					
-					txt += '<img src="http://localhost/storage/customer/'+responseObj[x].recruitNo+'.jpg"';
+					txt += '<img src="http://172.30.1.6/storage/recruit/img/'+responseObj[x].recruitNo+'.jpg"';
 					txt += 'onerror="this.src='+"'${contextPath}/img/default.png'"+'"'+' alt="">';
 					txt += '</div>'
 					
