@@ -42,7 +42,7 @@ public class ProjectHistoryService {
 					r.getMembers().forEach(m -> {
 						if (customerNo.equals(m.getCustomer().getCustomerNo()) && m.getEnterStatus().equals(1)) { // 팀원의 경우
 							result.add(new ProjectHistoryDTO(p.getTitle(), m.getEnterDate(),
-									p.getRecruits().iterator().next().getMembers().iterator().next().getQuitDate(),
+									m.getQuitDate(),
 									p.getTheme(), r.getPosition().getName())); // 종료날짜는 멤버의 quitDate와 동일하다
 						}
 					});
