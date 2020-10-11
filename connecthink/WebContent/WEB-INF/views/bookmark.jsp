@@ -212,9 +212,15 @@
 										data += position.position.name;
 										data += '</li>'
 									});
-										data += '<li class="intro">';
-										data += customer.receive.about;
-										data += '</li>'
+										if(customer.receive.about == null){
+											data += '<li class="intro" style="display:none;">';
+											data += customer.receive.about;
+											data += '</li>'
+										} else {
+											data += '<li class="intro">';
+											data += customer.receive.about;
+											data += '</li>'
+										}
 										data += '<li class="customerNo" style="display:none;">';
 										data += customer.receive.customerNo;
 										data += '</li>';
