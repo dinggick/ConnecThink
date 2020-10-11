@@ -176,7 +176,7 @@
     					${_csrf.parameterName} : '${_csrf.token}'},
     			success : (data, textStatus, jqXHR) => {
     				//프로필 사진
-    				$(".thumb>img").attr("src", "http://172.30.1.6/storage/customer/${sessionScope.loginInfo}.jpg");
+    				$(".thumb>img").attr("src", "http://172.30.1.37/storage/customer/${sessionScope.loginInfo}.jpg");
     				//이름
     				$("#customerName").html(data.name);
     				//역할군

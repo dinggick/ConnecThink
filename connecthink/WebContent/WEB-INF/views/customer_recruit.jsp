@@ -124,7 +124,7 @@
 							</div>
 							<div class="thumb">
 								<div class="profilepic" style="padding-left: 90px">
-									<img src="http://172.30.1.6/storage/customer/${customer.customerNo}.jpg" alt=""
+									<img src="http://172.30.1.37/storage/customer/${customer.customerNo}.jpg" alt=""
 										onerror="this.src='${contextPath}/img/d2.jpg'" style="width: 50px; height: 50px; border-radius: 50%;">
 									<div>
 									<c:if test="${isManager eq 'y' && customer.customerNo ne sessionScope.loginInfo}">
