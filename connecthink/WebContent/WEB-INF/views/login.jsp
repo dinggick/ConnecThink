@@ -42,8 +42,8 @@
 					<input type="hidden" id="csrf" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				</div>
 				<div class="modal-footer">
-	                    <a id="openFindEmailModalBtn" style="text-decoration: underline; color: #367FFF; cursor: pointer;" data-toggle="modal" data-backdrop="false">이메일 찾기</a>
-	                    <a id="openFindPwdModalBtn" style="text-decoration: underline; color: #367FFF; cursor: pointer;" data-toggle="modal" data-backdrop="false">비밀번호 찾기</a>
+	                    <a id="openFindEmailModalBtn" style="text-decoration: underline; color: #367FFF; cursor: pointer;">이메일 찾기</a>
+	                    <a id="openFindPwdModalBtn" style="text-decoration: underline; color: #367FFF; cursor: pointer;">비밀번호 찾기</a>
 	<!--                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button> -->
 	                    <button type="submit" class="btn btn-primary">로그인</button>
 	                </div>
@@ -103,6 +103,9 @@
 								<a style="color: #367FFF; cursor: pointer;" class="genric-btn info-border">이메일 인증</a>
 							</div>
 						</div>
+						<div class="mt-10" style="color: red; padding-left: 55px;">
+						
+						</div>
 						<br>
 					</div>
 					<div class="modal-footer">
@@ -146,7 +149,7 @@
         </div>
     </div>
     <!-- 회원가입 Modal -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -164,6 +167,9 @@
 		                        <div class="col-md-6">
 		                            <button id="requestVerifyCodeBtn" class="genric-btn info-border">이메일 인증</button>
 		                        </div>
+		                    </div>
+		                    <div class="mt-10" style="color: red; padding-left: 20px;">
+		                    	
 		                    </div>
 	                        <div class="mt-10">
 	                            <input type="password" name="password" placeholder="비밀번호" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호'" required class="single-input">
@@ -243,6 +249,12 @@
 	<script src="${contextPath}/js/mail-script.js"></script>
 	<script src="${contextPath}/js/main.js"></script>
 	<script>
+	//이메일 정규표현식 검사
+	function chkEmail(s) {
+		var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		return regExp.test(s);
+	}
+	
 	
 	$(() => {
 		//security 적용으로, 로그인이 필요한 페이지에 로그인하지 않고 접근하여 이 페이지로 이동된 경우, 로그인 창을 바로 보여준다
@@ -255,12 +267,15 @@
 		
 		var beforeVerifyModal;
 		//이메일 찾기 버튼 클릭
+		
 		$("#openFindEmailModalBtn").click(function() {
 			$("#loginModal").modal("hide");
+			$("#findEmailModalLongTitle").html("이메일 찾기");
 			$("#findEmailModal").modal({
 				keyboard: false,
 				backdrop: 'static'
 			});
+			$("#findEmailModal").find("button[type=submit]").css("display", "block");
 		});
 		//비밀번호 찾기 버튼 클릭
 		$("#openFindPwdModalBtn").click(function() {
@@ -312,18 +327,14 @@
 		//회원가입 모달에서 이메일 인증 버튼 클릭 시 인증 코드 요청 전송
 		$("#requestVerifyCodeBtn").click(function() {
 			var email = $(this).parent().prev().find("input").val();
+
 			if(email == '') {
-				alert("이메일을 입력하세요");
+				$("#registerModal > div > div > form > div.modal-body > div:nth-child(2)").html("이메일을 입력하세요");
+				return false;
+			} else if(!chkEmail(email)) {
+				$("#registerModal > div > div > form > div.modal-body > div:nth-child(2)").html("이메일을 올바르게 입력하세요");
 				return false;
 			}
-					
-			//이메일 인증 모달 표시
-			beforeVerifyModal = $("#registerModal");
-			$("#registerModal").modal("hide");
-			$("#verifyModal").modal({
-				keyboard: false,
-				backdrop: 'static'
-			});
 			
 			$.ajax({
 				url : "/connecthink/all/requestVerifyCode",
@@ -331,10 +342,16 @@
 						verifyType : 1,
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
-							
+					//이메일 인증 모달 표시
+					beforeVerifyModal = $("#registerModal");
+					$("#registerModal").modal("hide");
+					$("#verifyModal").modal({
+						keyboard: false,
+						backdrop: 'static'
+					});
 				},
 				error : () => {
-					alert("중복 이메일");
+					$("#registerModal > div > div > form > div.modal-body > div:nth-child(2)").find(".mt-10:first-child").html("이미 존재하는 계정입니다.");
 				}
 			});
 		});
@@ -400,6 +417,14 @@
 					$("#findEmailModal").find("div.modal-body").html(
 						`<br><h3>`+ data +`</h3><br>`
 					);
+					$("#findEmailModal").find("button[type=submit]").css("display", "none");
+				},
+				error : (xhr) => {
+					$("#findEmailModalLongTitle").html("당신의 이메일");
+					$("#findEmailModal").find("div.modal-body").html(
+							`<br><h3>`+ xhr.responseJSON +`</h3><br>`
+					);
+					$("#findEmailModal").find("button[type=submit]").css("display", "none");
 				}
 			});
 				
@@ -424,17 +449,12 @@
 			var email = $(this).parent().prev().find("input").val();
 			
 			if(email == '') {
-				alert("이메일을 입력하세요");
+				$("#findPwdModal").find("div.mt-10").html("이메일을 입력하세요.");
+				return false;
+			} else if(!chkEmail(email)) {
+				$("#findPwdModal").find("div.mt-10").html("이메일을 올바르게 입력하세요.");
 				return false;
 			}
-			
-			//이메일 인증 모달 표시
-			beforeVerifyModal = $("#findPwdModal");
-			$("#findPwdModal").modal("hide");
-			$("#verifyModal").modal({
-				keyboard: false,
-				backdrop: 'static'
-			});
 			
 			$.ajax({
 				url : "/connecthink/all/requestVerifyCode",
@@ -442,10 +462,16 @@
 						verifyType : 2,
 						'_csrf' : csrfToken},
 				success : (data, textStatus, jqXHR) => {
-					
+					//이메일 인증 모달 표시
+					beforeVerifyModal = $("#findPwdModal");
+					$("#findPwdModal").modal("hide");
+					$("#verifyModal").modal({
+						keyboard: false,
+						backdrop: 'static'
+					});
 				},
 				error : () => {
-					alert("중복 이메일");
+					$("#findPwdModal").find("div.mt-10").html("계정이 존재하지 않습니다. 이메일을 올바르게 입력했는지 확인하세요.");
 				}
 			});
 		});

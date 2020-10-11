@@ -117,7 +117,7 @@ public class CustomerController {
 				session.setAttribute("emailForFindPwd", email);
 				return ResponseEntity.status(HttpStatus.OK).body("success");
 			} else {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일을 올바르게 입력했는지 확인하세요");
 			}
 		}
 		
@@ -287,7 +287,7 @@ public class CustomerController {
 		Customer c = service.findByNameAndBirthDate(name, birthDate);
 		
 		if(c != null) return ResponseEntity.ok(c.getEmail());
-		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("이메일이 존재하지 않습니다");
+		else return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("계정이 존재하지 않습니다");
 	}
 	
 	@RequestMapping("/memberList")
