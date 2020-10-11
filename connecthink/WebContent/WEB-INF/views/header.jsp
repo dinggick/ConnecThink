@@ -153,7 +153,7 @@ function inbox(){
 }
 
 //------------------------ 웹소켓 --------------------------------
-var wSocket =  new WebSocket("ws://172.30.1.6/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://172.30.1.14/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
