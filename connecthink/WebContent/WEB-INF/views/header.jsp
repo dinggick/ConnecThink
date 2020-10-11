@@ -84,10 +84,15 @@
 								<div id="mySidenav" class="sidenav">
 									<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
 										<h4 style="padding-left: 20px;">나의 프로젝트 스페이스</h4>
-										<hr>							
+										<hr>
 								</div>
 							</div>
 						</div>
+						
+	<form name="goSpaceForm" action="${contextPath}/logined/board" method="post">
+		<input type="hidden" name="project_no" value="0">
+		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+	</form>
                                 
                             </div>
                             <div class="col-12">
@@ -149,7 +154,14 @@ function inbox(){
 	$('#bell').show();
 	$('#notibell').hide();	
 	let url = "${contextPath}/logined/inbox" ;
-	location.href = url;	
+	location.href = url;
+}
+
+//프로젝트 스페이스로 이동
+function goSpace(projectNo) {
+	let form = document.goSpaceForm;
+	$(form).find("input[name=project_no]").val(projectNo);
+	form.submit();
 }
 
 //------------------------ 웹소켓 --------------------------------

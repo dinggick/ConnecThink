@@ -7,8 +7,9 @@ $(() => {
 			
 			$(projectInfo).each(function (index, project) {
 				if(project.projectStatus ==1){
-					let url = "/connecthink/logined/board?project_no="+project.projectNo+"";
-					space.append("<a href="+url+">"+project.title+"</a>");
+//					let url = "/connecthink/logined/board?project_no="+project.projectNo+"";
+//					space.append("<a href="+url+">"+project.title+"</a>");
+					space.append('<a href="#" onclick="goSpace(' + project.projectNo + ');">' + project.title + '</a>')
 				}
 				
 			});	

@@ -27,9 +27,13 @@ public class ManageMemberController {
 	@RequestMapping(value="/manageMember/deny")
 	@ResponseBody
 	public String deny(String recruitNo, Integer memberNo) {
-		System.out.println("in ManageMemberController : deny 메소드 실행");
-		service.deleteById(recruitNo, memberNo);
-		return "success";
+		try {
+			System.out.println("in ManageMemberController : deny 메소드 실행");
+			service.deleteById(recruitNo, memberNo);
+			return "success";
+		} catch (Exception e) {
+			return "fail";
+		}
 	}
 	
 	/**
@@ -39,11 +43,14 @@ public class ManageMemberController {
 	@RequestMapping(value="/manageMember/allow")
 	@ResponseBody
 	public String allow(String recruitNo, Integer memberNo) {
-		System.out.println("in ManageMemberController : allow 메소드 실행");
-		Member member = service.findById(recruitNo, memberNo);
-		member.setEnterStatus(1);
-		member.setEnterDate(new Timestamp(new Date().getTime()));
-		service.update(member);
-		return "success";
+		try {
+			Member member = service.findById(recruitNo, memberNo);
+			member.setEnterStatus(1);
+			member.setEnterDate(new Timestamp(new Date().getTime()));
+			service.update(member);
+			return "success";
+		} catch (Exception e) {
+			return "fail";
+		}
 	}
 }
