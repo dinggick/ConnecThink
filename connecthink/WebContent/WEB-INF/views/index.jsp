@@ -301,15 +301,11 @@
 
 	<script>
 
-	$(document).ready(function(){
-	
-	loadMemberList();
-	loadProjectList();
-	if(${!empty sessionScope.loginInfo}) {			
-		checkNotification();	
-		}
+	$(document).ready(function(){	
+		loadMemberList();
+		loadProjectList();	
 	});
-
+	
 
 	function loadMemberList() {
 		var $memberSection = $("div.main_member_area > .container > .row:nth-child(2)");

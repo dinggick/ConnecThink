@@ -285,7 +285,7 @@
 		 $(".cancelbtn").hide();		
 		if ('${isManager}' == 'n') {			
 			$(".smallbtn").hide();
-		} else if ('${isManager}' == 'y' || '${customer.customerNo}' == '${sessionScope.loginInfo}'){
+		} else if ('${customer.customerNo}' == '${sessionScope.loginInfo}'){			
 			$(".smallbtn").hide();
 		}
 		bookClick();
