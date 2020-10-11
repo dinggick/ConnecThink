@@ -204,11 +204,11 @@ public class RecruitService {
 	 */
 	public void delRec(String recruitNo) throws RemoveException {
 		boolean isDone = false;
-
-		try {
+		Recruit recruit = recruitRepository.findById(recruitNo).get();
+		if(recruit.getMembers().size() == 0) {
 			recruitRepository.deleteRec(recruitNo);	
 			isDone = true;
-		}catch (Exception e) {
+		} else {
 			isDone = false;
 			throw new RemoveException("멤버가 존재합니다");
 		}		
