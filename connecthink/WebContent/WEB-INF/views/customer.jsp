@@ -44,6 +44,13 @@ width: 70px !important;
 height: 70px !important;
 }
 
+.single_candidates {
+	height: 300px !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
 </style>
 
 </head>
@@ -88,7 +95,9 @@ height: 70px !important;
 						<span class="customerNo">${customer.customerNo}</span>
 						<ul class="customerInfo mt-4" style="list-style: none;">
 							<c:forEach items="${customer.customerPositions}" var="position" varStatus="st1">
+							<c:if test ="${st1.index lt 5}">
 							<li class="position" style="font-weight: bold;">${position.position.name}</li>
+							</c:if>
 							</c:forEach>
 							<li class="intro">${customer.about}</li>
 						</ul>

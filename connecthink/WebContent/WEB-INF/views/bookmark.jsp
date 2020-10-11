@@ -55,6 +55,12 @@
 	height: 70px !important;
 }
 
+.single_candidates {
+	height: 300px !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
 
 
 </style>
@@ -208,9 +214,11 @@
 
 									let positions = customer.receive.customerPositions;
 									positions.forEach(function(position,index) {
-										data += '<li class="position" style="font-weight: bold;">';
-										data += position.position.name;
-										data += '</li>'
+										if(index < 5){
+											data += '<li class="position" style="font-weight: bold;">';
+											data += position.position.name;
+											data += '</li>'
+										}
 									});
 										if(customer.receive.about == null){
 											data += '<li class="intro" style="display:none;">';
