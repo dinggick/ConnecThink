@@ -285,6 +285,8 @@
 		 $(".cancelbtn").hide();		
 		if ('${isManager}' == 'n') {			
 			$(".smallbtn").hide();
+		} else if ('${isManager}' == 'y' || '${customer.customerNo}' == '${sessionScope.loginInfo}'){
+			$(".smallbtn").hide();
 		}
 		bookClick();
 	   
@@ -339,7 +341,7 @@
 						$('#myModal').modal("hide");
 						wSocket.send("connecthinksystem:nto:"+ ${customer.customerNo} + ":" + notiContent);	
 					} else {
-						alert(data.msg);						
+												
 
 					}
 				}

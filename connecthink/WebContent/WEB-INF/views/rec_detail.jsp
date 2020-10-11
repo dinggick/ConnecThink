@@ -217,7 +217,7 @@ span.customerNo {
 										onerror="this.src='${contextPath}/img/d2.jpg'" alt="프로필사진"
 										onclick="memberDetail(this);" class="mt-1"> <span
 										class="customerNo">${manager.customerNo}</span>
-									<div>${manager.name}</div>
+									<div><span class= "pcustomerName" >${manager.name}</span></div>
 								</div>
 							</div>
 						</div>
