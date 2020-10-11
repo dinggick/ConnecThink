@@ -1503,6 +1503,7 @@ scale
 					  this.status = "Connected";
 					  //수신 메세지
 					  this.socket.onmessage = ({data}) => {
+						  console.log(data);
 						var datas = data.split(":");
 						
 						//task 관련 요청시

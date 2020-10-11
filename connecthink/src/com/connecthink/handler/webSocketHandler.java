@@ -234,6 +234,9 @@ public class webSocketHandler extends TextWebSocketHandler{
 				}
 				
 			}else {
+				//메세지를 클라이언트 에게 모두 보냈음을 구분하는 메세지
+				session.sendMessage(new TextMessage("loadingCompleate:"));
+				
 				ObjectMapper mapper = new ObjectMapper();
 				
 				//Message Setting
