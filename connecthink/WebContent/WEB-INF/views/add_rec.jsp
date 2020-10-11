@@ -170,7 +170,7 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="number" placeholder="1" min="1" max="10"
+										<input type="number" placeholder="0" min="1" max="10"
 											name="headCount" required>
 									</div>
 								</div>
@@ -188,7 +188,7 @@ h4 .requir{
 								<div class="col-md-10">
 									<div class="input_field">
 										<input type="text" name="requirement"
-											placeholder="EX) 브랜딩 / 공모전 경험 / SPRING BOOT 사용 가능자" required>
+											placeholder="EX) 브랜딩 / 공모전 경험 / SPRING BOOT 사용 가능자" maxlength="100" required >
 									</div>
 								</div>
 								<div class="col-md-2">

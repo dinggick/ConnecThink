@@ -96,8 +96,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name="title" placeholder="프로젝트 이름 (20자 내)" onkeyup="first(this, 20);">
-										<span id = "counterOne" style = "color: gray;">0/20</span>
+										<input type="text" name="title" placeholder="프로젝트 이름 (10자 내)" onkeyup="first(this, 20);">
+										<span id = "counterOne" style = "color: gray;">0/10</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -105,8 +105,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name="about" placeholder="프로젝트에 대해 한 줄로 적어주세요(50자 내)" onkeyup="second(this, 50);">
-										<span id = "counterTwo" style = "color: gray;">0/50</span>
+										<input type="text" name="about" placeholder="프로젝트에 대해 한 줄로 적어주세요(25자 내)" onkeyup="second(this, 50);">
+										<span id = "counterTwo" style = "color: gray;">0/25</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -114,7 +114,7 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<input type="text" name = "theme" placeholder="프로젝트 주제를 적어주세요 (ex. 데이팅 앱/ 레시피 판매 사이트) ">
+										<input type="text" name = "theme" placeholder="프로젝트 주제를 적어주세요 (ex. 데이팅 앱/ 레시피 판매 사이트)" maxlength="30">
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -122,8 +122,8 @@ h4 .requir{
 								</div>
 								<div class="col-md-10">
 									<div class="input_field">
-										<textarea name="purpose" maxlength="150" placeholder="프로젝트 목적을 적어주세요(100자 이내) (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)" onkeyup="limit(this, 100);"></textarea>	
-										<span id = "counter" style = "color: gray;">0/100</span>
+										<textarea name="purpose" maxlength="150" placeholder="프로젝트 목적을 적어주세요(50자 이내) (ex. 공모전 참가 / 서비스 출시 / 포트폴리오 목적)" onkeyup="limit(this, 100);"></textarea>	
+										<span id = "counter" style = "color: gray;">0/50</span>
 									</div>
 								</div>
 								<div class="col-md-12">
@@ -261,10 +261,10 @@ h4 .requir{
 			}
 		}
 		
-		$('#counterOne').html(totalByte + '/20');
+		$('#counterOne').html(totalByte/2 + '/10');
 		
 		if (totalByte > maxByte) {
-			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			alert(maxByte/2 + "자를 초과 입력 할 수 없습니다");
 			str2 = strValue.substr(0, len);
 			str.value = str2;
 			first(str, 4000);
@@ -294,10 +294,10 @@ h4 .requir{
 			}
 		}
 		
-		$('#counterTwo').html(totalByte + '/50');
+		$('#counterTwo').html(totalByte/2 + '/25');
 		
 		if (totalByte > maxByte) {
-			alert(maxByte + "자를 초과 입력 할 수 없습니다");
+			alert(maxByte/2 + "자를 초과 입력 할 수 없습니다");
 			str2 = strValue.substr(0, len);
 			str.value = str2;
 			second(str, 4000);
@@ -328,10 +328,10 @@ h4 .requir{
 				}
 			}
 			
-			$('#counter').html(totalByte + '/100');
+			$('#counter').html(totalByte/2 + '/50');
 			
 			if (totalByte > maxByte) {
-				alert(maxByte + "자를 초과 입력 할 수 없습니다");
+				alert(maxByte/2 + "자를 초과 입력 할 수 없습니다");
 				str2 = strValue.substr(0, len);
 				str.value = str2;
 				limit(str, 4000);
