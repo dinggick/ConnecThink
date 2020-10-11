@@ -58,29 +58,22 @@ public class ProjectController {
 	@ResponseBody
 	public List<Recruit> memberModal(HttpSession session, Integer customerNo) {		
 		int managerNo = (int) session.getAttribute("loginInfo");		
-		List<Project> p = service.findByManagerNo(managerNo);	
-		for (Project s : p) {
-			if (s.getProjectStatus() == 2) {
-				p.remove(s);
-			}
-		}
+		List<Project> p = service.findByManagerNo(managerNo);			
 		List<Recruit> n = new ArrayList<>();
 		for (Project m : p) {
-			m.getRecruits().forEach(c -> {
-				if (c.getRecruitStatus() != 2) {
+			if (!m.getProjectStatus().equals(2)) {
+				m.getRecruits().forEach(c -> {
+				if (!c.getRecruitStatus().equals(2)) {
 					n.add(c);
 					c.getMembers().forEach(g -> {
 						if (g.getCustomer().getCustomerNo().equals(customerNo) && g.getInvited() ==1 ) {
 							n.remove(c);
 						} 
 					});
-				}
-				
+				}				
 			});
 		}
-		for(Recruit s : n) {
-			System.out.println(s.getRecruitNo());
-		}
+	}
 		return n;
 	}
 
