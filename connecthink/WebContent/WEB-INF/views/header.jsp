@@ -154,7 +154,7 @@ function inbox(){
 
 //------------------------ 웹소켓 --------------------------------
 
-var wSocket =  new WebSocket("ws://172.30.2.25/connecthink/header/inbox");
+var wSocket =  new WebSocket("ws://172.30.1.14/connecthink/header/inbox");
     wSocket.onopen = function(e) { onOpen(e) };
     wSocket.onclose = function(e) { onClose(e) };
     wSocket.onmessage = function(e) { onMessage(e) };
@@ -173,7 +173,13 @@ var wSocket =  new WebSocket("ws://172.30.2.25/connecthink/header/inbox");
    //메세지 수신시
    function onMessage(e) {	
 	   console.log(e.data);
-	
+	   if (e.data.includes('true', 28)){		
+			$('#bell').hide();
+			$('#notibell').show();	
+		} else {		
+			$('#bell').show();
+			$('#notibell').hide();	
+		}	
 	//수신한 메세지가 상대방 목록 불러오기인 경우
 	if (e.data.includes("connecthinksystem:loadList:")){
 		let otherStr = "";
@@ -358,7 +364,7 @@ var wSocket =  new WebSocket("ws://172.30.2.25/connecthink/header/inbox");
 				}
 			}
 		} else {
-			if (pmObj.receive.customerNo == loginedCustomer) {
+			if (pmObj.receive.customerNo == loginedCustomer) {				
 				$('#bell').hide();
 				$('#notibell').show();
 			}
@@ -384,13 +390,6 @@ var wSocket =  new WebSocket("ws://172.30.2.25/connecthink/header/inbox");
 			$('#bell').hide();
 			$('#notibell').show();
 		}
-	}	
-	if (e.data.includes('true', 28)){		
-		$('#bell').hide();
-		$('#notibell').show();	
-	} else {		
-		$('#bell').show();
-		$('#notibell').hide();	
 	}	
    }
    
