@@ -309,23 +309,7 @@
 		checkNotification();	
 		}
 	});
-	function checkNotification() {			
-		$.ajax({
-			url: "/connecthink/checkNotification",			
-			data:  { customerNo : '${sessionScope.loginInfo}', 
-				${_csrf.parameterName} : '${_csrf.token}'},   
-			success: function(data) {
-				console.log(data);
-				if (data == "success") {
-					$('#bell').hide();
-					$('#notibell').show();	
-				} else {
-					$('#bell').show();
-					$('#notibell').hide();	
-				}
-			}			
-		});
-	}	
+
 
 	function loadMemberList() {
 		var $memberSection = $("div.main_member_area > .container > .row:nth-child(2)");
