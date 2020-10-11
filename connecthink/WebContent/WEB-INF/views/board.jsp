@@ -1071,7 +1071,7 @@ scale
 					</div>
 					<div class="modal-body">
 						<div class="mt-10">
-							<textarea id="inputInModal" maxlength="100" v-model="updateText" name="text" required class="singleInput" onkeyup = "modalkeyup(this)" style="height:120px "></textarea>
+							<textarea id="inputInModal" maxlength="100" v-model="updateText" name="text" required class="singleInput" onkeyup = "modalkeyup(this)" v-bind:readonly="isTheEnd" style="height:120px"></textarea>
 							<input type="hidden" id="taskNo" value="">
 							<input type="hidden" id="cusNo" value="">
 						</div>
@@ -1426,6 +1426,7 @@ scale
 		  }
 		  //chatApp.vue가 생성되면 소캣 연결
 		  ,created(ev){
+			this.isTheEnd = ${checkStatus};
 			this.connect();
 			}//created
     	  //변화가 있을경우
@@ -1563,6 +1564,7 @@ scale
 				                		}
 				                	});
 								}
+								
 								//drag & Drop
 								else{									
 									var dDTastNo = datas[2];
@@ -1647,6 +1649,7 @@ scale
 						}
 						//프로젝트 종료시
 						else if(datas[0] == "isTheEnd"){
+							alert('프로젝트가 종료 되었습니다');
 							//chat 영역 readOnly set
 							this.isTheEnd = true;
 							//task 영역 readOnly set
@@ -1781,6 +1784,9 @@ scale
 		}//options
 		},//data
 		created(){
+			
+			this.isTheEnd = ${checkStatus};
+			
 			axios.get('/connecthink/taskList',{
 				params: {
 			  	      project_no: ${project_no}

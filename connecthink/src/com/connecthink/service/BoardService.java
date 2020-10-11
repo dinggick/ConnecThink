@@ -101,6 +101,15 @@ public class BoardService {
 		return memberInfo;
 	}
 	
+	/**
+	 * 해당 프로젝트의 종료 여부 가져오기
+	 * @author DongJun
+	 */
+	public boolean checkEndPj(Integer project_no){
+		int status = projectRepository.findById(project_no).get().getProjectStatus();
+		return  status == 2 ? true : false;		
+	}
+	
 	////////////////////변재 영역 
 	/*
 	 * 해당 프로젝트 포스트잇 전체 조회

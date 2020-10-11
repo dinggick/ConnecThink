@@ -31,6 +31,8 @@ public class BoardController {
    @Autowired
    private ProjectService pjService;
    
+   
+   
    /**
 	 *  @author DongJun, 재원
 	 *  팀 협업 스페이스로 이동
@@ -42,13 +44,14 @@ public class BoardController {
       int Manager_no = pjInfo.getManagerNo();
       String teamName = pjInfo.getTitle();
       List<Task> taskList = tList(project_no);
+      boolean istheEnd = service.checkEndPj(project_no);
       
-      	
         mv.setViewName("board");
         mv.addObject("project_no",project_no);
         mv.addObject("isManager",Manager_no);
         mv.addObject("title",teamName);
         mv.addObject("list", taskList);
+        mv.addObject("checkStatus",istheEnd);
 		return mv;
 	}
    
