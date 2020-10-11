@@ -156,7 +156,6 @@ public class RecruitController {
 			recruitService.addRec(recruitDTO);
 			status = "success";
 		} catch (Exception e) {
-			e.printStackTrace();
 			status = "fail";
 		}
 		return status;
@@ -207,7 +206,7 @@ public class RecruitController {
 			recruitService.delRec(recruitNo);
 		} catch (Exception e) {
 			result.put("status", "fail");
-			result.put("msg", "멤버가 존재하므로 삭제가 불가합니다");
+			result.put("msg", e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
@@ -226,7 +225,7 @@ public class RecruitController {
 			recruitService.delRecAll(projectNo, recruitNo);
 		} catch (Exception e) {
 			result.put("status", "fail");
-			result.put("msg", "멤버가 존재하므로 삭제가 불가합니다");
+			result.put("msg", e.getMessage());
 			e.printStackTrace();
 		}
 		return result;

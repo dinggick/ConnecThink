@@ -77,10 +77,12 @@ public class RecruitService {
 	/**
 	 * @author 홍지수
 	 * 모집 등록, 수정
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
-	public void addRec(RecruitDTO recruitDTO) {
+	public void addRec(RecruitDTO recruitDTO) throws IllegalStateException, IOException {
 		Recruit recruit = new Recruit();
-		
+
 		//projectNo
 		Project project = projectRepository.findById(recruitDTO.getProjectNo()).get();
 
@@ -122,21 +124,17 @@ public class RecruitService {
 
 		System.out.println("서비스 : " +  recruitDTO.getRecPic().getOriginalFilename());
 		String picName = recruitDTO.getRecPic().getOriginalFilename();
-		try {
 
-			if(!(picName.equals("")) && picName != null) {
-				//이미지 저장
-				recruitDTO.getRecPic().transferTo(pic);
-			}
 
-			//파일로 저장
-			OutputStream output = new FileOutputStream(txt);
-			byte[] data = recruitDTO.getRecExplain().getBytes();
-			output.write(data);
-
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
+		if(!(picName.equals("")) && picName != null) {
+			//이미지 저장
+			recruitDTO.getRecPic().transferTo(pic);
 		}
+
+		//파일로 저장
+		OutputStream output = new FileOutputStream(txt);
+		byte[] data = recruitDTO.getRecExplain().getBytes();
+		output.write(data);
 
 		//recruit에 담아주기
 		recruit.setRecruitNo(rNo);
@@ -146,7 +144,7 @@ public class RecruitService {
 		recruit.setRequirement(recruitDTO.getRequirement());
 		recruit.setRecruitStatus(1); //기본 값 1
 		recruit.setProjectNo(recruitDTO.getProjectNo());
-		
+
 		//project에 recruit 담기(더하기)
 		project.getRecruits().add(recruit);
 		//save 메서드 호출
@@ -160,14 +158,14 @@ public class RecruitService {
 		MemberId mi = new MemberId();
 		Customer c = customerRepository.findByCustomerNo(customerNo);
 		Recruit r = recruitRepository.findById(recruitNo).get();
-		
+
 		boolean isExists = false;
 
 		int idx = recruitNo.indexOf("R");
 		Integer projectNo = Integer.parseInt(recruitNo.substring(0, idx));
-				
+
 		List<Recruit> rList = recruitRepository.findAllByProjectNo(projectNo);
-		
+
 		for(Recruit rec : rList) {
 			Set<Member> ms= rec.getMembers();
 			if(ms.size()>0) {
@@ -178,8 +176,8 @@ public class RecruitService {
 				} //member for문 끝
 			}//if 끝
 		} //recruit for문 끝
-		
-		
+
+
 		if(isExists == false) {
 			mi.setMemberNo(customerNo);
 			mi.setRecruitNo(recruitNo);
@@ -192,9 +190,9 @@ public class RecruitService {
 		} else {
 			throw new AddException("이미 지원/초대/속해있는 회원입니다");
 		}
-		
-		
-		
+
+
+
 	}
 
 	/**
@@ -206,13 +204,13 @@ public class RecruitService {
 		boolean isDone = false;
 
 		Recruit recruit = recruitRepository.findById(recruitNo).get();
-	      if(recruit.getMembers().size() == 0) {
-	         recruitRepository.deleteRec(recruitNo);   
-	         isDone = true;
-	      } else {
-	         isDone = false;
-	         throw new RemoveException("멤버가 존재합니다");
-	      }   
+		if(recruit.getMembers().size() == 0) {
+			recruitRepository.deleteRec(recruitNo);   
+			isDone = true;
+		} else {
+			isDone = false;
+			throw new RemoveException("멤버가 존재하므로 삭제가 불가능합니다.");
+		}
 
 		//삭제 시 모집 썸네일도 제거
 
@@ -257,29 +255,33 @@ public class RecruitService {
 		//모집 - 파일경로
 		String saveTxtPath = rootUploadPath + File.separator + "storage" + File.separator + "recruit" + File.separator + "txt"  + File.separator;
 
-		File pic;
-		File txt;
-		
+		File pic = null;
+		File txt = null;
+
+
 		for(int i = 1; i <= count; i++) {
 			recruitNo = projectNo+"R"+ i;
-			try {
+			Recruit recruit = recruitRepository.findById(recruitNo).get();
+			if(recruit.getMembers().size() == 0) {
 				pic = new File(saveImgPath, recruitNo+".jpg");
 				txt = new File(saveTxtPath, recruitNo+".txt");
 				recruitRepository.deleteRec(recruitNo);
 				isDone = true;
-			}catch (Exception e) {
+			} else {
 				isDone = false;
-				throw new RemoveException("멤버가 존재합니다.");
+				throw new RemoveException("멤버가 존재하므로 삭제가 불가능합니다.");
 			}
+		}
 
-			if(isDone == true) {
-				if(pic.exists() && txt.exists()) {
-					pic.delete();
-					txt.delete();
-				} else if(!(pic.exists()) && txt.exists()) {
-					txt.delete();
-				}
-			} //파일 삭제 끝
-		}//for문 끝
+
+		if(isDone == true) {
+			if(pic.exists() && txt.exists()) {
+				pic.delete();
+				txt.delete();
+			} else if(!(pic.exists()) && txt.exists()) {
+				txt.delete();
+			}
+		} //파일 삭제 끝
 	}
 }
+
