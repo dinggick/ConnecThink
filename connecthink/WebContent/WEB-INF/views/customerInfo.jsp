@@ -244,7 +244,7 @@
         						method : "POST",
         						data : {${_csrf.parameterName} : '${_csrf.token}'},
         						success : (data, textStatus, jqXHR) => {
-        							location.href = "http://localhost/connecthink/";
+        							location.href = "http://172.30.1.37/connecthink/";
         						}
         					});
         				},
