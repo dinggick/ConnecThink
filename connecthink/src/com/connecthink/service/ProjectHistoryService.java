@@ -26,7 +26,7 @@ public class ProjectHistoryService {
 		List<ProjectHistoryDTO> result = new ArrayList<ProjectHistoryDTO>();
 
 		pList.forEach(p -> {
-			if (p.getManagerNo() == customerNo) { // 팀장인 경우
+			if (p.getManagerNo().equals(customerNo)) { // 팀장인 경우
 
 				Date quitDate = null;
 				for(Recruit r : p.getRecruits()) {

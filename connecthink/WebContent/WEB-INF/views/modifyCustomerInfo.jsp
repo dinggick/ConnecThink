@@ -351,7 +351,7 @@
 		 			},
 		 			data : formData,
 		 			success : (data, textStatus, jqXHR) => {
-		 				var imgUrl = "http://192.168.0.115/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime();
+		 				var imgUrl = "http://172.30.1.6/storage/customer/${sessionScope.loginInfo}.jpg?" + new Date().getTime();
 		 				
 // 		 				$.ajax({
 // 		 					url : "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg",
@@ -386,7 +386,7 @@
     					${_csrf.parameterName} : '${_csrf.token}'},
     			success : (data, textStatus, jqXHR) => {
     				//프로필 사진
-    				$(".thumb>img").attr("src", "http://localhost/storage/customer/${sessionScope.loginInfo}.jpg");
+    				$(".thumb>img").attr("src", "http://172.30.1.6/storage/customer/${sessionScope.loginInfo}.jpg");
     				//이름
     				$("#customerName").html(data.name);
     				//한 줄 소개

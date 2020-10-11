@@ -1347,7 +1347,7 @@ scale
 					  var memberInfo = result.data;	   			
 					  memberInfo.forEach(member => {
 						  var memberInfo = member.split(":");
-						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://172.30.1.54/storage/customer/"+memberInfo[0]+".jpg"});
+						  this.memberList.push({name : memberInfo[1],position : memberInfo[2],customer_no : memberInfo[0],imageRoute : "http://172.30.1.6/storage/customer"+memberInfo[0]+".jpg"});
 						 
 					  })//forEach for memberList				  
 			  })//axios
@@ -1488,7 +1488,7 @@ scale
 			 },
 			  //websocket 연결
 			  connect(){
-				  this.socket = new WebSocket("ws://172.30.1.26:8080/connecthink/chat/boardChat");
+				  this.socket = new WebSocket("ws://172.30.1.6/connecthink/chat/boardChat");
 
 				  
 				  //onopen
@@ -1662,7 +1662,7 @@ scale
 								 this.msgs.push({createDate : receptionTime, content : msg,reception :false});	 
 							}else{
 								//가져온 유저의 프로필 사진
-								let imageUrl = "http://172.30.1.54/storage/customer/"+user+".jpg";
+								let imageUrl = "http://172.30.1.6/storage/customer/"+user+".jpg";
 								
 								//전송한 사람이 내가 아닐경우
 								this.msgs.push({createDate : receptionTime, content : msg,reception :true,writer : name,imageRoute : imageUrl});

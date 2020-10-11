@@ -192,7 +192,7 @@ span.customerNo {
 										style="display: inline-block;">
 										<div class="thumb text-center mr-2">
 											<img
-												src="http://localhost/storage/customer/${member.customerNo}.jpg"
+												src="http://172.30.1.6/storage/customer/${member.customerNo}.jpg"
 												onerror="this.src='${contextPath}/img/d2.jpg'" alt="프로필사진"
 												onclick="memberDetail(this);"> <span
 												class="customerNo">${member.customerNo}</span> <span
@@ -213,7 +213,7 @@ span.customerNo {
 								<div style="width: 70px; height: 99px;">
 									<div>[팀장]</div>
 									<img
-										src="http://localhost/storage/customer/${manager.customerNo}.jpg"
+										src="http://172.30.1.6/storage/customer/${manager.customerNo}.jpg"
 										onerror="this.src='${contextPath}/img/d2.jpg'" alt="프로필사진"
 										onclick="memberDetail(this);" class="mt-1"> <span
 										class="customerNo">${manager.customerNo}</span>
