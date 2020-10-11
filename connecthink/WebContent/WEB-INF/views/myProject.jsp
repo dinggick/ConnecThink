@@ -230,17 +230,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <form name="goSpaceForm" action="${contextPath}/logined/board" method="post">
-		<input type="hidden" name="project_no" value="0">
-		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-	</form>
-   
+    </div>   
    
    <!-- featured_candidates_area_end  -->
-
-
-
 
    <!-- footer start -->
    <footer class="footer">
@@ -310,6 +302,7 @@
 		let tableRow = this.parentNode.parentNode;
 		let recruitNo = $(tableRow).find(".recruitNo").html();
 		let memberNo = $(tableRow).find(".memberNo").html();
+		let memberName = $(tableRow).find(".memberName").html();
 		let projectName = $(tableRow).find(".title").text();
 		let managerNo = typeof($(tableRow).find(".managerNo").val()) != 'undefined' ? $(tableRow).find(".managerNo").val() : 0;
 		
@@ -330,7 +323,7 @@
 				if ($(this).attr("class").search("allow-my-invi") > 0) {
 					isInvite = "초대";
 				} 				
-				allow(recruitNo, memberNo, isInvite, managerNo, projectName);
+				allow(recruitNo, memberNo, isInvite, managerNo, projectName, memberName);
 			}
 		}
 	});
@@ -360,13 +353,6 @@
 		}
 	}
 	
-	//프로젝트 스페이스로 이동
-	function goSpace(projectNo) {
-		let form = document.goSpaceForm;
-		$(form).find("input[name=project_no]").val(projectNo);
-		form.submit();
-	}
-	
 	//내가 등록한 프로젝트 불러오기
 	function myProject() {
 		$.ajax({
@@ -374,7 +360,7 @@
 			method : "POST",
 			data : {${_csrf.parameterName} : '${_csrf.token}'},
 			success : function(projects) {
-				$manageInTHead.html("이 프로젝트에 초대/지원한 회원");
+				$manageInTHead.html("");
 				$purposeOrPositionInTHead.html("목적");
 				$statusOrdeadlineInTHead.html("상태");
 				let data = "";
@@ -389,14 +375,16 @@
 						data += '<div class="theme">'+ project.theme +'</div>';
 						if(project.projectStatus == 1){
 							data += '<div class="status">진행중</div>';
+							data += '<div class="manageMember text-center">';
+							data += '<a href="#" class="manageInvited ctrl" onclick="findInvited(this,' + project.projectNo + ');" style="margin-right: 10px;">초대목록 ▼</a>';
+							data += '<a href="#" class="manageApplied ctrl" onclick="findApplied(this,' + project.projectNo + ');">지원목록 ▼</a></div></div>';
+							data += '<div class="showMember invitedMember progress-table bg-white">-</div>';
+							data += '<div class="showMember appliedMember progress-table bg-white">-</div>';
 						} else {
 							data += '<div class="status">종료</div>';
+							data += '<div class="manageMember text-center">';
+							data += '<a href="#" class="goSpaceBtn" onclick="goSpace(' + project.projectNo + ');">스페이스 가기</a></div></div>';
 						}
-						data += '<div class="manageMember text-center">';
-						data += '<a href="#" class="manageInvited ctrl" onclick="findInvited(this,' + project.projectNo + ');" style="margin-right: 10px;">초대목록 ▼</a>';
-						data += '<a href="#" class="manageApplied ctrl" onclick="findApplied(this,' + project.projectNo + ');">지원목록 ▼</a></div></div>';
-						data += '<div class="showMember invitedMember progress-table bg-white">-</div>';
-						data += '<div class="showMember appliedMember progress-table bg-white">-</div>';
 					});
 				} else {
 					data += "<div style='width:100%; height:100px; line-height:100px; text-align:center;'>등록한 프로젝트가 없습니다.</div>";
@@ -510,6 +498,7 @@
 						sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
 						sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + project.requirement + '</span></div>';
 						sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
+						sectionData += '<div class="memberName" style="display:none;">'+ project.memberName +'</div>';
 						sectionData += "<div class='recruitNo'>" + project.recruitNo + "</div>";
 						sectionData += '<div class="position">' + project.positionName + '</div>';
 						sectionData += '<div class="theme">' + project.theme + '</div>';
@@ -684,13 +673,13 @@
 	}
 
 	//수락하기
-	function allow(recruitNo, memberNo, isInvite, managerNo, projectName){
+	function allow(recruitNo, memberNo, isInvite, managerNo, projectName, memberName){
 		console.log(recruitNo + ":"+memberNo+":"+isInvite+":" +managerNo +":" +projectName);
 		var notiContent ="";
 		var receiver = "";
 		if(isInvite == "초대") {
 			receiver = managerNo;
-			notiContent = memberNo + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
+			notiContent = memberName + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
 		} else {
 			receiver = memberNo;
 			notiContent = "축하드립니다. " +projectName + "번 프로젝트의 팀원이 되셨습니다. 프로젝트 스페이스를 확인해주세요.";			
