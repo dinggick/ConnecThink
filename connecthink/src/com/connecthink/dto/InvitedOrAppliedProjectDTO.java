@@ -13,6 +13,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class InvitedOrAppliedProjectDTO {
 	
+	private String memberName;
+	
 	private Integer projectNo;
 	
 	private Integer managerNo;

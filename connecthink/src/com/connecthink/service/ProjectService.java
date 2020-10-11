@@ -57,14 +57,9 @@ public class ProjectService {
 				Recruit r = iter.next();
 				for(Member m : r.getMembers()) {
 					if(m.getCustomer().getCustomerNo().intValue() == memberNo.intValue() && m.getEnterStatus() == 0 && m.getInvited() == 0) {
-						appliedPList.add(new InvitedOrAppliedProjectDTO(p.getProjectNo(),
-																		p.getManagerNo(),
-																		p.getTitle(),
-																		p.getTheme(),
-																		r.getRecruitNo(),
-																		r.getRequirement(),
-																		r.getPosition().getName(),
-																		r.getDeadline()));
+						appliedPList.add(new InvitedOrAppliedProjectDTO(m.getCustomer().getName(), p.getProjectNo(), p.getManagerNo(),
+								p.getTitle(), p.getTheme(), r.getRecruitNo(),
+								r.getRequirement(), r.getPosition().getName(), r.getDeadline()));
 					}
 				}
 			}
@@ -86,14 +81,9 @@ public class ProjectService {
 				Recruit r = iter.next();
 				for(Member m : r.getMembers()) {
 					if(m.getCustomer().getCustomerNo().intValue() == memberNo.intValue() && m.getEnterStatus() == 0 && m.getInvited() == 1) {
-						invitedPList.add(new InvitedOrAppliedProjectDTO(p.getProjectNo(),
-																		p.getManagerNo(),
-																		p.getTitle(),
-																		p.getTheme(),
-																		r.getRecruitNo(),
-																		r.getRequirement(),
-																		r.getPosition().getName(),
-																		r.getDeadline()));
+						invitedPList.add(new InvitedOrAppliedProjectDTO(m.getCustomer().getName(), p.getProjectNo(), p.getManagerNo(),
+																		p.getTitle(), p.getTheme(), r.getRecruitNo(),
+																		r.getRequirement(), r.getPosition().getName(), r.getDeadline()));
 					}
 				}
 			}

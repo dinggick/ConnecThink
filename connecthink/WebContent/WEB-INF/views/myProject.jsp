@@ -302,6 +302,7 @@
 		let tableRow = this.parentNode.parentNode;
 		let recruitNo = $(tableRow).find(".recruitNo").html();
 		let memberNo = $(tableRow).find(".memberNo").html();
+		let memberName = $(tableRow).find(".memberName").html();
 		let projectName = $(tableRow).find(".title").text();
 		let managerNo = typeof($(tableRow).find(".managerNo").val()) != 'undefined' ? $(tableRow).find(".managerNo").val() : 0;
 		
@@ -322,7 +323,7 @@
 				if ($(this).attr("class").search("allow-my-invi") > 0) {
 					isInvite = "초대";
 				} 				
-				allow(recruitNo, memberNo, isInvite, managerNo, projectName);
+				allow(recruitNo, memberNo, isInvite, managerNo, projectName, memberName);
 			}
 		}
 	});
@@ -497,6 +498,7 @@
 						sectionData += '<div class="title">' + '<span onclick="projectDetail(this.parentNode);">' + project.title ;
 						sectionData += '</span> - <span onclick="recruitDetail(this.parentNode);">' + project.requirement + '</span></div>';
 						sectionData += '<div class="memberNo">'+ loginedCustomer +'</div>';
+						sectionData += '<div class="memberName" style="display:none;">'+ project.memberName +'</div>';
 						sectionData += "<div class='recruitNo'>" + project.recruitNo + "</div>";
 						sectionData += '<div class="position">' + project.positionName + '</div>';
 						sectionData += '<div class="theme">' + project.theme + '</div>';
@@ -671,13 +673,13 @@
 	}
 
 	//수락하기
-	function allow(recruitNo, memberNo, isInvite, managerNo, projectName){
+	function allow(recruitNo, memberNo, isInvite, managerNo, projectName, memberName){
 		console.log(recruitNo + ":"+memberNo+":"+isInvite+":" +managerNo +":" +projectName);
 		var notiContent ="";
 		var receiver = "";
 		if(isInvite == "초대") {
 			receiver = managerNo;
-			notiContent = memberNo + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
+			notiContent = memberName + "님이 " + projectName + "에 " + isInvite +  "수락을 하셨습니다 :)!";	
 		} else {
 			receiver = memberNo;
 			notiContent = "축하드립니다. " +projectName + "번 프로젝트의 팀원이 되셨습니다. 프로젝트 스페이스를 확인해주세요.";			
