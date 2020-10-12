@@ -62,6 +62,7 @@ public class RecruitService {
 	//메인에 뿌려줄 9개 프로젝트 찾기
 	public List<Recruit> findTopRecruit(){
 		List<Recruit> rec = recruitRepository.findTop9By();
+
 		rec.forEach(r -> {
 			Set<Member> members = r.getMembers();
 			Iterator<Member> mIter = members.iterator();

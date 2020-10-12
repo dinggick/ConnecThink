@@ -18,7 +18,7 @@ public interface RecruitRepository extends JpaRepository<Recruit, String> {
 			"where\r\n" + 
 			"    m.member_no = ?1")
 	public List<Recruit> findByCustomerNo(Integer customerNo);
-	
+	@Query(nativeQuery = true, value = "select * from recruit WHERE ROWNUM <= 9 and recruit_status <> 2")
 	public List<Recruit> findTop9By();
 	
 	/**

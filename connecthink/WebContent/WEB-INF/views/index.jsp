@@ -313,8 +313,7 @@
 	    	url : "/connecthink/customerList",  
 	    	method: "GET",
 	    	data:  { ${_csrf.parameterName} : '${_csrf.token}'},   
-			success: function(responseObj) {
-				
+			success: function(responseObj) {				
 				var txt = "";
 				for (x in responseObj) {
 					txt += "<div class='col-md-6 col-lg-3'><div class='single_catagory'>" +
@@ -327,9 +326,11 @@
 							" <input type='text' id='customerNo' value='"+responseObj[x].customerNo + "' hidden='hidden'>";							 
 					
 					for(p in responseObj[x].customerPositions) {
-						txt += "<p style='font-weight: bold;'>"+ responseObj[x].customerPositions[p].position.name+"</p>"
-					}	
-					txt += "<p>" + responseObj[x].about + "</p>";
+						//let position = responseObj[x].customerPositions[p].position.name = 'null' ? "" : responseObj[x].customerPositions[p].position.name;
+						txt += "<p style='font-weight: bold;'>"+ responseObj[x].customerPositions[p].position.name +"</p>"
+					}
+					let myAbout = responseObj[x].about == null ? "" : responseObj[x].about;
+					txt += "<p>" + myAbout + "</p>";
 					txt += "</div></div>";
 				} 
 				
